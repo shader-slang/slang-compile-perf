@@ -1,27 +1,9 @@
-# The slang-compile-perf repo stores ONLY measurements and the derived tracking series:
-#
-#   index.json                       release manifest
-#   releases/<tag>/results.json      per-release sweep (source of truth)
-#   daily/<date>-<sha>/results.json  one ToT sweep per night
-#   daily/<date>-<sha>/meta.json     run metadata
-#   runner.json                      runner fingerprint
-#   _tracking/tracking.json          derived series (trend.py / plots)
-#
-# Everything below is transient build scratch or regenerable on demand, and must
-# never be committed.
+# Derived HTML/SVG reports — regenerated locally from results.json on demand.
+# Not committed; served via GitHub Pages from the gh-pages branch.
+analysis/
+sweep/
+breakdown/
 
-# Generated Slang sources + compiled outputs (out.spv / out.slang-module).
-gen/
-
-# Derived HTML/SVG reports (report.py / sweep_report.py / breakdown.py / plot.py),
-# regenerated from results.json whenever needed.
-_analysis/
-_sweep/
-_breakdown/
-*.html
-*.svg
-*.png
-
-# analyze.py side outputs
+# analyze.py local side outputs
 flags.csv
 series.csv
