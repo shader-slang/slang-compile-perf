@@ -4,7 +4,7 @@ vector compose/truncate, and explicit narrowing. Stresses the coercion /
 conversion-cost engine in semantic checking rather than operator overloading.</p><p style='color:#666;font-size:13px'><b>bucket:</b> typecheck &nbsp;·&nbsp; <b>compile mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 600</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="680" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">implicit_conversion — full phase breakdown across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">implicit_conversion<tspan fill="#888" font-weight="400" text-decoration="none">  0.84×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">implicit_conversion<tspan fill="#888" font-weight="400" text-decoration="none">  0.87×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -14,31 +14,43 @@ conversion-cost engine in semantic checking rather than operator overloading.</p
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.1</text>
-<line x1="183.6" y1="516.0" x2="183.6" y2="519.0" stroke="#999"/>
-<text x="183.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 183.6 531.0)">26.2</text>
-<line x1="299.1" y1="516.0" x2="299.1" y2="519.0" stroke="#999"/>
-<text x="299.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 299.1 531.0)">26.3</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">25.19</text>
+<line x1="137.3" y1="516.0" x2="137.3" y2="519.0" stroke="#999"/>
+<text x="137.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 137.3 531.0)">25.20</text>
+<line x1="206.7" y1="516.0" x2="206.7" y2="519.0" stroke="#999"/>
+<text x="206.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 206.7 531.0)">25.21</text>
+<line x1="276.0" y1="516.0" x2="276.0" y2="519.0" stroke="#999"/>
+<text x="276.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 276.0 531.0)">25.22</text>
+<line x1="345.3" y1="516.0" x2="345.3" y2="519.0" stroke="#999"/>
+<text x="345.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 345.3 531.0)">25.23</text>
 <line x1="414.7" y1="516.0" x2="414.7" y2="519.0" stroke="#999"/>
-<text x="414.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 414.7 531.0)">26.4</text>
-<line x1="530.2" y1="516.0" x2="530.2" y2="519.0" stroke="#999"/>
-<text x="530.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 530.2 531.0)">26.5</text>
-<line x1="645.8" y1="516.0" x2="645.8" y2="519.0" stroke="#999"/>
-<text x="645.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 645.8 531.0)">26.7</text>
+<text x="414.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 414.7 531.0)">25.24</text>
+<line x1="484.0" y1="516.0" x2="484.0" y2="519.0" stroke="#999"/>
+<text x="484.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 484.0 531.0)">26.1</text>
+<line x1="553.3" y1="516.0" x2="553.3" y2="519.0" stroke="#999"/>
+<text x="553.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 553.3 531.0)">26.2</text>
+<line x1="622.7" y1="516.0" x2="622.7" y2="519.0" stroke="#999"/>
+<text x="622.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 622.7 531.0)">26.3</text>
+<line x1="692.0" y1="516.0" x2="692.0" y2="519.0" stroke="#999"/>
+<text x="692.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 692.0 531.0)">26.4</text>
 <line x1="761.3" y1="516.0" x2="761.3" y2="519.0" stroke="#999"/>
-<text x="761.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 761.3 531.0)">26.8</text>
-<line x1="876.9" y1="516.0" x2="876.9" y2="519.0" stroke="#999"/>
-<text x="876.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 876.9 531.0)">26.9</text>
-<line x1="992.4" y1="516.0" x2="992.4" y2="519.0" stroke="#999"/>
-<text x="992.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 992.4 531.0)">26.10</text>
+<text x="761.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 761.3 531.0)">26.5</text>
+<line x1="830.7" y1="516.0" x2="830.7" y2="519.0" stroke="#999"/>
+<text x="830.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 830.7 531.0)">26.7</text>
+<line x1="900.0" y1="516.0" x2="900.0" y2="519.0" stroke="#999"/>
+<text x="900.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 900.0 531.0)">26.8</text>
+<line x1="969.3" y1="516.0" x2="969.3" y2="519.0" stroke="#999"/>
+<text x="969.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 969.3 531.0)">26.9</text>
+<line x1="1038.7" y1="516.0" x2="1038.7" y2="519.0" stroke="#999"/>
+<text x="1038.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1038.7 531.0)">26.10</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
 <text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
-<polygon points="68.0,501.2 183.6,501.5 299.1,501.4 414.7,500.7 530.2,500.8 645.8,500.2 761.3,500.4 876.9,500.4 992.4,500.8 1108.0,500.4 1108.0,516.0 992.4,516.0 876.9,516.0 761.3,516.0 645.8,516.0 530.2,516.0 414.7,516.0 299.1,516.0 183.6,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>implicit_conversion — parseTranslationUnit</title></polygon>
-<polygon points="68.0,285.4 183.6,283.8 299.1,284.4 414.7,277.4 530.2,270.7 645.8,260.5 761.3,258.2 876.9,257.2 992.4,251.1 1108.0,337.3 1108.0,500.4 992.4,500.8 876.9,500.4 761.3,500.4 645.8,500.2 530.2,500.8 414.7,500.7 299.1,501.4 183.6,501.5 68.0,501.2" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>implicit_conversion — SemanticChecking</title></polygon>
-<polygon points="68.0,189.9 183.6,187.3 299.1,188.3 414.7,179.9 530.2,173.1 645.8,138.6 761.3,134.3 876.9,133.8 992.4,128.7 1108.0,244.8 1108.0,337.3 992.4,251.1 876.9,257.2 761.3,258.2 645.8,260.5 530.2,270.7 414.7,277.4 299.1,284.4 183.6,283.8 68.0,285.4" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>implicit_conversion — generateIR</title></polygon>
-<polygon points="68.0,189.7 183.6,187.0 299.1,187.8 414.7,179.6 530.2,172.3 645.8,137.2 761.3,131.1 876.9,133.8 992.4,127.2 1108.0,243.8 1108.0,244.8 992.4,128.7 876.9,133.8 761.3,134.3 645.8,138.6 530.2,173.1 414.7,179.9 299.1,188.3 183.6,187.3 68.0,189.9" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>implicit_conversion — frontEndExecute (self)</title></polygon>
-<polygon points="68.0,171.2 183.6,168.7 299.1,169.3 414.7,160.9 530.2,153.5 645.8,118.9 761.3,112.6 876.9,114.9 992.4,108.6 1108.0,226.6 1108.0,243.8 992.4,127.2 876.9,133.8 761.3,131.1 645.8,137.2 530.2,172.3 414.7,179.6 299.1,187.8 183.6,187.0 68.0,189.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>implicit_conversion — generateOutput (self)</title></polygon>
-<polygon points="68.0,170.9 183.6,168.7 299.1,169.3 414.7,160.9 530.2,153.5 645.8,118.9 761.3,112.6 876.9,114.9 992.4,108.6 1108.0,226.6 1108.0,226.6 992.4,108.6 876.9,114.9 761.3,112.6 645.8,118.9 530.2,153.5 414.7,160.9 299.1,169.3 183.6,168.7 68.0,171.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>implicit_conversion — compileInner (self)</title></polygon>
+<polygon points="68.0,501.5 137.3,501.5 206.7,501.6 276.0,501.3 345.3,501.3 414.7,501.0 484.0,501.2 553.3,501.5 622.7,501.4 692.0,500.7 761.3,500.8 830.7,500.2 900.0,500.4 969.3,500.4 1038.7,500.8 1108.0,500.4 1108.0,516.0 1038.7,516.0 969.3,516.0 900.0,516.0 830.7,516.0 761.3,516.0 692.0,516.0 622.7,516.0 553.3,516.0 484.0,516.0 414.7,516.0 345.3,516.0 276.0,516.0 206.7,516.0 137.3,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>implicit_conversion — parseTranslationUnit</title></polygon>
+<polygon points="68.0,301.1 137.3,300.7 206.7,301.4 276.0,289.2 345.3,285.5 414.7,287.3 484.0,285.4 553.3,283.8 622.7,284.4 692.0,277.4 761.3,270.7 830.7,260.5 900.0,258.2 969.3,257.2 1038.7,251.1 1108.0,337.3 1108.0,500.4 1038.7,500.8 969.3,500.4 900.0,500.4 830.7,500.2 761.3,500.8 692.0,500.7 622.7,501.4 553.3,501.5 484.0,501.2 414.7,501.0 345.3,501.3 276.0,501.3 206.7,501.6 137.3,501.5 68.0,501.5" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>implicit_conversion — SemanticChecking</title></polygon>
+<polygon points="68.0,202.9 137.3,203.8 206.7,204.3 276.0,192.6 345.3,191.0 414.7,192.8 484.0,189.9 553.3,187.3 622.7,188.3 692.0,179.9 761.3,173.1 830.7,138.6 900.0,134.3 969.3,133.8 1038.7,128.7 1108.0,244.8 1108.0,337.3 1038.7,251.1 969.3,257.2 900.0,258.2 830.7,260.5 761.3,270.7 692.0,277.4 622.7,284.4 553.3,283.8 484.0,285.4 414.7,287.3 345.3,285.5 276.0,289.2 206.7,301.4 137.3,300.7 68.0,301.1" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>implicit_conversion — generateIR</title></polygon>
+<polygon points="68.0,202.5 137.3,203.6 206.7,203.8 276.0,192.2 345.3,190.6 414.7,192.0 484.0,189.7 553.3,187.0 622.7,187.8 692.0,179.6 761.3,172.3 830.7,137.2 900.0,131.1 969.3,133.8 1038.7,127.2 1108.0,243.8 1108.0,244.8 1038.7,128.7 969.3,133.8 900.0,134.3 830.7,138.6 761.3,173.1 692.0,179.9 622.7,188.3 553.3,187.3 484.0,189.9 414.7,192.8 345.3,191.0 276.0,192.6 206.7,204.3 137.3,203.8 68.0,202.9" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>implicit_conversion — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,184.2 137.3,185.2 206.7,185.5 276.0,174.2 345.3,172.0 414.7,173.7 484.0,171.2 553.3,168.7 622.7,169.3 692.0,160.9 761.3,153.5 830.7,118.9 900.0,112.6 969.3,114.9 1038.7,108.6 1108.0,226.6 1108.0,243.8 1038.7,127.2 969.3,133.8 900.0,131.1 830.7,137.2 761.3,172.3 692.0,179.6 622.7,187.8 553.3,187.0 484.0,189.7 414.7,192.0 345.3,190.6 276.0,192.2 206.7,203.8 137.3,203.6 68.0,202.5" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>implicit_conversion — generateOutput (self)</title></polygon>
+<polygon points="68.0,184.2 137.3,185.2 206.7,185.5 276.0,174.2 345.3,170.7 414.7,173.7 484.0,170.9 553.3,168.7 622.7,169.3 692.0,160.9 761.3,153.5 830.7,118.9 900.0,112.6 969.3,114.9 1038.7,108.6 1108.0,226.6 1108.0,226.6 1038.7,108.6 969.3,114.9 900.0,112.6 830.7,118.9 761.3,153.5 692.0,160.9 622.7,169.3 553.3,168.7 484.0,171.2 414.7,173.7 345.3,172.0 276.0,174.2 206.7,185.5 137.3,185.2 68.0,184.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>implicit_conversion — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
