@@ -10,13 +10,13 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 </style>
 <div class="wrap">
 <h1>Slang compile-time performance — per benchmark</h1>
-<p class="sub">2 releases + 0 daily ToT runs, <b>26.7</b> → <b>26.8</b> · metric: median (ms) · 25 workloads. The 0 rightmost points per panel are daily top-of-tree builds.</p>
+<p class="sub">4 releases + 0 daily ToT runs, <b>26.4</b> → <b>26.8</b> · metric: median (ms) · 25 workloads. The 0 rightmost points per panel are daily top-of-tree builds.</p>
 <h2>Phase composition across releases — main phases</h2>
 <p class="small">One panel per workload; the two top-level phases <b>frontEndExecute</b> (green) and <b>generateOutput</b> (orange) stacked as areas across the release history, top edge tracing <code>compileInner</code> (own zero-based y-axis per panel; × = first→last ratio). <b>Click a workload name</b> to open its own page with the full sub-counter breakdown (specializeModule, simplifyIR, SemanticChecking, …).</p>
 <div class="chart"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1408" height="5142" viewBox="0 0 1408 5142" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1408" height="5142" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">Per-benchmark phase composition across releases + daily ToT (median ms)</text>
-<a xlink:href="workloads/autodiff.html" href="workloads/autodiff.html" target="_top"><text x="68" y="60" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">autodiff<tspan fill="#888" font-weight="400" text-decoration="none">  0.97Ã—</tspan></text></a>
+<a xlink:href="workloads/autodiff.html" href="workloads/autodiff.html" target="_top"><text x="68" y="60" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">autodiff<tspan fill="#888" font-weight="400" text-decoration="none">  3.74Ã—</tspan></text></a>
 <line x1="68.0" y1="376.0" x2="688.0" y2="376.0" stroke="#eee"/>
 <text x="64.0" y="379.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="226.0" x2="688.0" y2="226.0" stroke="#eee"/>
@@ -26,13 +26,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="68.0" y1="76.0" x2="68.0" y2="376.0" stroke="#333"/>
 <line x1="68.0" y1="376.0" x2="688.0" y2="376.0" stroke="#333"/>
 <line x1="68.0" y1="376.0" x2="68.0" y2="379.0" stroke="#999"/>
-<text x="68.0" y="391.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 391.0)">26.7</text>
+<text x="68.0" y="391.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 391.0)">26.4</text>
+<line x1="274.7" y1="376.0" x2="274.7" y2="379.0" stroke="#999"/>
+<text x="274.7" y="391.0" text-anchor="end" fill="#666" transform="rotate(-50 274.7 391.0)">26.5</text>
+<line x1="481.3" y1="376.0" x2="481.3" y2="379.0" stroke="#999"/>
+<text x="481.3" y="391.0" text-anchor="end" fill="#666" transform="rotate(-50 481.3 391.0)">26.7</text>
 <line x1="688.0" y1="376.0" x2="688.0" y2="379.0" stroke="#999"/>
 <text x="688.0" y="391.0" text-anchor="end" fill="#666" transform="rotate(-50 688.0 391.0)">26.8</text>
-<polygon points="68.0,365.0 688.0,364.8 688.0,376.0 68.0,376.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff â€” frontEndExecute</title></polygon>
-<polygon points="68.0,98.2 688.0,105.3 688.0,364.8 68.0,365.0" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff â€” generateOutput</title></polygon>
-<polygon points="68.0,98.2 688.0,105.3 688.0,105.3 68.0,98.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/mdl_dxr.html" href="workloads/mdl_dxr.html" target="_top"><text x="764" y="60" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">mdl_dxr<tspan fill="#888" font-weight="400" text-decoration="none">  1.00Ã—</tspan></text></a>
+<polygon points="68.0,372.2 274.7,372.1 481.3,365.0 688.0,364.8 688.0,376.0 481.3,376.0 274.7,376.0 68.0,376.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff â€” frontEndExecute</title></polygon>
+<polygon points="68.0,303.7 274.7,302.5 481.3,98.2 688.0,105.3 688.0,364.8 481.3,365.0 274.7,372.1 68.0,372.2" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff â€” generateOutput</title></polygon>
+<polygon points="68.0,303.6 274.7,302.4 481.3,98.2 688.0,105.3 688.0,105.3 481.3,98.2 274.7,302.5 68.0,303.7" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/mdl_dxr.html" href="workloads/mdl_dxr.html" target="_top"><text x="764" y="60" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">mdl_dxr<tspan fill="#888" font-weight="400" text-decoration="none">  1.19Ã—</tspan></text></a>
 <line x1="764.0" y1="376.0" x2="1384.0" y2="376.0" stroke="#eee"/>
 <text x="760.0" y="379.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="764.0" y1="226.0" x2="1384.0" y2="226.0" stroke="#eee"/>
@@ -42,29 +46,37 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="764.0" y1="76.0" x2="764.0" y2="376.0" stroke="#333"/>
 <line x1="764.0" y1="376.0" x2="1384.0" y2="376.0" stroke="#333"/>
 <line x1="764.0" y1="376.0" x2="764.0" y2="379.0" stroke="#999"/>
-<text x="764.0" y="391.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 391.0)">26.7</text>
+<text x="764.0" y="391.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 391.0)">26.4</text>
+<line x1="970.7" y1="376.0" x2="970.7" y2="379.0" stroke="#999"/>
+<text x="970.7" y="391.0" text-anchor="end" fill="#666" transform="rotate(-50 970.7 391.0)">26.5</text>
+<line x1="1177.3" y1="376.0" x2="1177.3" y2="379.0" stroke="#999"/>
+<text x="1177.3" y="391.0" text-anchor="end" fill="#666" transform="rotate(-50 1177.3 391.0)">26.7</text>
 <line x1="1384.0" y1="376.0" x2="1384.0" y2="379.0" stroke="#999"/>
 <text x="1384.0" y="391.0" text-anchor="end" fill="#666" transform="rotate(-50 1384.0 391.0)">26.8</text>
-<polygon points="764.0,280.5 1384.0,280.2 1384.0,376.0 764.0,376.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr â€” frontEndExecute</title></polygon>
-<polygon points="764.0,99.0 1384.0,98.5 1384.0,280.2 764.0,280.5" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr â€” generateOutput</title></polygon>
-<polygon points="764.0,98.7 1384.0,98.2 1384.0,98.5 764.0,99.0" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/parse.html" href="workloads/parse.html" target="_top"><text x="68" y="448" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">parse<tspan fill="#888" font-weight="400" text-decoration="none">  1.00Ã—</tspan></text></a>
+<polygon points="764.0,300.8 970.7,301.9 1177.3,280.5 1384.0,280.2 1384.0,376.0 1177.3,376.0 970.7,376.0 764.0,376.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr â€” frontEndExecute</title></polygon>
+<polygon points="764.0,142.2 970.7,150.3 1177.3,99.0 1384.0,98.5 1384.0,280.2 1177.3,280.5 970.7,301.9 764.0,300.8" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr â€” generateOutput</title></polygon>
+<polygon points="764.0,142.1 970.7,150.2 1177.3,98.7 1384.0,98.2 1384.0,98.5 1177.3,99.0 970.7,150.3 764.0,142.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/parse.html" href="workloads/parse.html" target="_top"><text x="68" y="448" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">parse<tspan fill="#888" font-weight="400" text-decoration="none">  0.99Ã—</tspan></text></a>
 <line x1="68.0" y1="764.0" x2="688.0" y2="764.0" stroke="#eee"/>
 <text x="64.0" y="767.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="614.0" x2="688.0" y2="614.0" stroke="#eee"/>
-<text x="64.0" y="617.0" text-anchor="end" fill="#999">852</text>
+<text x="64.0" y="617.0" text-anchor="end" fill="#999">870</text>
 <line x1="68.0" y1="464.0" x2="688.0" y2="464.0" stroke="#eee"/>
-<text x="64.0" y="467.0" text-anchor="end" fill="#999">1703</text>
+<text x="64.0" y="467.0" text-anchor="end" fill="#999">1740</text>
 <line x1="68.0" y1="464.0" x2="68.0" y2="764.0" stroke="#333"/>
 <line x1="68.0" y1="764.0" x2="688.0" y2="764.0" stroke="#333"/>
 <line x1="68.0" y1="764.0" x2="68.0" y2="767.0" stroke="#999"/>
-<text x="68.0" y="779.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 779.0)">26.7</text>
+<text x="68.0" y="779.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 779.0)">26.4</text>
+<line x1="274.7" y1="764.0" x2="274.7" y2="767.0" stroke="#999"/>
+<text x="274.7" y="779.0" text-anchor="end" fill="#666" transform="rotate(-50 274.7 779.0)">26.5</text>
+<line x1="481.3" y1="764.0" x2="481.3" y2="767.0" stroke="#999"/>
+<text x="481.3" y="779.0" text-anchor="end" fill="#666" transform="rotate(-50 481.3 779.0)">26.7</text>
 <line x1="688.0" y1="764.0" x2="688.0" y2="767.0" stroke="#999"/>
 <text x="688.0" y="779.0" text-anchor="end" fill="#666" transform="rotate(-50 688.0 779.0)">26.8</text>
-<polygon points="68.0,497.1 688.0,496.4 688.0,764.0 68.0,764.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse â€” frontEndExecute</title></polygon>
-<polygon points="68.0,487.1 688.0,486.3 688.0,496.4 68.0,497.1" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse â€” generateOutput</title></polygon>
-<polygon points="68.0,487.1 688.0,486.2 688.0,486.3 68.0,487.1" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/ir_builder.html" href="workloads/ir_builder.html" target="_top"><text x="764" y="448" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">ir_builder<tspan fill="#888" font-weight="400" text-decoration="none">  1.07Ã—</tspan></text></a>
+<polygon points="68.0,498.8 274.7,496.4 481.3,502.7 688.0,502.0 688.0,764.0 481.3,764.0 274.7,764.0 68.0,764.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse â€” frontEndExecute</title></polygon>
+<polygon points="68.0,488.6 274.7,486.2 481.3,492.9 688.0,492.0 688.0,502.0 481.3,502.7 274.7,496.4 68.0,498.8" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse â€” generateOutput</title></polygon>
+<polygon points="68.0,488.6 274.7,486.2 481.3,492.9 688.0,492.0 688.0,492.0 481.3,492.9 274.7,486.2 68.0,488.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/ir_builder.html" href="workloads/ir_builder.html" target="_top"><text x="764" y="448" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">ir_builder<tspan fill="#888" font-weight="400" text-decoration="none">  1.35Ã—</tspan></text></a>
 <line x1="764.0" y1="764.0" x2="1384.0" y2="764.0" stroke="#eee"/>
 <text x="760.0" y="767.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="764.0" y1="614.0" x2="1384.0" y2="614.0" stroke="#eee"/>
@@ -74,13 +86,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="764.0" y1="464.0" x2="764.0" y2="764.0" stroke="#333"/>
 <line x1="764.0" y1="764.0" x2="1384.0" y2="764.0" stroke="#333"/>
 <line x1="764.0" y1="764.0" x2="764.0" y2="767.0" stroke="#999"/>
-<text x="764.0" y="779.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 779.0)">26.7</text>
+<text x="764.0" y="779.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 779.0)">26.4</text>
+<line x1="970.7" y1="764.0" x2="970.7" y2="767.0" stroke="#999"/>
+<text x="970.7" y="779.0" text-anchor="end" fill="#666" transform="rotate(-50 970.7 779.0)">26.5</text>
+<line x1="1177.3" y1="764.0" x2="1177.3" y2="767.0" stroke="#999"/>
+<text x="1177.3" y="779.0" text-anchor="end" fill="#666" transform="rotate(-50 1177.3 779.0)">26.7</text>
 <line x1="1384.0" y1="764.0" x2="1384.0" y2="767.0" stroke="#999"/>
 <text x="1384.0" y="779.0" text-anchor="end" fill="#666" transform="rotate(-50 1384.0 779.0)">26.8</text>
-<polygon points="764.0,751.0 1384.0,751.1 1384.0,764.0 764.0,764.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>ir_builder â€” frontEndExecute</title></polygon>
-<polygon points="764.0,503.9 1384.0,486.6 1384.0,751.1 764.0,751.0" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>ir_builder â€” generateOutput</title></polygon>
-<polygon points="764.0,503.6 1384.0,486.2 1384.0,486.6 764.0,503.9" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>ir_builder â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/emit_metal.html" href="workloads/emit_metal.html" target="_top"><text x="68" y="836" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">emit_metal<tspan fill="#888" font-weight="400" text-decoration="none">  1.00Ã—</tspan></text></a>
+<polygon points="764.0,752.7 970.7,752.5 1177.3,751.0 1384.0,751.1 1384.0,764.0 1177.3,764.0 970.7,764.0 764.0,764.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>ir_builder â€” frontEndExecute</title></polygon>
+<polygon points="764.0,557.6 970.7,548.3 1177.3,503.9 1384.0,486.6 1384.0,751.1 1177.3,751.0 970.7,752.5 764.0,752.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>ir_builder â€” generateOutput</title></polygon>
+<polygon points="764.0,557.5 970.7,548.3 1177.3,503.6 1384.0,486.2 1384.0,486.6 1177.3,503.9 970.7,548.3 764.0,557.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>ir_builder â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/emit_metal.html" href="workloads/emit_metal.html" target="_top"><text x="68" y="836" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">emit_metal<tspan fill="#888" font-weight="400" text-decoration="none">  1.52Ã—</tspan></text></a>
 <line x1="68.0" y1="1152.0" x2="688.0" y2="1152.0" stroke="#eee"/>
 <text x="64.0" y="1155.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="1002.0" x2="688.0" y2="1002.0" stroke="#eee"/>
@@ -90,13 +106,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="68.0" y1="852.0" x2="68.0" y2="1152.0" stroke="#333"/>
 <line x1="68.0" y1="1152.0" x2="688.0" y2="1152.0" stroke="#333"/>
 <line x1="68.0" y1="1152.0" x2="68.0" y2="1155.0" stroke="#999"/>
-<text x="68.0" y="1167.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 1167.0)">26.7</text>
+<text x="68.0" y="1167.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 1167.0)">26.4</text>
+<line x1="274.7" y1="1152.0" x2="274.7" y2="1155.0" stroke="#999"/>
+<text x="274.7" y="1167.0" text-anchor="end" fill="#666" transform="rotate(-50 274.7 1167.0)">26.5</text>
+<line x1="481.3" y1="1152.0" x2="481.3" y2="1155.0" stroke="#999"/>
+<text x="481.3" y="1167.0" text-anchor="end" fill="#666" transform="rotate(-50 481.3 1167.0)">26.7</text>
 <line x1="688.0" y1="1152.0" x2="688.0" y2="1155.0" stroke="#999"/>
 <text x="688.0" y="1167.0" text-anchor="end" fill="#666" transform="rotate(-50 688.0 1167.0)">26.8</text>
-<polygon points="68.0,1130.5 688.0,1130.3 688.0,1152.0 68.0,1152.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_metal â€” frontEndExecute</title></polygon>
-<polygon points="68.0,874.8 688.0,874.2 688.0,1130.3 68.0,1130.5" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_metal â€” generateOutput</title></polygon>
-<polygon points="68.0,874.7 688.0,874.2 688.0,874.2 68.0,874.8" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_metal â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/sema_generics.html" href="workloads/sema_generics.html" target="_top"><text x="764" y="836" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">sema_generics<tspan fill="#888" font-weight="400" text-decoration="none">  1.01Ã—</tspan></text></a>
+<polygon points="68.0,1134.5 274.7,1134.4 481.3,1130.5 688.0,1130.3 688.0,1152.0 481.3,1152.0 274.7,1152.0 68.0,1152.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_metal â€” frontEndExecute</title></polygon>
+<polygon points="68.0,969.6 274.7,967.7 481.3,874.8 688.0,874.2 688.0,1130.3 481.3,1130.5 274.7,1134.4 68.0,1134.5" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_metal â€” generateOutput</title></polygon>
+<polygon points="68.0,969.2 274.7,967.7 481.3,874.7 688.0,874.2 688.0,874.2 481.3,874.8 274.7,967.7 68.0,969.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_metal â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/sema_generics.html" href="workloads/sema_generics.html" target="_top"><text x="764" y="836" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">sema_generics<tspan fill="#888" font-weight="400" text-decoration="none">  1.20Ã—</tspan></text></a>
 <line x1="764.0" y1="1152.0" x2="1384.0" y2="1152.0" stroke="#eee"/>
 <text x="760.0" y="1155.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="764.0" y1="1002.0" x2="1384.0" y2="1002.0" stroke="#eee"/>
@@ -106,13 +126,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="764.0" y1="852.0" x2="764.0" y2="1152.0" stroke="#333"/>
 <line x1="764.0" y1="1152.0" x2="1384.0" y2="1152.0" stroke="#333"/>
 <line x1="764.0" y1="1152.0" x2="764.0" y2="1155.0" stroke="#999"/>
-<text x="764.0" y="1167.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 1167.0)">26.7</text>
+<text x="764.0" y="1167.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 1167.0)">26.4</text>
+<line x1="970.7" y1="1152.0" x2="970.7" y2="1155.0" stroke="#999"/>
+<text x="970.7" y="1167.0" text-anchor="end" fill="#666" transform="rotate(-50 970.7 1167.0)">26.5</text>
+<line x1="1177.3" y1="1152.0" x2="1177.3" y2="1155.0" stroke="#999"/>
+<text x="1177.3" y="1167.0" text-anchor="end" fill="#666" transform="rotate(-50 1177.3 1167.0)">26.7</text>
 <line x1="1384.0" y1="1152.0" x2="1384.0" y2="1155.0" stroke="#999"/>
 <text x="1384.0" y="1167.0" text-anchor="end" fill="#666" transform="rotate(-50 1384.0 1167.0)">26.8</text>
-<polygon points="764.0,884.9 1384.0,882.8 1384.0,1152.0 764.0,1152.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>sema_generics â€” frontEndExecute</title></polygon>
-<polygon points="764.0,876.3 1384.0,874.2 1384.0,882.8 764.0,884.9" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>sema_generics â€” generateOutput</title></polygon>
-<polygon points="764.0,876.2 1384.0,874.2 1384.0,874.2 764.0,876.3" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>sema_generics â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/codegen_spirv.html" href="workloads/codegen_spirv.html" target="_top"><text x="68" y="1224" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">codegen_spirv<tspan fill="#888" font-weight="400" text-decoration="none">  1.01Ã—</tspan></text></a>
+<polygon points="764.0,929.7 970.7,920.1 1177.3,884.9 1384.0,882.8 1384.0,1152.0 1177.3,1152.0 970.7,1152.0 764.0,1152.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>sema_generics â€” frontEndExecute</title></polygon>
+<polygon points="764.0,920.9 970.7,911.0 1177.3,876.3 1384.0,874.2 1384.0,882.8 1177.3,884.9 970.7,920.1 764.0,929.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>sema_generics â€” generateOutput</title></polygon>
+<polygon points="764.0,920.9 970.7,911.0 1177.3,876.2 1384.0,874.2 1384.0,874.2 1177.3,876.3 970.7,911.0 764.0,920.9" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>sema_generics â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/codegen_spirv.html" href="workloads/codegen_spirv.html" target="_top"><text x="68" y="1224" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">codegen_spirv<tspan fill="#888" font-weight="400" text-decoration="none">  1.31Ã—</tspan></text></a>
 <line x1="68.0" y1="1540.0" x2="688.0" y2="1540.0" stroke="#eee"/>
 <text x="64.0" y="1543.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="1390.0" x2="688.0" y2="1390.0" stroke="#eee"/>
@@ -122,13 +146,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="68.0" y1="1240.0" x2="68.0" y2="1540.0" stroke="#333"/>
 <line x1="68.0" y1="1540.0" x2="688.0" y2="1540.0" stroke="#333"/>
 <line x1="68.0" y1="1540.0" x2="68.0" y2="1543.0" stroke="#999"/>
-<text x="68.0" y="1555.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 1555.0)">26.7</text>
+<text x="68.0" y="1555.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 1555.0)">26.4</text>
+<line x1="274.7" y1="1540.0" x2="274.7" y2="1543.0" stroke="#999"/>
+<text x="274.7" y="1555.0" text-anchor="end" fill="#666" transform="rotate(-50 274.7 1555.0)">26.5</text>
+<line x1="481.3" y1="1540.0" x2="481.3" y2="1543.0" stroke="#999"/>
+<text x="481.3" y="1555.0" text-anchor="end" fill="#666" transform="rotate(-50 481.3 1555.0)">26.7</text>
 <line x1="688.0" y1="1540.0" x2="688.0" y2="1543.0" stroke="#999"/>
 <text x="688.0" y="1555.0" text-anchor="end" fill="#666" transform="rotate(-50 688.0 1555.0)">26.8</text>
-<polygon points="68.0,1515.7 688.0,1515.6 688.0,1540.0 68.0,1540.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv â€” frontEndExecute</title></polygon>
-<polygon points="68.0,1265.0 688.0,1262.3 688.0,1515.6 68.0,1515.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv â€” generateOutput</title></polygon>
-<polygon points="68.0,1265.0 688.0,1262.2 688.0,1262.3 68.0,1265.0" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/emit_wgsl.html" href="workloads/emit_wgsl.html" target="_top"><text x="764" y="1224" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">emit_wgsl<tspan fill="#888" font-weight="400" text-decoration="none">  1.01Ã—</tspan></text></a>
+<polygon points="68.0,1519.8 274.7,1520.2 481.3,1515.7 688.0,1515.6 688.0,1540.0 481.3,1540.0 274.7,1540.0 68.0,1540.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv â€” frontEndExecute</title></polygon>
+<polygon points="68.0,1328.4 274.7,1330.5 481.3,1265.0 688.0,1262.3 688.0,1515.6 481.3,1515.7 274.7,1520.2 68.0,1519.8" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv â€” generateOutput</title></polygon>
+<polygon points="68.0,1328.4 274.7,1330.5 481.3,1265.0 688.0,1262.2 688.0,1262.3 481.3,1265.0 274.7,1330.5 68.0,1328.4" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/emit_wgsl.html" href="workloads/emit_wgsl.html" target="_top"><text x="764" y="1224" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">emit_wgsl<tspan fill="#888" font-weight="400" text-decoration="none">  1.72Ã—</tspan></text></a>
 <line x1="764.0" y1="1540.0" x2="1384.0" y2="1540.0" stroke="#eee"/>
 <text x="760.0" y="1543.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="764.0" y1="1390.0" x2="1384.0" y2="1390.0" stroke="#eee"/>
@@ -138,13 +166,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="764.0" y1="1240.0" x2="764.0" y2="1540.0" stroke="#333"/>
 <line x1="764.0" y1="1540.0" x2="1384.0" y2="1540.0" stroke="#333"/>
 <line x1="764.0" y1="1540.0" x2="764.0" y2="1543.0" stroke="#999"/>
-<text x="764.0" y="1555.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 1555.0)">26.7</text>
+<text x="764.0" y="1555.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 1555.0)">26.4</text>
+<line x1="970.7" y1="1540.0" x2="970.7" y2="1543.0" stroke="#999"/>
+<text x="970.7" y="1555.0" text-anchor="end" fill="#666" transform="rotate(-50 970.7 1555.0)">26.5</text>
+<line x1="1177.3" y1="1540.0" x2="1177.3" y2="1543.0" stroke="#999"/>
+<text x="1177.3" y="1555.0" text-anchor="end" fill="#666" transform="rotate(-50 1177.3 1555.0)">26.7</text>
 <line x1="1384.0" y1="1540.0" x2="1384.0" y2="1543.0" stroke="#999"/>
 <text x="1384.0" y="1555.0" text-anchor="end" fill="#666" transform="rotate(-50 1384.0 1555.0)">26.8</text>
-<polygon points="764.0,1513.7 1384.0,1513.7 1384.0,1540.0 764.0,1540.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_wgsl â€” frontEndExecute</title></polygon>
-<polygon points="764.0,1265.7 1384.0,1262.5 1384.0,1513.7 764.0,1513.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_wgsl â€” generateOutput</title></polygon>
-<polygon points="764.0,1265.4 1384.0,1262.2 1384.0,1262.5 764.0,1265.7" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_wgsl â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/inlining.html" href="workloads/inlining.html" target="_top"><text x="68" y="1612" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">inlining<tspan fill="#888" font-weight="400" text-decoration="none">  1.01Ã—</tspan></text></a>
+<polygon points="764.0,1518.8 970.7,1518.6 1177.3,1513.7 1384.0,1513.7 1384.0,1540.0 1177.3,1540.0 970.7,1540.0 764.0,1540.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_wgsl â€” frontEndExecute</title></polygon>
+<polygon points="764.0,1379.4 970.7,1382.0 1177.3,1265.7 1384.0,1262.5 1384.0,1513.7 1177.3,1513.7 970.7,1518.6 764.0,1518.8" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_wgsl â€” generateOutput</title></polygon>
+<polygon points="764.0,1378.5 970.7,1382.0 1177.3,1265.4 1384.0,1262.2 1384.0,1262.5 1177.3,1265.7 970.7,1382.0 764.0,1379.4" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_wgsl â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/inlining.html" href="workloads/inlining.html" target="_top"><text x="68" y="1612" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">inlining<tspan fill="#888" font-weight="400" text-decoration="none">  5.21Ã—</tspan></text></a>
 <line x1="68.0" y1="1928.0" x2="688.0" y2="1928.0" stroke="#eee"/>
 <text x="64.0" y="1931.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="1778.0" x2="688.0" y2="1778.0" stroke="#eee"/>
@@ -154,13 +186,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="68.0" y1="1628.0" x2="68.0" y2="1928.0" stroke="#333"/>
 <line x1="68.0" y1="1928.0" x2="688.0" y2="1928.0" stroke="#333"/>
 <line x1="68.0" y1="1928.0" x2="68.0" y2="1931.0" stroke="#999"/>
-<text x="68.0" y="1943.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 1943.0)">26.7</text>
+<text x="68.0" y="1943.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 1943.0)">26.4</text>
+<line x1="274.7" y1="1928.0" x2="274.7" y2="1931.0" stroke="#999"/>
+<text x="274.7" y="1943.0" text-anchor="end" fill="#666" transform="rotate(-50 274.7 1943.0)">26.5</text>
+<line x1="481.3" y1="1928.0" x2="481.3" y2="1931.0" stroke="#999"/>
+<text x="481.3" y="1943.0" text-anchor="end" fill="#666" transform="rotate(-50 481.3 1943.0)">26.7</text>
 <line x1="688.0" y1="1928.0" x2="688.0" y2="1931.0" stroke="#999"/>
 <text x="688.0" y="1943.0" text-anchor="end" fill="#666" transform="rotate(-50 688.0 1943.0)">26.8</text>
-<polygon points="68.0,1885.3 688.0,1885.0 688.0,1928.0 68.0,1928.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining â€” frontEndExecute</title></polygon>
-<polygon points="68.0,1652.6 688.0,1650.5 688.0,1885.0 68.0,1885.3" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining â€” generateOutput</title></polygon>
-<polygon points="68.0,1652.1 688.0,1650.2 688.0,1650.5 68.0,1652.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/loop_unroll.html" href="workloads/loop_unroll.html" target="_top"><text x="764" y="1612" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">loop_unroll<tspan fill="#888" font-weight="400" text-decoration="none">  1.01Ã—</tspan></text></a>
+<polygon points="68.0,1894.2 274.7,1894.0 481.3,1885.3 688.0,1885.0 688.0,1928.0 481.3,1928.0 274.7,1928.0 68.0,1928.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining â€” frontEndExecute</title></polygon>
+<polygon points="68.0,1875.0 274.7,1874.7 481.3,1652.6 688.0,1650.5 688.0,1885.0 481.3,1885.3 274.7,1894.0 68.0,1894.2" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining â€” generateOutput</title></polygon>
+<polygon points="68.0,1874.7 274.7,1874.6 481.3,1652.1 688.0,1650.2 688.0,1650.5 481.3,1652.6 274.7,1874.7 68.0,1875.0" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/loop_unroll.html" href="workloads/loop_unroll.html" target="_top"><text x="764" y="1612" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">loop_unroll<tspan fill="#888" font-weight="400" text-decoration="none">  1.13Ã—</tspan></text></a>
 <line x1="764.0" y1="1928.0" x2="1384.0" y2="1928.0" stroke="#eee"/>
 <text x="760.0" y="1931.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="764.0" y1="1778.0" x2="1384.0" y2="1778.0" stroke="#eee"/>
@@ -170,12 +206,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="764.0" y1="1628.0" x2="764.0" y2="1928.0" stroke="#333"/>
 <line x1="764.0" y1="1928.0" x2="1384.0" y2="1928.0" stroke="#333"/>
 <line x1="764.0" y1="1928.0" x2="764.0" y2="1931.0" stroke="#999"/>
-<text x="764.0" y="1943.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 1943.0)">26.7</text>
+<text x="764.0" y="1943.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 1943.0)">26.4</text>
+<line x1="970.7" y1="1928.0" x2="970.7" y2="1931.0" stroke="#999"/>
+<text x="970.7" y="1943.0" text-anchor="end" fill="#666" transform="rotate(-50 970.7 1943.0)">26.5</text>
+<line x1="1177.3" y1="1928.0" x2="1177.3" y2="1931.0" stroke="#999"/>
+<text x="1177.3" y="1943.0" text-anchor="end" fill="#666" transform="rotate(-50 1177.3 1943.0)">26.7</text>
 <line x1="1384.0" y1="1928.0" x2="1384.0" y2="1931.0" stroke="#999"/>
 <text x="1384.0" y="1943.0" text-anchor="end" fill="#666" transform="rotate(-50 1384.0 1943.0)">26.8</text>
-<polygon points="764.0,1907.5 1384.0,1907.2 1384.0,1928.0 764.0,1928.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>loop_unroll â€” frontEndExecute</title></polygon>
-<polygon points="764.0,1653.5 1384.0,1650.2 1384.0,1907.2 764.0,1907.5" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>loop_unroll â€” generateOutput</title></polygon>
-<a xlink:href="workloads/operator_typecheck.html" href="workloads/operator_typecheck.html" target="_top"><text x="68" y="2000" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">operator_typecheck<tspan fill="#888" font-weight="400" text-decoration="none">  1.01Ã—</tspan></text></a>
+<polygon points="764.0,1916.2 970.7,1915.9 1177.3,1907.5 1384.0,1907.2 1384.0,1928.0 1177.3,1928.0 970.7,1928.0 764.0,1928.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>loop_unroll â€” frontEndExecute</title></polygon>
+<polygon points="764.0,1682.4 970.7,1671.1 1177.3,1653.5 1384.0,1650.2 1384.0,1907.2 1177.3,1907.5 970.7,1915.9 764.0,1916.2" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>loop_unroll â€” generateOutput</title></polygon>
+<polygon points="764.0,1682.4 970.7,1671.0 1177.3,1653.5 1384.0,1650.2 1384.0,1650.2 1177.3,1653.5 970.7,1671.1 764.0,1682.4" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>loop_unroll â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/operator_typecheck.html" href="workloads/operator_typecheck.html" target="_top"><text x="68" y="2000" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">operator_typecheck<tspan fill="#888" font-weight="400" text-decoration="none">  1.07Ã—</tspan></text></a>
 <line x1="68.0" y1="2316.0" x2="688.0" y2="2316.0" stroke="#eee"/>
 <text x="64.0" y="2319.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="2166.0" x2="688.0" y2="2166.0" stroke="#eee"/>
@@ -185,13 +226,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="68.0" y1="2016.0" x2="68.0" y2="2316.0" stroke="#333"/>
 <line x1="68.0" y1="2316.0" x2="688.0" y2="2316.0" stroke="#333"/>
 <line x1="68.0" y1="2316.0" x2="68.0" y2="2319.0" stroke="#999"/>
-<text x="68.0" y="2331.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 2331.0)">26.7</text>
+<text x="68.0" y="2331.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 2331.0)">26.4</text>
+<line x1="274.7" y1="2316.0" x2="274.7" y2="2319.0" stroke="#999"/>
+<text x="274.7" y="2331.0" text-anchor="end" fill="#666" transform="rotate(-50 274.7 2331.0)">26.5</text>
+<line x1="481.3" y1="2316.0" x2="481.3" y2="2319.0" stroke="#999"/>
+<text x="481.3" y="2331.0" text-anchor="end" fill="#666" transform="rotate(-50 481.3 2331.0)">26.7</text>
 <line x1="688.0" y1="2316.0" x2="688.0" y2="2319.0" stroke="#999"/>
 <text x="688.0" y="2331.0" text-anchor="end" fill="#666" transform="rotate(-50 688.0 2331.0)">26.8</text>
-<polygon points="68.0,2053.9 688.0,2050.6 688.0,2316.0 68.0,2316.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>operator_typecheck â€” frontEndExecute</title></polygon>
-<polygon points="68.0,2041.7 688.0,2038.2 688.0,2050.6 68.0,2053.9" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>operator_typecheck â€” generateOutput</title></polygon>
-<polygon points="68.0,2041.6 688.0,2038.2 688.0,2038.2 68.0,2041.7" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>operator_typecheck â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/dynamic_dispatch.html" href="workloads/dynamic_dispatch.html" target="_top"><text x="764" y="2000" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">dynamic_dispatch<tspan fill="#888" font-weight="400" text-decoration="none">  1.00Ã—</tspan></text></a>
+<polygon points="68.0,2067.9 274.7,2061.4 481.3,2053.9 688.0,2050.6 688.0,2316.0 481.3,2316.0 274.7,2316.0 68.0,2316.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>operator_typecheck â€” frontEndExecute</title></polygon>
+<polygon points="68.0,2055.5 274.7,2048.8 481.3,2041.7 688.0,2038.2 688.0,2050.6 481.3,2053.9 274.7,2061.4 68.0,2067.9" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>operator_typecheck â€” generateOutput</title></polygon>
+<polygon points="68.0,2055.5 274.7,2048.8 481.3,2041.6 688.0,2038.2 688.0,2038.2 481.3,2041.7 274.7,2048.8 68.0,2055.5" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>operator_typecheck â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/dynamic_dispatch.html" href="workloads/dynamic_dispatch.html" target="_top"><text x="764" y="2000" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">dynamic_dispatch<tspan fill="#888" font-weight="400" text-decoration="none">  2.33Ã—</tspan></text></a>
 <line x1="764.0" y1="2316.0" x2="1384.0" y2="2316.0" stroke="#eee"/>
 <text x="760.0" y="2319.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="764.0" y1="2166.0" x2="1384.0" y2="2166.0" stroke="#eee"/>
@@ -201,13 +246,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="764.0" y1="2016.0" x2="764.0" y2="2316.0" stroke="#333"/>
 <line x1="764.0" y1="2316.0" x2="1384.0" y2="2316.0" stroke="#333"/>
 <line x1="764.0" y1="2316.0" x2="764.0" y2="2319.0" stroke="#999"/>
-<text x="764.0" y="2331.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 2331.0)">26.7</text>
+<text x="764.0" y="2331.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 2331.0)">26.4</text>
+<line x1="970.7" y1="2316.0" x2="970.7" y2="2319.0" stroke="#999"/>
+<text x="970.7" y="2331.0" text-anchor="end" fill="#666" transform="rotate(-50 970.7 2331.0)">26.5</text>
+<line x1="1177.3" y1="2316.0" x2="1177.3" y2="2319.0" stroke="#999"/>
+<text x="1177.3" y="2331.0" text-anchor="end" fill="#666" transform="rotate(-50 1177.3 2331.0)">26.7</text>
 <line x1="1384.0" y1="2316.0" x2="1384.0" y2="2319.0" stroke="#999"/>
 <text x="1384.0" y="2331.0" text-anchor="end" fill="#666" transform="rotate(-50 1384.0 2331.0)">26.8</text>
-<polygon points="764.0,2274.6 1384.0,2274.8 1384.0,2316.0 764.0,2316.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch â€” frontEndExecute</title></polygon>
-<polygon points="764.0,2039.0 1384.0,2038.6 1384.0,2274.8 764.0,2274.6" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch â€” generateOutput</title></polygon>
-<polygon points="764.0,2038.3 1384.0,2038.2 1384.0,2038.6 764.0,2039.0" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/specialization.html" href="workloads/specialization.html" target="_top"><text x="68" y="2388" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">specialization<tspan fill="#888" font-weight="400" text-decoration="none">  0.99Ã—</tspan></text></a>
+<polygon points="764.0,2286.1 970.7,2285.8 1177.3,2274.6 1384.0,2274.8 1384.0,2316.0 1177.3,2316.0 970.7,2316.0 764.0,2316.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch â€” frontEndExecute</title></polygon>
+<polygon points="764.0,2197.2 970.7,2196.8 1177.3,2039.0 1384.0,2038.6 1384.0,2274.8 1177.3,2274.6 970.7,2285.8 764.0,2286.1" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch â€” generateOutput</title></polygon>
+<polygon points="764.0,2197.0 970.7,2196.8 1177.3,2038.3 1384.0,2038.2 1384.0,2038.6 1177.3,2039.0 970.7,2196.8 764.0,2197.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/specialization.html" href="workloads/specialization.html" target="_top"><text x="68" y="2388" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">specialization<tspan fill="#888" font-weight="400" text-decoration="none">  1.38Ã—</tspan></text></a>
 <line x1="68.0" y1="2704.0" x2="688.0" y2="2704.0" stroke="#eee"/>
 <text x="64.0" y="2707.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="2554.0" x2="688.0" y2="2554.0" stroke="#eee"/>
@@ -217,13 +266,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="68.0" y1="2404.0" x2="68.0" y2="2704.0" stroke="#333"/>
 <line x1="68.0" y1="2704.0" x2="688.0" y2="2704.0" stroke="#333"/>
 <line x1="68.0" y1="2704.0" x2="68.0" y2="2707.0" stroke="#999"/>
-<text x="68.0" y="2719.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 2719.0)">26.7</text>
+<text x="68.0" y="2719.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 2719.0)">26.4</text>
+<line x1="274.7" y1="2704.0" x2="274.7" y2="2707.0" stroke="#999"/>
+<text x="274.7" y="2719.0" text-anchor="end" fill="#666" transform="rotate(-50 274.7 2719.0)">26.5</text>
+<line x1="481.3" y1="2704.0" x2="481.3" y2="2707.0" stroke="#999"/>
+<text x="481.3" y="2719.0" text-anchor="end" fill="#666" transform="rotate(-50 481.3 2719.0)">26.7</text>
 <line x1="688.0" y1="2704.0" x2="688.0" y2="2707.0" stroke="#999"/>
 <text x="688.0" y="2719.0" text-anchor="end" fill="#666" transform="rotate(-50 688.0 2719.0)">26.8</text>
-<polygon points="68.0,2655.5 688.0,2655.5 688.0,2704.0 68.0,2704.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization â€” frontEndExecute</title></polygon>
-<polygon points="68.0,2426.7 688.0,2427.9 688.0,2655.5 68.0,2655.5" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization â€” generateOutput</title></polygon>
-<polygon points="68.0,2426.2 688.0,2427.8 688.0,2427.9 68.0,2426.7" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/complexity_ladder.html" href="workloads/complexity_ladder.html" target="_top"><text x="764" y="2388" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">complexity_ladder<tspan fill="#888" font-weight="400" text-decoration="none">  1.00Ã—</tspan></text></a>
+<polygon points="68.0,2667.3 274.7,2667.5 481.3,2655.5 688.0,2655.5 688.0,2704.0 481.3,2704.0 274.7,2704.0 68.0,2704.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization â€” frontEndExecute</title></polygon>
+<polygon points="68.0,2503.4 274.7,2503.1 481.3,2426.7 688.0,2427.9 688.0,2655.5 481.3,2655.5 274.7,2667.5 68.0,2667.3" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization â€” generateOutput</title></polygon>
+<polygon points="68.0,2503.4 274.7,2502.9 481.3,2426.2 688.0,2427.8 688.0,2427.9 481.3,2426.7 274.7,2503.1 68.0,2503.4" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/complexity_ladder.html" href="workloads/complexity_ladder.html" target="_top"><text x="764" y="2388" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">complexity_ladder<tspan fill="#888" font-weight="400" text-decoration="none">  1.29Ã—</tspan></text></a>
 <line x1="764.0" y1="2704.0" x2="1384.0" y2="2704.0" stroke="#eee"/>
 <text x="760.0" y="2707.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="764.0" y1="2554.0" x2="1384.0" y2="2554.0" stroke="#eee"/>
@@ -233,13 +286,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="764.0" y1="2404.0" x2="764.0" y2="2704.0" stroke="#333"/>
 <line x1="764.0" y1="2704.0" x2="1384.0" y2="2704.0" stroke="#333"/>
 <line x1="764.0" y1="2704.0" x2="764.0" y2="2707.0" stroke="#999"/>
-<text x="764.0" y="2719.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 2719.0)">26.7</text>
+<text x="764.0" y="2719.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 2719.0)">26.4</text>
+<line x1="970.7" y1="2704.0" x2="970.7" y2="2707.0" stroke="#999"/>
+<text x="970.7" y="2719.0" text-anchor="end" fill="#666" transform="rotate(-50 970.7 2719.0)">26.5</text>
+<line x1="1177.3" y1="2704.0" x2="1177.3" y2="2707.0" stroke="#999"/>
+<text x="1177.3" y="2719.0" text-anchor="end" fill="#666" transform="rotate(-50 1177.3 2719.0)">26.7</text>
 <line x1="1384.0" y1="2704.0" x2="1384.0" y2="2707.0" stroke="#999"/>
 <text x="1384.0" y="2719.0" text-anchor="end" fill="#666" transform="rotate(-50 1384.0 2719.0)">26.8</text>
-<polygon points="764.0,2604.6 1384.0,2604.6 1384.0,2704.0 764.0,2704.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>complexity_ladder â€” frontEndExecute</title></polygon>
-<polygon points="764.0,2426.2 1384.0,2427.3 1384.0,2604.6 764.0,2604.6" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>complexity_ladder â€” generateOutput</title></polygon>
-<polygon points="764.0,2426.2 1384.0,2427.0 1384.0,2427.3 764.0,2426.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>complexity_ladder â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/control_flow_ssa.html" href="workloads/control_flow_ssa.html" target="_top"><text x="68" y="2776" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">control_flow_ssa<tspan fill="#888" font-weight="400" text-decoration="none">  1.01Ã—</tspan></text></a>
+<polygon points="764.0,2627.7 970.7,2628.2 1177.3,2604.6 1384.0,2604.6 1384.0,2704.0 1177.3,2704.0 970.7,2704.0 764.0,2704.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>complexity_ladder â€” frontEndExecute</title></polygon>
+<polygon points="764.0,2488.8 970.7,2490.5 1177.3,2426.2 1384.0,2427.3 1384.0,2604.6 1177.3,2604.6 970.7,2628.2 764.0,2627.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>complexity_ladder â€” generateOutput</title></polygon>
+<polygon points="764.0,2488.6 970.7,2490.5 1177.3,2426.2 1384.0,2427.0 1384.0,2427.3 1177.3,2426.2 970.7,2490.5 764.0,2488.8" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>complexity_ladder â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/control_flow_ssa.html" href="workloads/control_flow_ssa.html" target="_top"><text x="68" y="2776" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">control_flow_ssa<tspan fill="#888" font-weight="400" text-decoration="none">  1.19Ã—</tspan></text></a>
 <line x1="68.0" y1="3092.0" x2="688.0" y2="3092.0" stroke="#eee"/>
 <text x="64.0" y="3095.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="2942.0" x2="688.0" y2="2942.0" stroke="#eee"/>
@@ -249,13 +306,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="68.0" y1="2792.0" x2="68.0" y2="3092.0" stroke="#333"/>
 <line x1="68.0" y1="3092.0" x2="688.0" y2="3092.0" stroke="#333"/>
 <line x1="68.0" y1="3092.0" x2="68.0" y2="3095.0" stroke="#999"/>
-<text x="68.0" y="3107.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 3107.0)">26.7</text>
+<text x="68.0" y="3107.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 3107.0)">26.4</text>
+<line x1="274.7" y1="3092.0" x2="274.7" y2="3095.0" stroke="#999"/>
+<text x="274.7" y="3107.0" text-anchor="end" fill="#666" transform="rotate(-50 274.7 3107.0)">26.5</text>
+<line x1="481.3" y1="3092.0" x2="481.3" y2="3095.0" stroke="#999"/>
+<text x="481.3" y="3107.0" text-anchor="end" fill="#666" transform="rotate(-50 481.3 3107.0)">26.7</text>
 <line x1="688.0" y1="3092.0" x2="688.0" y2="3095.0" stroke="#999"/>
 <text x="688.0" y="3107.0" text-anchor="end" fill="#666" transform="rotate(-50 688.0 3107.0)">26.8</text>
-<polygon points="68.0,2991.9 688.0,2991.2 688.0,3092.0 68.0,3092.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” frontEndExecute</title></polygon>
-<polygon points="68.0,2816.6 688.0,2814.8 688.0,2991.2 68.0,2991.9" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” generateOutput</title></polygon>
-<polygon points="68.0,2816.4 688.0,2814.2 688.0,2814.8 68.0,2816.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/reflection_layout.html" href="workloads/reflection_layout.html" target="_top"><text x="764" y="2776" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">reflection_layout<tspan fill="#888" font-weight="400" text-decoration="none">  1.00Ã—</tspan></text></a>
+<polygon points="68.0,3012.6 274.7,3011.1 481.3,2991.9 688.0,2991.2 688.0,3092.0 481.3,3092.0 274.7,3092.0 68.0,3092.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” frontEndExecute</title></polygon>
+<polygon points="68.0,2858.8 274.7,2855.8 481.3,2816.6 688.0,2814.8 688.0,2991.2 481.3,2991.9 274.7,3011.1 68.0,3012.6" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” generateOutput</title></polygon>
+<polygon points="68.0,2858.5 274.7,2855.8 481.3,2816.4 688.0,2814.2 688.0,2814.8 481.3,2816.6 274.7,2855.8 68.0,2858.8" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/reflection_layout.html" href="workloads/reflection_layout.html" target="_top"><text x="764" y="2776" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">reflection_layout<tspan fill="#888" font-weight="400" text-decoration="none">  1.13Ã—</tspan></text></a>
 <line x1="764.0" y1="3092.0" x2="1384.0" y2="3092.0" stroke="#eee"/>
 <text x="760.0" y="3095.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="764.0" y1="2942.0" x2="1384.0" y2="2942.0" stroke="#eee"/>
@@ -265,13 +326,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="764.0" y1="2792.0" x2="764.0" y2="3092.0" stroke="#333"/>
 <line x1="764.0" y1="3092.0" x2="1384.0" y2="3092.0" stroke="#333"/>
 <line x1="764.0" y1="3092.0" x2="764.0" y2="3095.0" stroke="#999"/>
-<text x="764.0" y="3107.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 3107.0)">26.7</text>
+<text x="764.0" y="3107.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 3107.0)">26.4</text>
+<line x1="970.7" y1="3092.0" x2="970.7" y2="3095.0" stroke="#999"/>
+<text x="970.7" y="3107.0" text-anchor="end" fill="#666" transform="rotate(-50 970.7 3107.0)">26.5</text>
+<line x1="1177.3" y1="3092.0" x2="1177.3" y2="3095.0" stroke="#999"/>
+<text x="1177.3" y="3107.0" text-anchor="end" fill="#666" transform="rotate(-50 1177.3 3107.0)">26.7</text>
 <line x1="1384.0" y1="3092.0" x2="1384.0" y2="3095.0" stroke="#999"/>
 <text x="1384.0" y="3107.0" text-anchor="end" fill="#666" transform="rotate(-50 1384.0 3107.0)">26.8</text>
-<polygon points="764.0,2971.7 1384.0,2971.7 1384.0,3092.0 764.0,3092.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout â€” frontEndExecute</title></polygon>
-<polygon points="764.0,2822.1 1384.0,2822.3 1384.0,2971.7 764.0,2971.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout â€” generateOutput</title></polygon>
-<polygon points="764.0,2814.2 1384.0,2814.9 1384.0,2822.3 764.0,2822.1" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/serialize.html" href="workloads/serialize.html" target="_top"><text x="68" y="3164" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">serialize<tspan fill="#888" font-weight="400" text-decoration="none">  1.01Ã—</tspan></text></a>
+<polygon points="764.0,2966.5 970.7,2967.4 1177.3,2971.7 1384.0,2971.7 1384.0,3092.0 1177.3,3092.0 970.7,3092.0 764.0,3092.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout â€” frontEndExecute</title></polygon>
+<polygon points="764.0,2854.9 970.7,2858.0 1177.3,2822.1 1384.0,2822.3 1384.0,2971.7 1177.3,2971.7 970.7,2967.4 764.0,2966.5" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout â€” generateOutput</title></polygon>
+<polygon points="764.0,2847.4 970.7,2850.6 1177.3,2814.2 1384.0,2814.9 1384.0,2822.3 1177.3,2822.1 970.7,2858.0 764.0,2854.9" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/serialize.html" href="workloads/serialize.html" target="_top"><text x="68" y="3164" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">serialize<tspan fill="#888" font-weight="400" text-decoration="none">  1.19Ã—</tspan></text></a>
 <line x1="68.0" y1="3480.0" x2="688.0" y2="3480.0" stroke="#eee"/>
 <text x="64.0" y="3483.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="3330.0" x2="688.0" y2="3330.0" stroke="#eee"/>
@@ -281,12 +346,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="68.0" y1="3180.0" x2="68.0" y2="3480.0" stroke="#333"/>
 <line x1="68.0" y1="3480.0" x2="688.0" y2="3480.0" stroke="#333"/>
 <line x1="68.0" y1="3480.0" x2="68.0" y2="3483.0" stroke="#999"/>
-<text x="68.0" y="3495.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 3495.0)">26.7</text>
+<text x="68.0" y="3495.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 3495.0)">26.4</text>
+<line x1="274.7" y1="3480.0" x2="274.7" y2="3483.0" stroke="#999"/>
+<text x="274.7" y="3495.0" text-anchor="end" fill="#666" transform="rotate(-50 274.7 3495.0)">26.5</text>
+<line x1="481.3" y1="3480.0" x2="481.3" y2="3483.0" stroke="#999"/>
+<text x="481.3" y="3495.0" text-anchor="end" fill="#666" transform="rotate(-50 481.3 3495.0)">26.7</text>
 <line x1="688.0" y1="3480.0" x2="688.0" y2="3483.0" stroke="#999"/>
 <text x="688.0" y="3495.0" text-anchor="end" fill="#666" transform="rotate(-50 688.0 3495.0)">26.8</text>
-<polygon points="68.0,3227.2 688.0,3225.2 688.0,3480.0 68.0,3480.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>serialize â€” frontEndExecute</title></polygon>
-<polygon points="68.0,3203.9 688.0,3202.2 688.0,3225.2 68.0,3227.2" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>serialize â€” generateOutput</title></polygon>
-<a xlink:href="workloads/existential_aggregate.html" href="workloads/existential_aggregate.html" target="_top"><text x="764" y="3164" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">existential_aggregate<tspan fill="#888" font-weight="400" text-decoration="none">  1.01Ã—</tspan></text></a>
+<polygon points="68.0,3270.6 274.7,3268.6 481.3,3227.2 688.0,3225.2 688.0,3480.0 481.3,3480.0 274.7,3480.0 68.0,3480.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>serialize â€” frontEndExecute</title></polygon>
+<polygon points="68.0,3247.2 274.7,3245.6 481.3,3203.9 688.0,3202.2 688.0,3225.2 481.3,3227.2 274.7,3268.6 68.0,3270.6" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>serialize â€” generateOutput</title></polygon>
+<polygon points="68.0,3247.1 274.7,3245.1 481.3,3203.9 688.0,3202.2 688.0,3202.2 481.3,3203.9 274.7,3245.6 68.0,3247.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>serialize â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/existential_aggregate.html" href="workloads/existential_aggregate.html" target="_top"><text x="764" y="3164" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">existential_aggregate<tspan fill="#888" font-weight="400" text-decoration="none">  1.93Ã—</tspan></text></a>
 <line x1="764.0" y1="3480.0" x2="1384.0" y2="3480.0" stroke="#eee"/>
 <text x="760.0" y="3483.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="764.0" y1="3330.0" x2="1384.0" y2="3330.0" stroke="#eee"/>
@@ -296,13 +366,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="764.0" y1="3180.0" x2="764.0" y2="3480.0" stroke="#333"/>
 <line x1="764.0" y1="3480.0" x2="1384.0" y2="3480.0" stroke="#333"/>
 <line x1="764.0" y1="3480.0" x2="764.0" y2="3483.0" stroke="#999"/>
-<text x="764.0" y="3495.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 3495.0)">26.7</text>
+<text x="764.0" y="3495.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 3495.0)">26.4</text>
+<line x1="970.7" y1="3480.0" x2="970.7" y2="3483.0" stroke="#999"/>
+<text x="970.7" y="3495.0" text-anchor="end" fill="#666" transform="rotate(-50 970.7 3495.0)">26.5</text>
+<line x1="1177.3" y1="3480.0" x2="1177.3" y2="3483.0" stroke="#999"/>
+<text x="1177.3" y="3495.0" text-anchor="end" fill="#666" transform="rotate(-50 1177.3 3495.0)">26.7</text>
 <line x1="1384.0" y1="3480.0" x2="1384.0" y2="3483.0" stroke="#999"/>
 <text x="1384.0" y="3495.0" text-anchor="end" fill="#666" transform="rotate(-50 1384.0 3495.0)">26.8</text>
-<polygon points="764.0,3407.8 1384.0,3407.8 1384.0,3480.0 764.0,3480.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate â€” frontEndExecute</title></polygon>
-<polygon points="764.0,3205.3 1384.0,3203.4 1384.0,3407.8 764.0,3407.8" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate â€” generateOutput</title></polygon>
-<polygon points="764.0,3204.4 1384.0,3202.2 1384.0,3203.4 764.0,3205.3" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/implicit_conversion.html" href="workloads/implicit_conversion.html" target="_top"><text x="68" y="3552" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">implicit_conversion<tspan fill="#888" font-weight="400" text-decoration="none">  1.02Ã—</tspan></text></a>
+<polygon points="764.0,3431.0 970.7,3430.5 1177.3,3407.8 1384.0,3407.8 1384.0,3480.0 1177.3,3480.0 970.7,3480.0 764.0,3480.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate â€” frontEndExecute</title></polygon>
+<polygon points="764.0,3336.0 970.7,3335.6 1177.3,3205.3 1384.0,3203.4 1384.0,3407.8 1177.3,3407.8 970.7,3430.5 764.0,3431.0" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate â€” generateOutput</title></polygon>
+<polygon points="764.0,3335.9 970.7,3335.0 1177.3,3204.4 1384.0,3202.2 1384.0,3203.4 1177.3,3205.3 970.7,3335.6 764.0,3336.0" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/implicit_conversion.html" href="workloads/implicit_conversion.html" target="_top"><text x="68" y="3552" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">implicit_conversion<tspan fill="#888" font-weight="400" text-decoration="none">  1.14Ã—</tspan></text></a>
 <line x1="68.0" y1="3868.0" x2="688.0" y2="3868.0" stroke="#eee"/>
 <text x="64.0" y="3871.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="3718.0" x2="688.0" y2="3718.0" stroke="#eee"/>
@@ -312,12 +386,16 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="68.0" y1="3568.0" x2="68.0" y2="3868.0" stroke="#333"/>
 <line x1="68.0" y1="3868.0" x2="688.0" y2="3868.0" stroke="#333"/>
 <line x1="68.0" y1="3868.0" x2="68.0" y2="3871.0" stroke="#999"/>
-<text x="68.0" y="3883.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 3883.0)">26.7</text>
+<text x="68.0" y="3883.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 3883.0)">26.4</text>
+<line x1="274.7" y1="3868.0" x2="274.7" y2="3871.0" stroke="#999"/>
+<text x="274.7" y="3883.0" text-anchor="end" fill="#666" transform="rotate(-50 274.7 3883.0)">26.5</text>
+<line x1="481.3" y1="3868.0" x2="481.3" y2="3871.0" stroke="#999"/>
+<text x="481.3" y="3883.0" text-anchor="end" fill="#666" transform="rotate(-50 481.3 3883.0)">26.7</text>
 <line x1="688.0" y1="3868.0" x2="688.0" y2="3871.0" stroke="#999"/>
 <text x="688.0" y="3883.0" text-anchor="end" fill="#666" transform="rotate(-50 688.0 3883.0)">26.8</text>
-<polygon points="68.0,3607.2 688.0,3603.0 688.0,3868.0 68.0,3868.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>implicit_conversion â€” frontEndExecute</title></polygon>
-<polygon points="68.0,3594.6 688.0,3590.2 688.0,3603.0 68.0,3607.2" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>implicit_conversion â€” generateOutput</title></polygon>
-<a xlink:href="workloads/module_link.html" href="workloads/module_link.html" target="_top"><text x="764" y="3552" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">module_link<tspan fill="#888" font-weight="400" text-decoration="none">  1.00Ã—</tspan></text></a>
+<polygon points="68.0,3636.2 274.7,3631.4 481.3,3607.2 688.0,3603.0 688.0,3868.0 481.3,3868.0 274.7,3868.0 68.0,3868.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>implicit_conversion â€” frontEndExecute</title></polygon>
+<polygon points="68.0,3623.3 274.7,3618.5 481.3,3594.6 688.0,3590.2 688.0,3603.0 481.3,3607.2 274.7,3631.4 68.0,3636.2" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>implicit_conversion â€” generateOutput</title></polygon>
+<a xlink:href="workloads/module_link.html" href="workloads/module_link.html" target="_top"><text x="764" y="3552" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">module_link<tspan fill="#888" font-weight="400" text-decoration="none">  1.50Ã—</tspan></text></a>
 <line x1="764.0" y1="3868.0" x2="1384.0" y2="3868.0" stroke="#eee"/>
 <text x="760.0" y="3871.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="764.0" y1="3718.0" x2="1384.0" y2="3718.0" stroke="#eee"/>
@@ -327,13 +405,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="764.0" y1="3568.0" x2="764.0" y2="3868.0" stroke="#333"/>
 <line x1="764.0" y1="3868.0" x2="1384.0" y2="3868.0" stroke="#333"/>
 <line x1="764.0" y1="3868.0" x2="764.0" y2="3871.0" stroke="#999"/>
-<text x="764.0" y="3883.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 3883.0)">26.7</text>
+<text x="764.0" y="3883.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 3883.0)">26.4</text>
+<line x1="970.7" y1="3868.0" x2="970.7" y2="3871.0" stroke="#999"/>
+<text x="970.7" y="3883.0" text-anchor="end" fill="#666" transform="rotate(-50 970.7 3883.0)">26.5</text>
+<line x1="1177.3" y1="3868.0" x2="1177.3" y2="3871.0" stroke="#999"/>
+<text x="1177.3" y="3883.0" text-anchor="end" fill="#666" transform="rotate(-50 1177.3 3883.0)">26.7</text>
 <line x1="1384.0" y1="3868.0" x2="1384.0" y2="3871.0" stroke="#999"/>
 <text x="1384.0" y="3883.0" text-anchor="end" fill="#666" transform="rotate(-50 1384.0 3883.0)">26.8</text>
-<polygon points="764.0,3719.9 1384.0,3720.2 1384.0,3868.0 764.0,3868.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link â€” frontEndExecute</title></polygon>
-<polygon points="764.0,3591.9 1384.0,3592.1 1384.0,3720.2 764.0,3719.9" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link â€” generateOutput</title></polygon>
-<polygon points="764.0,3590.2 1384.0,3591.0 1384.0,3592.1 764.0,3591.9" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/resource_aggregate.html" href="workloads/resource_aggregate.html" target="_top"><text x="68" y="3940" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">resource_aggregate<tspan fill="#888" font-weight="400" text-decoration="none">  1.00Ã—</tspan></text></a>
+<polygon points="764.0,3739.5 970.7,3738.2 1177.3,3719.9 1384.0,3720.2 1384.0,3868.0 1177.3,3868.0 970.7,3868.0 764.0,3868.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link â€” frontEndExecute</title></polygon>
+<polygon points="764.0,3684.7 970.7,3683.4 1177.3,3591.9 1384.0,3592.1 1384.0,3720.2 1177.3,3719.9 970.7,3738.2 764.0,3739.5" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link â€” generateOutput</title></polygon>
+<polygon points="764.0,3683.3 970.7,3682.8 1177.3,3590.2 1384.0,3591.0 1384.0,3592.1 1177.3,3591.9 970.7,3683.4 764.0,3684.7" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/resource_aggregate.html" href="workloads/resource_aggregate.html" target="_top"><text x="68" y="3940" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">resource_aggregate<tspan fill="#888" font-weight="400" text-decoration="none">  1.63Ã—</tspan></text></a>
 <line x1="68.0" y1="4256.0" x2="688.0" y2="4256.0" stroke="#eee"/>
 <text x="64.0" y="4259.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="4106.0" x2="688.0" y2="4106.0" stroke="#eee"/>
@@ -343,13 +425,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="68.0" y1="3956.0" x2="68.0" y2="4256.0" stroke="#333"/>
 <line x1="68.0" y1="4256.0" x2="688.0" y2="4256.0" stroke="#333"/>
 <line x1="68.0" y1="4256.0" x2="68.0" y2="4259.0" stroke="#999"/>
-<text x="68.0" y="4271.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 4271.0)">26.7</text>
+<text x="68.0" y="4271.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 4271.0)">26.4</text>
+<line x1="274.7" y1="4256.0" x2="274.7" y2="4259.0" stroke="#999"/>
+<text x="274.7" y="4271.0" text-anchor="end" fill="#666" transform="rotate(-50 274.7 4271.0)">26.5</text>
+<line x1="481.3" y1="4256.0" x2="481.3" y2="4259.0" stroke="#999"/>
+<text x="481.3" y="4271.0" text-anchor="end" fill="#666" transform="rotate(-50 481.3 4271.0)">26.7</text>
 <line x1="688.0" y1="4256.0" x2="688.0" y2="4259.0" stroke="#999"/>
 <text x="688.0" y="4271.0" text-anchor="end" fill="#666" transform="rotate(-50 688.0 4271.0)">26.8</text>
-<polygon points="68.0,4134.7 688.0,4134.9 688.0,4256.0 68.0,4256.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” frontEndExecute</title></polygon>
-<polygon points="68.0,3983.0 688.0,3983.5 688.0,4134.9 68.0,4134.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” generateOutput</title></polygon>
-<polygon points="68.0,3978.2 688.0,3978.8 688.0,3983.5 68.0,3983.0" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/conformance.html" href="workloads/conformance.html" target="_top"><text x="764" y="3940" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">conformance<tspan fill="#888" font-weight="400" text-decoration="none">  1.00Ã—</tspan></text></a>
+<polygon points="68.0,4170.6 274.7,4170.4 481.3,4134.7 688.0,4134.9 688.0,4256.0 481.3,4256.0 274.7,4256.0 68.0,4256.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” frontEndExecute</title></polygon>
+<polygon points="68.0,4090.2 274.7,4091.3 481.3,3983.0 688.0,3983.5 688.0,4134.9 481.3,4134.7 274.7,4170.4 68.0,4170.6" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” generateOutput</title></polygon>
+<polygon points="68.0,4085.5 274.7,4088.0 481.3,3978.2 688.0,3978.8 688.0,3983.5 481.3,3983.0 274.7,4091.3 68.0,4090.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/conformance.html" href="workloads/conformance.html" target="_top"><text x="764" y="3940" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">conformance<tspan fill="#888" font-weight="400" text-decoration="none">  1.15Ã—</tspan></text></a>
 <line x1="764.0" y1="4256.0" x2="1384.0" y2="4256.0" stroke="#eee"/>
 <text x="760.0" y="4259.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="764.0" y1="4106.0" x2="1384.0" y2="4106.0" stroke="#eee"/>
@@ -359,13 +445,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="764.0" y1="3956.0" x2="764.0" y2="4256.0" stroke="#333"/>
 <line x1="764.0" y1="4256.0" x2="1384.0" y2="4256.0" stroke="#333"/>
 <line x1="764.0" y1="4256.0" x2="764.0" y2="4259.0" stroke="#999"/>
-<text x="764.0" y="4271.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 4271.0)">26.7</text>
+<text x="764.0" y="4271.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 4271.0)">26.4</text>
+<line x1="970.7" y1="4256.0" x2="970.7" y2="4259.0" stroke="#999"/>
+<text x="970.7" y="4271.0" text-anchor="end" fill="#666" transform="rotate(-50 970.7 4271.0)">26.5</text>
+<line x1="1177.3" y1="4256.0" x2="1177.3" y2="4259.0" stroke="#999"/>
+<text x="1177.3" y="4271.0" text-anchor="end" fill="#666" transform="rotate(-50 1177.3 4271.0)">26.7</text>
 <line x1="1384.0" y1="4256.0" x2="1384.0" y2="4259.0" stroke="#999"/>
 <text x="1384.0" y="4271.0" text-anchor="end" fill="#666" transform="rotate(-50 1384.0 4271.0)">26.8</text>
-<polygon points="764.0,4040.3 1384.0,4039.1 1384.0,4256.0 764.0,4256.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance â€” frontEndExecute</title></polygon>
-<polygon points="764.0,3979.1 1384.0,3979.1 1384.0,4039.1 764.0,4040.3" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance â€” generateOutput</title></polygon>
-<polygon points="764.0,3978.2 1384.0,3979.1 1384.0,3979.1 764.0,3979.1" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/diagnostics_clean.html" href="workloads/diagnostics_clean.html" target="_top"><text x="68" y="4328" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">diagnostics_clean<tspan fill="#888" font-weight="400" text-decoration="none">  1.01Ã—</tspan></text></a>
+<polygon points="764.0,4074.9 970.7,4065.9 1177.3,4040.3 1384.0,4039.1 1384.0,4256.0 1177.3,4256.0 970.7,4256.0 764.0,4256.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance â€” frontEndExecute</title></polygon>
+<polygon points="764.0,4014.9 970.7,4005.2 1177.3,3979.1 1384.0,3979.1 1384.0,4039.1 1177.3,4040.3 970.7,4065.9 764.0,4074.9" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance â€” generateOutput</title></polygon>
+<polygon points="764.0,4014.9 970.7,4005.2 1177.3,3978.2 1384.0,3979.1 1384.0,3979.1 1177.3,3979.1 970.7,4005.2 764.0,4014.9" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/diagnostics_clean.html" href="workloads/diagnostics_clean.html" target="_top"><text x="68" y="4328" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">diagnostics_clean<tspan fill="#888" font-weight="400" text-decoration="none">  1.65Ã—</tspan></text></a>
 <line x1="68.0" y1="4644.0" x2="688.0" y2="4644.0" stroke="#eee"/>
 <text x="64.0" y="4647.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="4494.0" x2="688.0" y2="4494.0" stroke="#eee"/>
@@ -375,13 +465,17 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="68.0" y1="4344.0" x2="68.0" y2="4644.0" stroke="#333"/>
 <line x1="68.0" y1="4644.0" x2="688.0" y2="4644.0" stroke="#333"/>
 <line x1="68.0" y1="4644.0" x2="68.0" y2="4647.0" stroke="#999"/>
-<text x="68.0" y="4659.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 4659.0)">26.7</text>
+<text x="68.0" y="4659.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 4659.0)">26.4</text>
+<line x1="274.7" y1="4644.0" x2="274.7" y2="4647.0" stroke="#999"/>
+<text x="274.7" y="4659.0" text-anchor="end" fill="#666" transform="rotate(-50 274.7 4659.0)">26.5</text>
+<line x1="481.3" y1="4644.0" x2="481.3" y2="4647.0" stroke="#999"/>
+<text x="481.3" y="4659.0" text-anchor="end" fill="#666" transform="rotate(-50 481.3 4659.0)">26.7</text>
 <line x1="688.0" y1="4644.0" x2="688.0" y2="4647.0" stroke="#999"/>
 <text x="688.0" y="4659.0" text-anchor="end" fill="#666" transform="rotate(-50 688.0 4659.0)">26.8</text>
-<polygon points="68.0,4430.1 688.0,4428.4 688.0,4644.0 68.0,4644.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean â€” frontEndExecute</title></polygon>
-<polygon points="68.0,4369.4 688.0,4367.0 688.0,4428.4 68.0,4430.1" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean â€” generateOutput</title></polygon>
-<polygon points="68.0,4368.9 688.0,4366.2 688.0,4367.0 68.0,4369.4" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean â€” compileInner (self)</title></polygon>
-<a xlink:href="workloads/overload_resolution.html" href="workloads/overload_resolution.html" target="_top"><text x="764" y="4328" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">overload_resolution<tspan fill="#888" font-weight="400" text-decoration="none">  1.00Ã—</tspan></text></a>
+<polygon points="68.0,4491.3 274.7,4486.7 481.3,4430.1 688.0,4428.4 688.0,4644.0 481.3,4644.0 274.7,4644.0 68.0,4644.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean â€” frontEndExecute</title></polygon>
+<polygon points="68.0,4476.0 274.7,4469.9 481.3,4369.4 688.0,4367.0 688.0,4428.4 481.3,4430.1 274.7,4486.7 68.0,4491.3" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean â€” generateOutput</title></polygon>
+<polygon points="68.0,4475.1 274.7,4467.7 481.3,4368.9 688.0,4366.2 688.0,4367.0 481.3,4369.4 274.7,4469.9 68.0,4476.0" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean â€” compileInner (self)</title></polygon>
+<a xlink:href="workloads/overload_resolution.html" href="workloads/overload_resolution.html" target="_top"><text x="764" y="4328" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">overload_resolution<tspan fill="#888" font-weight="400" text-decoration="none">  1.27Ã—</tspan></text></a>
 <line x1="764.0" y1="4644.0" x2="1384.0" y2="4644.0" stroke="#eee"/>
 <text x="760.0" y="4647.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="764.0" y1="4494.0" x2="1384.0" y2="4494.0" stroke="#eee"/>
@@ -391,12 +485,16 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="764.0" y1="4344.0" x2="764.0" y2="4644.0" stroke="#333"/>
 <line x1="764.0" y1="4644.0" x2="1384.0" y2="4644.0" stroke="#333"/>
 <line x1="764.0" y1="4644.0" x2="764.0" y2="4647.0" stroke="#999"/>
-<text x="764.0" y="4659.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 4659.0)">26.7</text>
+<text x="764.0" y="4659.0" text-anchor="end" fill="#666" transform="rotate(-50 764.0 4659.0)">26.4</text>
+<line x1="970.7" y1="4644.0" x2="970.7" y2="4647.0" stroke="#999"/>
+<text x="970.7" y="4659.0" text-anchor="end" fill="#666" transform="rotate(-50 970.7 4659.0)">26.5</text>
+<line x1="1177.3" y1="4644.0" x2="1177.3" y2="4647.0" stroke="#999"/>
+<text x="1177.3" y="4659.0" text-anchor="end" fill="#666" transform="rotate(-50 1177.3 4659.0)">26.7</text>
 <line x1="1384.0" y1="4644.0" x2="1384.0" y2="4647.0" stroke="#999"/>
 <text x="1384.0" y="4659.0" text-anchor="end" fill="#666" transform="rotate(-50 1384.0 4659.0)">26.8</text>
-<polygon points="764.0,4391.7 1384.0,4391.5 1384.0,4644.0 764.0,4644.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>overload_resolution â€” frontEndExecute</title></polygon>
-<polygon points="764.0,4366.7 1384.0,4366.2 1384.0,4391.5 764.0,4391.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>overload_resolution â€” generateOutput</title></polygon>
-<a xlink:href="workloads/minimal.html" href="workloads/minimal.html" target="_top"><text x="68" y="4716" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">minimal<tspan fill="#888" font-weight="400" text-decoration="none">  0.99Ã—</tspan></text></a>
+<polygon points="764.0,4451.2 970.7,4445.0 1177.3,4391.7 1384.0,4391.5 1384.0,4644.0 1177.3,4644.0 970.7,4644.0 764.0,4644.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>overload_resolution â€” frontEndExecute</title></polygon>
+<polygon points="764.0,4425.5 970.7,4419.3 1177.3,4366.7 1384.0,4366.2 1384.0,4391.5 1177.3,4391.7 970.7,4445.0 764.0,4451.2" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>overload_resolution â€” generateOutput</title></polygon>
+<a xlink:href="workloads/minimal.html" href="workloads/minimal.html" target="_top"><text x="68" y="4716" font-size="15" font-weight="600" fill="#1a5fb4" text-decoration="underline">minimal<tspan fill="#888" font-weight="400" text-decoration="none">  2.89Ã—</tspan></text></a>
 <line x1="68.0" y1="5032.0" x2="688.0" y2="5032.0" stroke="#eee"/>
 <text x="64.0" y="5035.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="4882.0" x2="688.0" y2="4882.0" stroke="#eee"/>
@@ -406,12 +504,16 @@ h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bo
 <line x1="68.0" y1="4732.0" x2="68.0" y2="5032.0" stroke="#333"/>
 <line x1="68.0" y1="5032.0" x2="688.0" y2="5032.0" stroke="#333"/>
 <line x1="68.0" y1="5032.0" x2="68.0" y2="5035.0" stroke="#999"/>
-<text x="68.0" y="5047.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 5047.0)">26.7</text>
+<text x="68.0" y="5047.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 5047.0)">26.4</text>
+<line x1="274.7" y1="5032.0" x2="274.7" y2="5035.0" stroke="#999"/>
+<text x="274.7" y="5047.0" text-anchor="end" fill="#666" transform="rotate(-50 274.7 5047.0)">26.5</text>
+<line x1="481.3" y1="5032.0" x2="481.3" y2="5035.0" stroke="#999"/>
+<text x="481.3" y="5047.0" text-anchor="end" fill="#666" transform="rotate(-50 481.3 5047.0)">26.7</text>
 <line x1="688.0" y1="5032.0" x2="688.0" y2="5035.0" stroke="#999"/>
 <text x="688.0" y="5047.0" text-anchor="end" fill="#666" transform="rotate(-50 688.0 5047.0)">26.8</text>
-<polygon points="68.0,4947.1 688.0,4948.7 688.0,5032.0 68.0,5032.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>minimal â€” frontEndExecute</title></polygon>
-<polygon points="68.0,4755.9 688.0,4759.9 688.0,4948.7 68.0,4947.1" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>minimal â€” generateOutput</title></polygon>
-<polygon points="68.0,4754.2 688.0,4757.4 688.0,4759.9 68.0,4755.9" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>minimal â€” compileInner (self)</title></polygon>
+<polygon points="68.0,4971.8 274.7,4969.6 481.3,4947.1 688.0,4948.7 688.0,5032.0 481.3,5032.0 274.7,5032.0 68.0,5032.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>minimal â€” frontEndExecute</title></polygon>
+<polygon points="68.0,4937.8 274.7,4935.9 481.3,4755.9 688.0,4759.9 688.0,4948.7 481.3,4947.1 274.7,4969.6 68.0,4971.8" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>minimal â€” generateOutput</title></polygon>
+<polygon points="68.0,4937.1 274.7,4932.4 481.3,4754.2 688.0,4757.4 688.0,4759.9 481.3,4755.9 274.7,4935.9 68.0,4937.8" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>minimal â€” compileInner (self)</title></polygon>
 <text x="12" y="5094" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="5102" width="12" height="12" fill="#41ab5d"/>
 <text x="28" y="5112" fill="#222">frontEndExecute</text>

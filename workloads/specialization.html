@@ -1,8 +1,8 @@
-<!doctype html><meta charset=utf-8><title>specialization � phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>specialization</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>A generic struct over a type parameter, instantiated at n distinct
+<!doctype html><meta charset=utf-8><title>specialization � phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>specialization</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>A generic struct over a type parameter, instantiated at n distinct
 wrapper types. Forces specializeModule to clone the generic n ways.</p><p style='color:#666;font-size:13px'><b>bucket:</b> specialization &nbsp;�&nbsp; <b>compile mode:</b> target &nbsp;�&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;�&nbsp; <b>default N:</b> 300</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="680" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">specialization — full phase breakdown across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">specialization<tspan fill="#888" font-weight="400" text-decoration="none">  0.99×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">specialization<tspan fill="#888" font-weight="400" text-decoration="none">  1.38×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -12,24 +12,28 @@ wrapper types. Forces specializeModule to clone the generic n ways.</p><p style=
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.7</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.4</text>
+<line x1="414.7" y1="516.0" x2="414.7" y2="519.0" stroke="#999"/>
+<text x="414.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 414.7 531.0)">26.5</text>
+<line x1="761.3" y1="516.0" x2="761.3" y2="519.0" stroke="#999"/>
+<text x="761.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 761.3 531.0)">26.7</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
 <text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.8</text>
-<polygon points="68.0,513.8 1108.0,513.7 1108.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — parseTranslationUnit</title></polygon>
-<polygon points="68.0,470.8 1108.0,470.8 1108.0,513.7 68.0,513.8" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — SemanticChecking</title></polygon>
-<polygon points="68.0,445.0 1108.0,445.1 1108.0,470.8 68.0,470.8" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — generateIR</title></polygon>
-<polygon points="68.0,444.8 1108.0,444.8 1108.0,445.1 68.0,445.0" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — frontEndExecute (self)</title></polygon>
-<polygon points="68.0,384.6 1108.0,384.8 1108.0,444.8 68.0,444.8" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — specializeModule</title></polygon>
-<polygon points="68.0,293.1 1108.0,293.3 1108.0,384.8 68.0,384.6" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — simplifyIR</title></polygon>
-<polygon points="68.0,279.4 1108.0,279.4 1108.0,293.3 68.0,293.1" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — linkIR</title></polygon>
-<polygon points="68.0,279.1 1108.0,279.1 1108.0,279.4 68.0,279.4" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — unrollLoopsInModule</title></polygon>
-<polygon points="68.0,248.3 1108.0,248.2 1108.0,279.1 68.0,279.1" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — legalizeResourceTypes</title></polygon>
-<polygon points="68.0,215.6 1108.0,215.4 1108.0,248.2 68.0,248.3" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — legalizeExistentialTypeLayout</title></polygon>
-<polygon points="68.0,213.3 1108.0,213.1 1108.0,215.4 68.0,215.6" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — performMandatoryEarlyInlining</title></polygon>
-<polygon points="68.0,212.6 1108.0,212.4 1108.0,213.1 68.0,213.3" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — performForceInlining</title></polygon>
-<polygon points="68.0,160.5 1108.0,160.2 1108.0,212.4 68.0,212.6" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — linkAndOptimizeIR (self)</title></polygon>
-<polygon points="68.0,109.3 1108.0,111.0 1108.0,160.2 68.0,160.5" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — generateOutput (self)</title></polygon>
-<polygon points="68.0,108.6 1108.0,110.9 1108.0,111.0 68.0,109.3" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — compileInner (self)</title></polygon>
+<polygon points="68.0,513.9 414.7,513.9 761.3,513.8 1108.0,513.7 1108.0,516.0 761.3,516.0 414.7,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — parseTranslationUnit</title></polygon>
+<polygon points="68.0,479.3 414.7,479.6 761.3,470.8 1108.0,470.8 1108.0,513.7 761.3,513.8 414.7,513.9 68.0,513.9" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — SemanticChecking</title></polygon>
+<polygon points="68.0,462.7 414.7,463.1 761.3,445.0 1108.0,445.1 1108.0,470.8 761.3,470.8 414.7,479.6 68.0,479.3" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — generateIR</title></polygon>
+<polygon points="68.0,462.2 414.7,462.5 761.3,444.8 1108.0,444.8 1108.0,445.1 761.3,445.0 414.7,463.1 68.0,462.7" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,441.1 414.7,440.4 761.3,384.6 1108.0,384.8 1108.0,444.8 761.3,444.8 414.7,462.5 68.0,462.2" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — specializeModule</title></polygon>
+<polygon points="68.0,363.5 414.7,362.2 761.3,293.1 1108.0,293.3 1108.0,384.8 761.3,384.6 414.7,440.4 68.0,441.1" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — simplifyIR</title></polygon>
+<polygon points="68.0,359.6 414.7,358.5 761.3,279.4 1108.0,279.4 1108.0,293.3 761.3,293.1 414.7,362.2 68.0,363.5" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — linkIR</title></polygon>
+<polygon points="68.0,359.1 414.7,358.0 761.3,279.1 1108.0,279.1 1108.0,279.4 761.3,279.4 414.7,358.5 68.0,359.6" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — unrollLoopsInModule</title></polygon>
+<polygon points="68.0,330.8 414.7,329.5 761.3,248.3 1108.0,248.2 1108.0,279.1 761.3,279.1 414.7,358.0 68.0,359.1" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,300.7 414.7,299.4 761.3,215.6 1108.0,215.4 1108.0,248.2 761.3,248.3 414.7,329.5 68.0,330.8" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,298.0 414.7,296.7 761.3,213.3 1108.0,213.1 1108.0,215.4 761.3,215.6 414.7,299.4 68.0,300.7" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,297.3 414.7,296.0 761.3,212.6 1108.0,212.4 1108.0,213.1 761.3,213.3 414.7,296.7 68.0,298.0" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — performForceInlining</title></polygon>
+<polygon points="68.0,274.3 414.7,272.9 761.3,160.5 1108.0,160.2 1108.0,212.4 761.3,212.6 414.7,296.0 68.0,297.3" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,222.1 414.7,221.3 761.3,109.3 1108.0,111.0 1108.0,160.2 761.3,160.5 414.7,272.9 68.0,274.3" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — generateOutput (self)</title></polygon>
+<polygon points="68.0,222.1 414.7,221.1 761.3,108.6 1108.0,110.9 1108.0,111.0 761.3,109.3 414.7,221.3 68.0,222.1" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>

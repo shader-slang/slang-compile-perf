@@ -1,4 +1,4 @@
-<!doctype html><meta charset=utf-8><title>existential_aggregate � phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>existential_aggregate</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>An interface-typed *field* inside a struct (`Scene { IMat m; ... }`), with
+<!doctype html><meta charset=utf-8><title>existential_aggregate � phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>existential_aggregate</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>An interface-typed *field* inside a struct (`Scene { IMat m; ... }`), with
 n implementations selected at runtime through a switch. Unlike
 `dynamic_dispatch` (a bare local existential), boxing the existential in an
 aggregate forces `legalizeExistentialTypeLayout` to float the existential
@@ -8,7 +8,7 @@ legalizeExistentialTypeLayout + the downstream simplifyIR. Scales by breadth
 (number of implementations / switch cases).</p><p style='color:#666;font-size:13px'><b>bucket:</b> dynamic_dispatch &nbsp;�&nbsp; <b>compile mode:</b> target &nbsp;�&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;�&nbsp; <b>default N:</b> 100</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="680" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">existential_aggregate — full phase breakdown across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">existential_aggregate<tspan fill="#888" font-weight="400" text-decoration="none">  1.01×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">existential_aggregate<tspan fill="#888" font-weight="400" text-decoration="none">  1.93×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -18,24 +18,28 @@ legalizeExistentialTypeLayout + the downstream simplifyIR. Scales by breadth
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.7</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.4</text>
+<line x1="414.7" y1="516.0" x2="414.7" y2="519.0" stroke="#999"/>
+<text x="414.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 414.7 531.0)">26.5</text>
+<line x1="761.3" y1="516.0" x2="761.3" y2="519.0" stroke="#999"/>
+<text x="761.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 761.3 531.0)">26.7</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
 <text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.8</text>
-<polygon points="68.0,514.4 1108.0,514.4 1108.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — parseTranslationUnit</title></polygon>
-<polygon points="68.0,442.1 1108.0,442.0 1108.0,514.4 68.0,514.4" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — SemanticChecking</title></polygon>
-<polygon points="68.0,411.1 1108.0,410.6 1108.0,442.0 68.0,442.1" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — generateIR</title></polygon>
-<polygon points="68.0,410.1 1108.0,410.1 1108.0,410.6 68.0,411.1" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — frontEndExecute (self)</title></polygon>
-<polygon points="68.0,270.7 1108.0,270.4 1108.0,410.1 68.0,410.1" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — specializeModule</title></polygon>
-<polygon points="68.0,207.1 1108.0,206.8 1108.0,270.4 68.0,270.7" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — simplifyIR</title></polygon>
-<polygon points="68.0,186.6 1108.0,185.5 1108.0,206.8 68.0,207.1" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — linkIR</title></polygon>
-<polygon points="68.0,186.5 1108.0,185.4 1108.0,185.5 68.0,186.6" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — unrollLoopsInModule</title></polygon>
-<polygon points="68.0,183.7 1108.0,182.5 1108.0,185.4 68.0,186.5" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — legalizeResourceTypes</title></polygon>
-<polygon points="68.0,179.3 1108.0,178.1 1108.0,182.5 68.0,183.7" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — legalizeExistentialTypeLayout</title></polygon>
-<polygon points="68.0,178.8 1108.0,177.7 1108.0,178.1 68.0,179.3" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — performMandatoryEarlyInlining</title></polygon>
-<polygon points="68.0,178.3 1108.0,177.1 1108.0,177.7 68.0,178.8" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — performForceInlining</title></polygon>
-<polygon points="68.0,142.2 1108.0,140.4 1108.0,177.1 68.0,178.3" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — linkAndOptimizeIR (self)</title></polygon>
-<polygon points="68.0,113.1 1108.0,110.4 1108.0,140.4 68.0,142.2" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — generateOutput (self)</title></polygon>
-<polygon points="68.0,111.7 1108.0,108.6 1108.0,110.4 68.0,113.1" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — compileInner (self)</title></polygon>
+<polygon points="68.0,514.4 414.7,514.4 761.3,514.4 1108.0,514.4 1108.0,516.0 761.3,516.0 414.7,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — parseTranslationUnit</title></polygon>
+<polygon points="68.0,457.5 414.7,457.0 761.3,442.1 1108.0,442.0 1108.0,514.4 761.3,514.4 414.7,514.4 68.0,514.4" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — SemanticChecking</title></polygon>
+<polygon points="68.0,444.6 414.7,444.1 761.3,411.1 1108.0,410.6 1108.0,442.0 761.3,442.1 414.7,457.0 68.0,457.5" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — generateIR</title></polygon>
+<polygon points="68.0,444.2 414.7,443.4 761.3,410.1 1108.0,410.1 1108.0,410.6 761.3,411.1 414.7,444.1 68.0,444.6" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,415.4 414.7,414.7 761.3,270.7 1108.0,270.4 1108.0,410.1 761.3,410.1 414.7,443.4 68.0,444.2" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — specializeModule</title></polygon>
+<polygon points="68.0,369.2 414.7,368.2 761.3,207.1 1108.0,206.8 1108.0,270.4 761.3,270.7 414.7,414.7 68.0,415.4" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — simplifyIR</title></polygon>
+<polygon points="68.0,365.8 414.7,365.0 761.3,186.6 1108.0,185.5 1108.0,206.8 761.3,207.1 414.7,368.2 68.0,369.2" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — linkIR</title></polygon>
+<polygon points="68.0,365.6 414.7,364.8 761.3,186.5 1108.0,185.4 1108.0,185.5 761.3,186.6 414.7,365.0 68.0,365.8" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — unrollLoopsInModule</title></polygon>
+<polygon points="68.0,362.8 414.7,362.0 761.3,183.7 1108.0,182.5 1108.0,185.4 761.3,186.5 414.7,364.8 68.0,365.6" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,358.1 414.7,357.3 761.3,179.3 1108.0,178.1 1108.0,182.5 761.3,183.7 414.7,362.0 68.0,362.8" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,357.6 414.7,356.8 761.3,178.8 1108.0,177.7 1108.0,178.1 761.3,179.3 414.7,357.3 68.0,358.1" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,357.1 414.7,356.3 761.3,178.3 1108.0,177.1 1108.0,177.7 761.3,178.8 414.7,356.8 68.0,357.6" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — performForceInlining</title></polygon>
+<polygon points="68.0,334.3 414.7,333.4 761.3,142.2 1108.0,140.4 1108.0,177.1 761.3,178.3 414.7,356.3 68.0,357.1" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,304.8 414.7,304.3 761.3,113.1 1108.0,110.4 1108.0,140.4 761.3,142.2 414.7,333.4 68.0,334.3" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — generateOutput (self)</title></polygon>
+<polygon points="68.0,304.6 414.7,303.4 761.3,111.7 1108.0,108.6 1108.0,110.4 761.3,113.1 414.7,304.3 68.0,304.8" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>

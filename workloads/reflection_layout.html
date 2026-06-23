@@ -1,4 +1,4 @@
-<!doctype html><meta charset=utf-8><title>reflection_layout � phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>reflection_layout</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>n constant buffers, each with a structurally rich payload � vectors,
+<!doctype html><meta charset=utf-8><title>reflection_layout � phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>reflection_layout</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>n constant buffers, each with a structurally rich payload � vectors,
 matrices, an array of a nested `Light` struct, a nested `Material` struct and
 a scalar array. This is the only workload with a large, deeply-typed shader
 *parameter interface* (every other workload's interface is a single
@@ -12,7 +12,7 @@ holistic signal); -reflection-json additionally runs the serializer, which is
 cheap today but tracked here for regression coverage.</p><p style='color:#666;font-size:13px'><b>bucket:</b> reflection_layout &nbsp;�&nbsp; <b>compile mode:</b> target &nbsp;�&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;�&nbsp; <b>default N:</b> 120</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="680" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">reflection_layout — full phase breakdown across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">reflection_layout<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">reflection_layout<tspan fill="#888" font-weight="400" text-decoration="none">  1.13×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -22,24 +22,28 @@ cheap today but tracked here for regression coverage.</p><p style='color:#666;fo
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.7</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.4</text>
+<line x1="414.7" y1="516.0" x2="414.7" y2="519.0" stroke="#999"/>
+<text x="414.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 414.7 531.0)">26.5</text>
+<line x1="761.3" y1="516.0" x2="761.3" y2="519.0" stroke="#999"/>
+<text x="761.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 761.3 531.0)">26.7</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
 <text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.8</text>
-<polygon points="68.0,509.6 1108.0,509.6 1108.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — parseTranslationUnit</title></polygon>
-<polygon points="68.0,379.7 1108.0,379.3 1108.0,509.6 68.0,509.6" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — SemanticChecking</title></polygon>
-<polygon points="68.0,351.2 1108.0,350.8 1108.0,379.3 68.0,379.7" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — generateIR</title></polygon>
-<polygon points="68.0,339.6 1108.0,339.6 1108.0,350.8 68.0,351.2" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — frontEndExecute (self)</title></polygon>
-<polygon points="68.0,322.9 1108.0,322.8 1108.0,339.6 68.0,339.6" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — specializeModule</title></polygon>
-<polygon points="68.0,287.0 1108.0,286.8 1108.0,322.8 68.0,322.9" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — simplifyIR</title></polygon>
-<polygon points="68.0,266.4 1108.0,268.2 1108.0,286.8 68.0,287.0" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — linkIR</title></polygon>
-<polygon points="68.0,266.4 1108.0,268.1 1108.0,268.2 68.0,266.4" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — unrollLoopsInModule</title></polygon>
-<polygon points="68.0,250.5 1108.0,252.1 1108.0,268.1 68.0,266.4" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — legalizeResourceTypes</title></polygon>
-<polygon points="68.0,237.4 1108.0,238.7 1108.0,252.1 68.0,250.5" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — legalizeExistentialTypeLayout</title></polygon>
-<polygon points="68.0,236.3 1108.0,237.6 1108.0,238.7 68.0,237.4" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — performMandatoryEarlyInlining</title></polygon>
-<polygon points="68.0,229.2 1108.0,230.8 1108.0,237.6 68.0,236.3" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — performForceInlining</title></polygon>
-<polygon points="68.0,165.7 1108.0,167.4 1108.0,230.8 68.0,229.2" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — linkAndOptimizeIR (self)</title></polygon>
-<polygon points="68.0,120.2 1108.0,120.4 1108.0,167.4 68.0,165.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — generateOutput (self)</title></polygon>
-<polygon points="68.0,108.6 1108.0,109.6 1108.0,120.4 68.0,120.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — compileInner (self)</title></polygon>
+<polygon points="68.0,509.6 414.7,509.6 761.3,509.6 1108.0,509.6 1108.0,516.0 761.3,516.0 414.7,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — parseTranslationUnit</title></polygon>
+<polygon points="68.0,363.6 414.7,365.6 761.3,379.7 1108.0,379.3 1108.0,509.6 761.3,509.6 414.7,509.6 68.0,509.6" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — SemanticChecking</title></polygon>
+<polygon points="68.0,342.8 414.7,344.7 761.3,351.2 1108.0,350.8 1108.0,379.3 761.3,379.7 414.7,365.6 68.0,363.6" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — generateIR</title></polygon>
+<polygon points="68.0,331.9 414.7,333.3 761.3,339.6 1108.0,339.6 1108.0,350.8 761.3,351.2 414.7,344.7 68.0,342.8" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,328.6 414.7,330.1 761.3,322.9 1108.0,322.8 1108.0,339.6 761.3,339.6 414.7,333.3 68.0,331.9" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — specializeModule</title></polygon>
+<polygon points="68.0,297.6 414.7,299.3 761.3,287.0 1108.0,286.8 1108.0,322.8 761.3,322.9 414.7,330.1 68.0,328.6" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — simplifyIR</title></polygon>
+<polygon points="68.0,291.3 414.7,293.3 761.3,266.4 1108.0,268.2 1108.0,286.8 761.3,287.0 414.7,299.3 68.0,297.6" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — linkIR</title></polygon>
+<polygon points="68.0,291.2 414.7,293.3 761.3,266.4 1108.0,268.1 1108.0,268.2 761.3,266.4 414.7,293.3 68.0,291.3" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — unrollLoopsInModule</title></polygon>
+<polygon points="68.0,275.0 414.7,277.3 761.3,250.5 1108.0,252.1 1108.0,268.1 761.3,266.4 414.7,293.3 68.0,291.2" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,260.8 414.7,263.3 761.3,237.4 1108.0,238.7 1108.0,252.1 761.3,250.5 414.7,277.3 68.0,275.0" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,259.7 414.7,262.1 761.3,236.3 1108.0,237.6 1108.0,238.7 761.3,237.4 414.7,263.3 68.0,260.8" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,252.4 414.7,254.8 761.3,229.2 1108.0,230.8 1108.0,237.6 761.3,236.3 414.7,262.1 68.0,259.7" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — performForceInlining</title></polygon>
+<polygon points="68.0,215.2 414.7,219.1 761.3,165.7 1108.0,167.4 1108.0,230.8 761.3,229.2 414.7,254.8 68.0,252.4" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,168.3 414.7,172.8 761.3,120.2 1108.0,120.4 1108.0,167.4 761.3,165.7 414.7,219.1 68.0,215.2" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — generateOutput (self)</title></polygon>
+<polygon points="68.0,157.3 414.7,161.9 761.3,108.6 1108.0,109.6 1108.0,120.4 761.3,120.2 414.7,172.8 68.0,168.3" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>

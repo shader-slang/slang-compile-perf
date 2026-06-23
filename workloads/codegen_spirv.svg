@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="680" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">codegen_spirv — full phase breakdown across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">codegen_spirv<tspan fill="#888" font-weight="400" text-decoration="none">  1.01×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">codegen_spirv<tspan fill="#888" font-weight="400" text-decoration="none">  1.32×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -11,24 +11,28 @@
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.7</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.4</text>
+<line x1="414.7" y1="516.0" x2="414.7" y2="519.0" stroke="#999"/>
+<text x="414.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 414.7 531.0)">26.5</text>
+<line x1="761.3" y1="516.0" x2="761.3" y2="519.0" stroke="#999"/>
+<text x="761.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 761.3 531.0)">26.7</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
 <text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.8</text>
-<polygon points="68.0,515.6 1108.0,515.6 1108.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — parseTranslationUnit</title></polygon>
-<polygon points="68.0,487.3 1108.0,487.1 1108.0,515.6 68.0,515.6" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — SemanticChecking</title></polygon>
-<polygon points="68.0,480.6 1108.0,480.4 1108.0,487.1 68.0,487.3" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — generateIR</title></polygon>
-<polygon points="68.0,480.4 1108.0,480.2 1108.0,480.4 68.0,480.6" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — frontEndExecute (self)</title></polygon>
-<polygon points="68.0,466.8 1108.0,467.8 1108.0,480.2 68.0,480.4" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — specializeModule</title></polygon>
-<polygon points="68.0,432.6 1108.0,433.3 1108.0,467.8 68.0,466.8" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — simplifyIR</title></polygon>
-<polygon points="68.0,425.3 1108.0,425.8 1108.0,433.3 68.0,432.6" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — linkIR</title></polygon>
-<polygon points="68.0,425.3 1108.0,425.8 1108.0,425.8 68.0,425.3" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — unrollLoopsInModule</title></polygon>
-<polygon points="68.0,340.5 1108.0,339.5 1108.0,425.8 68.0,425.3" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — legalizeResourceTypes</title></polygon>
-<polygon points="68.0,256.5 1108.0,253.6 1108.0,339.5 68.0,340.5" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — legalizeExistentialTypeLayout</title></polygon>
-<polygon points="68.0,256.4 1108.0,253.4 1108.0,253.6 68.0,256.5" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — performMandatoryEarlyInlining</title></polygon>
-<polygon points="68.0,256.2 1108.0,253.2 1108.0,253.4 68.0,256.4" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — performForceInlining</title></polygon>
-<polygon points="68.0,203.8 1108.0,200.3 1108.0,253.2 68.0,256.2" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — linkAndOptimizeIR (self)</title></polygon>
-<polygon points="68.0,112.7 1108.0,108.8 1108.0,200.3 68.0,203.8" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — generateOutput (self)</title></polygon>
-<polygon points="68.0,112.6 1108.0,108.6 1108.0,108.8 68.0,112.7" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — compileInner (self)</title></polygon>
+<polygon points="68.0,515.6 414.7,515.6 761.3,515.6 1108.0,515.6 1108.0,516.0 761.3,516.0 414.7,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — parseTranslationUnit</title></polygon>
+<polygon points="68.0,490.4 414.7,490.9 761.3,487.3 1108.0,487.1 1108.0,515.6 761.3,515.6 414.7,515.6 68.0,515.6" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — SemanticChecking</title></polygon>
+<polygon points="68.0,486.6 414.7,487.1 761.3,480.6 1108.0,480.4 1108.0,487.1 761.3,487.3 414.7,490.9 68.0,490.4" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — generateIR</title></polygon>
+<polygon points="68.0,486.4 414.7,486.9 761.3,480.4 1108.0,480.2 1108.0,480.4 761.3,480.6 414.7,487.1 68.0,486.6" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,482.6 414.7,482.7 761.3,466.8 1108.0,467.8 1108.0,480.2 761.3,480.4 414.7,486.9 68.0,486.4" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — specializeModule</title></polygon>
+<polygon points="68.0,479.0 414.7,479.2 761.3,432.6 1108.0,433.3 1108.0,467.8 761.3,466.8 414.7,482.7 68.0,482.6" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — simplifyIR</title></polygon>
+<polygon points="68.0,478.1 414.7,478.3 761.3,425.3 1108.0,425.8 1108.0,433.3 761.3,432.6 414.7,479.2 68.0,479.0" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — linkIR</title></polygon>
+<polygon points="68.0,478.1 414.7,478.3 761.3,425.3 1108.0,425.8 1108.0,425.8 761.3,425.3 414.7,478.3 68.0,478.1" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — unrollLoopsInModule</title></polygon>
+<polygon points="68.0,391.9 414.7,393.3 761.3,340.5 1108.0,339.5 1108.0,425.8 761.3,425.3 414.7,478.3 68.0,478.1" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,305.2 414.7,307.7 761.3,256.5 1108.0,253.6 1108.0,339.5 761.3,340.5 414.7,393.3 68.0,391.9" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,305.0 414.7,307.5 761.3,256.4 1108.0,253.4 1108.0,253.6 761.3,256.5 414.7,307.7 68.0,305.2" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,304.8 414.7,307.2 761.3,256.2 1108.0,253.2 1108.0,253.4 761.3,256.4 414.7,307.5 68.0,305.0" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — performForceInlining</title></polygon>
+<polygon points="68.0,298.1 414.7,300.6 761.3,203.8 1108.0,200.3 1108.0,253.2 761.3,256.2 414.7,307.2 68.0,304.8" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,206.4 414.7,208.8 761.3,112.7 1108.0,108.8 1108.0,200.3 761.3,203.8 414.7,300.6 68.0,298.1" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — generateOutput (self)</title></polygon>
+<polygon points="68.0,206.4 414.7,208.8 761.3,112.6 1108.0,108.6 1108.0,108.8 761.3,112.7 414.7,208.8 68.0,206.4" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>codegen_spirv — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>

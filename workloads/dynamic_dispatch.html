@@ -1,9 +1,9 @@
-<!doctype html><meta charset=utf-8><title>dynamic_dispatch � phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>dynamic_dispatch</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>One interface, n implementations, called through an existential whose
+<!doctype html><meta charset=utf-8><title>dynamic_dispatch � phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>dynamic_dispatch</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>One interface, n implementations, called through an existential whose
 concrete type is chosen at runtime (defeats static specialization, forcing
 witness-table dynamic dispatch). Stresses dispatch lowering / specializeModule.</p><p style='color:#666;font-size:13px'><b>bucket:</b> dynamic_dispatch &nbsp;�&nbsp; <b>compile mode:</b> target &nbsp;�&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;�&nbsp; <b>default N:</b> 200</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="680" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">dynamic_dispatch — full phase breakdown across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">dynamic_dispatch<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">dynamic_dispatch<tspan fill="#888" font-weight="400" text-decoration="none">  2.33×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -13,24 +13,28 @@ witness-table dynamic dispatch). Stresses dispatch lowering / specializeModule.<
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.7</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.4</text>
+<line x1="414.7" y1="516.0" x2="414.7" y2="519.0" stroke="#999"/>
+<text x="414.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 414.7 531.0)">26.5</text>
+<line x1="761.3" y1="516.0" x2="761.3" y2="519.0" stroke="#999"/>
+<text x="761.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 761.3 531.0)">26.7</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
 <text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.8</text>
-<polygon points="68.0,514.7 1108.0,514.7 1108.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — parseTranslationUnit</title></polygon>
-<polygon points="68.0,472.6 1108.0,473.3 1108.0,514.7 68.0,514.7" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — SemanticChecking</title></polygon>
-<polygon points="68.0,455.3 1108.0,456.0 1108.0,473.3 68.0,472.6" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — generateIR</title></polygon>
-<polygon points="68.0,455.2 1108.0,455.6 1108.0,456.0 68.0,455.3" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — frontEndExecute (self)</title></polygon>
-<polygon points="68.0,282.5 1108.0,281.6 1108.0,455.6 68.0,455.2" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — specializeModule</title></polygon>
-<polygon points="68.0,193.4 1108.0,192.6 1108.0,281.6 68.0,282.5" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — simplifyIR</title></polygon>
-<polygon points="68.0,182.9 1108.0,182.1 1108.0,192.6 68.0,193.4" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — linkIR</title></polygon>
-<polygon points="68.0,182.7 1108.0,182.0 1108.0,182.1 68.0,182.9" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — unrollLoopsInModule</title></polygon>
-<polygon points="68.0,179.3 1108.0,178.6 1108.0,182.0 68.0,182.7" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — legalizeResourceTypes</title></polygon>
-<polygon points="68.0,173.8 1108.0,173.0 1108.0,178.6 68.0,179.3" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — legalizeExistentialTypeLayout</title></polygon>
-<polygon points="68.0,173.5 1108.0,172.7 1108.0,173.0 68.0,173.8" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — performMandatoryEarlyInlining</title></polygon>
-<polygon points="68.0,173.0 1108.0,172.2 1108.0,172.7 68.0,173.5" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — performForceInlining</title></polygon>
-<polygon points="68.0,135.3 1108.0,134.7 1108.0,172.2 68.0,173.0" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — linkAndOptimizeIR (self)</title></polygon>
-<polygon points="68.0,109.8 1108.0,109.2 1108.0,134.7 68.0,135.3" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — generateOutput (self)</title></polygon>
-<polygon points="68.0,108.6 1108.0,108.6 1108.0,109.2 68.0,109.8" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — compileInner (self)</title></polygon>
+<polygon points="68.0,514.7 414.7,514.7 761.3,514.7 1108.0,514.7 1108.0,516.0 761.3,516.0 414.7,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — parseTranslationUnit</title></polygon>
+<polygon points="68.0,480.4 414.7,479.9 761.3,472.6 1108.0,473.3 1108.0,514.7 761.3,514.7 414.7,514.7 68.0,514.7" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — SemanticChecking</title></polygon>
+<polygon points="68.0,472.5 414.7,472.1 761.3,455.3 1108.0,456.0 1108.0,473.3 761.3,472.6 414.7,479.9 68.0,480.4" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — generateIR</title></polygon>
+<polygon points="68.0,472.1 414.7,471.7 761.3,455.2 1108.0,455.6 1108.0,456.0 761.3,455.3 414.7,472.1 68.0,472.5" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,454.3 414.7,454.0 761.3,282.5 1108.0,281.6 1108.0,455.6 761.3,455.2 414.7,471.7 68.0,472.1" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — specializeModule</title></polygon>
+<polygon points="68.0,400.9 414.7,400.6 761.3,193.4 1108.0,192.6 1108.0,281.6 761.3,282.5 414.7,454.0 68.0,454.3" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — simplifyIR</title></polygon>
+<polygon points="68.0,398.8 414.7,398.6 761.3,182.9 1108.0,182.1 1108.0,192.6 761.3,193.4 414.7,400.6 68.0,400.9" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — linkIR</title></polygon>
+<polygon points="68.0,398.5 414.7,398.3 761.3,182.7 1108.0,182.0 1108.0,182.1 761.3,182.9 414.7,398.6 68.0,398.8" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — unrollLoopsInModule</title></polygon>
+<polygon points="68.0,395.1 414.7,394.9 761.3,179.3 1108.0,178.6 1108.0,182.0 761.3,182.7 414.7,398.3 68.0,398.5" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,389.3 414.7,389.1 761.3,173.8 1108.0,173.0 1108.0,178.6 761.3,179.3 414.7,394.9 68.0,395.1" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,388.8 414.7,388.6 761.3,173.5 1108.0,172.7 1108.0,173.0 761.3,173.8 414.7,389.1 68.0,389.3" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,388.4 414.7,388.1 761.3,173.0 1108.0,172.2 1108.0,172.7 761.3,173.5 414.7,388.6 68.0,388.8" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — performForceInlining</title></polygon>
+<polygon points="68.0,367.2 414.7,366.7 761.3,135.3 1108.0,134.7 1108.0,172.2 761.3,173.0 414.7,388.1 68.0,388.4" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,341.8 414.7,341.3 761.3,109.8 1108.0,109.2 1108.0,134.7 761.3,135.3 414.7,366.7 68.0,367.2" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — generateOutput (self)</title></polygon>
+<polygon points="68.0,341.4 414.7,341.3 761.3,108.6 1108.0,108.6 1108.0,109.2 761.3,109.8 414.7,341.3 68.0,341.8" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
