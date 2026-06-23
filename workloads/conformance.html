@@ -1,31 +1,43 @@
-<!doctype html><meta charset=utf-8><title>conformance � phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>conformance</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>`n` structs each conforming to a shared interface. Stresses interface
+<!doctype html><meta charset=utf-8><title>conformance — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>conformance</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>`n` structs each conforming to a shared interface. Stresses interface
 conformance checking / witness synthesis in the front end (compiled to a
-.slang-module so the signal is sema, not codegen).</p><p style='color:#666;font-size:13px'><b>bucket:</b> sema &nbsp;�&nbsp; <b>compile mode:</b> module &nbsp;�&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;�&nbsp; <b>default N:</b> 600</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+.slang-module so the signal is sema, not codegen).</p><p style='color:#666;font-size:13px'><b>bucket:</b> sema &nbsp;·&nbsp; <b>compile mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 600</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="680" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">conformance — full phase breakdown across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">conformance<tspan fill="#888" font-weight="400" text-decoration="none">  1.15×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">conformance<tspan fill="#888" font-weight="400" text-decoration="none">  0.78×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
-<text x="64.0" y="299.0" text-anchor="end" fill="#999">45</text>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">46</text>
 <line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
 <text x="64.0" y="79.0" text-anchor="end" fill="#999">91</text>
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.4</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.1</text>
+<line x1="183.6" y1="516.0" x2="183.6" y2="519.0" stroke="#999"/>
+<text x="183.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 183.6 531.0)">26.2</text>
+<line x1="299.1" y1="516.0" x2="299.1" y2="519.0" stroke="#999"/>
+<text x="299.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 299.1 531.0)">26.3</text>
 <line x1="414.7" y1="516.0" x2="414.7" y2="519.0" stroke="#999"/>
-<text x="414.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 414.7 531.0)">26.5</text>
+<text x="414.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 414.7 531.0)">26.4</text>
+<line x1="530.2" y1="516.0" x2="530.2" y2="519.0" stroke="#999"/>
+<text x="530.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 530.2 531.0)">26.5</text>
+<line x1="645.8" y1="516.0" x2="645.8" y2="519.0" stroke="#999"/>
+<text x="645.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 645.8 531.0)">26.7</text>
 <line x1="761.3" y1="516.0" x2="761.3" y2="519.0" stroke="#999"/>
-<text x="761.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 761.3 531.0)">26.7</text>
+<text x="761.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 761.3 531.0)">26.8</text>
+<line x1="876.9" y1="516.0" x2="876.9" y2="519.0" stroke="#999"/>
+<text x="876.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 876.9 531.0)">26.9</text>
+<line x1="992.4" y1="516.0" x2="992.4" y2="519.0" stroke="#999"/>
+<text x="992.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 992.4 531.0)">26.10</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.8</text>
-<polygon points="68.0,496.3 414.7,495.8 761.3,493.8 1108.0,494.3 1108.0,516.0 761.3,516.0 414.7,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — parseTranslationUnit</title></polygon>
-<polygon points="68.0,346.7 414.7,338.4 761.3,307.0 1108.0,305.8 1108.0,494.3 761.3,493.8 414.7,495.8 68.0,496.3" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — SemanticChecking</title></polygon>
-<polygon points="68.0,250.9 414.7,239.1 761.3,200.3 1108.0,198.4 1108.0,305.8 761.3,307.0 414.7,338.4 68.0,346.7" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — generateIR</title></polygon>
-<polygon points="68.0,250.4 414.7,237.1 761.3,199.7 1108.0,197.9 1108.0,198.4 761.3,200.3 414.7,239.1 68.0,250.9" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — frontEndExecute (self)</title></polygon>
-<polygon points="68.0,162.4 414.7,148.1 761.3,109.9 1108.0,109.9 1108.0,197.9 761.3,199.7 414.7,237.1 68.0,250.4" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — generateOutput (self)</title></polygon>
-<polygon points="68.0,162.4 414.7,148.1 761.3,108.6 1108.0,109.9 1108.0,109.9 761.3,109.9 414.7,148.1 68.0,162.4" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — compileInner (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,496.0 183.6,496.7 299.1,496.9 414.7,496.4 530.2,495.9 645.8,493.9 761.3,494.4 876.9,495.1 992.4,495.3 1108.0,495.7 1108.0,516.0 992.4,516.0 876.9,516.0 761.3,516.0 645.8,516.0 530.2,516.0 414.7,516.0 299.1,516.0 183.6,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — parseTranslationUnit</title></polygon>
+<polygon points="68.0,353.8 183.6,349.3 299.1,349.7 414.7,347.3 530.2,339.0 645.8,307.8 761.3,306.6 876.9,307.3 992.4,305.6 1108.0,425.4 1108.0,495.7 992.4,495.3 876.9,495.1 761.3,494.4 645.8,493.9 530.2,495.9 414.7,496.4 299.1,496.9 183.6,496.7 68.0,496.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — SemanticChecking</title></polygon>
+<polygon points="68.0,258.4 183.6,253.6 299.1,254.4 414.7,251.9 530.2,240.1 645.8,201.5 761.3,199.6 876.9,200.0 992.4,198.3 1108.0,327.8 1108.0,425.4 992.4,305.6 876.9,307.3 761.3,306.6 645.8,307.8 530.2,339.0 414.7,347.3 299.1,349.7 183.6,349.3 68.0,353.8" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — generateIR</title></polygon>
+<polygon points="68.0,256.3 183.6,253.6 299.1,254.1 414.7,251.4 530.2,238.2 645.8,200.9 761.3,199.1 876.9,199.6 992.4,196.6 1108.0,327.8 1108.0,327.8 992.4,198.3 876.9,200.0 761.3,199.6 645.8,201.5 530.2,240.1 414.7,251.9 299.1,254.4 183.6,253.6 68.0,258.4" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,167.5 183.6,166.8 299.1,166.6 414.7,163.7 530.2,149.5 645.8,111.4 761.3,111.4 876.9,111.5 992.4,108.6 1108.0,243.6 1108.0,327.8 992.4,196.6 876.9,199.6 761.3,199.1 645.8,200.9 530.2,238.2 414.7,251.4 299.1,254.1 183.6,253.6 68.0,256.3" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — generateOutput (self)</title></polygon>
+<polygon points="68.0,167.5 183.6,166.8 299.1,166.6 414.7,163.7 530.2,149.5 645.8,110.1 761.3,111.4 876.9,111.2 992.4,108.6 1108.0,243.6 1108.0,243.6 992.4,108.6 876.9,111.5 761.3,111.4 645.8,111.4 530.2,149.5 414.7,163.7 299.1,166.6 183.6,166.8 68.0,167.5" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
@@ -59,7 +71,7 @@ conformance checking / witness synthesis in the front end (compiled to a
 <text x="582" y="650" fill="#222">generateOutput (self)</text>
 <rect x="843" y="640" width="12" height="12" fill="#969696"/>
 <text x="859" y="650" fill="#222">compileInner (self)</text>
-</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 600); long files show the first 40 lines, the area around computeMain (�40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>conformance.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py � do not edit by hand.
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 600); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>conformance.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
 interface IFace { float f(float x); int g(); }
 
 struct C0 : IFace { float f(float x) { return x * 1.0 + 0.0; } int g() { return 0; } }
@@ -100,7 +112,7 @@ struct C34 : IFace { float f(float x) { return x * 8.0 + 34.0; } int g() { retur
 struct C35 : IFace { float f(float x) { return x * 9.0 + 35.0; } int g() { return 35; } }
 struct C36 : IFace { float f(float x) { return x * 1.0 + 36.0; } int g() { return 36; } }
 
-// � 523 lines omitted �
+// … 523 lines omitted …
 
 struct C560 : IFace { float f(float x) { return x * 3.0 + 560.0; } int g() { return 560; } }
 struct C561 : IFace { float f(float x) { return x * 4.0 + 561.0; } int g() { return 561; } }

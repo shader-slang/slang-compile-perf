@@ -1,45 +1,57 @@
-<!doctype html><meta charset=utf-8><title>control_flow_ssa � phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>control_flow_ssa</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>A single entry point with n stacked control-flow blocks � nested if/else,
-a bounded inner loop with break/continue, and a switch � all mutating a small
+<!doctype html><meta charset=utf-8><title>control_flow_ssa — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>control_flow_ssa</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>A single entry point with n stacked control-flow blocks — nested if/else,
+a bounded inner loop with break/continue, and a switch — all mutating a small
 set of carried locals (a, b, c, d). Re-assigning the same locals across many
 branches and loop back-edges is what forces SSA construction to insert phi
 nodes and what the CFG simplifier (constructSSA, inside simplifyIR) must chew
 through. Isolates the SSA/CFG axis that complexity_ladder only touches as one
 of several mixed dimensions; nothing else stresses it alone. Scales by breadth
-= number of control-flow blocks, so basic-block and phi counts grow with n.</p><p style='color:#666;font-size:13px'><b>bucket:</b> control_flow &nbsp;�&nbsp; <b>compile mode:</b> target &nbsp;�&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;�&nbsp; <b>default N:</b> 120</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+= number of control-flow blocks, so basic-block and phi counts grow with n.</p><p style='color:#666;font-size:13px'><b>bucket:</b> control_flow &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 120</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="680" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">control_flow_ssa — full phase breakdown across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">control_flow_ssa<tspan fill="#888" font-weight="400" text-decoration="none">  1.19×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">control_flow_ssa<tspan fill="#888" font-weight="400" text-decoration="none">  0.93×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
-<text x="64.0" y="299.0" text-anchor="end" fill="#999">160</text>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">161</text>
 <line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
-<text x="64.0" y="79.0" text-anchor="end" fill="#999">320</text>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">323</text>
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.4</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.1</text>
+<line x1="183.6" y1="516.0" x2="183.6" y2="519.0" stroke="#999"/>
+<text x="183.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 183.6 531.0)">26.2</text>
+<line x1="299.1" y1="516.0" x2="299.1" y2="519.0" stroke="#999"/>
+<text x="299.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 299.1 531.0)">26.3</text>
 <line x1="414.7" y1="516.0" x2="414.7" y2="519.0" stroke="#999"/>
-<text x="414.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 414.7 531.0)">26.5</text>
+<text x="414.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 414.7 531.0)">26.4</text>
+<line x1="530.2" y1="516.0" x2="530.2" y2="519.0" stroke="#999"/>
+<text x="530.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 530.2 531.0)">26.5</text>
+<line x1="645.8" y1="516.0" x2="645.8" y2="519.0" stroke="#999"/>
+<text x="645.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 645.8 531.0)">26.7</text>
 <line x1="761.3" y1="516.0" x2="761.3" y2="519.0" stroke="#999"/>
-<text x="761.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 761.3 531.0)">26.7</text>
+<text x="761.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 761.3 531.0)">26.8</text>
+<line x1="876.9" y1="516.0" x2="876.9" y2="519.0" stroke="#999"/>
+<text x="876.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 876.9 531.0)">26.9</text>
+<line x1="992.4" y1="516.0" x2="992.4" y2="519.0" stroke="#999"/>
+<text x="992.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 992.4 531.0)">26.10</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.8</text>
-<polygon points="68.0,514.2 414.7,514.2 761.3,514.3 1108.0,514.3 1108.0,516.0 761.3,516.0 414.7,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — parseTranslationUnit</title></polygon>
-<polygon points="68.0,433.0 414.7,430.7 761.3,413.0 1108.0,412.5 1108.0,514.3 761.3,514.3 414.7,514.2 68.0,514.2" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — SemanticChecking</title></polygon>
-<polygon points="68.0,400.2 414.7,398.1 761.3,369.6 1108.0,368.6 1108.0,412.5 761.3,413.0 414.7,430.7 68.0,433.0" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — generateIR</title></polygon>
-<polygon points="68.0,399.5 414.7,398.1 761.3,369.2 1108.0,368.2 1108.0,368.6 761.3,369.6 414.7,398.1 68.0,400.2" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — frontEndExecute (self)</title></polygon>
-<polygon points="68.0,391.2 414.7,389.8 761.3,352.9 1108.0,352.2 1108.0,368.2 761.3,369.2 414.7,398.1 68.0,399.5" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — specializeModule</title></polygon>
-<polygon points="68.0,353.7 414.7,352.9 761.3,302.3 1108.0,301.0 1108.0,352.2 761.3,352.9 414.7,389.8 68.0,391.2" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — simplifyIR</title></polygon>
-<polygon points="68.0,350.3 414.7,348.9 761.3,288.7 1108.0,287.0 1108.0,301.0 761.3,302.3 414.7,352.9 68.0,353.7" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — linkIR</title></polygon>
-<polygon points="68.0,350.1 414.7,348.7 761.3,288.5 1108.0,286.8 1108.0,287.0 761.3,288.7 414.7,348.9 68.0,350.3" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — unrollLoopsInModule</title></polygon>
-<polygon points="68.0,346.7 414.7,345.3 761.3,285.0 1108.0,283.0 1108.0,286.8 761.3,288.5 414.7,348.7 68.0,350.1" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — legalizeResourceTypes</title></polygon>
-<polygon points="68.0,343.1 414.7,341.7 761.3,281.3 1108.0,279.0 1108.0,283.0 761.3,285.0 414.7,345.3 68.0,346.7" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — legalizeExistentialTypeLayout</title></polygon>
-<polygon points="68.0,338.2 414.7,336.8 761.3,276.6 1108.0,274.1 1108.0,279.0 761.3,281.3 414.7,341.7 68.0,343.1" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — performMandatoryEarlyInlining</title></polygon>
-<polygon points="68.0,337.6 414.7,336.2 761.3,276.0 1108.0,273.5 1108.0,274.1 761.3,276.6 414.7,336.8 68.0,338.2" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — performForceInlining</title></polygon>
-<polygon points="68.0,277.4 414.7,275.6 761.3,212.5 1108.0,209.3 1108.0,273.5 761.3,276.0 414.7,336.2 68.0,337.6" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — linkAndOptimizeIR (self)</title></polygon>
-<polygon points="68.0,174.0 414.7,171.6 761.3,112.1 1108.0,109.5 1108.0,209.3 761.3,212.5 414.7,275.6 68.0,277.4" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — generateOutput (self)</title></polygon>
-<polygon points="68.0,173.5 414.7,171.6 761.3,111.8 1108.0,108.6 1108.0,109.5 761.3,112.1 414.7,171.6 68.0,174.0" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — compileInner (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,514.4 183.6,514.4 299.1,514.3 414.7,514.3 530.2,514.3 645.8,514.3 761.3,514.3 876.9,514.3 992.4,514.2 1108.0,514.3 1108.0,516.0 992.4,516.0 876.9,516.0 761.3,516.0 645.8,516.0 530.2,516.0 414.7,516.0 299.1,516.0 183.6,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — parseTranslationUnit</title></polygon>
+<polygon points="68.0,438.7 183.6,436.1 299.1,436.6 414.7,433.7 530.2,431.4 645.8,414.0 761.3,413.4 876.9,412.1 992.4,409.1 1108.0,480.0 1108.0,514.3 992.4,514.2 876.9,514.3 761.3,514.3 645.8,514.3 530.2,514.3 414.7,514.3 299.1,514.3 183.6,514.4 68.0,514.4" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — SemanticChecking</title></polygon>
+<polygon points="68.0,407.3 183.6,405.2 299.1,405.6 414.7,401.3 530.2,399.2 645.8,370.9 761.3,369.9 876.9,368.4 992.4,365.1 1108.0,451.5 1108.0,480.0 992.4,409.1 876.9,412.1 761.3,413.4 645.8,414.0 530.2,431.4 414.7,433.7 299.1,436.6 183.6,436.1 68.0,438.7" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — generateIR</title></polygon>
+<polygon points="68.0,406.9 183.6,404.8 299.1,405.2 414.7,400.5 530.2,399.1 645.8,370.5 761.3,369.5 876.9,368.0 992.4,364.7 1108.0,451.1 1108.0,451.5 992.4,365.1 876.9,368.4 761.3,369.9 645.8,370.9 530.2,399.2 414.7,401.3 299.1,405.6 183.6,405.2 68.0,407.3" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,398.9 183.6,396.8 299.1,397.2 414.7,392.3 530.2,390.9 645.8,354.3 761.3,353.7 876.9,352.1 992.4,348.8 1108.0,437.4 1108.0,451.1 992.4,364.7 876.9,368.0 761.3,369.5 645.8,370.5 530.2,399.1 414.7,400.5 299.1,405.2 183.6,404.8 68.0,406.9" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — specializeModule</title></polygon>
+<polygon points="68.0,364.1 183.6,361.4 299.1,361.7 414.7,355.1 530.2,354.4 645.8,304.2 761.3,302.9 876.9,301.4 992.4,298.9 1108.0,391.3 1108.0,437.4 992.4,348.8 876.9,352.1 761.3,353.7 645.8,354.3 530.2,390.9 414.7,392.3 299.1,397.2 183.6,396.8 68.0,398.9" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — simplifyIR</title></polygon>
+<polygon points="68.0,361.5 183.6,358.6 299.1,359.0 414.7,351.8 530.2,350.4 645.8,290.7 761.3,289.1 876.9,287.7 992.4,285.1 1108.0,388.9 1108.0,391.3 992.4,298.9 876.9,301.4 761.3,302.9 645.8,304.2 530.2,354.4 414.7,355.1 299.1,361.7 183.6,361.4 68.0,364.1" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — linkIR</title></polygon>
+<polygon points="68.0,361.3 183.6,358.4 299.1,358.7 414.7,351.6 530.2,350.2 645.8,290.5 761.3,288.9 876.9,287.5 992.4,284.9 1108.0,388.7 1108.0,388.9 992.4,285.1 876.9,287.7 761.3,289.1 645.8,290.7 530.2,350.4 414.7,351.8 299.1,359.0 183.6,358.6 68.0,361.5" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — unrollLoopsInModule</title></polygon>
+<polygon points="68.0,358.0 183.6,355.2 299.1,355.5 414.7,348.2 530.2,346.8 645.8,287.1 761.3,285.1 876.9,283.8 992.4,281.3 1108.0,384.6 1108.0,388.7 992.4,284.9 876.9,287.5 761.3,288.9 645.8,290.5 530.2,350.2 414.7,351.6 299.1,358.7 183.6,358.4 68.0,361.3" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,354.6 183.6,351.7 299.1,352.0 414.7,344.6 530.2,343.2 645.8,283.4 761.3,281.1 876.9,279.9 992.4,277.4 1108.0,380.2 1108.0,384.6 992.4,281.3 876.9,283.8 761.3,285.1 645.8,287.1 530.2,346.8 414.7,348.2 299.1,355.5 183.6,355.2 68.0,358.0" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,349.9 183.6,347.0 299.1,347.4 414.7,339.8 530.2,338.4 645.8,278.8 761.3,276.3 876.9,275.0 992.4,272.7 1108.0,375.5 1108.0,380.2 992.4,277.4 876.9,279.9 761.3,281.1 645.8,283.4 530.2,343.2 414.7,344.6 299.1,352.0 183.6,351.7 68.0,354.6" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,349.3 183.6,346.4 299.1,346.8 414.7,339.2 530.2,337.8 645.8,278.1 761.3,275.7 876.9,274.4 992.4,272.1 1108.0,374.8 1108.0,375.5 992.4,272.7 876.9,275.0 761.3,276.3 645.8,278.8 530.2,338.4 414.7,339.8 299.1,347.4 183.6,347.0 68.0,349.9" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — performForceInlining</title></polygon>
+<polygon points="68.0,291.5 183.6,288.1 299.1,289.5 414.7,279.5 530.2,277.8 645.8,215.2 761.3,212.0 876.9,210.3 992.4,207.7 1108.0,316.8 1108.0,374.8 992.4,272.1 876.9,274.4 761.3,275.7 645.8,278.1 530.2,337.8 414.7,339.2 299.1,346.8 183.6,346.4 68.0,349.3" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,194.0 183.6,188.4 299.1,191.7 414.7,177.0 530.2,174.7 645.8,115.7 761.3,113.1 876.9,110.4 992.4,109.0 1108.0,214.9 1108.0,316.8 992.4,207.7 876.9,210.3 761.3,212.0 645.8,215.2 530.2,277.8 414.7,279.5 299.1,289.5 183.6,288.1 68.0,291.5" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — generateOutput (self)</title></polygon>
+<polygon points="68.0,193.3 183.6,188.3 299.1,190.5 414.7,176.6 530.2,174.7 645.8,115.4 761.3,112.2 876.9,110.4 992.4,108.6 1108.0,214.7 1108.0,214.9 992.4,109.0 876.9,110.4 761.3,113.1 645.8,115.7 530.2,174.7 414.7,177.0 299.1,191.7 183.6,188.4 68.0,194.0" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
@@ -73,7 +85,7 @@ of several mixed dimensions; nothing else stresses it alone. Scales by breadth
 <text x="582" y="650" fill="#222">generateOutput (self)</text>
 <rect x="843" y="640" width="12" height="12" fill="#969696"/>
 <text x="859" y="650" fill="#222">compileInner (self)</text>
-</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 120); long files show the first 40 lines, the area around computeMain (�40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>control_flow_ssa.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py � do not edit by hand.
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 120); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>control_flow_ssa.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
 RWStructuredBuffer&lt;float&gt; outBuf;
 StructuredBuffer&lt;float&gt; inBuf;
 
@@ -121,7 +133,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
         case 1: b += c; break;
         case 2: c *= 1.01; break;
 
-// � 2325 lines omitted �
+// … 2325 lines omitted …
 
         a = a * 1.1 + b;
         [MaxIters(4)] for (int k = 0; k &lt; 3; ++k)

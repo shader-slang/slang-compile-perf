@@ -1,39 +1,51 @@
-<!doctype html><meta charset=utf-8><title>mdl_dxr � phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>mdl_dxr</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>Real MDL/DXR path-tracing shaders (shader-slang/MDL-SDK). `n` is ignored
+<!doctype html><meta charset=utf-8><title>mdl_dxr — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>mdl_dxr</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>Real MDL/DXR path-tracing shaders (shader-slang/MDL-SDK). `n` is ignored
 (fixed corpus). Compiled monolithically from hit.slang, which imports the
-rest. This is a holistic real-world compile-time number.</p><p style='color:#666;font-size:13px'><b>bucket:</b> real_world &nbsp;�&nbsp; <b>compile mode:</b> target &nbsp;�&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;�&nbsp; <b>default N:</b> 0</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+rest. This is a holistic real-world compile-time number.</p><p style='color:#666;font-size:13px'><b>bucket:</b> real_world &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 0</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="680" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">mdl_dxr — full phase breakdown across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">mdl_dxr<tspan fill="#888" font-weight="400" text-decoration="none">  1.19×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">mdl_dxr<tspan fill="#888" font-weight="400" text-decoration="none">  0.97×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
-<text x="64.0" y="299.0" text-anchor="end" fill="#999">863</text>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">875</text>
 <line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
-<text x="64.0" y="79.0" text-anchor="end" fill="#999">1727</text>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">1750</text>
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.4</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.1</text>
+<line x1="183.6" y1="516.0" x2="183.6" y2="519.0" stroke="#999"/>
+<text x="183.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 183.6 531.0)">26.2</text>
+<line x1="299.1" y1="516.0" x2="299.1" y2="519.0" stroke="#999"/>
+<text x="299.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 299.1 531.0)">26.3</text>
 <line x1="414.7" y1="516.0" x2="414.7" y2="519.0" stroke="#999"/>
-<text x="414.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 414.7 531.0)">26.5</text>
+<text x="414.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 414.7 531.0)">26.4</text>
+<line x1="530.2" y1="516.0" x2="530.2" y2="519.0" stroke="#999"/>
+<text x="530.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 530.2 531.0)">26.5</text>
+<line x1="645.8" y1="516.0" x2="645.8" y2="519.0" stroke="#999"/>
+<text x="645.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 645.8 531.0)">26.7</text>
 <line x1="761.3" y1="516.0" x2="761.3" y2="519.0" stroke="#999"/>
-<text x="761.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 761.3 531.0)">26.7</text>
+<text x="761.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 761.3 531.0)">26.8</text>
+<line x1="876.9" y1="516.0" x2="876.9" y2="519.0" stroke="#999"/>
+<text x="876.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 876.9 531.0)">26.9</text>
+<line x1="992.4" y1="516.0" x2="992.4" y2="519.0" stroke="#999"/>
+<text x="992.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 992.4 531.0)">26.10</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.8</text>
-<polygon points="68.0,512.7 414.7,512.8 761.3,512.7 1108.0,512.7 1108.0,516.0 761.3,516.0 414.7,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — parseTranslationUnit</title></polygon>
-<polygon points="68.0,406.6 414.7,408.1 761.3,379.5 1108.0,379.2 1108.0,512.7 761.3,512.7 414.7,512.8 68.0,512.7" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — SemanticChecking</title></polygon>
-<polygon points="68.0,405.8 414.7,407.4 761.3,375.9 1108.0,375.5 1108.0,379.2 761.3,379.5 414.7,408.1 68.0,406.6" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — generateIR</title></polygon>
-<polygon points="68.0,391.1 414.7,392.3 761.3,345.8 1108.0,345.4 1108.0,375.5 761.3,375.9 414.7,407.4 68.0,405.8" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — specializeModule</title></polygon>
-<polygon points="68.0,355.8 414.7,358.0 761.3,299.0 1108.0,298.8 1108.0,345.4 761.3,345.8 414.7,392.3 68.0,391.1" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — simplifyIR</title></polygon>
-<polygon points="68.0,352.5 414.7,354.9 761.3,291.4 1108.0,291.6 1108.0,298.8 761.3,299.0 414.7,358.0 68.0,355.8" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — linkIR</title></polygon>
-<polygon points="68.0,352.3 414.7,354.8 761.3,291.4 1108.0,291.5 1108.0,291.6 761.3,291.4 414.7,354.9 68.0,352.5" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — unrollLoopsInModule</title></polygon>
-<polygon points="68.0,343.5 414.7,346.3 761.3,282.7 1108.0,282.9 1108.0,291.5 761.3,291.4 414.7,354.8 68.0,352.3" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — legalizeResourceTypes</title></polygon>
-<polygon points="68.0,334.6 414.7,337.6 761.3,273.9 1108.0,274.1 1108.0,282.9 761.3,282.7 414.7,346.3 68.0,343.5" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — legalizeExistentialTypeLayout</title></polygon>
-<polygon points="68.0,333.8 414.7,336.9 761.3,273.3 1108.0,273.5 1108.0,274.1 761.3,273.9 414.7,337.6 68.0,334.6" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — performMandatoryEarlyInlining</title></polygon>
-<polygon points="68.0,333.0 414.7,336.1 761.3,272.6 1108.0,272.8 1108.0,273.5 761.3,273.3 414.7,336.9 68.0,333.8" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — performForceInlining</title></polygon>
-<polygon points="68.0,301.9 414.7,305.0 761.3,229.2 1108.0,229.3 1108.0,272.8 761.3,272.6 414.7,336.1 68.0,333.0" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — linkAndOptimizeIR (self)</title></polygon>
-<polygon points="68.0,173.2 414.7,185.0 761.3,109.7 1108.0,108.9 1108.0,229.3 761.3,229.2 414.7,305.0 68.0,301.9" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — generateOutput (self)</title></polygon>
-<polygon points="68.0,173.0 414.7,184.8 761.3,109.3 1108.0,108.6 1108.0,108.9 761.3,109.7 414.7,185.0 68.0,173.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — compileInner (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,512.8 183.6,512.8 299.1,512.8 414.7,512.7 530.2,512.8 645.8,512.8 761.3,512.8 876.9,512.8 992.4,512.8 1108.0,512.8 1108.0,516.0 992.4,516.0 876.9,516.0 761.3,516.0 645.8,516.0 530.2,516.0 414.7,516.0 299.1,516.0 183.6,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — parseTranslationUnit</title></polygon>
+<polygon points="68.0,413.5 183.6,412.1 299.1,412.0 414.7,408.0 530.2,409.6 645.8,381.3 761.3,381.0 876.9,381.5 992.4,375.7 1108.0,448.8 1108.0,512.8 992.4,512.8 876.9,512.8 761.3,512.8 645.8,512.8 530.2,512.8 414.7,512.7 299.1,512.8 183.6,512.8 68.0,512.8" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — SemanticChecking</title></polygon>
+<polygon points="68.0,412.8 183.6,411.4 299.1,411.3 414.7,407.2 530.2,408.8 645.8,377.7 761.3,377.3 876.9,377.9 992.4,372.0 1108.0,447.9 1108.0,448.8 992.4,375.7 876.9,381.5 761.3,381.0 645.8,381.3 530.2,409.6 414.7,408.0 299.1,412.0 183.6,412.1 68.0,413.5" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — generateIR</title></polygon>
+<polygon points="68.0,398.7 183.6,397.2 299.1,397.2 414.7,392.8 530.2,393.9 645.8,348.1 761.3,347.7 876.9,348.2 992.4,342.1 1108.0,425.0 1108.0,447.9 992.4,372.0 876.9,377.9 761.3,377.3 645.8,377.7 530.2,408.8 414.7,407.2 299.1,411.3 183.6,411.4 68.0,412.8" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — specializeModule</title></polygon>
+<polygon points="68.0,365.3 183.6,363.4 299.1,363.4 414.7,357.9 530.2,360.1 645.8,301.8 761.3,301.6 876.9,302.1 992.4,295.9 1108.0,383.0 1108.0,425.0 992.4,342.1 876.9,348.2 761.3,347.7 645.8,348.1 530.2,393.9 414.7,392.8 299.1,397.2 183.6,397.2 68.0,398.7" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — simplifyIR</title></polygon>
+<polygon points="68.0,362.3 183.6,360.3 299.1,360.3 414.7,354.6 530.2,357.1 645.8,294.4 761.3,294.6 876.9,295.2 992.4,288.8 1108.0,380.0 1108.0,383.0 992.4,295.9 876.9,302.1 761.3,301.6 645.8,301.8 530.2,360.1 414.7,357.9 299.1,363.4 183.6,363.4 68.0,365.3" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — linkIR</title></polygon>
+<polygon points="68.0,362.2 183.6,360.2 299.1,360.2 414.7,354.5 530.2,356.9 645.8,294.3 761.3,294.5 876.9,295.2 992.4,288.7 1108.0,379.9 1108.0,380.0 992.4,288.8 876.9,295.2 761.3,294.6 645.8,294.4 530.2,357.1 414.7,354.6 299.1,360.3 183.6,360.3 68.0,362.3" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — unrollLoopsInModule</title></polygon>
+<polygon points="68.0,353.8 183.6,351.6 299.1,351.8 414.7,345.8 530.2,348.5 645.8,285.8 761.3,286.0 876.9,286.6 992.4,280.2 1108.0,371.4 1108.0,379.9 992.4,288.7 876.9,295.2 761.3,294.5 645.8,294.3 530.2,356.9 414.7,354.5 299.1,360.2 183.6,360.2 68.0,362.2" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,345.3 183.6,343.0 299.1,343.2 414.7,336.9 530.2,340.0 645.8,277.1 761.3,277.3 876.9,277.9 992.4,271.6 1108.0,362.7 1108.0,371.4 992.4,280.2 876.9,286.6 761.3,286.0 645.8,285.8 530.2,348.5 414.7,345.8 299.1,351.8 183.6,351.6 68.0,353.8" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,344.5 183.6,342.3 299.1,342.5 414.7,336.2 530.2,339.2 645.8,276.5 761.3,276.7 876.9,277.3 992.4,271.1 1108.0,362.1 1108.0,362.7 992.4,271.6 876.9,277.9 761.3,277.3 645.8,277.1 530.2,340.0 414.7,336.9 299.1,343.2 183.6,343.0 68.0,345.3" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,344.0 183.6,341.5 299.1,341.8 414.7,335.4 530.2,338.5 645.8,275.8 761.3,276.0 876.9,276.5 992.4,270.3 1108.0,361.4 1108.0,362.1 992.4,271.1 876.9,277.3 761.3,276.7 645.8,276.5 530.2,339.2 414.7,336.2 299.1,342.5 183.6,342.3 68.0,344.5" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — performForceInlining</title></polygon>
+<polygon points="68.0,314.3 183.6,311.2 299.1,311.8 414.7,304.7 530.2,307.7 645.8,232.9 761.3,233.1 876.9,233.4 992.4,227.9 1108.0,325.7 1108.0,361.4 992.4,270.3 876.9,276.5 761.3,276.0 645.8,275.8 530.2,338.5 414.7,335.4 299.1,341.8 183.6,341.5 68.0,344.0" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,197.2 183.6,193.7 299.1,195.0 414.7,177.7 530.2,189.3 645.8,115.1 761.3,114.3 876.9,113.6 992.4,109.5 1108.0,207.4 1108.0,325.7 992.4,227.9 876.9,233.4 761.3,233.1 645.8,232.9 530.2,307.7 414.7,304.7 299.1,311.8 183.6,311.2 68.0,314.3" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — generateOutput (self)</title></polygon>
+<polygon points="68.0,196.9 183.6,192.7 299.1,194.8 414.7,177.5 530.2,189.1 645.8,114.7 761.3,113.9 876.9,112.5 992.4,108.6 1108.0,207.4 1108.0,207.4 992.4,109.5 876.9,113.6 761.3,114.3 645.8,115.1 530.2,189.3 414.7,177.7 299.1,195.0 183.6,193.7 68.0,197.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
@@ -67,7 +79,7 @@ rest. This is a holistic real-world compile-time number.</p><p style='color:#666
 <text x="582" y="650" fill="#222">generateOutput (self)</text>
 <rect x="843" y="640" width="12" height="12" fill="#969696"/>
 <text x="859" y="650" fill="#222">compileInner (self)</text>
-</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source; long files show the first 40 lines, the area around computeMain (�40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>common.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>/******************************************************************************
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source; long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>common.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>/******************************************************************************
  * Copyright (c) 2019-2024, NVIDIA CORPORATION. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -108,7 +120,7 @@ public cbuffer SceneConstants : register(b1)
 
     // (progressive) rendering
 
-// � 256 lines omitted �
+// … 256 lines omitted …
 
 }
 
@@ -190,7 +202,7 @@ import material;
 [shader("closesthit")]
 void MdlRadianceClosestHitProgram(inout RadianceHitInfo payload, Attributes attrib)
 
-// � 160 lines omitted �
+// … 160 lines omitted …
 
 // ------------------------------------------------------------------------------------------------
 // MDL shadow group shader
@@ -272,7 +284,7 @@ float3 environment_sample(inout uint seed,
                                  out float3 to_light,
                                  out float pdf)
 
-// � 56 lines omitted �
+// … 56 lines omitted …
 
 public float3 sample_lights(inout Shading_state_material state, out float3 to_light, out float light_pdf, inout uint seed)
 {
@@ -354,7 +366,7 @@ static const float3 glob_cnst91[16] = { { 0.02985999919f, 0.003100000089f, 0.136
 // functions
 structtype1 constr_structtype1(
 
-// � 12448 lines omitted �
+// … 12448 lines omitted …
 
     tmp2 = mdl_read_argblock_as_int(tmp0 + 824);
     int tmp3 = mdl_read_argblock_as_int(tmp0 + 72);
@@ -436,7 +448,7 @@ public struct Mdl_texture_info
     public uint gpu_resource_array_start;
 
 
-// � 1570 lines omitted �
+// … 1570 lines omitted …
 
     Derived_float3 default_value,
     bool uniform_lookup)
@@ -518,7 +530,7 @@ public cbuffer Material_constants : register(b0, space3)
     public int material_id;
     public uint material_flags;
 
-// � 106 lines omitted �
+// … 106 lines omitted …
 
     mdl_state.geom_normal = world_geom_normal;
 	// currently not supported
@@ -600,7 +612,7 @@ public struct Derived_float {
 public struct Derived_float2 {
     public float2 val;
 
-// � 175 lines omitted �
+// … 175 lines omitted …
 
 	public float3 albedo_diffuse;          ///&lt; output: (diffuse part of the) albedo
 	public float3 albedo_glossy;           ///&lt; output: (glossy part of the) albedo

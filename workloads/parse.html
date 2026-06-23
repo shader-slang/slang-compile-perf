@@ -1,8 +1,8 @@
-<!doctype html><meta charset=utf-8><title>parse � phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>parse</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>Large but semantically trivial source: many functions, each a long
-arithmetic expression. Stresses lex/parse with cheap sema.</p><p style='color:#666;font-size:13px'><b>bucket:</b> parse &nbsp;�&nbsp; <b>compile mode:</b> module &nbsp;�&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;�&nbsp; <b>default N:</b> 2000</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<!doctype html><meta charset=utf-8><title>parse — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>parse</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>Large but semantically trivial source: many functions, each a long
+arithmetic expression. Stresses lex/parse with cheap sema.</p><p style='color:#666;font-size:13px'><b>bucket:</b> parse &nbsp;·&nbsp; <b>compile mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 2000</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="680" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">parse — full phase breakdown across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">parse<tspan fill="#888" font-weight="400" text-decoration="none">  0.99×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">parse<tspan fill="#888" font-weight="400" text-decoration="none">  0.23×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -12,19 +12,31 @@ arithmetic expression. Stresses lex/parse with cheap sema.</p><p style='color:#6
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.4</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.1</text>
+<line x1="183.6" y1="516.0" x2="183.6" y2="519.0" stroke="#999"/>
+<text x="183.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 183.6 531.0)">26.2</text>
+<line x1="299.1" y1="516.0" x2="299.1" y2="519.0" stroke="#999"/>
+<text x="299.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 299.1 531.0)">26.3</text>
 <line x1="414.7" y1="516.0" x2="414.7" y2="519.0" stroke="#999"/>
-<text x="414.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 414.7 531.0)">26.5</text>
+<text x="414.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 414.7 531.0)">26.4</text>
+<line x1="530.2" y1="516.0" x2="530.2" y2="519.0" stroke="#999"/>
+<text x="530.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 530.2 531.0)">26.5</text>
+<line x1="645.8" y1="516.0" x2="645.8" y2="519.0" stroke="#999"/>
+<text x="645.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 645.8 531.0)">26.7</text>
 <line x1="761.3" y1="516.0" x2="761.3" y2="519.0" stroke="#999"/>
-<text x="761.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 761.3 531.0)">26.7</text>
+<text x="761.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 761.3 531.0)">26.8</text>
+<line x1="876.9" y1="516.0" x2="876.9" y2="519.0" stroke="#999"/>
+<text x="876.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 876.9 531.0)">26.9</text>
+<line x1="992.4" y1="516.0" x2="992.4" y2="519.0" stroke="#999"/>
+<text x="992.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 992.4 531.0)">26.10</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.8</text>
-<polygon points="68.0,507.9 414.7,507.9 761.3,508.0 1108.0,507.9 1108.0,516.0 761.3,516.0 414.7,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse — parseTranslationUnit</title></polygon>
-<polygon points="68.0,188.5 414.7,187.4 761.3,194.1 1108.0,195.3 1108.0,507.9 761.3,508.0 414.7,507.9 68.0,507.9" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse — SemanticChecking</title></polygon>
-<polygon points="68.0,127.1 414.7,123.5 761.3,132.7 1108.0,131.7 1108.0,195.3 761.3,194.1 414.7,187.4 68.0,188.5" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse — generateIR</title></polygon>
-<polygon points="68.0,127.1 414.7,123.5 761.3,132.7 1108.0,131.7 1108.0,131.7 761.3,132.7 414.7,123.5 68.0,127.1" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse — frontEndExecute (self)</title></polygon>
-<polygon points="68.0,112.1 414.7,108.6 761.3,118.3 1108.0,117.1 1108.0,131.7 761.3,132.7 414.7,123.5 68.0,127.1" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse — generateOutput (self)</title></polygon>
-<polygon points="68.0,112.1 414.7,108.6 761.3,118.3 1108.0,117.1 1108.0,117.1 761.3,118.3 414.7,108.6 68.0,112.1" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse — compileInner (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,508.2 183.6,508.2 299.1,508.2 414.7,507.9 530.2,507.9 645.8,508.0 761.3,507.9 876.9,508.0 992.4,508.0 1108.0,508.0 1108.0,516.0 992.4,516.0 876.9,516.0 761.3,516.0 645.8,516.0 530.2,516.0 414.7,516.0 299.1,516.0 183.6,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse — parseTranslationUnit</title></polygon>
+<polygon points="68.0,206.2 183.6,203.3 299.1,203.5 414.7,188.5 530.2,187.4 645.8,194.1 761.3,195.3 876.9,196.7 992.4,198.3 1108.0,478.3 1108.0,508.0 992.4,508.0 876.9,508.0 761.3,507.9 645.8,508.0 530.2,507.9 414.7,507.9 299.1,508.2 183.6,508.2 68.0,508.2" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse — SemanticChecking</title></polygon>
+<polygon points="68.0,146.3 183.6,142.6 299.1,142.6 414.7,127.1 530.2,123.5 645.8,132.7 761.3,131.7 876.9,134.8 992.4,136.8 1108.0,442.7 1108.0,478.3 992.4,198.3 876.9,196.7 761.3,195.3 645.8,194.1 530.2,187.4 414.7,188.5 299.1,203.5 183.6,203.3 68.0,206.2" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse — generateIR</title></polygon>
+<polygon points="68.0,146.2 183.6,142.3 299.1,141.8 414.7,127.1 530.2,123.5 645.8,132.7 761.3,131.7 876.9,134.7 992.4,136.8 1108.0,441.5 1108.0,442.7 992.4,136.8 876.9,134.8 761.3,131.7 645.8,132.7 530.2,123.5 414.7,127.1 299.1,142.6 183.6,142.6 68.0,146.3" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,131.7 183.6,127.8 299.1,127.3 414.7,112.1 530.2,108.6 645.8,118.3 761.3,117.1 876.9,120.1 992.4,122.2 1108.0,427.3 1108.0,441.5 992.4,136.8 876.9,134.7 761.3,131.7 645.8,132.7 530.2,123.5 414.7,127.1 299.1,141.8 183.6,142.3 68.0,146.2" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse — generateOutput (self)</title></polygon>
+<polygon points="68.0,131.3 183.6,127.8 299.1,127.3 414.7,112.1 530.2,108.6 645.8,118.3 761.3,117.1 876.9,120.1 992.4,122.2 1108.0,427.3 1108.0,427.3 992.4,122.2 876.9,120.1 761.3,117.1 645.8,118.3 530.2,108.6 414.7,112.1 299.1,127.3 183.6,127.8 68.0,131.7" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>parse — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
@@ -58,7 +70,7 @@ arithmetic expression. Stresses lex/parse with cheap sema.</p><p style='color:#6
 <text x="582" y="650" fill="#222">generateOutput (self)</text>
 <rect x="843" y="640" width="12" height="12" fill="#969696"/>
 <text x="859" y="650" fill="#222">compileInner (self)</text>
-</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 2000); long files show the first 40 lines, the area around computeMain (�40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>parse.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py � do not edit by hand.
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 2000); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>parse.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
 RWStructuredBuffer&lt;float&gt; outBuf;
 
 float p_0(float x) { return x - 0.0 * x + 1.0 * x - 2.0 * x + 3.0 * x - 4.0 * x + 5.0 * x - 6.0 * x + 7.0 * x - 1.0 * x + 0.0 * x - 3.0 * x + 2.0 * x - 5.0 * x + 4.0 * x - 0.0 * x + 6.0 * x - 2.0 * x + 8.0 * x - 4.0 * x + 1.0 * x - 6.0 * x + 3.0 * x - 1.0 * x + 5.0 * x - 3.0 * x + 7.0 * x - 5.0 * x + 0.0 * x - 0.0 * x + 2.0 * x - 2.0 * x + 4.0 * x - 4.0 * x + 6.0 * x - 6.0 * x + 8.0 * x - 1.0 * x + 1.0 * x - 3.0 * x + 3.0 * x; }
@@ -99,7 +111,7 @@ float p_34(float x) { return x - 0.0 * x + 1.0 * x - 2.0 * x + 3.0 * x - 4.0 * x
 float p_35(float x) { return x - 0.0 * x + 1.0 * x - 2.0 * x + 3.0 * x - 4.0 * x + 5.0 * x - 6.0 * x + 7.0 * x - 1.0 * x + 0.0 * x - 3.0 * x + 2.0 * x - 5.0 * x + 4.0 * x - 0.0 * x + 6.0 * x - 2.0 * x + 8.0 * x - 4.0 * x + 1.0 * x - 6.0 * x + 3.0 * x - 1.0 * x + 5.0 * x - 3.0 * x + 7.0 * x - 5.0 * x + 0.0 * x - 0.0 * x + 2.0 * x - 2.0 * x + 4.0 * x - 4.0 * x + 6.0 * x - 6.0 * x + 8.0 * x - 1.0 * x + 1.0 * x - 3.0 * x + 3.0 * x; }
 float p_36(float x) { return x - 0.0 * x + 1.0 * x - 2.0 * x + 3.0 * x - 4.0 * x + 5.0 * x - 6.0 * x + 7.0 * x - 1.0 * x + 0.0 * x - 3.0 * x + 2.0 * x - 5.0 * x + 4.0 * x - 0.0 * x + 6.0 * x - 2.0 * x + 8.0 * x - 4.0 * x + 1.0 * x - 6.0 * x + 3.0 * x - 1.0 * x + 5.0 * x - 3.0 * x + 7.0 * x - 5.0 * x + 0.0 * x - 0.0 * x + 2.0 * x - 2.0 * x + 4.0 * x - 4.0 * x + 6.0 * x - 6.0 * x + 8.0 * x - 1.0 * x + 1.0 * x - 3.0 * x + 3.0 * x; }
 
-// � 1926 lines omitted �
+// … 1926 lines omitted …
 
 float p_1963(float x) { return x - 0.0 * x + 1.0 * x - 2.0 * x + 3.0 * x - 4.0 * x + 5.0 * x - 6.0 * x + 7.0 * x - 1.0 * x + 0.0 * x - 3.0 * x + 2.0 * x - 5.0 * x + 4.0 * x - 0.0 * x + 6.0 * x - 2.0 * x + 8.0 * x - 4.0 * x + 1.0 * x - 6.0 * x + 3.0 * x - 1.0 * x + 5.0 * x - 3.0 * x + 7.0 * x - 5.0 * x + 0.0 * x - 0.0 * x + 2.0 * x - 2.0 * x + 4.0 * x - 4.0 * x + 6.0 * x - 6.0 * x + 8.0 * x - 1.0 * x + 1.0 * x - 3.0 * x + 3.0 * x; }
 float p_1964(float x) { return x - 0.0 * x + 1.0 * x - 2.0 * x + 3.0 * x - 4.0 * x + 5.0 * x - 6.0 * x + 7.0 * x - 1.0 * x + 0.0 * x - 3.0 * x + 2.0 * x - 5.0 * x + 4.0 * x - 0.0 * x + 6.0 * x - 2.0 * x + 8.0 * x - 4.0 * x + 1.0 * x - 6.0 * x + 3.0 * x - 1.0 * x + 5.0 * x - 3.0 * x + 7.0 * x - 5.0 * x + 0.0 * x - 0.0 * x + 2.0 * x - 2.0 * x + 4.0 * x - 4.0 * x + 6.0 * x - 6.0 * x + 8.0 * x - 1.0 * x + 1.0 * x - 3.0 * x + 3.0 * x; }
