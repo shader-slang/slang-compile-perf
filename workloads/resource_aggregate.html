@@ -9,37 +9,35 @@ drop them before legalization runs. Scales by breadth = number of bundles,
 i.e. the count of resource fields the pass must legalize; legalizeResourceTypes
 grows super-linearly in n.</p><p style='color:#666;font-size:13px'><b>bucket:</b> resource_legalize &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 80</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="680" fill="white"/>
-<text x="12" y="30" font-size="20" font-weight="bold">resource_aggregate — full phase breakdown across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">resource_aggregate<tspan fill="#888" font-weight="400" text-decoration="none">  0.60×</tspan></text>
+<text x="12" y="30" font-size="20" font-weight="bold">resource_aggregate â€” full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">resource_aggregate<tspan fill="#888" font-weight="400" text-decoration="none">  1.00Ã—</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
-<text x="64.0" y="299.0" text-anchor="end" fill="#999">59</text>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">58</text>
 <line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
-<text x="64.0" y="79.0" text-anchor="end" fill="#999">119</text>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">116</text>
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.9</text>
-<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
-<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.10</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.7</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
-<polygon points="68.0,513.9 588.0,513.8 1108.0,513.9 1108.0,516.0 588.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — parseTranslationUnit</title></polygon>
-<polygon points="68.0,395.8 588.0,390.0 1108.0,465.0 1108.0,513.9 588.0,513.8 68.0,513.9" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — SemanticChecking</title></polygon>
-<polygon points="68.0,347.2 588.0,341.3 1108.0,443.0 1108.0,465.0 588.0,390.0 68.0,395.8" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — generateIR</title></polygon>
-<polygon points="68.0,339.9 588.0,334.7 1108.0,436.0 1108.0,443.0 588.0,341.3 68.0,347.2" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — frontEndExecute (self)</title></polygon>
-<polygon points="68.0,302.4 588.0,297.4 1108.0,403.0 1108.0,436.0 588.0,334.7 68.0,339.9" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — specializeModule</title></polygon>
-<polygon points="68.0,275.6 588.0,270.9 1108.0,379.4 1108.0,403.0 588.0,297.4 68.0,302.4" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — simplifyIR</title></polygon>
-<polygon points="68.0,233.9 588.0,228.6 1108.0,373.8 1108.0,379.4 588.0,270.9 68.0,275.6" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — linkIR</title></polygon>
-<polygon points="68.0,233.8 588.0,228.6 1108.0,373.7 1108.0,373.8 588.0,228.6 68.0,233.9" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — unrollLoopsInModule</title></polygon>
-<polygon points="68.0,219.8 588.0,214.4 1108.0,361.6 1108.0,373.7 588.0,228.6 68.0,233.8" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — legalizeResourceTypes</title></polygon>
-<polygon points="68.0,211.6 588.0,206.3 1108.0,354.3 1108.0,361.6 588.0,214.4 68.0,219.8" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — legalizeExistentialTypeLayout</title></polygon>
-<polygon points="68.0,210.3 588.0,205.1 1108.0,353.1 1108.0,354.3 588.0,206.3 68.0,211.6" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — performMandatoryEarlyInlining</title></polygon>
-<polygon points="68.0,208.4 588.0,203.3 1108.0,351.6 1108.0,353.1 588.0,205.1 68.0,210.3" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — performForceInlining</title></polygon>
-<polygon points="68.0,168.5 588.0,163.5 1108.0,323.0 1108.0,351.6 588.0,203.3 68.0,208.4" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — linkAndOptimizeIR (self)</title></polygon>
-<polygon points="68.0,119.2 588.0,115.5 1108.0,282.2 1108.0,323.0 588.0,163.5 68.0,168.5" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — generateOutput (self)</title></polygon>
-<polygon points="68.0,115.6 588.0,108.6 1108.0,276.5 1108.0,282.2 588.0,115.5 68.0,119.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — compileInner (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.8</text>
+<polygon points="68.0,513.9 1108.0,513.9 1108.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” parseTranslationUnit</title></polygon>
+<polygon points="68.0,394.5 1108.0,393.8 1108.0,513.9 68.0,513.9" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” SemanticChecking</title></polygon>
+<polygon points="68.0,345.0 1108.0,344.3 1108.0,393.8 68.0,394.5" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” generateIR</title></polygon>
+<polygon points="68.0,338.1 1108.0,338.4 1108.0,344.3 68.0,345.0" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” frontEndExecute (self)</title></polygon>
+<polygon points="68.0,299.3 1108.0,300.7 1108.0,338.4 68.0,338.1" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” specializeModule</title></polygon>
+<polygon points="68.0,272.1 1108.0,273.7 1108.0,300.7 68.0,299.3" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” simplifyIR</title></polygon>
+<polygon points="68.0,230.4 1108.0,232.3 1108.0,273.7 68.0,272.1" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” linkIR</title></polygon>
+<polygon points="68.0,230.3 1108.0,232.2 1108.0,232.3 68.0,230.4" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” unrollLoopsInModule</title></polygon>
+<polygon points="68.0,216.3 1108.0,217.8 1108.0,232.2 68.0,230.3" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” legalizeResourceTypes</title></polygon>
+<polygon points="68.0,208.1 1108.0,209.3 1108.0,217.8 68.0,216.3" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,206.8 1108.0,207.9 1108.0,209.3 68.0,208.1" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,205.0 1108.0,206.1 1108.0,207.9 68.0,206.8" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” performForceInlining</title></polygon>
+<polygon points="68.0,163.6 1108.0,164.8 1108.0,206.1 68.0,205.0" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,115.6 1108.0,116.3 1108.0,164.8 68.0,163.6" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” generateOutput (self)</title></polygon>
+<polygon points="68.0,108.6 1108.0,109.5 1108.0,116.3 68.0,115.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>

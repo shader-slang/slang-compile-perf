@@ -7,37 +7,35 @@ through. Isolates the SSA/CFG axis that complexity_ladder only touches as one
 of several mixed dimensions; nothing else stresses it alone. Scales by breadth
 = number of control-flow blocks, so basic-block and phi counts grow with n.</p><p style='color:#666;font-size:13px'><b>bucket:</b> control_flow &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 120</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="680" fill="white"/>
-<text x="12" y="30" font-size="20" font-weight="bold">control_flow_ssa — full phase breakdown across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">control_flow_ssa<tspan fill="#888" font-weight="400" text-decoration="none">  0.74×</tspan></text>
+<text x="12" y="30" font-size="20" font-weight="bold">control_flow_ssa â€” full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">control_flow_ssa<tspan fill="#888" font-weight="400" text-decoration="none">  1.01Ã—</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
-<text x="64.0" y="299.0" text-anchor="end" fill="#999">161</text>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">160</text>
 <line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
-<text x="64.0" y="79.0" text-anchor="end" fill="#999">323</text>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">320</text>
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.9</text>
-<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
-<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.10</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.7</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
-<polygon points="68.0,514.3 588.0,514.2 1108.0,514.3 1108.0,516.0 588.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — parseTranslationUnit</title></polygon>
-<polygon points="68.0,412.1 588.0,409.1 1108.0,480.0 1108.0,514.3 588.0,514.2 68.0,514.3" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — SemanticChecking</title></polygon>
-<polygon points="68.0,368.4 588.0,365.1 1108.0,451.5 1108.0,480.0 588.0,409.1 68.0,412.1" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — generateIR</title></polygon>
-<polygon points="68.0,368.0 588.0,364.7 1108.0,451.1 1108.0,451.5 588.0,365.1 68.0,368.4" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — frontEndExecute (self)</title></polygon>
-<polygon points="68.0,352.1 588.0,348.8 1108.0,437.4 1108.0,451.1 588.0,364.7 68.0,368.0" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — specializeModule</title></polygon>
-<polygon points="68.0,301.4 588.0,298.9 1108.0,391.3 1108.0,437.4 588.0,348.8 68.0,352.1" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — simplifyIR</title></polygon>
-<polygon points="68.0,287.7 588.0,285.1 1108.0,388.9 1108.0,391.3 588.0,298.9 68.0,301.4" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — linkIR</title></polygon>
-<polygon points="68.0,287.5 588.0,284.9 1108.0,388.7 1108.0,388.9 588.0,285.1 68.0,287.7" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — unrollLoopsInModule</title></polygon>
-<polygon points="68.0,283.8 588.0,281.3 1108.0,384.6 1108.0,388.7 588.0,284.9 68.0,287.5" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — legalizeResourceTypes</title></polygon>
-<polygon points="68.0,279.9 588.0,277.4 1108.0,380.2 1108.0,384.6 588.0,281.3 68.0,283.8" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — legalizeExistentialTypeLayout</title></polygon>
-<polygon points="68.0,275.0 588.0,272.7 1108.0,375.5 1108.0,380.2 588.0,277.4 68.0,279.9" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — performMandatoryEarlyInlining</title></polygon>
-<polygon points="68.0,274.4 588.0,272.1 1108.0,374.8 1108.0,375.5 588.0,272.7 68.0,275.0" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — performForceInlining</title></polygon>
-<polygon points="68.0,210.3 588.0,207.7 1108.0,316.8 1108.0,374.8 588.0,272.1 68.0,274.4" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — linkAndOptimizeIR (self)</title></polygon>
-<polygon points="68.0,110.4 588.0,109.0 1108.0,214.9 1108.0,316.8 588.0,207.7 68.0,210.3" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — generateOutput (self)</title></polygon>
-<polygon points="68.0,110.4 588.0,108.6 1108.0,214.7 1108.0,214.9 588.0,109.0 68.0,110.4" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa — compileInner (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.8</text>
+<polygon points="68.0,514.3 1108.0,514.3 1108.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” parseTranslationUnit</title></polygon>
+<polygon points="68.0,413.0 1108.0,412.5 1108.0,514.3 68.0,514.3" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” SemanticChecking</title></polygon>
+<polygon points="68.0,369.6 1108.0,368.6 1108.0,412.5 68.0,413.0" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” generateIR</title></polygon>
+<polygon points="68.0,369.2 1108.0,368.2 1108.0,368.6 68.0,369.6" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” frontEndExecute (self)</title></polygon>
+<polygon points="68.0,352.9 1108.0,352.2 1108.0,368.2 68.0,369.2" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” specializeModule</title></polygon>
+<polygon points="68.0,302.3 1108.0,301.0 1108.0,352.2 68.0,352.9" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” simplifyIR</title></polygon>
+<polygon points="68.0,288.7 1108.0,287.0 1108.0,301.0 68.0,302.3" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” linkIR</title></polygon>
+<polygon points="68.0,288.5 1108.0,286.8 1108.0,287.0 68.0,288.7" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” unrollLoopsInModule</title></polygon>
+<polygon points="68.0,285.0 1108.0,283.0 1108.0,286.8 68.0,288.5" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” legalizeResourceTypes</title></polygon>
+<polygon points="68.0,281.3 1108.0,279.0 1108.0,283.0 68.0,285.0" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,276.6 1108.0,274.1 1108.0,279.0 68.0,281.3" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,276.0 1108.0,273.5 1108.0,274.1 68.0,276.6" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” performForceInlining</title></polygon>
+<polygon points="68.0,212.5 1108.0,209.3 1108.0,273.5 68.0,276.0" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,112.1 1108.0,109.5 1108.0,209.3 68.0,212.5" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” generateOutput (self)</title></polygon>
+<polygon points="68.0,111.8 1108.0,108.6 1108.0,109.5 68.0,112.1" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>control_flow_ssa â€” compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
