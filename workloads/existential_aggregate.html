@@ -1,0 +1,239 @@
+<!doctype html><meta charset=utf-8><title>existential_aggregate — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>existential_aggregate</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>An interface-typed *field* inside a struct (`Scene { IMat m; ... }`), with
+n implementations selected at runtime through a switch. Unlike
+`dynamic_dispatch` (a bare local existential), boxing the existential in an
+aggregate forces `legalizeExistentialTypeLayout` to float the existential
+field out and recompute the parent layout, and feeds specializeModule a
+witness-table-per-case blowup. Stresses specializeModule +
+legalizeExistentialTypeLayout + the downstream simplifyIR. Scales by breadth
+(number of implementations / switch cases).</p><p style='color:#666;font-size:13px'><b>bucket:</b> dynamic_dispatch &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 100</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="680" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">existential_aggregate — full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">existential_aggregate<tspan fill="#888" font-weight="400" text-decoration="none">  0.67×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">114</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">227</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.9</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.10</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,514.4 588.0,514.2 1108.0,514.4 1108.0,516.0 588.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — parseTranslationUnit</title></polygon>
+<polygon points="68.0,441.3 588.0,438.4 1108.0,485.4 1108.0,514.4 588.0,514.2 68.0,514.4" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — SemanticChecking</title></polygon>
+<polygon points="68.0,409.8 588.0,407.1 1108.0,470.8 1108.0,485.4 588.0,438.4 68.0,441.3" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — generateIR</title></polygon>
+<polygon points="68.0,409.7 588.0,406.2 1108.0,470.2 1108.0,470.8 588.0,407.1 68.0,409.8" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,271.3 588.0,267.2 1108.0,348.6 1108.0,470.2 588.0,406.2 68.0,409.7" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — specializeModule</title></polygon>
+<polygon points="68.0,208.3 588.0,203.9 1108.0,309.3 1108.0,348.6 588.0,267.2 68.0,271.3" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — simplifyIR</title></polygon>
+<polygon points="68.0,187.1 588.0,182.5 1108.0,306.5 1108.0,309.3 588.0,203.9 68.0,208.3" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — linkIR</title></polygon>
+<polygon points="68.0,187.0 588.0,182.4 1108.0,306.4 1108.0,306.5 588.0,182.5 68.0,187.1" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — unrollLoopsInModule</title></polygon>
+<polygon points="68.0,184.3 588.0,179.6 1108.0,304.1 1108.0,306.4 588.0,182.4 68.0,187.0" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,180.0 588.0,175.3 1108.0,300.5 1108.0,304.1 588.0,179.6 68.0,184.3" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,179.5 588.0,174.9 1108.0,300.1 1108.0,300.5 588.0,175.3 68.0,180.0" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,179.0 588.0,174.3 1108.0,299.5 1108.0,300.1 588.0,174.9 68.0,179.5" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — performForceInlining</title></polygon>
+<polygon points="68.0,141.8 588.0,137.5 1108.0,275.6 1108.0,299.5 588.0,174.3 68.0,179.0" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,112.8 588.0,108.6 1108.0,247.5 1108.0,275.6 588.0,137.5 68.0,141.8" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>existential_aggregate — generateOutput (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="650" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="640" width="12" height="12" fill="#fd8d3c"/>
+<text x="305" y="650" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#e6550d"/>
+<text x="582" y="650" fill="#222">generateOutput (self)</text>
+<rect x="843" y="640" width="12" height="12" fill="#969696"/>
+<text x="859" y="650" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 100); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>existential_aggregate.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+[anyValueSize(16)]
+interface IMat { float shade(float x); }
+
+struct M0 : IMat { float shade(float x) { return x * 1.0 + 0.0 + sin(x * 1.0); } }
+struct M1 : IMat { float shade(float x) { return x * 2.0 + 1.0 + sin(x * 2.0); } }
+struct M2 : IMat { float shade(float x) { return x * 3.0 + 2.0 + sin(x * 3.0); } }
+struct M3 : IMat { float shade(float x) { return x * 4.0 + 3.0 + sin(x * 4.0); } }
+struct M4 : IMat { float shade(float x) { return x * 5.0 + 4.0 + sin(x * 5.0); } }
+struct M5 : IMat { float shade(float x) { return x * 6.0 + 5.0 + sin(x * 6.0); } }
+struct M6 : IMat { float shade(float x) { return x * 7.0 + 6.0 + sin(x * 7.0); } }
+struct M7 : IMat { float shade(float x) { return x * 8.0 + 7.0 + sin(x * 1.0); } }
+struct M8 : IMat { float shade(float x) { return x * 9.0 + 8.0 + sin(x * 2.0); } }
+struct M9 : IMat { float shade(float x) { return x * 10.0 + 9.0 + sin(x * 3.0); } }
+struct M10 : IMat { float shade(float x) { return x * 11.0 + 10.0 + sin(x * 4.0); } }
+struct M11 : IMat { float shade(float x) { return x * 12.0 + 11.0 + sin(x * 5.0); } }
+struct M12 : IMat { float shade(float x) { return x * 13.0 + 12.0 + sin(x * 6.0); } }
+struct M13 : IMat { float shade(float x) { return x * 14.0 + 13.0 + sin(x * 7.0); } }
+struct M14 : IMat { float shade(float x) { return x * 15.0 + 14.0 + sin(x * 1.0); } }
+struct M15 : IMat { float shade(float x) { return x * 16.0 + 15.0 + sin(x * 2.0); } }
+struct M16 : IMat { float shade(float x) { return x * 17.0 + 16.0 + sin(x * 3.0); } }
+struct M17 : IMat { float shade(float x) { return x * 18.0 + 17.0 + sin(x * 4.0); } }
+struct M18 : IMat { float shade(float x) { return x * 19.0 + 18.0 + sin(x * 5.0); } }
+struct M19 : IMat { float shade(float x) { return x * 20.0 + 19.0 + sin(x * 6.0); } }
+struct M20 : IMat { float shade(float x) { return x * 21.0 + 20.0 + sin(x * 7.0); } }
+struct M21 : IMat { float shade(float x) { return x * 22.0 + 21.0 + sin(x * 1.0); } }
+struct M22 : IMat { float shade(float x) { return x * 23.0 + 22.0 + sin(x * 2.0); } }
+struct M23 : IMat { float shade(float x) { return x * 24.0 + 23.0 + sin(x * 3.0); } }
+struct M24 : IMat { float shade(float x) { return x * 25.0 + 24.0 + sin(x * 4.0); } }
+struct M25 : IMat { float shade(float x) { return x * 26.0 + 25.0 + sin(x * 5.0); } }
+struct M26 : IMat { float shade(float x) { return x * 27.0 + 26.0 + sin(x * 6.0); } }
+struct M27 : IMat { float shade(float x) { return x * 28.0 + 27.0 + sin(x * 7.0); } }
+struct M28 : IMat { float shade(float x) { return x * 29.0 + 28.0 + sin(x * 1.0); } }
+struct M29 : IMat { float shade(float x) { return x * 30.0 + 29.0 + sin(x * 2.0); } }
+struct M30 : IMat { float shade(float x) { return x * 31.0 + 30.0 + sin(x * 3.0); } }
+struct M31 : IMat { float shade(float x) { return x * 32.0 + 31.0 + sin(x * 4.0); } }
+struct M32 : IMat { float shade(float x) { return x * 33.0 + 32.0 + sin(x * 5.0); } }
+struct M33 : IMat { float shade(float x) { return x * 34.0 + 33.0 + sin(x * 6.0); } }
+
+// … 33 lines omitted …
+
+struct M67 : IMat { float shade(float x) { return x * 68.0 + 67.0 + sin(x * 5.0); } }
+struct M68 : IMat { float shade(float x) { return x * 69.0 + 68.0 + sin(x * 6.0); } }
+struct M69 : IMat { float shade(float x) { return x * 70.0 + 69.0 + sin(x * 7.0); } }
+struct M70 : IMat { float shade(float x) { return x * 71.0 + 70.0 + sin(x * 1.0); } }
+struct M71 : IMat { float shade(float x) { return x * 72.0 + 71.0 + sin(x * 2.0); } }
+struct M72 : IMat { float shade(float x) { return x * 73.0 + 72.0 + sin(x * 3.0); } }
+struct M73 : IMat { float shade(float x) { return x * 74.0 + 73.0 + sin(x * 4.0); } }
+struct M74 : IMat { float shade(float x) { return x * 75.0 + 74.0 + sin(x * 5.0); } }
+struct M75 : IMat { float shade(float x) { return x * 76.0 + 75.0 + sin(x * 6.0); } }
+struct M76 : IMat { float shade(float x) { return x * 77.0 + 76.0 + sin(x * 7.0); } }
+struct M77 : IMat { float shade(float x) { return x * 78.0 + 77.0 + sin(x * 1.0); } }
+struct M78 : IMat { float shade(float x) { return x * 79.0 + 78.0 + sin(x * 2.0); } }
+struct M79 : IMat { float shade(float x) { return x * 80.0 + 79.0 + sin(x * 3.0); } }
+struct M80 : IMat { float shade(float x) { return x * 81.0 + 80.0 + sin(x * 4.0); } }
+struct M81 : IMat { float shade(float x) { return x * 82.0 + 81.0 + sin(x * 5.0); } }
+struct M82 : IMat { float shade(float x) { return x * 83.0 + 82.0 + sin(x * 6.0); } }
+struct M83 : IMat { float shade(float x) { return x * 84.0 + 83.0 + sin(x * 7.0); } }
+struct M84 : IMat { float shade(float x) { return x * 85.0 + 84.0 + sin(x * 1.0); } }
+struct M85 : IMat { float shade(float x) { return x * 86.0 + 85.0 + sin(x * 2.0); } }
+struct M86 : IMat { float shade(float x) { return x * 87.0 + 86.0 + sin(x * 3.0); } }
+struct M87 : IMat { float shade(float x) { return x * 88.0 + 87.0 + sin(x * 4.0); } }
+struct M88 : IMat { float shade(float x) { return x * 89.0 + 88.0 + sin(x * 5.0); } }
+struct M89 : IMat { float shade(float x) { return x * 90.0 + 89.0 + sin(x * 6.0); } }
+struct M90 : IMat { float shade(float x) { return x * 91.0 + 90.0 + sin(x * 7.0); } }
+struct M91 : IMat { float shade(float x) { return x * 92.0 + 91.0 + sin(x * 1.0); } }
+struct M92 : IMat { float shade(float x) { return x * 93.0 + 92.0 + sin(x * 2.0); } }
+struct M93 : IMat { float shade(float x) { return x * 94.0 + 93.0 + sin(x * 3.0); } }
+struct M94 : IMat { float shade(float x) { return x * 95.0 + 94.0 + sin(x * 4.0); } }
+struct M95 : IMat { float shade(float x) { return x * 96.0 + 95.0 + sin(x * 5.0); } }
+struct M96 : IMat { float shade(float x) { return x * 97.0 + 96.0 + sin(x * 6.0); } }
+struct M97 : IMat { float shade(float x) { return x * 98.0 + 97.0 + sin(x * 7.0); } }
+struct M98 : IMat { float shade(float x) { return x * 99.0 + 98.0 + sin(x * 1.0); } }
+struct M99 : IMat { float shade(float x) { return x * 100.0 + 99.0 + sin(x * 2.0); } }
+
+struct Scene { IMat m; float w; }
+
+float shadeScene(Scene sc, float x) { return sc.m.shade(x) * sc.w; }
+
+[shader("compute")]
+[numthreads(64,1,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float acc = 0.0;
+    int base = int(tid.x);
+    for (int i = 0; i &lt; 100; ++i)
+    {
+        Scene sc;
+        switch ((base + i) % 100)
+        {
+        case 0: sc.m = M0(); break;
+        case 1: sc.m = M1(); break;
+        case 2: sc.m = M2(); break;
+        case 3: sc.m = M3(); break;
+        case 4: sc.m = M4(); break;
+        case 5: sc.m = M5(); break;
+        case 6: sc.m = M6(); break;
+        case 7: sc.m = M7(); break;
+        case 8: sc.m = M8(); break;
+        case 9: sc.m = M9(); break;
+        case 10: sc.m = M10(); break;
+        case 11: sc.m = M11(); break;
+        case 12: sc.m = M12(); break;
+        case 13: sc.m = M13(); break;
+        case 14: sc.m = M14(); break;
+        case 15: sc.m = M15(); break;
+        case 16: sc.m = M16(); break;
+        case 17: sc.m = M17(); break;
+        case 18: sc.m = M18(); break;
+        case 19: sc.m = M19(); break;
+        case 20: sc.m = M20(); break;
+        case 21: sc.m = M21(); break;
+        case 22: sc.m = M22(); break;
+        case 23: sc.m = M23(); break;
+        case 24: sc.m = M24(); break;
+        case 25: sc.m = M25(); break;
+        case 26: sc.m = M26(); break;
+        case 27: sc.m = M27(); break;
+        case 28: sc.m = M28(); break;
+        case 29: sc.m = M29(); break;
+        case 30: sc.m = M30(); break;
+        case 31: sc.m = M31(); break;
+
+// … 35 lines omitted …
+
+        case 67: sc.m = M67(); break;
+        case 68: sc.m = M68(); break;
+        case 69: sc.m = M69(); break;
+        case 70: sc.m = M70(); break;
+        case 71: sc.m = M71(); break;
+        case 72: sc.m = M72(); break;
+        case 73: sc.m = M73(); break;
+        case 74: sc.m = M74(); break;
+        case 75: sc.m = M75(); break;
+        case 76: sc.m = M76(); break;
+        case 77: sc.m = M77(); break;
+        case 78: sc.m = M78(); break;
+        case 79: sc.m = M79(); break;
+        case 80: sc.m = M80(); break;
+        case 81: sc.m = M81(); break;
+        case 82: sc.m = M82(); break;
+        case 83: sc.m = M83(); break;
+        case 84: sc.m = M84(); break;
+        case 85: sc.m = M85(); break;
+        case 86: sc.m = M86(); break;
+        case 87: sc.m = M87(); break;
+        case 88: sc.m = M88(); break;
+        case 89: sc.m = M89(); break;
+        case 90: sc.m = M90(); break;
+        case 91: sc.m = M91(); break;
+        case 92: sc.m = M92(); break;
+        case 93: sc.m = M93(); break;
+        case 94: sc.m = M94(); break;
+        case 95: sc.m = M95(); break;
+        case 96: sc.m = M96(); break;
+        case 97: sc.m = M97(); break;
+        case 98: sc.m = M98(); break;
+        case 99: sc.m = M99(); break;
+        default: sc.m = M0(); break;
+        }
+        sc.w = float(i);
+        acc += shadeScene(sc, outBuf[0] + float(i));
+    }
+    outBuf[0] = acc;
+}</pre></body>

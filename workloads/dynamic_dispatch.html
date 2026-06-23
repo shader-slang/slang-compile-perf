@@ -1,0 +1,159 @@
+<!doctype html><meta charset=utf-8><title>dynamic_dispatch — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>dynamic_dispatch</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>One interface, n implementations, called through an existential whose
+concrete type is chosen at runtime (defeats static specialization, forcing
+witness-table dynamic dispatch). Stresses dispatch lowering / specializeModule.</p><p style='color:#666;font-size:13px'><b>bucket:</b> dynamic_dispatch &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 200</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="680" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">dynamic_dispatch — full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">dynamic_dispatch<tspan fill="#888" font-weight="400" text-decoration="none">  0.65×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">240</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">480</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.9</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.10</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,514.7 588.0,514.6 1108.0,514.7 1108.0,516.0 588.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — parseTranslationUnit</title></polygon>
+<polygon points="68.0,472.9 588.0,471.2 1108.0,495.8 1108.0,514.7 588.0,514.6 68.0,514.7" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — SemanticChecking</title></polygon>
+<polygon points="68.0,455.2 588.0,453.6 1108.0,486.7 1108.0,495.8 588.0,471.2 68.0,472.9" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — generateIR</title></polygon>
+<polygon points="68.0,454.9 588.0,453.3 1108.0,486.3 1108.0,486.7 588.0,453.6 68.0,455.2" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,281.2 588.0,281.3 1108.0,353.3 1108.0,486.3 588.0,453.3 68.0,454.9" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — specializeModule</title></polygon>
+<polygon points="68.0,193.4 588.0,192.6 1108.0,306.2 1108.0,353.3 588.0,281.3 68.0,281.2" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — simplifyIR</title></polygon>
+<polygon points="68.0,182.9 588.0,181.9 1108.0,304.2 1108.0,306.2 588.0,192.6 68.0,193.4" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — linkIR</title></polygon>
+<polygon points="68.0,182.8 588.0,181.7 1108.0,304.1 1108.0,304.2 588.0,181.9 68.0,182.9" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — unrollLoopsInModule</title></polygon>
+<polygon points="68.0,179.4 588.0,178.4 1108.0,301.9 1108.0,304.1 588.0,181.7 68.0,182.8" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,174.0 588.0,172.9 1108.0,298.4 1108.0,301.9 588.0,178.4 68.0,179.4" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,173.6 588.0,172.6 1108.0,298.1 1108.0,298.4 588.0,172.9 68.0,174.0" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,173.1 588.0,172.1 1108.0,297.6 1108.0,298.1 588.0,172.6 68.0,173.6" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — performForceInlining</title></polygon>
+<polygon points="68.0,134.7 588.0,135.0 1108.0,276.9 1108.0,297.6 588.0,172.1 68.0,173.1" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,108.9 588.0,109.3 1108.0,252.4 1108.0,276.9 588.0,135.0 68.0,134.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — generateOutput (self)</title></polygon>
+<polygon points="68.0,108.6 588.0,109.1 1108.0,252.3 1108.0,252.4 588.0,109.3 68.0,108.9" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>dynamic_dispatch — compileInner (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="650" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="640" width="12" height="12" fill="#fd8d3c"/>
+<text x="305" y="650" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#e6550d"/>
+<text x="582" y="650" fill="#222">generateOutput (self)</text>
+<rect x="843" y="640" width="12" height="12" fill="#969696"/>
+<text x="859" y="650" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 200); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>dynamic_dispatch.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+[anyValueSize(16)]
+interface IShape { float eval(float x); }
+
+struct Shape0 : IShape { float eval(float x) { return x * 1.0 + 0.0 + sin(x * 1.0); } }
+struct Shape1 : IShape { float eval(float x) { return x * 2.0 + 1.0 + sin(x * 2.0); } }
+struct Shape2 : IShape { float eval(float x) { return x * 3.0 + 2.0 + sin(x * 3.0); } }
+struct Shape3 : IShape { float eval(float x) { return x * 4.0 + 3.0 + sin(x * 4.0); } }
+struct Shape4 : IShape { float eval(float x) { return x * 5.0 + 4.0 + sin(x * 5.0); } }
+struct Shape5 : IShape { float eval(float x) { return x * 6.0 + 5.0 + sin(x * 6.0); } }
+struct Shape6 : IShape { float eval(float x) { return x * 7.0 + 6.0 + sin(x * 7.0); } }
+struct Shape7 : IShape { float eval(float x) { return x * 8.0 + 7.0 + sin(x * 8.0); } }
+struct Shape8 : IShape { float eval(float x) { return x * 9.0 + 8.0 + sin(x * 9.0); } }
+struct Shape9 : IShape { float eval(float x) { return x * 10.0 + 9.0 + sin(x * 10.0); } }
+struct Shape10 : IShape { float eval(float x) { return x * 11.0 + 10.0 + sin(x * 11.0); } }
+struct Shape11 : IShape { float eval(float x) { return x * 12.0 + 11.0 + sin(x * 12.0); } }
+struct Shape12 : IShape { float eval(float x) { return x * 13.0 + 12.0 + sin(x * 13.0); } }
+struct Shape13 : IShape { float eval(float x) { return x * 14.0 + 13.0 + sin(x * 14.0); } }
+struct Shape14 : IShape { float eval(float x) { return x * 15.0 + 14.0 + sin(x * 15.0); } }
+struct Shape15 : IShape { float eval(float x) { return x * 16.0 + 15.0 + sin(x * 16.0); } }
+struct Shape16 : IShape { float eval(float x) { return x * 17.0 + 16.0 + sin(x * 17.0); } }
+struct Shape17 : IShape { float eval(float x) { return x * 18.0 + 17.0 + sin(x * 18.0); } }
+struct Shape18 : IShape { float eval(float x) { return x * 19.0 + 18.0 + sin(x * 19.0); } }
+struct Shape19 : IShape { float eval(float x) { return x * 20.0 + 19.0 + sin(x * 20.0); } }
+struct Shape20 : IShape { float eval(float x) { return x * 21.0 + 20.0 + sin(x * 21.0); } }
+struct Shape21 : IShape { float eval(float x) { return x * 22.0 + 21.0 + sin(x * 22.0); } }
+struct Shape22 : IShape { float eval(float x) { return x * 23.0 + 22.0 + sin(x * 23.0); } }
+struct Shape23 : IShape { float eval(float x) { return x * 24.0 + 23.0 + sin(x * 24.0); } }
+struct Shape24 : IShape { float eval(float x) { return x * 25.0 + 24.0 + sin(x * 25.0); } }
+struct Shape25 : IShape { float eval(float x) { return x * 26.0 + 25.0 + sin(x * 26.0); } }
+struct Shape26 : IShape { float eval(float x) { return x * 27.0 + 26.0 + sin(x * 27.0); } }
+struct Shape27 : IShape { float eval(float x) { return x * 28.0 + 27.0 + sin(x * 28.0); } }
+struct Shape28 : IShape { float eval(float x) { return x * 29.0 + 28.0 + sin(x * 29.0); } }
+struct Shape29 : IShape { float eval(float x) { return x * 30.0 + 29.0 + sin(x * 30.0); } }
+struct Shape30 : IShape { float eval(float x) { return x * 31.0 + 30.0 + sin(x * 31.0); } }
+struct Shape31 : IShape { float eval(float x) { return x * 32.0 + 31.0 + sin(x * 32.0); } }
+struct Shape32 : IShape { float eval(float x) { return x * 33.0 + 32.0 + sin(x * 33.0); } }
+struct Shape33 : IShape { float eval(float x) { return x * 34.0 + 33.0 + sin(x * 34.0); } }
+
+// … 341 lines omitted …
+
+    case 169: s = Shape169(); break;
+    case 170: s = Shape170(); break;
+    case 171: s = Shape171(); break;
+    case 172: s = Shape172(); break;
+    case 173: s = Shape173(); break;
+    case 174: s = Shape174(); break;
+    case 175: s = Shape175(); break;
+    case 176: s = Shape176(); break;
+    case 177: s = Shape177(); break;
+    case 178: s = Shape178(); break;
+    case 179: s = Shape179(); break;
+    case 180: s = Shape180(); break;
+    case 181: s = Shape181(); break;
+    case 182: s = Shape182(); break;
+    case 183: s = Shape183(); break;
+    case 184: s = Shape184(); break;
+    case 185: s = Shape185(); break;
+    case 186: s = Shape186(); break;
+    case 187: s = Shape187(); break;
+    case 188: s = Shape188(); break;
+    case 189: s = Shape189(); break;
+    case 190: s = Shape190(); break;
+    case 191: s = Shape191(); break;
+    case 192: s = Shape192(); break;
+    case 193: s = Shape193(); break;
+    case 194: s = Shape194(); break;
+    case 195: s = Shape195(); break;
+    case 196: s = Shape196(); break;
+    case 197: s = Shape197(); break;
+    case 198: s = Shape198(); break;
+    case 199: s = Shape199(); break;
+    default: s = Shape0(); break;
+    }
+    return s.eval(x);
+}
+
+float run(IShape s, float x) { return s.eval(x); }
+
+[shader("compute")]
+[numthreads(1,1,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float acc = 0.0;
+    int base = int(tid.x);
+    for (int i = 0; i &lt; 200; ++i)
+        acc += dispatch((base + i) % 200, outBuf[0] + float(i));
+    outBuf[0] = acc;
+}</pre></body>

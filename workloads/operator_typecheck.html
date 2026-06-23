@@ -1,0 +1,216 @@
+<!doctype html><meta charset=utf-8><title>operator_typecheck — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>operator_typecheck</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>`n` functions, each a long arithmetic expression whose operands alternate
+among float/int/uint (typed locals and literals of differing kinds). Every
+`+`/`-`/`*` must resolve the builtin arithmetic operator overload set and
+insert an implicit conversion to the common type — the "checking the types of
+1 and 2 in 1 + 2" cost, multiplied across many nodes. Contrast `parse`, whose
+same-type float expressions skip overload ranking. Module mode -&gt; the signal
+is SemanticChecking, not codegen.</p><p style='color:#666;font-size:13px'><b>bucket:</b> typecheck &nbsp;·&nbsp; <b>compile mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 800</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="680" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">operator_typecheck — full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">operator_typecheck<tspan fill="#888" font-weight="400" text-decoration="none">  0.34×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">269</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">539</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.9</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.10</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,508.1 588.0,508.2 1108.0,508.2 1108.0,516.0 588.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>operator_typecheck — parseTranslationUnit</title></polygon>
+<polygon points="68.0,212.5 588.0,213.7 1108.0,447.6 1108.0,508.2 588.0,508.2 68.0,508.1" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>operator_typecheck — SemanticChecking</title></polygon>
+<polygon points="68.0,126.8 588.0,133.1 1108.0,395.5 1108.0,447.6 588.0,213.7 68.0,212.5" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>operator_typecheck — generateIR</title></polygon>
+<polygon points="68.0,126.8 588.0,133.0 1108.0,395.1 1108.0,395.5 588.0,133.1 68.0,126.8" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>operator_typecheck — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,108.6 588.0,114.9 1108.0,378.2 1108.0,395.1 588.0,133.0 68.0,126.8" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>operator_typecheck — generateOutput (self)</title></polygon>
+<polygon points="68.0,108.6 588.0,114.9 1108.0,378.1 1108.0,378.2 588.0,114.9 68.0,108.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>operator_typecheck — compileInner (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="650" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="640" width="12" height="12" fill="#fd8d3c"/>
+<text x="305" y="650" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#e6550d"/>
+<text x="582" y="650" fill="#222">generateOutput (self)</text>
+<rect x="843" y="640" width="12" height="12" fill="#969696"/>
+<text x="859" y="650" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 800); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>operator_typecheck.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+float op_0(float fx, int ix, uint ux) { return fx + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5; }
+float op_1(float fx, int ix, uint ux) { return fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u; }
+float op_2(float fx, int ix, uint ux) { return fx + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux; }
+float op_3(float fx, int ix, uint ux) { return fx - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0; }
+float op_4(float fx, int ix, uint ux) { return fx + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx; }
+float op_5(float fx, int ix, uint ux) { return fx - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10; }
+float op_6(float fx, int ix, uint ux) { return fx + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11; }
+float op_7(float fx, int ix, uint ux) { return fx - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx; }
+float op_8(float fx, int ix, uint ux) { return fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u; }
+float op_9(float fx, int ix, uint ux) { return fx - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix; }
+float op_10(float fx, int ix, uint ux) { return fx + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5; }
+float op_11(float fx, int ix, uint ux) { return fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u; }
+float op_12(float fx, int ix, uint ux) { return fx + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux; }
+float op_13(float fx, int ix, uint ux) { return fx - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0; }
+float op_14(float fx, int ix, uint ux) { return fx + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx; }
+float op_15(float fx, int ix, uint ux) { return fx - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10; }
+float op_16(float fx, int ix, uint ux) { return fx + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11; }
+float op_17(float fx, int ix, uint ux) { return fx - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx; }
+float op_18(float fx, int ix, uint ux) { return fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u; }
+float op_19(float fx, int ix, uint ux) { return fx - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix; }
+float op_20(float fx, int ix, uint ux) { return fx + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5; }
+float op_21(float fx, int ix, uint ux) { return fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u; }
+float op_22(float fx, int ix, uint ux) { return fx + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux; }
+float op_23(float fx, int ix, uint ux) { return fx - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0; }
+float op_24(float fx, int ix, uint ux) { return fx + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx; }
+float op_25(float fx, int ix, uint ux) { return fx - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10; }
+float op_26(float fx, int ix, uint ux) { return fx + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11; }
+float op_27(float fx, int ix, uint ux) { return fx - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx; }
+float op_28(float fx, int ix, uint ux) { return fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u; }
+float op_29(float fx, int ix, uint ux) { return fx - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix; }
+float op_30(float fx, int ix, uint ux) { return fx + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5; }
+float op_31(float fx, int ix, uint ux) { return fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u; }
+float op_32(float fx, int ix, uint ux) { return fx + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux; }
+float op_33(float fx, int ix, uint ux) { return fx - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0; }
+float op_34(float fx, int ix, uint ux) { return fx + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx; }
+float op_35(float fx, int ix, uint ux) { return fx - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10; }
+float op_36(float fx, int ix, uint ux) { return fx + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11; }
+
+// … 726 lines omitted …
+
+float op_763(float fx, int ix, uint ux) { return fx - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0; }
+float op_764(float fx, int ix, uint ux) { return fx + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx; }
+float op_765(float fx, int ix, uint ux) { return fx - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10; }
+float op_766(float fx, int ix, uint ux) { return fx + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11; }
+float op_767(float fx, int ix, uint ux) { return fx - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx; }
+float op_768(float fx, int ix, uint ux) { return fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u; }
+float op_769(float fx, int ix, uint ux) { return fx - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix; }
+float op_770(float fx, int ix, uint ux) { return fx + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5; }
+float op_771(float fx, int ix, uint ux) { return fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u; }
+float op_772(float fx, int ix, uint ux) { return fx + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux; }
+float op_773(float fx, int ix, uint ux) { return fx - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0; }
+float op_774(float fx, int ix, uint ux) { return fx + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx; }
+float op_775(float fx, int ix, uint ux) { return fx - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10; }
+float op_776(float fx, int ix, uint ux) { return fx + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11; }
+float op_777(float fx, int ix, uint ux) { return fx - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx; }
+float op_778(float fx, int ix, uint ux) { return fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u; }
+float op_779(float fx, int ix, uint ux) { return fx - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix; }
+float op_780(float fx, int ix, uint ux) { return fx + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5; }
+float op_781(float fx, int ix, uint ux) { return fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u; }
+float op_782(float fx, int ix, uint ux) { return fx + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux; }
+float op_783(float fx, int ix, uint ux) { return fx - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0; }
+float op_784(float fx, int ix, uint ux) { return fx + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx; }
+float op_785(float fx, int ix, uint ux) { return fx - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10; }
+float op_786(float fx, int ix, uint ux) { return fx + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11; }
+float op_787(float fx, int ix, uint ux) { return fx - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx; }
+float op_788(float fx, int ix, uint ux) { return fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u; }
+float op_789(float fx, int ix, uint ux) { return fx - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix; }
+float op_790(float fx, int ix, uint ux) { return fx + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5; }
+float op_791(float fx, int ix, uint ux) { return fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u; }
+float op_792(float fx, int ix, uint ux) { return fx + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux; }
+float op_793(float fx, int ix, uint ux) { return fx - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0; }
+float op_794(float fx, int ix, uint ux) { return fx + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx; }
+float op_795(float fx, int ix, uint ux) { return fx - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10; }
+float op_796(float fx, int ix, uint ux) { return fx + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11; }
+float op_797(float fx, int ix, uint ux) { return fx - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx; }
+float op_798(float fx, int ix, uint ux) { return fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u; }
+float op_799(float fx, int ix, uint ux) { return fx - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix - ux * 5 + fx * 6u - 7 + ux + ix * 8.0 - 9u + fx + ux * 10 - fx * 11 + 2 * fx - ix + 3u + 4.0 * ix; }
+
+[shader("compute")]
+[numthreads(1,1,1)]
+void computeMain()
+{
+    float acc = 0.0;
+    float fx = outBuf[0]; int ix = int(outBuf[0]); uint ux = uint(outBuf[0]);
+    acc += op_0(fx, ix, ux);
+    acc += op_1(fx, ix, ux);
+    acc += op_2(fx, ix, ux);
+    acc += op_3(fx, ix, ux);
+    acc += op_4(fx, ix, ux);
+    acc += op_5(fx, ix, ux);
+    acc += op_6(fx, ix, ux);
+    acc += op_7(fx, ix, ux);
+    acc += op_8(fx, ix, ux);
+    acc += op_9(fx, ix, ux);
+    acc += op_10(fx, ix, ux);
+    acc += op_11(fx, ix, ux);
+    acc += op_12(fx, ix, ux);
+    acc += op_13(fx, ix, ux);
+    acc += op_14(fx, ix, ux);
+    acc += op_15(fx, ix, ux);
+    acc += op_16(fx, ix, ux);
+    acc += op_17(fx, ix, ux);
+    acc += op_18(fx, ix, ux);
+    acc += op_19(fx, ix, ux);
+    acc += op_20(fx, ix, ux);
+    acc += op_21(fx, ix, ux);
+    acc += op_22(fx, ix, ux);
+    acc += op_23(fx, ix, ux);
+    acc += op_24(fx, ix, ux);
+    acc += op_25(fx, ix, ux);
+    acc += op_26(fx, ix, ux);
+    acc += op_27(fx, ix, ux);
+    acc += op_28(fx, ix, ux);
+    acc += op_29(fx, ix, ux);
+    acc += op_30(fx, ix, ux);
+    acc += op_31(fx, ix, ux);
+    acc += op_32(fx, ix, ux);
+    acc += op_33(fx, ix, ux);
+    acc += op_34(fx, ix, ux);
+    acc += op_35(fx, ix, ux);
+    acc += op_36(fx, ix, ux);
+    acc += op_37(fx, ix, ux);
+    acc += op_38(fx, ix, ux);
+    acc += op_39(fx, ix, ux);
+    acc += op_40(fx, ix, ux);
+    acc += op_41(fx, ix, ux);
+    acc += op_42(fx, ix, ux);
+    acc += op_43(fx, ix, ux);
+    acc += op_44(fx, ix, ux);
+    acc += op_45(fx, ix, ux);
+    acc += op_46(fx, ix, ux);
+    acc += op_47(fx, ix, ux);
+    acc += op_48(fx, ix, ux);
+    acc += op_49(fx, ix, ux);
+    acc += op_50(fx, ix, ux);
+    acc += op_51(fx, ix, ux);
+    acc += op_52(fx, ix, ux);
+    acc += op_53(fx, ix, ux);
+    acc += op_54(fx, ix, ux);
+    acc += op_55(fx, ix, ux);
+    acc += op_56(fx, ix, ux);
+    acc += op_57(fx, ix, ux);
+    acc += op_58(fx, ix, ux);
+    acc += op_59(fx, ix, ux);
+    acc += op_60(fx, ix, ux);
+    acc += op_61(fx, ix, ux);
+    acc += op_62(fx, ix, ux);
+    acc += op_63(fx, ix, ux);
+    outBuf[0] = acc;
+}</pre></body>

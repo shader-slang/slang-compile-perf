@@ -1,0 +1,234 @@
+<!doctype html><meta charset=utf-8><title>autodiff — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>autodiff</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>n differentiable functions arranged in bounded-depth groups, each group
+differentiated in both forward and reverse mode, plus a differentiable
+generic. Stresses the autodiff IR transform (inside linkAndOptimizeIR) and
+the front-end checking of [Differentiable]. Scales by breadth.</p><p style='color:#666;font-size:13px'><b>bucket:</b> autodiff &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 200</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="680" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">autodiff — full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">autodiff<tspan fill="#888" font-weight="400" text-decoration="none">  0.32×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">2145</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">4289</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.9</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.10</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,515.9 588.0,515.9 1108.0,515.9 1108.0,516.0 588.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff — parseTranslationUnit</title></polygon>
+<polygon points="68.0,505.4 588.0,505.4 1108.0,507.0 1108.0,515.9 588.0,515.9 68.0,515.9" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff — SemanticChecking</title></polygon>
+<polygon points="68.0,499.3 588.0,499.3 1108.0,502.5 1108.0,507.0 588.0,505.4 68.0,505.4" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff — generateIR</title></polygon>
+<polygon points="68.0,499.2 588.0,499.3 1108.0,502.5 1108.0,502.5 588.0,499.3 68.0,499.3" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,355.0 588.0,355.1 1108.0,473.8 1108.0,502.5 588.0,499.3 68.0,499.2" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff — specializeModule</title></polygon>
+<polygon points="68.0,204.9 588.0,205.2 1108.0,440.5 1108.0,473.8 588.0,355.1 68.0,355.0" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff — simplifyIR</title></polygon>
+<polygon points="68.0,203.4 588.0,203.6 1108.0,440.0 1108.0,440.5 588.0,205.2 68.0,204.9" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff — linkIR</title></polygon>
+<polygon points="68.0,203.3 588.0,203.6 1108.0,439.9 1108.0,440.0 588.0,203.6 68.0,203.4" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff — unrollLoopsInModule</title></polygon>
+<polygon points="68.0,200.7 588.0,200.9 1108.0,437.3 1108.0,439.9 588.0,203.6 68.0,203.3" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,197.3 588.0,197.5 1108.0,434.7 1108.0,437.3 588.0,200.9 68.0,200.7" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,197.0 588.0,197.2 1108.0,434.4 1108.0,434.7 588.0,197.5 68.0,197.3" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,196.7 588.0,196.9 1108.0,434.1 1108.0,434.4 588.0,197.2 68.0,197.0" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff — performForceInlining</title></polygon>
+<polygon points="68.0,146.7 588.0,147.0 1108.0,421.3 1108.0,434.1 588.0,196.9 68.0,196.7" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff — linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,108.8 588.0,108.9 1108.0,387.0 1108.0,421.3 588.0,147.0 68.0,146.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff — generateOutput (self)</title></polygon>
+<polygon points="68.0,108.6 588.0,108.8 1108.0,387.0 1108.0,387.0 588.0,108.9 68.0,108.8" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>autodiff — compileInner (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="650" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="640" width="12" height="12" fill="#fd8d3c"/>
+<text x="305" y="650" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#e6550d"/>
+<text x="582" y="650" fill="#222">generateOutput (self)</text>
+<rect x="843" y="640" width="12" height="12" fill="#969696"/>
+<text x="859" y="650" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 200); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>autodiff.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+[Differentiable]
+float leaf(float x) { return x * x + sin(x) * cos(x); }
+
+[Differentiable]
+float chain_0(float x) { return leaf(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_1(float x) { return chain_0(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_2(float x) { return chain_1(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_3(float x) { return chain_2(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_4(float x) { return chain_3(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_5(float x) { return chain_4(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_6(float x) { return chain_5(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_7(float x) { return chain_6(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_8(float x) { return leaf(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_9(float x) { return chain_8(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_10(float x) { return chain_9(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_11(float x) { return chain_10(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_12(float x) { return chain_11(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_13(float x) { return chain_12(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_14(float x) { return chain_13(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_15(float x) { return chain_14(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_16(float x) { return leaf(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+
+// … 332 lines omitted …
+
+[Differentiable]
+float chain_183(float x) { return chain_182(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_184(float x) { return leaf(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_185(float x) { return chain_184(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_186(float x) { return chain_185(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_187(float x) { return chain_186(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_188(float x) { return chain_187(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_189(float x) { return chain_188(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_190(float x) { return chain_189(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_191(float x) { return chain_190(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_192(float x) { return leaf(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_193(float x) { return chain_192(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_194(float x) { return chain_193(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_195(float x) { return chain_194(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_196(float x) { return chain_195(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_197(float x) { return chain_196(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_198(float x) { return chain_197(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+[Differentiable]
+float chain_199(float x) { return chain_198(x) * 1.0009 + sin(x) * 0.5 - cos(x) * 0.25; }
+
+[Differentiable]
+T poly&lt;T : IDifferentiable &amp; IFloat&gt;(T x) { return x * x * x + x; }
+
+[shader("compute")]
+[numthreads(1,1,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float x = outBuf[tid.x];
+    float acc = 0.0;
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_7)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_7)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_15)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_15)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_23)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_23)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_31)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_31)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_39)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_39)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_47)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_47)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_55)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_55)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_63)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_63)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_71)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_71)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_79)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_79)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_87)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_87)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_95)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_95)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_103)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_103)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_111)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_111)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_119)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_119)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_127)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_127)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_135)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_135)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_143)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_143)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_151)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_151)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_159)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_159)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_167)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_167)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_175)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_175)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_183)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_183)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_191)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_191)(diffPair(x, 1.0)).d; }
+    { var dp = diffPair(x, 1.0);
+      bwd_diff(chain_199)(dp, 1.0); acc += dp.d;
+      acc += fwd_diff(chain_199)(diffPair(x, 1.0)).d; }
+    acc += fwd_diff(poly&lt;float&gt;)(diffPair(x, 1.0)).d;
+    outBuf[0] = acc;
+}</pre></body>

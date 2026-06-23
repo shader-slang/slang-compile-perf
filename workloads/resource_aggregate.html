@@ -1,0 +1,242 @@
+<!doctype html><meta charset=utf-8><title>resource_aggregate — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>resource_aggregate</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>n resource-bundle structs (each holding two textures, a sampler and a
+StructuredBuffer) declared at global scope and all read in the entry point.
+Nesting resource handles inside an aggregate forces `legalizeResourceTypes`
+to flatten each struct's resource fields into individually-bound resources
+before a target can consume them — a pass no other workload triggers (every
+other workload's only resource is a bare RWStructuredBuffer). Resources are
+kept live (sampled / indexed into the output) so dead-code elimination can't
+drop them before legalization runs. Scales by breadth = number of bundles,
+i.e. the count of resource fields the pass must legalize; legalizeResourceTypes
+grows super-linearly in n.</p><p style='color:#666;font-size:13px'><b>bucket:</b> resource_legalize &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 80</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="680" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">resource_aggregate — full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">resource_aggregate<tspan fill="#888" font-weight="400" text-decoration="none">  0.60×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">59</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">119</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.9</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.10</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,513.9 588.0,513.8 1108.0,513.9 1108.0,516.0 588.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — parseTranslationUnit</title></polygon>
+<polygon points="68.0,395.8 588.0,390.0 1108.0,465.0 1108.0,513.9 588.0,513.8 68.0,513.9" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — SemanticChecking</title></polygon>
+<polygon points="68.0,347.2 588.0,341.3 1108.0,443.0 1108.0,465.0 588.0,390.0 68.0,395.8" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — generateIR</title></polygon>
+<polygon points="68.0,339.9 588.0,334.7 1108.0,436.0 1108.0,443.0 588.0,341.3 68.0,347.2" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,302.4 588.0,297.4 1108.0,403.0 1108.0,436.0 588.0,334.7 68.0,339.9" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — specializeModule</title></polygon>
+<polygon points="68.0,275.6 588.0,270.9 1108.0,379.4 1108.0,403.0 588.0,297.4 68.0,302.4" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — simplifyIR</title></polygon>
+<polygon points="68.0,233.9 588.0,228.6 1108.0,373.8 1108.0,379.4 588.0,270.9 68.0,275.6" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — linkIR</title></polygon>
+<polygon points="68.0,233.8 588.0,228.6 1108.0,373.7 1108.0,373.8 588.0,228.6 68.0,233.9" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — unrollLoopsInModule</title></polygon>
+<polygon points="68.0,219.8 588.0,214.4 1108.0,361.6 1108.0,373.7 588.0,228.6 68.0,233.8" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,211.6 588.0,206.3 1108.0,354.3 1108.0,361.6 588.0,214.4 68.0,219.8" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,210.3 588.0,205.1 1108.0,353.1 1108.0,354.3 588.0,206.3 68.0,211.6" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,208.4 588.0,203.3 1108.0,351.6 1108.0,353.1 588.0,205.1 68.0,210.3" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — performForceInlining</title></polygon>
+<polygon points="68.0,168.5 588.0,163.5 1108.0,323.0 1108.0,351.6 588.0,203.3 68.0,208.4" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,119.2 588.0,115.5 1108.0,282.2 1108.0,323.0 588.0,163.5 68.0,168.5" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — generateOutput (self)</title></polygon>
+<polygon points="68.0,115.6 588.0,108.6 1108.0,276.5 1108.0,282.2 588.0,115.5 68.0,119.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate — compileInner (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="650" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="640" width="12" height="12" fill="#fd8d3c"/>
+<text x="305" y="650" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#e6550d"/>
+<text x="582" y="650" fill="#222">generateOutput (self)</text>
+<rect x="843" y="640" width="12" height="12" fill="#969696"/>
+<text x="859" y="650" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 80); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>resource_aggregate.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct ResBundle { Texture2D&lt;float4&gt; albedo; Texture2D&lt;float4&gt; normal; SamplerState samp; StructuredBuffer&lt;float&gt; coeffs; }
+
+ResBundle bundle_0;
+ResBundle bundle_1;
+ResBundle bundle_2;
+ResBundle bundle_3;
+ResBundle bundle_4;
+ResBundle bundle_5;
+ResBundle bundle_6;
+ResBundle bundle_7;
+ResBundle bundle_8;
+ResBundle bundle_9;
+ResBundle bundle_10;
+ResBundle bundle_11;
+ResBundle bundle_12;
+ResBundle bundle_13;
+ResBundle bundle_14;
+ResBundle bundle_15;
+ResBundle bundle_16;
+ResBundle bundle_17;
+ResBundle bundle_18;
+ResBundle bundle_19;
+ResBundle bundle_20;
+ResBundle bundle_21;
+ResBundle bundle_22;
+ResBundle bundle_23;
+ResBundle bundle_24;
+ResBundle bundle_25;
+ResBundle bundle_26;
+ResBundle bundle_27;
+ResBundle bundle_28;
+ResBundle bundle_29;
+ResBundle bundle_30;
+ResBundle bundle_31;
+ResBundle bundle_32;
+ResBundle bundle_33;
+ResBundle bundle_34;
+ResBundle bundle_35;
+ResBundle bundle_36;
+
+// … 8 lines omitted …
+
+ResBundle bundle_45;
+ResBundle bundle_46;
+ResBundle bundle_47;
+ResBundle bundle_48;
+ResBundle bundle_49;
+ResBundle bundle_50;
+ResBundle bundle_51;
+ResBundle bundle_52;
+ResBundle bundle_53;
+ResBundle bundle_54;
+ResBundle bundle_55;
+ResBundle bundle_56;
+ResBundle bundle_57;
+ResBundle bundle_58;
+ResBundle bundle_59;
+ResBundle bundle_60;
+ResBundle bundle_61;
+ResBundle bundle_62;
+ResBundle bundle_63;
+ResBundle bundle_64;
+ResBundle bundle_65;
+ResBundle bundle_66;
+ResBundle bundle_67;
+ResBundle bundle_68;
+ResBundle bundle_69;
+ResBundle bundle_70;
+ResBundle bundle_71;
+ResBundle bundle_72;
+ResBundle bundle_73;
+ResBundle bundle_74;
+ResBundle bundle_75;
+ResBundle bundle_76;
+ResBundle bundle_77;
+ResBundle bundle_78;
+ResBundle bundle_79;
+
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float acc = 0.0;
+    float2 uv = float2(tid.xy) * 0.01;
+    acc += bundle_0.albedo.SampleLevel(bundle_0.samp, uv, 0).x
+          + bundle_0.normal.SampleLevel(bundle_0.samp, uv, 0).y
+          + bundle_0.coeffs[tid.x % 16];
+    acc += bundle_1.albedo.SampleLevel(bundle_1.samp, uv, 0).x
+          + bundle_1.normal.SampleLevel(bundle_1.samp, uv, 0).y
+          + bundle_1.coeffs[tid.x % 16];
+    acc += bundle_2.albedo.SampleLevel(bundle_2.samp, uv, 0).x
+          + bundle_2.normal.SampleLevel(bundle_2.samp, uv, 0).y
+          + bundle_2.coeffs[tid.x % 16];
+    acc += bundle_3.albedo.SampleLevel(bundle_3.samp, uv, 0).x
+          + bundle_3.normal.SampleLevel(bundle_3.samp, uv, 0).y
+          + bundle_3.coeffs[tid.x % 16];
+    acc += bundle_4.albedo.SampleLevel(bundle_4.samp, uv, 0).x
+          + bundle_4.normal.SampleLevel(bundle_4.samp, uv, 0).y
+          + bundle_4.coeffs[tid.x % 16];
+    acc += bundle_5.albedo.SampleLevel(bundle_5.samp, uv, 0).x
+          + bundle_5.normal.SampleLevel(bundle_5.samp, uv, 0).y
+          + bundle_5.coeffs[tid.x % 16];
+    acc += bundle_6.albedo.SampleLevel(bundle_6.samp, uv, 0).x
+          + bundle_6.normal.SampleLevel(bundle_6.samp, uv, 0).y
+          + bundle_6.coeffs[tid.x % 16];
+    acc += bundle_7.albedo.SampleLevel(bundle_7.samp, uv, 0).x
+          + bundle_7.normal.SampleLevel(bundle_7.samp, uv, 0).y
+          + bundle_7.coeffs[tid.x % 16];
+    acc += bundle_8.albedo.SampleLevel(bundle_8.samp, uv, 0).x
+          + bundle_8.normal.SampleLevel(bundle_8.samp, uv, 0).y
+          + bundle_8.coeffs[tid.x % 16];
+    acc += bundle_9.albedo.SampleLevel(bundle_9.samp, uv, 0).x
+          + bundle_9.normal.SampleLevel(bundle_9.samp, uv, 0).y
+          + bundle_9.coeffs[tid.x % 16];
+    acc += bundle_10.albedo.SampleLevel(bundle_10.samp, uv, 0).x
+          + bundle_10.normal.SampleLevel(bundle_10.samp, uv, 0).y
+          + bundle_10.coeffs[tid.x % 16];
+    acc += bundle_11.albedo.SampleLevel(bundle_11.samp, uv, 0).x
+          + bundle_11.normal.SampleLevel(bundle_11.samp, uv, 0).y
+          + bundle_11.coeffs[tid.x % 16];
+    acc += bundle_12.albedo.SampleLevel(bundle_12.samp, uv, 0).x
+
+// … 165 lines omitted …
+
+          + bundle_67.normal.SampleLevel(bundle_67.samp, uv, 0).y
+          + bundle_67.coeffs[tid.x % 16];
+    acc += bundle_68.albedo.SampleLevel(bundle_68.samp, uv, 0).x
+          + bundle_68.normal.SampleLevel(bundle_68.samp, uv, 0).y
+          + bundle_68.coeffs[tid.x % 16];
+    acc += bundle_69.albedo.SampleLevel(bundle_69.samp, uv, 0).x
+          + bundle_69.normal.SampleLevel(bundle_69.samp, uv, 0).y
+          + bundle_69.coeffs[tid.x % 16];
+    acc += bundle_70.albedo.SampleLevel(bundle_70.samp, uv, 0).x
+          + bundle_70.normal.SampleLevel(bundle_70.samp, uv, 0).y
+          + bundle_70.coeffs[tid.x % 16];
+    acc += bundle_71.albedo.SampleLevel(bundle_71.samp, uv, 0).x
+          + bundle_71.normal.SampleLevel(bundle_71.samp, uv, 0).y
+          + bundle_71.coeffs[tid.x % 16];
+    acc += bundle_72.albedo.SampleLevel(bundle_72.samp, uv, 0).x
+          + bundle_72.normal.SampleLevel(bundle_72.samp, uv, 0).y
+          + bundle_72.coeffs[tid.x % 16];
+    acc += bundle_73.albedo.SampleLevel(bundle_73.samp, uv, 0).x
+          + bundle_73.normal.SampleLevel(bundle_73.samp, uv, 0).y
+          + bundle_73.coeffs[tid.x % 16];
+    acc += bundle_74.albedo.SampleLevel(bundle_74.samp, uv, 0).x
+          + bundle_74.normal.SampleLevel(bundle_74.samp, uv, 0).y
+          + bundle_74.coeffs[tid.x % 16];
+    acc += bundle_75.albedo.SampleLevel(bundle_75.samp, uv, 0).x
+          + bundle_75.normal.SampleLevel(bundle_75.samp, uv, 0).y
+          + bundle_75.coeffs[tid.x % 16];
+    acc += bundle_76.albedo.SampleLevel(bundle_76.samp, uv, 0).x
+          + bundle_76.normal.SampleLevel(bundle_76.samp, uv, 0).y
+          + bundle_76.coeffs[tid.x % 16];
+    acc += bundle_77.albedo.SampleLevel(bundle_77.samp, uv, 0).x
+          + bundle_77.normal.SampleLevel(bundle_77.samp, uv, 0).y
+          + bundle_77.coeffs[tid.x % 16];
+    acc += bundle_78.albedo.SampleLevel(bundle_78.samp, uv, 0).x
+          + bundle_78.normal.SampleLevel(bundle_78.samp, uv, 0).y
+          + bundle_78.coeffs[tid.x % 16];
+    acc += bundle_79.albedo.SampleLevel(bundle_79.samp, uv, 0).x
+          + bundle_79.normal.SampleLevel(bundle_79.samp, uv, 0).y
+          + bundle_79.coeffs[tid.x % 16];
+    outBuf[tid.x] = acc;
+}</pre></body>

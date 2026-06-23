@@ -1,0 +1,142 @@
+<!doctype html><meta charset=utf-8><title>conformance — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>conformance</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>`n` structs each conforming to a shared interface. Stresses interface
+conformance checking / witness synthesis in the front end (compiled to a
+.slang-module so the signal is sema, not codegen).</p><p style='color:#666;font-size:13px'><b>bucket:</b> sema &nbsp;·&nbsp; <b>compile mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 600</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="680" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">conformance — full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">conformance<tspan fill="#888" font-weight="400" text-decoration="none">  0.67×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">46</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">91</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.9</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.10</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,495.1 588.0,495.3 1108.0,495.7 1108.0,516.0 588.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — parseTranslationUnit</title></polygon>
+<polygon points="68.0,307.3 588.0,305.6 1108.0,425.4 1108.0,495.7 588.0,495.3 68.0,495.1" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — SemanticChecking</title></polygon>
+<polygon points="68.0,200.0 588.0,198.3 1108.0,327.8 1108.0,425.4 588.0,305.6 68.0,307.3" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — generateIR</title></polygon>
+<polygon points="68.0,199.6 588.0,196.6 1108.0,327.8 1108.0,327.8 588.0,198.3 68.0,200.0" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,111.5 588.0,108.6 1108.0,243.6 1108.0,327.8 588.0,196.6 68.0,199.6" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — generateOutput (self)</title></polygon>
+<polygon points="68.0,111.2 588.0,108.6 1108.0,243.6 1108.0,243.6 588.0,108.6 68.0,111.5" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance — compileInner (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="650" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="640" width="12" height="12" fill="#fd8d3c"/>
+<text x="305" y="650" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#e6550d"/>
+<text x="582" y="650" fill="#222">generateOutput (self)</text>
+<rect x="843" y="640" width="12" height="12" fill="#969696"/>
+<text x="859" y="650" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 600); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>conformance.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+interface IFace { float f(float x); int g(); }
+
+struct C0 : IFace { float f(float x) { return x * 1.0 + 0.0; } int g() { return 0; } }
+struct C1 : IFace { float f(float x) { return x * 2.0 + 1.0; } int g() { return 1; } }
+struct C2 : IFace { float f(float x) { return x * 3.0 + 2.0; } int g() { return 2; } }
+struct C3 : IFace { float f(float x) { return x * 4.0 + 3.0; } int g() { return 3; } }
+struct C4 : IFace { float f(float x) { return x * 5.0 + 4.0; } int g() { return 4; } }
+struct C5 : IFace { float f(float x) { return x * 6.0 + 5.0; } int g() { return 5; } }
+struct C6 : IFace { float f(float x) { return x * 7.0 + 6.0; } int g() { return 6; } }
+struct C7 : IFace { float f(float x) { return x * 8.0 + 7.0; } int g() { return 7; } }
+struct C8 : IFace { float f(float x) { return x * 9.0 + 8.0; } int g() { return 8; } }
+struct C9 : IFace { float f(float x) { return x * 1.0 + 9.0; } int g() { return 9; } }
+struct C10 : IFace { float f(float x) { return x * 2.0 + 10.0; } int g() { return 10; } }
+struct C11 : IFace { float f(float x) { return x * 3.0 + 11.0; } int g() { return 11; } }
+struct C12 : IFace { float f(float x) { return x * 4.0 + 12.0; } int g() { return 12; } }
+struct C13 : IFace { float f(float x) { return x * 5.0 + 13.0; } int g() { return 13; } }
+struct C14 : IFace { float f(float x) { return x * 6.0 + 14.0; } int g() { return 14; } }
+struct C15 : IFace { float f(float x) { return x * 7.0 + 15.0; } int g() { return 15; } }
+struct C16 : IFace { float f(float x) { return x * 8.0 + 16.0; } int g() { return 16; } }
+struct C17 : IFace { float f(float x) { return x * 9.0 + 17.0; } int g() { return 17; } }
+struct C18 : IFace { float f(float x) { return x * 1.0 + 18.0; } int g() { return 18; } }
+struct C19 : IFace { float f(float x) { return x * 2.0 + 19.0; } int g() { return 19; } }
+struct C20 : IFace { float f(float x) { return x * 3.0 + 20.0; } int g() { return 20; } }
+struct C21 : IFace { float f(float x) { return x * 4.0 + 21.0; } int g() { return 21; } }
+struct C22 : IFace { float f(float x) { return x * 5.0 + 22.0; } int g() { return 22; } }
+struct C23 : IFace { float f(float x) { return x * 6.0 + 23.0; } int g() { return 23; } }
+struct C24 : IFace { float f(float x) { return x * 7.0 + 24.0; } int g() { return 24; } }
+struct C25 : IFace { float f(float x) { return x * 8.0 + 25.0; } int g() { return 25; } }
+struct C26 : IFace { float f(float x) { return x * 9.0 + 26.0; } int g() { return 26; } }
+struct C27 : IFace { float f(float x) { return x * 1.0 + 27.0; } int g() { return 27; } }
+struct C28 : IFace { float f(float x) { return x * 2.0 + 28.0; } int g() { return 28; } }
+struct C29 : IFace { float f(float x) { return x * 3.0 + 29.0; } int g() { return 29; } }
+struct C30 : IFace { float f(float x) { return x * 4.0 + 30.0; } int g() { return 30; } }
+struct C31 : IFace { float f(float x) { return x * 5.0 + 31.0; } int g() { return 31; } }
+struct C32 : IFace { float f(float x) { return x * 6.0 + 32.0; } int g() { return 32; } }
+struct C33 : IFace { float f(float x) { return x * 7.0 + 33.0; } int g() { return 33; } }
+struct C34 : IFace { float f(float x) { return x * 8.0 + 34.0; } int g() { return 34; } }
+struct C35 : IFace { float f(float x) { return x * 9.0 + 35.0; } int g() { return 35; } }
+struct C36 : IFace { float f(float x) { return x * 1.0 + 36.0; } int g() { return 36; } }
+
+// … 523 lines omitted …
+
+struct C560 : IFace { float f(float x) { return x * 3.0 + 560.0; } int g() { return 560; } }
+struct C561 : IFace { float f(float x) { return x * 4.0 + 561.0; } int g() { return 561; } }
+struct C562 : IFace { float f(float x) { return x * 5.0 + 562.0; } int g() { return 562; } }
+struct C563 : IFace { float f(float x) { return x * 6.0 + 563.0; } int g() { return 563; } }
+struct C564 : IFace { float f(float x) { return x * 7.0 + 564.0; } int g() { return 564; } }
+struct C565 : IFace { float f(float x) { return x * 8.0 + 565.0; } int g() { return 565; } }
+struct C566 : IFace { float f(float x) { return x * 9.0 + 566.0; } int g() { return 566; } }
+struct C567 : IFace { float f(float x) { return x * 1.0 + 567.0; } int g() { return 567; } }
+struct C568 : IFace { float f(float x) { return x * 2.0 + 568.0; } int g() { return 568; } }
+struct C569 : IFace { float f(float x) { return x * 3.0 + 569.0; } int g() { return 569; } }
+struct C570 : IFace { float f(float x) { return x * 4.0 + 570.0; } int g() { return 570; } }
+struct C571 : IFace { float f(float x) { return x * 5.0 + 571.0; } int g() { return 571; } }
+struct C572 : IFace { float f(float x) { return x * 6.0 + 572.0; } int g() { return 572; } }
+struct C573 : IFace { float f(float x) { return x * 7.0 + 573.0; } int g() { return 573; } }
+struct C574 : IFace { float f(float x) { return x * 8.0 + 574.0; } int g() { return 574; } }
+struct C575 : IFace { float f(float x) { return x * 9.0 + 575.0; } int g() { return 575; } }
+struct C576 : IFace { float f(float x) { return x * 1.0 + 576.0; } int g() { return 576; } }
+struct C577 : IFace { float f(float x) { return x * 2.0 + 577.0; } int g() { return 577; } }
+struct C578 : IFace { float f(float x) { return x * 3.0 + 578.0; } int g() { return 578; } }
+struct C579 : IFace { float f(float x) { return x * 4.0 + 579.0; } int g() { return 579; } }
+struct C580 : IFace { float f(float x) { return x * 5.0 + 580.0; } int g() { return 580; } }
+struct C581 : IFace { float f(float x) { return x * 6.0 + 581.0; } int g() { return 581; } }
+struct C582 : IFace { float f(float x) { return x * 7.0 + 582.0; } int g() { return 582; } }
+struct C583 : IFace { float f(float x) { return x * 8.0 + 583.0; } int g() { return 583; } }
+struct C584 : IFace { float f(float x) { return x * 9.0 + 584.0; } int g() { return 584; } }
+struct C585 : IFace { float f(float x) { return x * 1.0 + 585.0; } int g() { return 585; } }
+struct C586 : IFace { float f(float x) { return x * 2.0 + 586.0; } int g() { return 586; } }
+struct C587 : IFace { float f(float x) { return x * 3.0 + 587.0; } int g() { return 587; } }
+struct C588 : IFace { float f(float x) { return x * 4.0 + 588.0; } int g() { return 588; } }
+struct C589 : IFace { float f(float x) { return x * 5.0 + 589.0; } int g() { return 589; } }
+struct C590 : IFace { float f(float x) { return x * 6.0 + 590.0; } int g() { return 590; } }
+struct C591 : IFace { float f(float x) { return x * 7.0 + 591.0; } int g() { return 591; } }
+struct C592 : IFace { float f(float x) { return x * 8.0 + 592.0; } int g() { return 592; } }
+struct C593 : IFace { float f(float x) { return x * 9.0 + 593.0; } int g() { return 593; } }
+struct C594 : IFace { float f(float x) { return x * 1.0 + 594.0; } int g() { return 594; } }
+struct C595 : IFace { float f(float x) { return x * 2.0 + 595.0; } int g() { return 595; } }
+struct C596 : IFace { float f(float x) { return x * 3.0 + 596.0; } int g() { return 596; } }
+struct C597 : IFace { float f(float x) { return x * 4.0 + 597.0; } int g() { return 597; } }
+struct C598 : IFace { float f(float x) { return x * 5.0 + 598.0; } int g() { return 598; } }
+struct C599 : IFace { float f(float x) { return x * 6.0 + 599.0; } int g() { return 599; } }</pre></body>

@@ -1,0 +1,206 @@
+<!doctype html><meta charset=utf-8><title>inlining — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>inlining</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>n [ForceInline] functions in bounded-depth groups. The inliner collapses
+each group into its group-top; the entry sums all group-tops, giving the SSA
+simplifier large bodies to chew on. Scales by breadth (bounded nesting).</p><p style='color:#666;font-size:13px'><b>bucket:</b> inlining &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 400</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="680" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">inlining — full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">inlining<tspan fill="#888" font-weight="400" text-decoration="none">  0.84×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">295</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">590</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.9</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.10</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,514.6 588.0,514.4 1108.0,514.6 1108.0,516.0 588.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining — parseTranslationUnit</title></polygon>
+<polygon points="68.0,468.7 588.0,467.8 1108.0,487.6 1108.0,514.6 588.0,514.4 68.0,514.6" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining — SemanticChecking</title></polygon>
+<polygon points="68.0,451.6 588.0,450.8 1108.0,477.1 1108.0,487.6 588.0,467.8 68.0,468.7" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining — generateIR</title></polygon>
+<polygon points="68.0,451.2 588.0,450.6 1108.0,476.8 1108.0,477.1 588.0,450.8 68.0,451.6" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,430.8 588.0,429.7 1108.0,462.3 1108.0,476.8 588.0,450.6 68.0,451.2" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining — specializeModule</title></polygon>
+<polygon points="68.0,138.5 588.0,137.5 1108.0,192.2 1108.0,462.3 588.0,429.7 68.0,430.8" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining — simplifyIR</title></polygon>
+<polygon points="68.0,129.4 588.0,128.1 1108.0,190.7 1108.0,192.2 588.0,137.5 68.0,138.5" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining — linkIR</title></polygon>
+<polygon points="68.0,129.3 588.0,128.0 1108.0,190.6 1108.0,190.7 588.0,128.1 68.0,129.4" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining — unrollLoopsInModule</title></polygon>
+<polygon points="68.0,128.1 588.0,126.7 1108.0,189.4 1108.0,190.6 588.0,128.0 68.0,129.3" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,126.9 588.0,125.4 1108.0,188.2 1108.0,189.4 588.0,126.7 68.0,128.1" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,126.4 588.0,125.0 1108.0,187.7 1108.0,188.2 588.0,125.4 68.0,126.9" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,124.6 588.0,123.2 1108.0,186.0 1108.0,187.7 588.0,125.0 68.0,126.4" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining — performForceInlining</title></polygon>
+<polygon points="68.0,112.2 588.0,110.6 1108.0,175.7 1108.0,186.0 588.0,123.2 68.0,124.6" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining — linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,110.3 588.0,108.7 1108.0,174.1 1108.0,175.7 588.0,110.6 68.0,112.2" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining — generateOutput (self)</title></polygon>
+<polygon points="68.0,108.7 588.0,108.6 1108.0,174.1 1108.0,174.1 588.0,108.7 68.0,110.3" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>inlining — compileInner (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="650" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="640" width="12" height="12" fill="#fd8d3c"/>
+<text x="305" y="650" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#e6550d"/>
+<text x="582" y="650" fill="#222">generateOutput (self)</text>
+<rect x="843" y="640" width="12" height="12" fill="#969696"/>
+<text x="859" y="650" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 400); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>inlining.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+[ForceInline] float step_0(float x) { return x * 1.01 + sin(x); }
+[ForceInline] float step_1(float x) { float t = step_0(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_2(float x) { float t = step_1(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_3(float x) { float t = step_2(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_4(float x) { float t = step_3(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_5(float x) { float t = step_4(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_6(float x) { float t = step_5(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_7(float x) { float t = step_6(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_8(float x) { return x * 1.01 + sin(x); }
+[ForceInline] float step_9(float x) { float t = step_8(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_10(float x) { float t = step_9(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_11(float x) { float t = step_10(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_12(float x) { float t = step_11(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_13(float x) { float t = step_12(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_14(float x) { float t = step_13(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_15(float x) { float t = step_14(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_16(float x) { return x * 1.01 + sin(x); }
+[ForceInline] float step_17(float x) { float t = step_16(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_18(float x) { float t = step_17(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_19(float x) { float t = step_18(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_20(float x) { float t = step_19(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_21(float x) { float t = step_20(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_22(float x) { float t = step_21(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_23(float x) { float t = step_22(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_24(float x) { return x * 1.01 + sin(x); }
+[ForceInline] float step_25(float x) { float t = step_24(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_26(float x) { float t = step_25(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_27(float x) { float t = step_26(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_28(float x) { float t = step_27(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_29(float x) { float t = step_28(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_30(float x) { float t = step_29(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_31(float x) { float t = step_30(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_32(float x) { return x * 1.01 + sin(x); }
+[ForceInline] float step_33(float x) { float t = step_32(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_34(float x) { float t = step_33(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_35(float x) { float t = step_34(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_36(float x) { float t = step_35(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+
+// … 326 lines omitted …
+
+[ForceInline] float step_363(float x) { float t = step_362(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_364(float x) { float t = step_363(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_365(float x) { float t = step_364(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_366(float x) { float t = step_365(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_367(float x) { float t = step_366(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_368(float x) { return x * 1.01 + sin(x); }
+[ForceInline] float step_369(float x) { float t = step_368(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_370(float x) { float t = step_369(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_371(float x) { float t = step_370(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_372(float x) { float t = step_371(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_373(float x) { float t = step_372(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_374(float x) { float t = step_373(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_375(float x) { float t = step_374(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_376(float x) { return x * 1.01 + sin(x); }
+[ForceInline] float step_377(float x) { float t = step_376(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_378(float x) { float t = step_377(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_379(float x) { float t = step_378(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_380(float x) { float t = step_379(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_381(float x) { float t = step_380(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_382(float x) { float t = step_381(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_383(float x) { float t = step_382(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_384(float x) { return x * 1.01 + sin(x); }
+[ForceInline] float step_385(float x) { float t = step_384(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_386(float x) { float t = step_385(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_387(float x) { float t = step_386(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_388(float x) { float t = step_387(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_389(float x) { float t = step_388(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_390(float x) { float t = step_389(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_391(float x) { float t = step_390(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_392(float x) { return x * 1.01 + sin(x); }
+[ForceInline] float step_393(float x) { float t = step_392(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_394(float x) { float t = step_393(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_395(float x) { float t = step_394(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_396(float x) { float t = step_395(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_397(float x) { float t = step_396(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_398(float x) { float t = step_397(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+[ForceInline] float step_399(float x) { float t = step_398(x); return t * 1.01 + cos(t) - sin(x * 0.5); }
+
+[shader("compute")]
+[numthreads(1,1,1)]
+void computeMain()
+{
+    float x = outBuf[0]; float acc = 0.0;
+    acc += step_7(x);
+    acc += step_15(x);
+    acc += step_23(x);
+    acc += step_31(x);
+    acc += step_39(x);
+    acc += step_47(x);
+    acc += step_55(x);
+    acc += step_63(x);
+    acc += step_71(x);
+    acc += step_79(x);
+    acc += step_87(x);
+    acc += step_95(x);
+    acc += step_103(x);
+    acc += step_111(x);
+    acc += step_119(x);
+    acc += step_127(x);
+    acc += step_135(x);
+    acc += step_143(x);
+    acc += step_151(x);
+    acc += step_159(x);
+    acc += step_167(x);
+    acc += step_175(x);
+    acc += step_183(x);
+    acc += step_191(x);
+    acc += step_199(x);
+    acc += step_207(x);
+    acc += step_215(x);
+    acc += step_223(x);
+    acc += step_231(x);
+    acc += step_239(x);
+    acc += step_247(x);
+    acc += step_255(x);
+    acc += step_263(x);
+    acc += step_271(x);
+    acc += step_279(x);
+    acc += step_287(x);
+    acc += step_295(x);
+    acc += step_303(x);
+    acc += step_311(x);
+    acc += step_319(x);
+    acc += step_327(x);
+    acc += step_335(x);
+    acc += step_343(x);
+    acc += step_351(x);
+    acc += step_359(x);
+    acc += step_367(x);
+    acc += step_375(x);
+    acc += step_383(x);
+    acc += step_391(x);
+    acc += step_399(x);
+    outBuf[0] = acc;
+}</pre></body>

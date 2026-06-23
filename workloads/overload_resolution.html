@@ -1,0 +1,213 @@
+<!doctype html><meta charset=utf-8><title>overload_resolution — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>overload_resolution</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>A large user-defined overload set (`pick`/`pick2`, scalar + vector + two-arg
+candidates), then `n` call sites with rotating argument types. Every call
+enumerates all candidates and ranks them by conversion cost to choose the best
+match — isolating the candidate-ranking cost that scales with overload-set
+size times call-site count.</p><p style='color:#666;font-size:13px'><b>bucket:</b> typecheck &nbsp;·&nbsp; <b>compile mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 600</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="680" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">overload_resolution — full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">overload_resolution<tspan fill="#888" font-weight="400" text-decoration="none">  0.68×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">28</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">56</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.9</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.10</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,502.7 588.0,502.2 1108.0,502.5 1108.0,516.0 588.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>overload_resolution — parseTranslationUnit</title></polygon>
+<polygon points="68.0,276.4 588.0,268.4 1108.0,346.0 1108.0,502.5 588.0,502.2 68.0,502.7" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>overload_resolution — SemanticChecking</title></polygon>
+<polygon points="68.0,155.6 588.0,146.7 1108.0,279.4 1108.0,346.0 588.0,268.4 68.0,276.4" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>overload_resolution — generateIR</title></polygon>
+<polygon points="68.0,153.3 588.0,145.3 1108.0,278.8 1108.0,279.4 588.0,146.7 68.0,155.6" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>overload_resolution — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,116.8 588.0,108.6 1108.0,244.9 1108.0,278.8 588.0,145.3 68.0,153.3" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>overload_resolution — generateOutput (self)</title></polygon>
+<polygon points="68.0,115.5 588.0,108.6 1108.0,244.0 1108.0,244.9 588.0,108.6 68.0,116.8" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>overload_resolution — compileInner (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="650" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="640" width="12" height="12" fill="#fd8d3c"/>
+<text x="305" y="650" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#e6550d"/>
+<text x="582" y="650" fill="#222">generateOutput (self)</text>
+<rect x="843" y="640" width="12" height="12" fill="#969696"/>
+<text x="859" y="650" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 600); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>overload_resolution.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+float pick(float x) { return float(x) + 1.0; }
+float pick(int x) { return float(x) + 1.0; }
+float pick(uint x) { return float(x) + 1.0; }
+float pick(float2 x) { return float(x[0] + x[0]); }
+float pick(float3 x) { return float(x[0] + x[0]); }
+float pick(float4 x) { return float(x[0] + x[0]); }
+float pick2(float a, float b) { return float(a) + float(b); }
+float pick2(int a, float b) { return float(a) + float(b); }
+float pick2(float a, int b) { return float(a) + float(b); }
+float pick2(int a, int b) { return float(a) + float(b); }
+float pick2(uint a, float b) { return float(a) + float(b); }
+float pick2(float a, uint b) { return float(a) + float(b); }
+
+float call_0() { return pick(1.0) + pick2(1.0, 2.0); }
+float call_1() { return pick(2) + pick2(3, 4.0); }
+float call_2() { return pick(3u) + pick2(5.0, 6); }
+float call_3() { return pick(float2(1.0)) + pick2(7, 8); }
+float call_4() { return pick(float3(1.0)) + pick2(9u, 10.0); }
+float call_5() { return pick(float4(1.0)) + pick2(11.0, 12u); }
+float call_6() { return pick(1.0) + pick2(1.0, 2.0); }
+float call_7() { return pick(2) + pick2(3, 4.0); }
+float call_8() { return pick(3u) + pick2(5.0, 6); }
+float call_9() { return pick(float2(1.0)) + pick2(7, 8); }
+float call_10() { return pick(float3(1.0)) + pick2(9u, 10.0); }
+float call_11() { return pick(float4(1.0)) + pick2(11.0, 12u); }
+float call_12() { return pick(1.0) + pick2(1.0, 2.0); }
+float call_13() { return pick(2) + pick2(3, 4.0); }
+float call_14() { return pick(3u) + pick2(5.0, 6); }
+float call_15() { return pick(float2(1.0)) + pick2(7, 8); }
+float call_16() { return pick(float3(1.0)) + pick2(9u, 10.0); }
+float call_17() { return pick(float4(1.0)) + pick2(11.0, 12u); }
+float call_18() { return pick(1.0) + pick2(1.0, 2.0); }
+float call_19() { return pick(2) + pick2(3, 4.0); }
+float call_20() { return pick(3u) + pick2(5.0, 6); }
+float call_21() { return pick(float2(1.0)) + pick2(7, 8); }
+float call_22() { return pick(float3(1.0)) + pick2(9u, 10.0); }
+float call_23() { return pick(float4(1.0)) + pick2(11.0, 12u); }
+
+// … 539 lines omitted …
+
+float call_563() { return pick(float4(1.0)) + pick2(11.0, 12u); }
+float call_564() { return pick(1.0) + pick2(1.0, 2.0); }
+float call_565() { return pick(2) + pick2(3, 4.0); }
+float call_566() { return pick(3u) + pick2(5.0, 6); }
+float call_567() { return pick(float2(1.0)) + pick2(7, 8); }
+float call_568() { return pick(float3(1.0)) + pick2(9u, 10.0); }
+float call_569() { return pick(float4(1.0)) + pick2(11.0, 12u); }
+float call_570() { return pick(1.0) + pick2(1.0, 2.0); }
+float call_571() { return pick(2) + pick2(3, 4.0); }
+float call_572() { return pick(3u) + pick2(5.0, 6); }
+float call_573() { return pick(float2(1.0)) + pick2(7, 8); }
+float call_574() { return pick(float3(1.0)) + pick2(9u, 10.0); }
+float call_575() { return pick(float4(1.0)) + pick2(11.0, 12u); }
+float call_576() { return pick(1.0) + pick2(1.0, 2.0); }
+float call_577() { return pick(2) + pick2(3, 4.0); }
+float call_578() { return pick(3u) + pick2(5.0, 6); }
+float call_579() { return pick(float2(1.0)) + pick2(7, 8); }
+float call_580() { return pick(float3(1.0)) + pick2(9u, 10.0); }
+float call_581() { return pick(float4(1.0)) + pick2(11.0, 12u); }
+float call_582() { return pick(1.0) + pick2(1.0, 2.0); }
+float call_583() { return pick(2) + pick2(3, 4.0); }
+float call_584() { return pick(3u) + pick2(5.0, 6); }
+float call_585() { return pick(float2(1.0)) + pick2(7, 8); }
+float call_586() { return pick(float3(1.0)) + pick2(9u, 10.0); }
+float call_587() { return pick(float4(1.0)) + pick2(11.0, 12u); }
+float call_588() { return pick(1.0) + pick2(1.0, 2.0); }
+float call_589() { return pick(2) + pick2(3, 4.0); }
+float call_590() { return pick(3u) + pick2(5.0, 6); }
+float call_591() { return pick(float2(1.0)) + pick2(7, 8); }
+float call_592() { return pick(float3(1.0)) + pick2(9u, 10.0); }
+float call_593() { return pick(float4(1.0)) + pick2(11.0, 12u); }
+float call_594() { return pick(1.0) + pick2(1.0, 2.0); }
+float call_595() { return pick(2) + pick2(3, 4.0); }
+float call_596() { return pick(3u) + pick2(5.0, 6); }
+float call_597() { return pick(float2(1.0)) + pick2(7, 8); }
+float call_598() { return pick(float3(1.0)) + pick2(9u, 10.0); }
+float call_599() { return pick(float4(1.0)) + pick2(11.0, 12u); }
+
+[shader("compute")]
+[numthreads(1,1,1)]
+void computeMain()
+{
+    float acc = 0.0;
+    acc += call_0();
+    acc += call_1();
+    acc += call_2();
+    acc += call_3();
+    acc += call_4();
+    acc += call_5();
+    acc += call_6();
+    acc += call_7();
+    acc += call_8();
+    acc += call_9();
+    acc += call_10();
+    acc += call_11();
+    acc += call_12();
+    acc += call_13();
+    acc += call_14();
+    acc += call_15();
+    acc += call_16();
+    acc += call_17();
+    acc += call_18();
+    acc += call_19();
+    acc += call_20();
+    acc += call_21();
+    acc += call_22();
+    acc += call_23();
+    acc += call_24();
+    acc += call_25();
+    acc += call_26();
+    acc += call_27();
+    acc += call_28();
+    acc += call_29();
+    acc += call_30();
+    acc += call_31();
+    acc += call_32();
+    acc += call_33();
+    acc += call_34();
+    acc += call_35();
+    acc += call_36();
+    acc += call_37();
+    acc += call_38();
+    acc += call_39();
+    acc += call_40();
+    acc += call_41();
+    acc += call_42();
+    acc += call_43();
+    acc += call_44();
+    acc += call_45();
+    acc += call_46();
+    acc += call_47();
+    acc += call_48();
+    acc += call_49();
+    acc += call_50();
+    acc += call_51();
+    acc += call_52();
+    acc += call_53();
+    acc += call_54();
+    acc += call_55();
+    acc += call_56();
+    acc += call_57();
+    acc += call_58();
+    acc += call_59();
+    acc += call_60();
+    acc += call_61();
+    acc += call_62();
+    acc += call_63();
+    outBuf[0] = acc;
+}</pre></body>

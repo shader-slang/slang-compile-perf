@@ -1,0 +1,234 @@
+<!doctype html><meta charset=utf-8><title>specialization — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>specialization</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>A generic struct over a type parameter, instantiated at n distinct
+wrapper types. Forces specializeModule to clone the generic n ways.</p><p style='color:#666;font-size:13px'><b>bucket:</b> specialization &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 300</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="680" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">specialization — full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">specialization<tspan fill="#888" font-weight="400" text-decoration="none">  0.68×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">169</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">338</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.9</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.10</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,513.8 588.0,513.8 1108.0,513.8 1108.0,516.0 588.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — parseTranslationUnit</title></polygon>
+<polygon points="68.0,471.1 588.0,469.5 1108.0,488.4 1108.0,513.8 588.0,513.8 68.0,513.8" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — SemanticChecking</title></polygon>
+<polygon points="68.0,445.4 588.0,443.7 1108.0,472.9 1108.0,488.4 588.0,469.5 68.0,471.1" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — generateIR</title></polygon>
+<polygon points="68.0,445.0 588.0,443.1 1108.0,472.4 1108.0,472.9 588.0,443.7 68.0,445.4" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,384.4 588.0,382.5 1108.0,444.8 1108.0,472.4 588.0,443.1 68.0,445.0" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — specializeModule</title></polygon>
+<polygon points="68.0,293.7 588.0,290.4 1108.0,389.7 1108.0,444.8 588.0,382.5 68.0,384.4" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — simplifyIR</title></polygon>
+<polygon points="68.0,279.9 588.0,276.8 1108.0,386.3 1108.0,389.7 588.0,290.4 68.0,293.7" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — linkIR</title></polygon>
+<polygon points="68.0,279.7 588.0,276.5 1108.0,386.0 1108.0,386.3 588.0,276.8 68.0,279.9" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — unrollLoopsInModule</title></polygon>
+<polygon points="68.0,248.9 588.0,245.9 1108.0,357.5 1108.0,386.0 588.0,276.5 68.0,279.7" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,216.4 588.0,213.4 1108.0,327.4 1108.0,357.5 588.0,245.9 68.0,248.9" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,214.2 588.0,211.2 1108.0,325.2 1108.0,327.4 588.0,213.4 68.0,216.4" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,213.4 588.0,210.5 1108.0,324.5 1108.0,325.2 588.0,211.2 68.0,214.2" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — performForceInlining</title></polygon>
+<polygon points="68.0,161.7 588.0,158.1 1108.0,288.4 1108.0,324.5 588.0,210.5 68.0,213.4" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,113.3 588.0,109.0 1108.0,242.4 1108.0,288.4 588.0,158.1 68.0,161.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — generateOutput (self)</title></polygon>
+<polygon points="68.0,113.3 588.0,108.6 1108.0,242.2 1108.0,242.4 588.0,109.0 68.0,113.3" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>specialization — compileInner (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="650" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="640" width="12" height="12" fill="#fd8d3c"/>
+<text x="305" y="650" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#e6550d"/>
+<text x="582" y="650" fill="#222">generateOutput (self)</text>
+<rect x="843" y="640" width="12" height="12" fill="#969696"/>
+<text x="859" y="650" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 300); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>specialization.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+interface IVal { float get(); }
+
+struct V0 : IVal { float get() { return 0.0 + 1.0; } }
+struct V1 : IVal { float get() { return 1.0 + 1.0; } }
+struct V2 : IVal { float get() { return 2.0 + 1.0; } }
+struct V3 : IVal { float get() { return 3.0 + 1.0; } }
+struct V4 : IVal { float get() { return 4.0 + 1.0; } }
+struct V5 : IVal { float get() { return 5.0 + 1.0; } }
+struct V6 : IVal { float get() { return 6.0 + 1.0; } }
+struct V7 : IVal { float get() { return 7.0 + 1.0; } }
+struct V8 : IVal { float get() { return 8.0 + 1.0; } }
+struct V9 : IVal { float get() { return 9.0 + 1.0; } }
+struct V10 : IVal { float get() { return 10.0 + 1.0; } }
+struct V11 : IVal { float get() { return 11.0 + 1.0; } }
+struct V12 : IVal { float get() { return 12.0 + 1.0; } }
+struct V13 : IVal { float get() { return 13.0 + 1.0; } }
+struct V14 : IVal { float get() { return 14.0 + 1.0; } }
+struct V15 : IVal { float get() { return 15.0 + 1.0; } }
+struct V16 : IVal { float get() { return 16.0 + 1.0; } }
+struct V17 : IVal { float get() { return 17.0 + 1.0; } }
+struct V18 : IVal { float get() { return 18.0 + 1.0; } }
+struct V19 : IVal { float get() { return 19.0 + 1.0; } }
+struct V20 : IVal { float get() { return 20.0 + 1.0; } }
+struct V21 : IVal { float get() { return 21.0 + 1.0; } }
+struct V22 : IVal { float get() { return 22.0 + 1.0; } }
+struct V23 : IVal { float get() { return 23.0 + 1.0; } }
+struct V24 : IVal { float get() { return 24.0 + 1.0; } }
+struct V25 : IVal { float get() { return 25.0 + 1.0; } }
+struct V26 : IVal { float get() { return 26.0 + 1.0; } }
+struct V27 : IVal { float get() { return 27.0 + 1.0; } }
+struct V28 : IVal { float get() { return 28.0 + 1.0; } }
+struct V29 : IVal { float get() { return 29.0 + 1.0; } }
+struct V30 : IVal { float get() { return 30.0 + 1.0; } }
+struct V31 : IVal { float get() { return 31.0 + 1.0; } }
+struct V32 : IVal { float get() { return 32.0 + 1.0; } }
+struct V33 : IVal { float get() { return 33.0 + 1.0; } }
+struct V34 : IVal { float get() { return 34.0 + 1.0; } }
+
+// … 230 lines omitted …
+
+struct V265 : IVal { float get() { return 265.0 + 1.0; } }
+struct V266 : IVal { float get() { return 266.0 + 1.0; } }
+struct V267 : IVal { float get() { return 267.0 + 1.0; } }
+struct V268 : IVal { float get() { return 268.0 + 1.0; } }
+struct V269 : IVal { float get() { return 269.0 + 1.0; } }
+struct V270 : IVal { float get() { return 270.0 + 1.0; } }
+struct V271 : IVal { float get() { return 271.0 + 1.0; } }
+struct V272 : IVal { float get() { return 272.0 + 1.0; } }
+struct V273 : IVal { float get() { return 273.0 + 1.0; } }
+struct V274 : IVal { float get() { return 274.0 + 1.0; } }
+struct V275 : IVal { float get() { return 275.0 + 1.0; } }
+struct V276 : IVal { float get() { return 276.0 + 1.0; } }
+struct V277 : IVal { float get() { return 277.0 + 1.0; } }
+struct V278 : IVal { float get() { return 278.0 + 1.0; } }
+struct V279 : IVal { float get() { return 279.0 + 1.0; } }
+struct V280 : IVal { float get() { return 280.0 + 1.0; } }
+struct V281 : IVal { float get() { return 281.0 + 1.0; } }
+struct V282 : IVal { float get() { return 282.0 + 1.0; } }
+struct V283 : IVal { float get() { return 283.0 + 1.0; } }
+struct V284 : IVal { float get() { return 284.0 + 1.0; } }
+struct V285 : IVal { float get() { return 285.0 + 1.0; } }
+struct V286 : IVal { float get() { return 286.0 + 1.0; } }
+struct V287 : IVal { float get() { return 287.0 + 1.0; } }
+struct V288 : IVal { float get() { return 288.0 + 1.0; } }
+struct V289 : IVal { float get() { return 289.0 + 1.0; } }
+struct V290 : IVal { float get() { return 290.0 + 1.0; } }
+struct V291 : IVal { float get() { return 291.0 + 1.0; } }
+struct V292 : IVal { float get() { return 292.0 + 1.0; } }
+struct V293 : IVal { float get() { return 293.0 + 1.0; } }
+struct V294 : IVal { float get() { return 294.0 + 1.0; } }
+struct V295 : IVal { float get() { return 295.0 + 1.0; } }
+struct V296 : IVal { float get() { return 296.0 + 1.0; } }
+struct V297 : IVal { float get() { return 297.0 + 1.0; } }
+struct V298 : IVal { float get() { return 298.0 + 1.0; } }
+struct V299 : IVal { float get() { return 299.0 + 1.0; } }
+
+struct Box&lt;T : IVal&gt; { T v; float compute() { return v.get() * 2.0 + v.get(); } }
+
+[shader("compute")]
+[numthreads(1,1,1)]
+void computeMain()
+{
+    float acc = 0.0;
+    { Box&lt;V0&gt; b; acc += b.compute(); }
+    { Box&lt;V1&gt; b; acc += b.compute(); }
+    { Box&lt;V2&gt; b; acc += b.compute(); }
+    { Box&lt;V3&gt; b; acc += b.compute(); }
+    { Box&lt;V4&gt; b; acc += b.compute(); }
+    { Box&lt;V5&gt; b; acc += b.compute(); }
+    { Box&lt;V6&gt; b; acc += b.compute(); }
+    { Box&lt;V7&gt; b; acc += b.compute(); }
+    { Box&lt;V8&gt; b; acc += b.compute(); }
+    { Box&lt;V9&gt; b; acc += b.compute(); }
+    { Box&lt;V10&gt; b; acc += b.compute(); }
+    { Box&lt;V11&gt; b; acc += b.compute(); }
+    { Box&lt;V12&gt; b; acc += b.compute(); }
+    { Box&lt;V13&gt; b; acc += b.compute(); }
+    { Box&lt;V14&gt; b; acc += b.compute(); }
+    { Box&lt;V15&gt; b; acc += b.compute(); }
+    { Box&lt;V16&gt; b; acc += b.compute(); }
+    { Box&lt;V17&gt; b; acc += b.compute(); }
+    { Box&lt;V18&gt; b; acc += b.compute(); }
+    { Box&lt;V19&gt; b; acc += b.compute(); }
+    { Box&lt;V20&gt; b; acc += b.compute(); }
+    { Box&lt;V21&gt; b; acc += b.compute(); }
+    { Box&lt;V22&gt; b; acc += b.compute(); }
+    { Box&lt;V23&gt; b; acc += b.compute(); }
+    { Box&lt;V24&gt; b; acc += b.compute(); }
+    { Box&lt;V25&gt; b; acc += b.compute(); }
+    { Box&lt;V26&gt; b; acc += b.compute(); }
+    { Box&lt;V27&gt; b; acc += b.compute(); }
+    { Box&lt;V28&gt; b; acc += b.compute(); }
+    { Box&lt;V29&gt; b; acc += b.compute(); }
+    { Box&lt;V30&gt; b; acc += b.compute(); }
+    { Box&lt;V31&gt; b; acc += b.compute(); }
+    { Box&lt;V32&gt; b; acc += b.compute(); }
+    { Box&lt;V33&gt; b; acc += b.compute(); }
+    { Box&lt;V34&gt; b; acc += b.compute(); }
+    { Box&lt;V35&gt; b; acc += b.compute(); }
+    { Box&lt;V36&gt; b; acc += b.compute(); }
+    { Box&lt;V37&gt; b; acc += b.compute(); }
+
+// … 224 lines omitted …
+
+    { Box&lt;V262&gt; b; acc += b.compute(); }
+    { Box&lt;V263&gt; b; acc += b.compute(); }
+    { Box&lt;V264&gt; b; acc += b.compute(); }
+    { Box&lt;V265&gt; b; acc += b.compute(); }
+    { Box&lt;V266&gt; b; acc += b.compute(); }
+    { Box&lt;V267&gt; b; acc += b.compute(); }
+    { Box&lt;V268&gt; b; acc += b.compute(); }
+    { Box&lt;V269&gt; b; acc += b.compute(); }
+    { Box&lt;V270&gt; b; acc += b.compute(); }
+    { Box&lt;V271&gt; b; acc += b.compute(); }
+    { Box&lt;V272&gt; b; acc += b.compute(); }
+    { Box&lt;V273&gt; b; acc += b.compute(); }
+    { Box&lt;V274&gt; b; acc += b.compute(); }
+    { Box&lt;V275&gt; b; acc += b.compute(); }
+    { Box&lt;V276&gt; b; acc += b.compute(); }
+    { Box&lt;V277&gt; b; acc += b.compute(); }
+    { Box&lt;V278&gt; b; acc += b.compute(); }
+    { Box&lt;V279&gt; b; acc += b.compute(); }
+    { Box&lt;V280&gt; b; acc += b.compute(); }
+    { Box&lt;V281&gt; b; acc += b.compute(); }
+    { Box&lt;V282&gt; b; acc += b.compute(); }
+    { Box&lt;V283&gt; b; acc += b.compute(); }
+    { Box&lt;V284&gt; b; acc += b.compute(); }
+    { Box&lt;V285&gt; b; acc += b.compute(); }
+    { Box&lt;V286&gt; b; acc += b.compute(); }
+    { Box&lt;V287&gt; b; acc += b.compute(); }
+    { Box&lt;V288&gt; b; acc += b.compute(); }
+    { Box&lt;V289&gt; b; acc += b.compute(); }
+    { Box&lt;V290&gt; b; acc += b.compute(); }
+    { Box&lt;V291&gt; b; acc += b.compute(); }
+    { Box&lt;V292&gt; b; acc += b.compute(); }
+    { Box&lt;V293&gt; b; acc += b.compute(); }
+    { Box&lt;V294&gt; b; acc += b.compute(); }
+    { Box&lt;V295&gt; b; acc += b.compute(); }
+    { Box&lt;V296&gt; b; acc += b.compute(); }
+    { Box&lt;V297&gt; b; acc += b.compute(); }
+    { Box&lt;V298&gt; b; acc += b.compute(); }
+    { Box&lt;V299&gt; b; acc += b.compute(); }
+    outBuf[0] = acc;
+}</pre></body>

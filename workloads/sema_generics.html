@@ -1,0 +1,225 @@
+<!doctype html><meta charset=utf-8><title>sema_generics — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>sema_generics</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>n distinct generic functions with interface constraints, each instantiated
+at several concrete types. Stresses semantic checking, generic constraint
+satisfaction and instantiation in the front-end.</p><p style='color:#666;font-size:13px'><b>bucket:</b> sema &nbsp;·&nbsp; <b>compile mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 1000</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="680" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">sema_generics — full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">sema_generics<tspan fill="#888" font-weight="400" text-decoration="none">  0.98×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">566</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">1132</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.9</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.10</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,512.3 588.0,512.3 1108.0,512.3 1108.0,516.0 588.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>sema_generics — parseTranslationUnit</title></polygon>
+<polygon points="68.0,177.6 588.0,173.6 1108.0,177.4 1108.0,512.3 588.0,512.3 68.0,512.3" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>sema_generics — SemanticChecking</title></polygon>
+<polygon points="68.0,125.4 588.0,121.3 1108.0,131.8 1108.0,177.4 588.0,173.6 68.0,177.6" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>sema_generics — generateIR</title></polygon>
+<polygon points="68.0,124.9 588.0,120.8 1108.0,131.7 1108.0,131.8 588.0,121.3 68.0,125.4" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>sema_generics — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,112.7 588.0,108.6 1108.0,120.3 1108.0,131.7 588.0,120.8 68.0,124.9" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>sema_generics — generateOutput (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="650" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="640" width="12" height="12" fill="#fd8d3c"/>
+<text x="305" y="650" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#e6550d"/>
+<text x="582" y="650" fill="#222">generateOutput (self)</text>
+<rect x="843" y="640" width="12" height="12" fill="#969696"/>
+<text x="859" y="650" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 1000); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>sema_generics.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+T poly_0&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_1&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_2&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_3&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_4&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_5&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_6&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_7&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_8&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_9&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_10&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_11&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_12&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_13&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_14&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_15&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_16&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_17&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_18&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_19&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_20&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_21&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_22&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_23&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_24&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_25&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_26&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_27&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_28&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_29&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_30&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_31&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_32&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_33&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_34&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_35&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_36&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+
+// … 926 lines omitted …
+
+T poly_963&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_964&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_965&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_966&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_967&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_968&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_969&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_970&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_971&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_972&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_973&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_974&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_975&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_976&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_977&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_978&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_979&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_980&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_981&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_982&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_983&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_984&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_985&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_986&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_987&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_988&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_989&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_990&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_991&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_992&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_993&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_994&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_995&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_996&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_997&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_998&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+T poly_999&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a + b; }
+
+[shader("compute")]
+[numthreads(1,1,1)]
+void computeMain()
+{
+    float facc = 0.0; int iacc = 0; uint uacc = 0u;
+    float fx = outBuf[0]; int ix = int(outBuf[0]); uint ux = uint(outBuf[0]);
+    facc += poly_0&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_0&lt;int&gt;(ix, ix + 1);
+    uacc += poly_0&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_1&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_1&lt;int&gt;(ix, ix + 1);
+    uacc += poly_1&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_2&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_2&lt;int&gt;(ix, ix + 1);
+    uacc += poly_2&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_3&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_3&lt;int&gt;(ix, ix + 1);
+    uacc += poly_3&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_4&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_4&lt;int&gt;(ix, ix + 1);
+    uacc += poly_4&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_5&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_5&lt;int&gt;(ix, ix + 1);
+    uacc += poly_5&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_6&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_6&lt;int&gt;(ix, ix + 1);
+    uacc += poly_6&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_7&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_7&lt;int&gt;(ix, ix + 1);
+    uacc += poly_7&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_8&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_8&lt;int&gt;(ix, ix + 1);
+    uacc += poly_8&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_9&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_9&lt;int&gt;(ix, ix + 1);
+    uacc += poly_9&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_10&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_10&lt;int&gt;(ix, ix + 1);
+    uacc += poly_10&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_11&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_11&lt;int&gt;(ix, ix + 1);
+    uacc += poly_11&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_12&lt;float&gt;(fx, fx + 1.0);
+
+// … 2925 lines omitted …
+
+    iacc += poly_987&lt;int&gt;(ix, ix + 1);
+    uacc += poly_987&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_988&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_988&lt;int&gt;(ix, ix + 1);
+    uacc += poly_988&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_989&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_989&lt;int&gt;(ix, ix + 1);
+    uacc += poly_989&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_990&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_990&lt;int&gt;(ix, ix + 1);
+    uacc += poly_990&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_991&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_991&lt;int&gt;(ix, ix + 1);
+    uacc += poly_991&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_992&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_992&lt;int&gt;(ix, ix + 1);
+    uacc += poly_992&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_993&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_993&lt;int&gt;(ix, ix + 1);
+    uacc += poly_993&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_994&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_994&lt;int&gt;(ix, ix + 1);
+    uacc += poly_994&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_995&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_995&lt;int&gt;(ix, ix + 1);
+    uacc += poly_995&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_996&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_996&lt;int&gt;(ix, ix + 1);
+    uacc += poly_996&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_997&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_997&lt;int&gt;(ix, ix + 1);
+    uacc += poly_997&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_998&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_998&lt;int&gt;(ix, ix + 1);
+    uacc += poly_998&lt;uint&gt;(ux, ux + 1u);
+    facc += poly_999&lt;float&gt;(fx, fx + 1.0);
+    iacc += poly_999&lt;int&gt;(ix, ix + 1);
+    uacc += poly_999&lt;uint&gt;(ux, ux + 1u);
+    outBuf[0] = facc + float(iacc) + float(uacc);
+}</pre></body>

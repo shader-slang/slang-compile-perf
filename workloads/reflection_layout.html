@@ -1,0 +1,244 @@
+<!doctype html><meta charset=utf-8><title>reflection_layout — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>reflection_layout</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>n constant buffers, each with a structurally rich payload — vectors,
+matrices, an array of a nested `Light` struct, a nested `Material` struct and
+a scalar array. This is the only workload with a large, deeply-typed shader
+*parameter interface* (every other workload's interface is a single
+RWStructuredBuffer), so it is the one stressor for the parameter binding /
+layout-assignment engine and — with `-reflection-json` (see the spec's
+reflection_json flag) — the reflection serializer, the layout/reflection path
+no other workload covers. Scales by breadth = number of
+parameter blocks the layout engine must place and reflect. Note: layout is
+computed during compileInner regardless of the flag (so compileInner is the
+holistic signal); -reflection-json additionally runs the serializer, which is
+cheap today but tracked here for regression coverage.</p><p style='color:#666;font-size:13px'><b>bucket:</b> reflection_layout &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 120</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="680" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">reflection_layout — full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">reflection_layout<tspan fill="#888" font-weight="400" text-decoration="none">  0.77×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">152</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">303</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.9</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.10</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,509.6 588.0,509.4 1108.0,509.7 1108.0,516.0 588.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — parseTranslationUnit</title></polygon>
+<polygon points="68.0,379.3 588.0,379.8 1108.0,423.7 1108.0,509.7 588.0,509.4 68.0,509.6" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — SemanticChecking</title></polygon>
+<polygon points="68.0,351.0 588.0,351.2 1108.0,406.6 1108.0,423.7 588.0,379.8 68.0,379.3" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — generateIR</title></polygon>
+<polygon points="68.0,340.4 588.0,340.3 1108.0,396.1 1108.0,406.6 588.0,351.2 68.0,351.0" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,323.5 588.0,323.2 1108.0,380.9 1108.0,396.1 588.0,340.3 68.0,340.4" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — specializeModule</title></polygon>
+<polygon points="68.0,287.8 588.0,287.2 1108.0,351.9 1108.0,380.9 588.0,323.2 68.0,323.5" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — simplifyIR</title></polygon>
+<polygon points="68.0,269.7 588.0,268.8 1108.0,346.8 1108.0,351.9 588.0,287.2 68.0,287.8" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — linkIR</title></polygon>
+<polygon points="68.0,269.6 588.0,268.8 1108.0,346.7 1108.0,346.8 588.0,268.8 68.0,269.7" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — unrollLoopsInModule</title></polygon>
+<polygon points="68.0,253.8 588.0,252.9 1108.0,333.3 1108.0,346.7 588.0,268.8 68.0,269.6" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,240.6 588.0,239.6 1108.0,320.3 1108.0,333.3 588.0,252.9 68.0,253.8" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,239.6 588.0,238.6 1108.0,319.2 1108.0,320.3 588.0,239.6 68.0,240.6" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,232.6 588.0,231.5 1108.0,312.4 1108.0,319.2 588.0,238.6 68.0,239.6" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — performForceInlining</title></polygon>
+<polygon points="68.0,170.8 588.0,168.1 1108.0,261.2 1108.0,312.4 588.0,231.5 68.0,232.6" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,124.8 588.0,121.2 1108.0,216.3 1108.0,261.2 588.0,168.1 68.0,170.8" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — generateOutput (self)</title></polygon>
+<polygon points="68.0,112.7 588.0,108.6 1108.0,205.8 1108.0,216.3 588.0,121.2 68.0,124.8" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>reflection_layout — compileInner (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="650" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="640" width="12" height="12" fill="#fd8d3c"/>
+<text x="305" y="650" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#e6550d"/>
+<text x="582" y="650" fill="#222">generateOutput (self)</text>
+<rect x="843" y="640" width="12" height="12" fill="#969696"/>
+<text x="859" y="650" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 120); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>reflection_layout.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Light { float3 pos; float3 color; float intensity; float4x4 shadow; }
+struct Material { float4 base; float metal; float rough; float2 uvScale; float3x3 tangent; }
+
+cbuffer Params0 : register(b0)
+{
+    float4 tint0;
+    float4x4 xform0;
+    Light lights0[4];
+    Material mat0;
+    float weights0[8];
+}
+cbuffer Params1 : register(b1)
+{
+    float4 tint1;
+    float4x4 xform1;
+    Light lights1[4];
+    Material mat1;
+    float weights1[8];
+}
+cbuffer Params2 : register(b2)
+{
+    float4 tint2;
+    float4x4 xform2;
+    Light lights2[4];
+    Material mat2;
+    float weights2[8];
+}
+cbuffer Params3 : register(b3)
+{
+    float4 tint3;
+    float4x4 xform3;
+    Light lights3[4];
+    Material mat3;
+    float weights3[8];
+}
+cbuffer Params4 : register(b4)
+{
+    float4 tint4;
+    float4x4 xform4;
+
+// … 889 lines omitted …
+
+    Material mat115;
+    float weights115[8];
+}
+cbuffer Params116 : register(b116)
+{
+    float4 tint116;
+    float4x4 xform116;
+    Light lights116[4];
+    Material mat116;
+    float weights116[8];
+}
+cbuffer Params117 : register(b117)
+{
+    float4 tint117;
+    float4x4 xform117;
+    Light lights117[4];
+    Material mat117;
+    float weights117[8];
+}
+cbuffer Params118 : register(b118)
+{
+    float4 tint118;
+    float4x4 xform118;
+    Light lights118[4];
+    Material mat118;
+    float weights118[8];
+}
+cbuffer Params119 : register(b119)
+{
+    float4 tint119;
+    float4x4 xform119;
+    Light lights119[4];
+    Material mat119;
+    float weights119[8];
+}
+
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+[shader("compute")]
+[numthreads(1,1,1)]
+void computeMain()
+{
+    float acc = 0.0;
+    acc += tint0.x + xform0[0][0] + lights0[0].intensity + mat0.metal + weights0[0];
+    acc += tint1.x + xform1[0][0] + lights1[0].intensity + mat1.metal + weights1[0];
+    acc += tint2.x + xform2[0][0] + lights2[0].intensity + mat2.metal + weights2[0];
+    acc += tint3.x + xform3[0][0] + lights3[0].intensity + mat3.metal + weights3[0];
+    acc += tint4.x + xform4[0][0] + lights4[0].intensity + mat4.metal + weights4[0];
+    acc += tint5.x + xform5[0][0] + lights5[0].intensity + mat5.metal + weights5[0];
+    acc += tint6.x + xform6[0][0] + lights6[0].intensity + mat6.metal + weights6[0];
+    acc += tint7.x + xform7[0][0] + lights7[0].intensity + mat7.metal + weights7[0];
+    acc += tint8.x + xform8[0][0] + lights8[0].intensity + mat8.metal + weights8[0];
+    acc += tint9.x + xform9[0][0] + lights9[0].intensity + mat9.metal + weights9[0];
+    acc += tint10.x + xform10[0][0] + lights10[0].intensity + mat10.metal + weights10[0];
+    acc += tint11.x + xform11[0][0] + lights11[0].intensity + mat11.metal + weights11[0];
+    acc += tint12.x + xform12[0][0] + lights12[0].intensity + mat12.metal + weights12[0];
+    acc += tint13.x + xform13[0][0] + lights13[0].intensity + mat13.metal + weights13[0];
+    acc += tint14.x + xform14[0][0] + lights14[0].intensity + mat14.metal + weights14[0];
+    acc += tint15.x + xform15[0][0] + lights15[0].intensity + mat15.metal + weights15[0];
+    acc += tint16.x + xform16[0][0] + lights16[0].intensity + mat16.metal + weights16[0];
+    acc += tint17.x + xform17[0][0] + lights17[0].intensity + mat17.metal + weights17[0];
+    acc += tint18.x + xform18[0][0] + lights18[0].intensity + mat18.metal + weights18[0];
+    acc += tint19.x + xform19[0][0] + lights19[0].intensity + mat19.metal + weights19[0];
+    acc += tint20.x + xform20[0][0] + lights20[0].intensity + mat20.metal + weights20[0];
+    acc += tint21.x + xform21[0][0] + lights21[0].intensity + mat21.metal + weights21[0];
+    acc += tint22.x + xform22[0][0] + lights22[0].intensity + mat22.metal + weights22[0];
+    acc += tint23.x + xform23[0][0] + lights23[0].intensity + mat23.metal + weights23[0];
+    acc += tint24.x + xform24[0][0] + lights24[0].intensity + mat24.metal + weights24[0];
+    acc += tint25.x + xform25[0][0] + lights25[0].intensity + mat25.metal + weights25[0];
+    acc += tint26.x + xform26[0][0] + lights26[0].intensity + mat26.metal + weights26[0];
+    acc += tint27.x + xform27[0][0] + lights27[0].intensity + mat27.metal + weights27[0];
+    acc += tint28.x + xform28[0][0] + lights28[0].intensity + mat28.metal + weights28[0];
+    acc += tint29.x + xform29[0][0] + lights29[0].intensity + mat29.metal + weights29[0];
+    acc += tint30.x + xform30[0][0] + lights30[0].intensity + mat30.metal + weights30[0];
+    acc += tint31.x + xform31[0][0] + lights31[0].intensity + mat31.metal + weights31[0];
+    acc += tint32.x + xform32[0][0] + lights32[0].intensity + mat32.metal + weights32[0];
+    acc += tint33.x + xform33[0][0] + lights33[0].intensity + mat33.metal + weights33[0];
+    acc += tint34.x + xform34[0][0] + lights34[0].intensity + mat34.metal + weights34[0];
+    acc += tint35.x + xform35[0][0] + lights35[0].intensity + mat35.metal + weights35[0];
+    acc += tint36.x + xform36[0][0] + lights36[0].intensity + mat36.metal + weights36[0];
+    acc += tint37.x + xform37[0][0] + lights37[0].intensity + mat37.metal + weights37[0];
+
+// … 44 lines omitted …
+
+    acc += tint82.x + xform82[0][0] + lights82[0].intensity + mat82.metal + weights82[0];
+    acc += tint83.x + xform83[0][0] + lights83[0].intensity + mat83.metal + weights83[0];
+    acc += tint84.x + xform84[0][0] + lights84[0].intensity + mat84.metal + weights84[0];
+    acc += tint85.x + xform85[0][0] + lights85[0].intensity + mat85.metal + weights85[0];
+    acc += tint86.x + xform86[0][0] + lights86[0].intensity + mat86.metal + weights86[0];
+    acc += tint87.x + xform87[0][0] + lights87[0].intensity + mat87.metal + weights87[0];
+    acc += tint88.x + xform88[0][0] + lights88[0].intensity + mat88.metal + weights88[0];
+    acc += tint89.x + xform89[0][0] + lights89[0].intensity + mat89.metal + weights89[0];
+    acc += tint90.x + xform90[0][0] + lights90[0].intensity + mat90.metal + weights90[0];
+    acc += tint91.x + xform91[0][0] + lights91[0].intensity + mat91.metal + weights91[0];
+    acc += tint92.x + xform92[0][0] + lights92[0].intensity + mat92.metal + weights92[0];
+    acc += tint93.x + xform93[0][0] + lights93[0].intensity + mat93.metal + weights93[0];
+    acc += tint94.x + xform94[0][0] + lights94[0].intensity + mat94.metal + weights94[0];
+    acc += tint95.x + xform95[0][0] + lights95[0].intensity + mat95.metal + weights95[0];
+    acc += tint96.x + xform96[0][0] + lights96[0].intensity + mat96.metal + weights96[0];
+    acc += tint97.x + xform97[0][0] + lights97[0].intensity + mat97.metal + weights97[0];
+    acc += tint98.x + xform98[0][0] + lights98[0].intensity + mat98.metal + weights98[0];
+    acc += tint99.x + xform99[0][0] + lights99[0].intensity + mat99.metal + weights99[0];
+    acc += tint100.x + xform100[0][0] + lights100[0].intensity + mat100.metal + weights100[0];
+    acc += tint101.x + xform101[0][0] + lights101[0].intensity + mat101.metal + weights101[0];
+    acc += tint102.x + xform102[0][0] + lights102[0].intensity + mat102.metal + weights102[0];
+    acc += tint103.x + xform103[0][0] + lights103[0].intensity + mat103.metal + weights103[0];
+    acc += tint104.x + xform104[0][0] + lights104[0].intensity + mat104.metal + weights104[0];
+    acc += tint105.x + xform105[0][0] + lights105[0].intensity + mat105.metal + weights105[0];
+    acc += tint106.x + xform106[0][0] + lights106[0].intensity + mat106.metal + weights106[0];
+    acc += tint107.x + xform107[0][0] + lights107[0].intensity + mat107.metal + weights107[0];
+    acc += tint108.x + xform108[0][0] + lights108[0].intensity + mat108.metal + weights108[0];
+    acc += tint109.x + xform109[0][0] + lights109[0].intensity + mat109.metal + weights109[0];
+    acc += tint110.x + xform110[0][0] + lights110[0].intensity + mat110.metal + weights110[0];
+    acc += tint111.x + xform111[0][0] + lights111[0].intensity + mat111.metal + weights111[0];
+    acc += tint112.x + xform112[0][0] + lights112[0].intensity + mat112.metal + weights112[0];
+    acc += tint113.x + xform113[0][0] + lights113[0].intensity + mat113.metal + weights113[0];
+    acc += tint114.x + xform114[0][0] + lights114[0].intensity + mat114.metal + weights114[0];
+    acc += tint115.x + xform115[0][0] + lights115[0].intensity + mat115.metal + weights115[0];
+    acc += tint116.x + xform116[0][0] + lights116[0].intensity + mat116.metal + weights116[0];
+    acc += tint117.x + xform117[0][0] + lights117[0].intensity + mat117.metal + weights117[0];
+    acc += tint118.x + xform118[0][0] + lights118[0].intensity + mat118.metal + weights118[0];
+    acc += tint119.x + xform119[0][0] + lights119[0].intensity + mat119.metal + weights119[0];
+    outBuf[0] = acc;
+}</pre></body>

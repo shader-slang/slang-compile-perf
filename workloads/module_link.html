@@ -1,0 +1,535 @@
+<!doctype html><meta charset=utf-8><title>module_link — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>module_link</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>n importable modules plus a main that imports and uses all of them. The
+harness precompiles each module to .slang-module, then compiles main against
+them, stressing module read + linkIR.</p><p style='color:#666;font-size:13px'><b>bucket:</b> module_link &nbsp;·&nbsp; <b>compile mode:</b> link &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 100</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="680" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">module_link — full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">module_link<tspan fill="#888" font-weight="400" text-decoration="none">  0.75×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">74</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">147</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.9</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.10</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,515.0 588.0,515.1 1108.0,515.0 1108.0,516.0 588.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link — parseTranslationUnit</title></polygon>
+<polygon points="68.0,310.2 588.0,308.5 1108.0,327.6 1108.0,515.0 588.0,515.1 68.0,515.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link — SemanticChecking</title></polygon>
+<polygon points="68.0,307.0 588.0,305.3 1108.0,317.0 1108.0,327.6 588.0,308.5 68.0,310.2" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link — generateIR</title></polygon>
+<polygon points="68.0,302.8 588.0,301.0 1108.0,315.9 1108.0,317.0 588.0,305.3 68.0,307.0" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,287.3 588.0,285.5 1108.0,304.6 1108.0,315.9 588.0,301.0 68.0,302.8" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link — specializeModule</title></polygon>
+<polygon points="68.0,268.2 588.0,266.3 1108.0,286.9 1108.0,304.6 588.0,285.5 68.0,287.3" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link — simplifyIR</title></polygon>
+<polygon points="68.0,168.7 588.0,166.9 1108.0,259.4 1108.0,286.9 588.0,266.3 68.0,268.2" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link — linkIR</title></polygon>
+<polygon points="68.0,168.6 588.0,166.8 1108.0,259.3 1108.0,259.4 588.0,166.9 68.0,168.7" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link — unrollLoopsInModule</title></polygon>
+<polygon points="68.0,165.5 588.0,163.7 1108.0,256.1 1108.0,259.3 588.0,166.8 68.0,168.6" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,162.2 588.0,160.4 1108.0,252.8 1108.0,256.1 588.0,163.7 68.0,165.5" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,162.0 588.0,160.2 1108.0,252.6 1108.0,252.8 588.0,160.4 68.0,162.2" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,161.7 588.0,159.9 1108.0,252.3 1108.0,252.6 588.0,160.2 68.0,162.0" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link — performForceInlining</title></polygon>
+<polygon points="68.0,137.2 588.0,135.8 1108.0,234.3 1108.0,252.3 588.0,159.9 68.0,161.7" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link — linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,113.6 588.0,113.3 1108.0,212.2 1108.0,234.3 588.0,135.8 68.0,137.2" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link — generateOutput (self)</title></polygon>
+<polygon points="68.0,108.6 588.0,111.6 1108.0,212.2 1108.0,212.2 588.0,113.3 68.0,113.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>module_link — compileInner (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="650" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="640" width="12" height="12" fill="#fd8d3c"/>
+<text x="305" y="650" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#e6550d"/>
+<text x="582" y="650" fill="#222">generateOutput (self)</text>
+<rect x="843" y="640" width="12" height="12" fill="#969696"/>
+<text x="859" y="650" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 100); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_0.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_0;
+
+public float mfun_0(float x) { return x * 1.0009 + sin(x + 0.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_1.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_1;
+
+public float mfun_1(float x) { return x * 2.0009 + sin(x + 1.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_2.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_2;
+
+public float mfun_2(float x) { return x * 3.0009 + sin(x + 2.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_3.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_3;
+
+public float mfun_3(float x) { return x * 4.0009 + sin(x + 3.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_4.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_4;
+
+public float mfun_4(float x) { return x * 5.0009 + sin(x + 4.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_5.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_5;
+
+public float mfun_5(float x) { return x * 6.0009 + sin(x + 5.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_6.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_6;
+
+public float mfun_6(float x) { return x * 7.0009 + sin(x + 6.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_7.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_7;
+
+public float mfun_7(float x) { return x * 8.0009 + sin(x + 7.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_8.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_8;
+
+public float mfun_8(float x) { return x * 9.0009 + sin(x + 8.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_9.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_9;
+
+public float mfun_9(float x) { return x * 10.0009 + sin(x + 9.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_10.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_10;
+
+public float mfun_10(float x) { return x * 11.0009 + sin(x + 10.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_11.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_11;
+
+public float mfun_11(float x) { return x * 12.0009 + sin(x + 11.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_12.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_12;
+
+public float mfun_12(float x) { return x * 13.0009 + sin(x + 12.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_13.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_13;
+
+public float mfun_13(float x) { return x * 14.0009 + sin(x + 13.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_14.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_14;
+
+public float mfun_14(float x) { return x * 15.0009 + sin(x + 14.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_15.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_15;
+
+public float mfun_15(float x) { return x * 16.0009 + sin(x + 15.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_16.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_16;
+
+public float mfun_16(float x) { return x * 17.0009 + sin(x + 16.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_17.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_17;
+
+public float mfun_17(float x) { return x * 18.0009 + sin(x + 17.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_18.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_18;
+
+public float mfun_18(float x) { return x * 19.0009 + sin(x + 18.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_19.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_19;
+
+public float mfun_19(float x) { return x * 20.0009 + sin(x + 19.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_20.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_20;
+
+public float mfun_20(float x) { return x * 21.0009 + sin(x + 20.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_21.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_21;
+
+public float mfun_21(float x) { return x * 22.0009 + sin(x + 21.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_22.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_22;
+
+public float mfun_22(float x) { return x * 23.0009 + sin(x + 22.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_23.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_23;
+
+public float mfun_23(float x) { return x * 24.0009 + sin(x + 23.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_24.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_24;
+
+public float mfun_24(float x) { return x * 25.0009 + sin(x + 24.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_25.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_25;
+
+public float mfun_25(float x) { return x * 26.0009 + sin(x + 25.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_26.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_26;
+
+public float mfun_26(float x) { return x * 27.0009 + sin(x + 26.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_27.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_27;
+
+public float mfun_27(float x) { return x * 28.0009 + sin(x + 27.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_28.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_28;
+
+public float mfun_28(float x) { return x * 29.0009 + sin(x + 28.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_29.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_29;
+
+public float mfun_29(float x) { return x * 30.0009 + sin(x + 29.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_30.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_30;
+
+public float mfun_30(float x) { return x * 31.0009 + sin(x + 30.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_31.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_31;
+
+public float mfun_31(float x) { return x * 32.0009 + sin(x + 31.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_32.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_32;
+
+public float mfun_32(float x) { return x * 33.0009 + sin(x + 32.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_33.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_33;
+
+public float mfun_33(float x) { return x * 34.0009 + sin(x + 33.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_34.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_34;
+
+public float mfun_34(float x) { return x * 35.0009 + sin(x + 34.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_35.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_35;
+
+public float mfun_35(float x) { return x * 36.0009 + sin(x + 35.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_36.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_36;
+
+public float mfun_36(float x) { return x * 37.0009 + sin(x + 36.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_37.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_37;
+
+public float mfun_37(float x) { return x * 38.0009 + sin(x + 37.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_38.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_38;
+
+public float mfun_38(float x) { return x * 39.0009 + sin(x + 38.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_39.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_39;
+
+public float mfun_39(float x) { return x * 40.0009 + sin(x + 39.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_40.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_40;
+
+public float mfun_40(float x) { return x * 41.0009 + sin(x + 40.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_41.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_41;
+
+public float mfun_41(float x) { return x * 42.0009 + sin(x + 41.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_42.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_42;
+
+public float mfun_42(float x) { return x * 43.0009 + sin(x + 42.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_43.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_43;
+
+public float mfun_43(float x) { return x * 44.0009 + sin(x + 43.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_44.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_44;
+
+public float mfun_44(float x) { return x * 45.0009 + sin(x + 44.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_45.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_45;
+
+public float mfun_45(float x) { return x * 46.0009 + sin(x + 45.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_46.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_46;
+
+public float mfun_46(float x) { return x * 47.0009 + sin(x + 46.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_47.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_47;
+
+public float mfun_47(float x) { return x * 48.0009 + sin(x + 47.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_48.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_48;
+
+public float mfun_48(float x) { return x * 49.0009 + sin(x + 48.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_49.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_49;
+
+public float mfun_49(float x) { return x * 50.0009 + sin(x + 49.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_50.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_50;
+
+public float mfun_50(float x) { return x * 51.0009 + sin(x + 50.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_51.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_51;
+
+public float mfun_51(float x) { return x * 52.0009 + sin(x + 51.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_52.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_52;
+
+public float mfun_52(float x) { return x * 53.0009 + sin(x + 52.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_53.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_53;
+
+public float mfun_53(float x) { return x * 54.0009 + sin(x + 53.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_54.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_54;
+
+public float mfun_54(float x) { return x * 55.0009 + sin(x + 54.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_55.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_55;
+
+public float mfun_55(float x) { return x * 56.0009 + sin(x + 55.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_56.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_56;
+
+public float mfun_56(float x) { return x * 57.0009 + sin(x + 56.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_57.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_57;
+
+public float mfun_57(float x) { return x * 58.0009 + sin(x + 57.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_58.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_58;
+
+public float mfun_58(float x) { return x * 59.0009 + sin(x + 58.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_59.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_59;
+
+public float mfun_59(float x) { return x * 60.0009 + sin(x + 59.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_60.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_60;
+
+public float mfun_60(float x) { return x * 61.0009 + sin(x + 60.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_61.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_61;
+
+public float mfun_61(float x) { return x * 62.0009 + sin(x + 61.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_62.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_62;
+
+public float mfun_62(float x) { return x * 63.0009 + sin(x + 62.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_63.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_63;
+
+public float mfun_63(float x) { return x * 64.0009 + sin(x + 63.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_64.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_64;
+
+public float mfun_64(float x) { return x * 65.0009 + sin(x + 64.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_65.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_65;
+
+public float mfun_65(float x) { return x * 66.0009 + sin(x + 65.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_66.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_66;
+
+public float mfun_66(float x) { return x * 67.0009 + sin(x + 66.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_67.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_67;
+
+public float mfun_67(float x) { return x * 68.0009 + sin(x + 67.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_68.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_68;
+
+public float mfun_68(float x) { return x * 69.0009 + sin(x + 68.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_69.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_69;
+
+public float mfun_69(float x) { return x * 70.0009 + sin(x + 69.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_70.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_70;
+
+public float mfun_70(float x) { return x * 71.0009 + sin(x + 70.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_71.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_71;
+
+public float mfun_71(float x) { return x * 72.0009 + sin(x + 71.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_72.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_72;
+
+public float mfun_72(float x) { return x * 73.0009 + sin(x + 72.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_73.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_73;
+
+public float mfun_73(float x) { return x * 74.0009 + sin(x + 73.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_74.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_74;
+
+public float mfun_74(float x) { return x * 75.0009 + sin(x + 74.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_75.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_75;
+
+public float mfun_75(float x) { return x * 76.0009 + sin(x + 75.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_76.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_76;
+
+public float mfun_76(float x) { return x * 77.0009 + sin(x + 76.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_77.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_77;
+
+public float mfun_77(float x) { return x * 78.0009 + sin(x + 77.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_78.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_78;
+
+public float mfun_78(float x) { return x * 79.0009 + sin(x + 78.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_79.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_79;
+
+public float mfun_79(float x) { return x * 80.0009 + sin(x + 79.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_80.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_80;
+
+public float mfun_80(float x) { return x * 81.0009 + sin(x + 80.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_81.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_81;
+
+public float mfun_81(float x) { return x * 82.0009 + sin(x + 81.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_82.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_82;
+
+public float mfun_82(float x) { return x * 83.0009 + sin(x + 82.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_83.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_83;
+
+public float mfun_83(float x) { return x * 84.0009 + sin(x + 83.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_84.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_84;
+
+public float mfun_84(float x) { return x * 85.0009 + sin(x + 84.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_85.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_85;
+
+public float mfun_85(float x) { return x * 86.0009 + sin(x + 85.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_86.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_86;
+
+public float mfun_86(float x) { return x * 87.0009 + sin(x + 86.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_87.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_87;
+
+public float mfun_87(float x) { return x * 88.0009 + sin(x + 87.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_88.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_88;
+
+public float mfun_88(float x) { return x * 89.0009 + sin(x + 88.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_89.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_89;
+
+public float mfun_89(float x) { return x * 90.0009 + sin(x + 89.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_90.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_90;
+
+public float mfun_90(float x) { return x * 91.0009 + sin(x + 90.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_91.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_91;
+
+public float mfun_91(float x) { return x * 92.0009 + sin(x + 91.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_92.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_92;
+
+public float mfun_92(float x) { return x * 93.0009 + sin(x + 92.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_93.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_93;
+
+public float mfun_93(float x) { return x * 94.0009 + sin(x + 93.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_94.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_94;
+
+public float mfun_94(float x) { return x * 95.0009 + sin(x + 94.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_95.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_95;
+
+public float mfun_95(float x) { return x * 96.0009 + sin(x + 95.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_96.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_96;
+
+public float mfun_96(float x) { return x * 97.0009 + sin(x + 96.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_97.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_97;
+
+public float mfun_97(float x) { return x * 98.0009 + sin(x + 97.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_98.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_98;
+
+public float mfun_98(float x) { return x * 99.0009 + sin(x + 98.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>mod_99.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module mod_99;
+
+public float mfun_99(float x) { return x * 100.0009 + sin(x + 99.0); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>link_main.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+import mod_0;
+import mod_1;
+import mod_2;
+import mod_3;
+import mod_4;
+import mod_5;
+import mod_6;
+import mod_7;
+import mod_8;
+import mod_9;
+import mod_10;
+import mod_11;
+import mod_12;
+import mod_13;
+import mod_14;
+import mod_15;
+import mod_16;
+import mod_17;
+import mod_18;
+import mod_19;
+import mod_20;
+import mod_21;
+import mod_22;
+import mod_23;
+import mod_24;
+import mod_25;
+import mod_26;
+import mod_27;
+import mod_28;
+import mod_29;
+import mod_30;
+import mod_31;
+import mod_32;
+import mod_33;
+import mod_34;
+import mod_35;
+import mod_36;
+import mod_37;
+import mod_38;
+
+// … 26 lines omitted …
+
+import mod_65;
+import mod_66;
+import mod_67;
+import mod_68;
+import mod_69;
+import mod_70;
+import mod_71;
+import mod_72;
+import mod_73;
+import mod_74;
+import mod_75;
+import mod_76;
+import mod_77;
+import mod_78;
+import mod_79;
+import mod_80;
+import mod_81;
+import mod_82;
+import mod_83;
+import mod_84;
+import mod_85;
+import mod_86;
+import mod_87;
+import mod_88;
+import mod_89;
+import mod_90;
+import mod_91;
+import mod_92;
+import mod_93;
+import mod_94;
+import mod_95;
+import mod_96;
+import mod_97;
+import mod_98;
+import mod_99;
+
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+[shader("compute")]
+[numthreads(1,1,1)]
+void computeMain()
+{
+    float acc = outBuf[0];
+    acc = mfun_0(acc);
+    acc = mfun_1(acc);
+    acc = mfun_2(acc);
+    acc = mfun_3(acc);
+    acc = mfun_4(acc);
+    acc = mfun_5(acc);
+    acc = mfun_6(acc);
+    acc = mfun_7(acc);
+    acc = mfun_8(acc);
+    acc = mfun_9(acc);
+    acc = mfun_10(acc);
+    acc = mfun_11(acc);
+    acc = mfun_12(acc);
+    acc = mfun_13(acc);
+    acc = mfun_14(acc);
+    acc = mfun_15(acc);
+    acc = mfun_16(acc);
+    acc = mfun_17(acc);
+    acc = mfun_18(acc);
+    acc = mfun_19(acc);
+    acc = mfun_20(acc);
+    acc = mfun_21(acc);
+    acc = mfun_22(acc);
+    acc = mfun_23(acc);
+    acc = mfun_24(acc);
+    acc = mfun_25(acc);
+    acc = mfun_26(acc);
+    acc = mfun_27(acc);
+    acc = mfun_28(acc);
+    acc = mfun_29(acc);
+    acc = mfun_30(acc);
+    acc = mfun_31(acc);
+    acc = mfun_32(acc);
+    acc = mfun_33(acc);
+    acc = mfun_34(acc);
+    acc = mfun_35(acc);
+    acc = mfun_36(acc);
+    acc = mfun_37(acc);
+
+// … 24 lines omitted …
+
+    acc = mfun_62(acc);
+    acc = mfun_63(acc);
+    acc = mfun_64(acc);
+    acc = mfun_65(acc);
+    acc = mfun_66(acc);
+    acc = mfun_67(acc);
+    acc = mfun_68(acc);
+    acc = mfun_69(acc);
+    acc = mfun_70(acc);
+    acc = mfun_71(acc);
+    acc = mfun_72(acc);
+    acc = mfun_73(acc);
+    acc = mfun_74(acc);
+    acc = mfun_75(acc);
+    acc = mfun_76(acc);
+    acc = mfun_77(acc);
+    acc = mfun_78(acc);
+    acc = mfun_79(acc);
+    acc = mfun_80(acc);
+    acc = mfun_81(acc);
+    acc = mfun_82(acc);
+    acc = mfun_83(acc);
+    acc = mfun_84(acc);
+    acc = mfun_85(acc);
+    acc = mfun_86(acc);
+    acc = mfun_87(acc);
+    acc = mfun_88(acc);
+    acc = mfun_89(acc);
+    acc = mfun_90(acc);
+    acc = mfun_91(acc);
+    acc = mfun_92(acc);
+    acc = mfun_93(acc);
+    acc = mfun_94(acc);
+    acc = mfun_95(acc);
+    acc = mfun_96(acc);
+    acc = mfun_97(acc);
+    acc = mfun_98(acc);
+    acc = mfun_99(acc);
+    outBuf[0] = acc;
+}</pre></body>

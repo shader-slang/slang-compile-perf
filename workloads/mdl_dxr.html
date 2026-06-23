@@ -1,0 +1,642 @@
+<!doctype html><meta charset=utf-8><title>mdl_dxr — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>mdl_dxr</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>Real MDL/DXR path-tracing shaders (shader-slang/MDL-SDK). `n` is ignored
+(fixed corpus). Compiled monolithically from hit.slang, which imports the
+rest. This is a holistic real-world compile-time number.</p><p style='color:#666;font-size:13px'><b>bucket:</b> real_world &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 0</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="680" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">mdl_dxr — full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">mdl_dxr<tspan fill="#888" font-weight="400" text-decoration="none">  0.76×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">875</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">1750</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.9</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.10</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,512.8 588.0,512.8 1108.0,512.8 1108.0,516.0 588.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — parseTranslationUnit</title></polygon>
+<polygon points="68.0,381.5 588.0,375.7 1108.0,448.8 1108.0,512.8 588.0,512.8 68.0,512.8" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — SemanticChecking</title></polygon>
+<polygon points="68.0,377.9 588.0,372.0 1108.0,447.9 1108.0,448.8 588.0,375.7 68.0,381.5" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — generateIR</title></polygon>
+<polygon points="68.0,348.2 588.0,342.1 1108.0,425.0 1108.0,447.9 588.0,372.0 68.0,377.9" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — specializeModule</title></polygon>
+<polygon points="68.0,302.1 588.0,295.9 1108.0,383.0 1108.0,425.0 588.0,342.1 68.0,348.2" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — simplifyIR</title></polygon>
+<polygon points="68.0,295.2 588.0,288.8 1108.0,380.0 1108.0,383.0 588.0,295.9 68.0,302.1" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — linkIR</title></polygon>
+<polygon points="68.0,295.2 588.0,288.7 1108.0,379.9 1108.0,380.0 588.0,288.8 68.0,295.2" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — unrollLoopsInModule</title></polygon>
+<polygon points="68.0,286.6 588.0,280.2 1108.0,371.4 1108.0,379.9 588.0,288.7 68.0,295.2" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,277.9 588.0,271.6 1108.0,362.7 1108.0,371.4 588.0,280.2 68.0,286.6" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,277.3 588.0,271.1 1108.0,362.1 1108.0,362.7 588.0,271.6 68.0,277.9" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,276.5 588.0,270.3 1108.0,361.4 1108.0,362.1 588.0,271.1 68.0,277.3" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — performForceInlining</title></polygon>
+<polygon points="68.0,233.4 588.0,227.9 1108.0,325.7 1108.0,361.4 588.0,270.3 68.0,276.5" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,113.6 588.0,109.5 1108.0,207.4 1108.0,325.7 588.0,227.9 68.0,233.4" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — generateOutput (self)</title></polygon>
+<polygon points="68.0,112.5 588.0,108.6 1108.0,207.4 1108.0,207.4 588.0,109.5 68.0,113.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>mdl_dxr — compileInner (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="650" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="640" width="12" height="12" fill="#fd8d3c"/>
+<text x="305" y="650" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#e6550d"/>
+<text x="582" y="650" fill="#222">generateOutput (self)</text>
+<rect x="843" y="640" width="12" height="12" fill="#969696"/>
+<text x="859" y="650" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source; long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>common.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>/******************************************************************************
+ * Copyright (c) 2019-2024, NVIDIA CORPORATION. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *  * Neither the name of NVIDIA CORPORATION nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ``AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+ * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *****************************************************************************/
+
+module common;
+
+public static const float M_PI = 3.14159265358979323846;
+public static const float M_ONE_OVER_PI = 0.318309886183790671538;
+public static const float DIRAC = -1.0f;
+
+public cbuffer SceneConstants : register(b1)
+{
+    public float total_time;
+    public float delta_time;
+
+    // (progressive) rendering
+
+// … 256 lines omitted …
+
+}
+
+public float4 rnd4(inout uint prev)
+{
+    return float4((float) lcg(prev) / (float) 0x01000000,
+                  (float) lcg(prev) / (float) 0x01000000,
+                  (float) lcg(prev) / (float) 0x01000000,
+                  (float) lcg(prev) / (float) 0x01000000);
+}
+
+//-------------------------------------------------------------------------------------------------
+// Math helper
+//-------------------------------------------------------------------------------------------------
+
+// convert float4x3 to 4x4, to be compatible with the slang compiler
+public float4x4 to4x4(float3x4 source)
+{
+    return float4x4(source[0], source[1], source[2], float4(0.0f, 0.0f, 0.0f, 1.0f));
+}
+
+//-------------------------------------------------------------------------------------------------
+// Avoiding self intersections (see Ray Tracing Gems, Ch. 6)
+//-------------------------------------------------------------------------------------------------
+
+public float3 offset_ray(const float3 p, const float3 n)
+{
+    const float origin = 1.0f / 32.0f;
+    const float float_scale = 1.0f / 65536.0f;
+    const float int_scale = 256.0f;
+
+    const int3 of_i = int3(int_scale * n);
+
+    float3 p_i = float3(asfloat(asint(p.x) + ((p.x &lt; 0.0f) ? -of_i.x : of_i.x)),
+                        asfloat(asint(p.y) + ((p.y &lt; 0.0f) ? -of_i.y : of_i.y)),
+                        asfloat(asint(p.z) + ((p.z &lt; 0.0f) ? -of_i.z : of_i.z)));
+
+    return float3(abs(p.x) &lt; origin ? p.x + float_scale * n.x : p_i.x,
+                  abs(p.y) &lt; origin ? p.y + float_scale * n.y : p_i.y,
+                  abs(p.z) &lt; origin ? p.z + float_scale * n.z : p_i.z);
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>hit.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>/******************************************************************************
+ * Copyright (c) 2019-2024, NVIDIA CORPORATION. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *  * Neither the name of NVIDIA CORPORATION nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ``AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+ * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *****************************************************************************/
+
+import common;
+import lighting;
+import setup;
+import types;
+import material;
+
+// ------------------------------------------------------------------------------------------------
+// MDL hit group shader
+// ------------------------------------------------------------------------------------------------
+
+[shader("closesthit")]
+void MdlRadianceClosestHitProgram(inout RadianceHitInfo payload, Attributes attrib)
+
+// … 160 lines omitted …
+
+// ------------------------------------------------------------------------------------------------
+// MDL shadow group shader
+// ------------------------------------------------------------------------------------------------
+
+[shader("anyhit")]
+void MdlShadowAnyHitProgram(inout ShadowHitInfo payload, Attributes attrib)
+{
+    // back face culling
+    if (has_flag(material_flags, MATERIAL_FLAG_SINGLE_SIDED)) {
+        if (is_back_face()) {
+            IgnoreHit();
+            return;
+        }
+    }
+
+    // early out if there is no opacity function
+    if (has_flag(material_flags, MATERIAL_FLAG_OPAQUE))
+    {
+        payload.isHit = true;
+        AcceptHitAndEndSearch();
+        return;
+    }
+
+    // setup MDL state
+    Shading_state_material mdl_state;
+    setup_mdl_shading_state(mdl_state, attrib);
+
+    // evaluate the cutout opacity
+    const float opacity = mdl_standalone_geometry_cutout_opacity(mdl_state);
+
+    // do alpha blending the stochastically way
+    if (rnd(payload.seed) &lt; opacity)
+    {
+        payload.isHit = true;
+        AcceptHitAndEndSearch();
+        return;
+    }
+
+    IgnoreHit();
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>lighting.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>module environment;
+
+import types;
+import common;
+
+//-------------------------------------------------------------------------------------------------
+// Environment
+//-------------------------------------------------------------------------------------------------
+
+// Environment map and sample data for importance sampling
+Texture2D&lt;float4&gt; environment_texture : register(t0, space1);
+StructuredBuffer&lt;Environment_sample_data&gt; environment_sample_buffer : register(t1, space1);
+SamplerState sampler_latlong : register(s3);
+
+struct Environment_sample_data
+{
+    uint alias;
+    float q;
+};
+
+float3 environment_evaluate(float3 normalized_dir,
+                                   out float pdf)
+{
+    // assuming lat long
+    float u = atan2(normalized_dir.z, normalized_dir.x) * 0.5f * M_ONE_OVER_PI + 0.5f;
+    u -= environment_rotation;
+    if (u &lt; 0.0f)
+        u += 1.0f;
+    const float v = acos(-normalized_dir.y) * M_ONE_OVER_PI;
+
+    // get radiance and calculate pdf
+    float3 t = environment_texture.SampleLevel(
+        sampler_latlong, float2(u, v), /*mipmaplevel=*/ 0.0f, /*mipoffset=*/0).xyz;
+    pdf = max(t.x, max(t.y, t.z)) * environment_inv_integral;
+    return t * environment_intensity_factor;
+}
+
+float3 environment_sample(inout uint seed,
+                                 out float3 to_light,
+                                 out float pdf)
+
+// … 56 lines omitted …
+
+public float3 sample_lights(inout Shading_state_material state, out float3 to_light, out float light_pdf, inout uint seed)
+{
+    unmodified(state);
+
+    float p_select_light = 1.0f;
+    if (point_light_enabled != 0)
+    {
+        // keep it simple and use either point light or environment light, each with the same
+        // probability. If the environment factor is zero, we always use the point light
+        // Note: see also miss shader
+        p_select_light = environment_intensity_factor &gt; 0.0f ? 0.5f : 1.0f;
+
+        // in general, you would select the light depending on the importance of it
+        // e.g. by incorporating their luminance
+
+        // randomly select one of the lights
+        if (rnd(seed) &lt;= p_select_light)
+        {
+            light_pdf = DIRAC; // infinity
+
+            // compute light direction and distance
+			to_light = point_light_position - state.position.val;
+
+            const float inv_distance2 = 1.0f / dot(to_light, to_light);
+            to_light *= sqrt(inv_distance2);
+
+            return point_light_intensity * inv_distance2 * 0.25f * M_ONE_OVER_PI / p_select_light;
+        }
+
+        // probability to select the environment instead
+        p_select_light = (1.0f - p_select_light);
+    }
+
+    // light from the environment
+    float3 radiance = environment_sample(seed, to_light, light_pdf);
+
+    // return radiance over pdf
+    light_pdf *= p_select_light;
+    return radiance / light_pdf;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>module material;
+
+import runtime;
+import types;
+
+// user defined structs
+struct structtype1 {
+    float m_0;
+    float m_1;
+    float m_2;
+    float m_3;
+};
+struct float22 {
+    float m_0;
+    float m_1;
+};
+struct _ZN4base23texture_coordinate_infoE {
+    float3 position;
+    float3 tangent_u;
+    float3 tangent_v;
+    int source_flags;
+};
+struct deriv_type0 {
+    _ZN4base23texture_coordinate_infoE val;
+    _ZN4base23texture_coordinate_infoE dx;
+    _ZN4base23texture_coordinate_infoE dy;
+};
+struct structtype0 {
+    float3 m_0;
+    float m_1;
+};
+struct deriv_type97 {
+    float4x4 val;
+    float4x4 dx;
+    float4x4 dy;
+};
+// globals
+static const float3 glob_cnst91[16] = { { 0.02985999919f, 0.003100000089f, 0.1360899955f }, { 0.2071499974f, 0.02304000035f, 0.995840013f }, { 0.367170006f, 0.06469000131f, 1.895499945f }, { 0.2854900062f, 0.1366100013f, 1.672359943f }, { 0.08233000338f, 0.2685599923f, 0.7665299773f }, { 0.01723000035f, 0.4862099886f, 0.2188899964f }, { 0.1439999938f, 0.7734100223f, 0.05886000022f }, { 0.4095700085f, 0.9585000277f, 0.01279999968f }, { 0.7420099974f, 0.9796699882f, 0.0006000000285f }, { 1.033249974f, 0.8459100127f, 0.0f }, { 1.083850026f, 0.622420013f, 0.0f }, { 0.7920299768f, 0.3674899936f, 0.0f }, { 0.3875100017f, 0.1613499969f, 0.0f }, { 0.134010002f, 0.05297999829f, 0.0f }, { 0.03531000018f, 0.01374999993f, 0.0f }, { 0.008170000277f, 0.003169999924f, 0.0f } };
+// functions
+structtype1 constr_structtype1(
+
+// … 12448 lines omitted …
+
+    tmp2 = mdl_read_argblock_as_int(tmp0 + 824);
+    int tmp3 = mdl_read_argblock_as_int(tmp0 + 72);
+    int tmp4 = mdl_read_argblock_as_int(tmp0 + 76);
+    Derived_float tmp5 = constr_Derived_float(mdl_read_argblock_as_float(tmp0 + 80), 0.0f, 0.0f);
+    Derived_float tmp6 = constr_Derived_float(mdl_read_argblock_as_float(tmp0 + 84), 0.0f, 0.0f);
+    Derived_float tmp7 = constr_Derived_float(mdl_read_argblock_as_float(tmp0 + 88), 0.0f, 0.0f);
+    Derived_float tmp8 = constr_Derived_float(mdl_read_argblock_as_float(tmp0 + 92), 0.0f, 0.0f);
+    bool tmp9 = mdl_read_argblock_as_bool(tmp0 + 96);
+    bool tmp10 = mdl_read_argblock_as_bool(tmp0 + 97);
+    bool tmp11 = mdl_read_argblock_as_bool(tmp0 + 98);
+    int tmp12 = mdl_read_argblock_as_int(tmp0 + 100);
+    Derived_float3 tmp13 = constr_Derived_float3(float3(mdl_read_argblock_as_float(tmp0 + 112), mdl_read_argblock_as_float(tmp0 + 116), mdl_read_argblock_as_float(tmp0 + 120)), float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 0.0f));
+    Derived_float3 tmp14 = constr_Derived_float3(float3(mdl_read_argblock_as_float(tmp0 + 128), mdl_read_argblock_as_float(tmp0 + 132), mdl_read_argblock_as_float(tmp0 + 136)), float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 0.0f));
+    Derived_float3 tmp15 = constr_Derived_float3(float3(mdl_read_argblock_as_float(tmp0 + 144), mdl_read_argblock_as_float(tmp0 + 148), mdl_read_argblock_as_float(tmp0 + 152)), float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 0.0f));
+    tmp16 = _ZN11OmniSurface9OmniImage16texture_lookup_2EU7uniformu10texture_2dU7uniformbu5colorU7uniformbu6float2U7uniformN11OmniSurface9OmniImage9wrap_modeEU7uniformN11OmniSurface9OmniImage9wrap_modeEN4base23texture_coordinate_infoE(tmp2, mdl_read_argblock_as_bool(tmp0 + 16), float3(mdl_read_argblock_as_float(tmp0 + 32), mdl_read_argblock_as_float(tmp0 + 36), mdl_read_argblock_as_float(tmp0 + 40)), mdl_read_argblock_as_bool(tmp0 + 48), constr_Derived_float2(float2(mdl_read_argblock_as_float(tmp0 + 56), mdl_read_argblock_as_float(tmp0 + 60)), float2(0.0f, 0.0f), float2(0.0f, 0.0f)), mdl_read_argblock_as_int(tmp0 + 64), mdl_read_argblock_as_int(tmp0 + 68), _ZN11OmniSurface9OmniImage28compute_texture_coordinate_2EU7uniformN4base25texture_coordinate_systemEU7uniformiU7uniformfU7uniformfU7uniformfU7uniformfU7uniformbU7uniformbU7uniformbU7uniformN11OmniSurface9OmniImage15projection_modeEU7uniformu6float3U7uniformu6float3U7uniformu6float3(state, tmp3, tmp4, tmp5, tmp6, tmp7, tmp8, tmp9, tmp10, tmp11, tmp12, tmp13, tmp14, tmp15));
+    newret = tmp16.m_0;
+    tmp17 = mdl_read_argblock_as_int(tmp0 + 828);
+    if (tmp17 == 0) {
+        newret2 = tmp16.m_1;
+        phi_in = newret2;
+    } else if (tmp17 == 1)
+        phi_in = newret.x;
+    else if (tmp17 == 2)
+        phi_in = newret.y;
+    else if (tmp17 == 3)
+        phi_in = newret.z;
+    else if (tmp17 == 4)
+        phi_in = 1.0f;
+    else if (tmp17 == 7) {
+        tmp18 = (newret.x + newret.y + newret.z) * 0.3333333433f;
+        phi_in = tmp18;
+    } else if (tmp17 == 6) {
+        tmp19 = newret.x * 0.2126709968f + newret.y * 0.7151600122f + newret.z * 0.07216899842f;
+        phi_in = tmp19;
+    } else
+        phi_in = 0.0f;
+    phi_out = phi_in;
+    float tmp20 = tex_texture_isvalid(tmp2) ? phi_out : mdl_read_argblock_as_float(tmp0 + 832);
+    return mdl_read_argblock_as_bool(tmp0 + 816) ? tmp1 == 0.0f ? tmp20 : tmp1 &lt;= tmp20 ? 1.0f : 0.0f : 1.0f;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>runtime.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>/******************************************************************************
+ * Copyright (c) 2019-2024, NVIDIA CORPORATION. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *  * Neither the name of NVIDIA CORPORATION nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ``AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+ * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *****************************************************************************/
+
+module runtime;
+
+import common;
+import types;
+
+/// Information passed to GPU for mapping id requested in the runtime functions to texture
+/// views of the corresponding type.
+public struct Mdl_texture_info
+{
+    // index into the tex2d, tex3d, ... buffers, depending on the type requested
+    public uint gpu_resource_array_start;
+
+
+// … 1570 lines omitted …
+
+    Derived_float3 default_value,
+    bool uniform_lookup)
+{
+    return scene_data_lookup_deriv_float3(
+        state, scene_data_id, default_value, uniform_lookup);
+}
+
+Derived_float2 scene_data_lookup_deriv_float2(
+    inout Shading_state_material state,
+    int scene_data_id,
+    Derived_float2 default_value,
+    bool uniform_lookup)
+{
+    if (!scene_data_isvalid_internal(state, scene_data_id, uniform_lookup))
+        return default_value;
+
+    Derived_float2 res;
+    res.val = scene_data_lookup_float2(
+        state, scene_data_id, default_value.val, uniform_lookup);
+    res.dx = float2(0, 0);
+    res.dy = float2(0, 0);
+    return res;
+}
+
+Derived_float scene_data_lookup_deriv_float(
+    inout Shading_state_material state,
+    int scene_data_id,
+    Derived_float default_value,
+    bool uniform_lookup)
+{
+    if (!scene_data_isvalid_internal(state, scene_data_id, uniform_lookup))
+        return default_value;
+
+    Derived_float res;
+    res.val = scene_data_lookup_float(
+        state, scene_data_id, default_value.val, uniform_lookup);
+    res.dx = 0;
+    res.dy = 0;
+    return res;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>setup.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>module setup;
+
+import common;
+import types;
+import runtime;
+
+public typedef int MaterialFlags;
+public static const MaterialFlags MATERIAL_FLAG_NONE = 0;
+public static const MaterialFlags MATERIAL_FLAG_OPAQUE = 1 &lt;&lt; 0; // allows to skip opacity evaluation
+public static const MaterialFlags MATERIAL_FLAG_SINGLE_SIDED = 1 &lt;&lt; 1; // geometry is only visible from the front side
+
+// ------------------------------------------------------------------------------------------------
+// defined in the global root signature
+// ------------------------------------------------------------------------------------------------
+
+// Ray tracing acceleration structure, accessed as a SRV
+public RaytracingAccelerationStructure SceneBVH : register(t0, space0);
+
+// ------------------------------------------------------------------------------------------------
+// defined in the local root signature
+// ------------------------------------------------------------------------------------------------
+
+// mesh data
+public StructuredBuffer&lt;uint&gt; indices: register(t2, space0);
+
+// geometry data
+// as long as there are only a few values here, place them directly instead of a constant buffer
+cbuffer _Geometry_constants_0 : register(b2, space0) { uint geometry_vertex_buffer_byte_offset; }
+cbuffer _Geometry_constants_1 : register(b3, space0) { uint geometry_vertex_stride; }
+cbuffer _Geometry_constants_2 : register(b4, space0) { uint geometry_index_offset; }
+cbuffer _Geometry_constants_3 : register(b5, space0) { uint geometry_scene_data_info_offset; }
+
+public cbuffer Material_constants : register(b0, space3)
+{
+    // shared for all material compiled from the same MDL material
+    // - none -
+
+    // individual properties of the different material instances
+    public int material_id;
+    public uint material_flags;
+
+// … 106 lines omitted …
+
+    mdl_state.geom_normal = world_geom_normal;
+	// currently not supported
+	mdl_state.position.val = hit_position;
+	mdl_state.position.dx = float3(0, 0, 0);
+	mdl_state.position.dy = float3(0, 0, 0);
+    mdl_state.animation_time = (enable_animiation &gt;= 0) ? total_time : 0.0f;
+    mdl_state.tangent_u[0] = world_tangent;
+    mdl_state.tangent_v[0] = world_binormal;
+    mdl_state.ro_data_segment_offset = 0;
+    mdl_state.world_to_object = world_to_object;
+    mdl_state.object_to_world = object_to_world;
+    mdl_state.object_id = 0;
+    mdl_state.meters_per_scene_unit = meters_per_scene_unit;
+    mdl_state.arg_block_offset = 0;
+
+    // fill the renderer state information
+    mdl_state.renderer_state.scene_data_info_offset = geometry_scene_data_info_offset;
+    mdl_state.renderer_state.scene_data_geometry_byte_offset = geometry_vertex_buffer_byte_offset;
+    mdl_state.renderer_state.hit_vertex_indices = vertex_indices;
+    mdl_state.renderer_state.barycentric = barycentric;
+    mdl_state.renderer_state.hit_backface = backfacing_primitive;
+
+    // get texture coordinates using a manually added scene data element with the scene data id
+    // defined as `SCENE_DATA_ID_TEXCOORD_0`
+    // (see end of target code generation on application side)
+    float2 texcoord0 = scene_data_lookup_float2(mdl_state, 1 /* SCENE_DATA_ID_TEXCOORD_0 */, float2(0.0f, 0.0f), false);
+
+    // apply uv transformations
+    texcoord0 = texcoord0 * uv_scale + uv_offset;
+    if (uv_repeat != 0)
+        texcoord0 = texcoord0 - floor(texcoord0);
+    if (uv_saturate != 0)
+        texcoord0 = saturate(texcoord0);
+
+	// would make sense in a rasterizer. for a ray tracers this is not straight forward
+	mdl_state.text_coords[0].val = float3(texcoord0, 0);
+	mdl_state.text_coords[0].dx = float3(0, 0, 0);
+	mdl_state.text_coords[0].dy = float3(0, 0, 0);
+}
+</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>types.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>/******************************************************************************
+ * Copyright (c) 2019-2024, NVIDIA CORPORATION. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *  * Neither the name of NVIDIA CORPORATION nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ``AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+ * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *****************************************************************************/
+
+module types;
+
+import common;
+
+public struct Derived_float {
+    public float val;
+    public float dx;
+    public float dy;
+};
+
+public struct Derived_float2 {
+    public float2 val;
+
+// … 175 lines omitted …
+
+	public float3 albedo_diffuse;          ///&lt; output: (diffuse part of the) albedo
+	public float3 albedo_glossy;           ///&lt; output: (glossy part of the) albedo
+	public float3 normal;                  ///&lt; output: normal
+
+    public float3 roughness;               ///&lt; output: glossy rougness_u,
+                                    ///  glossy roughness_v, bsdf_weight
+};
+
+/// Input and output public structure for EDF sampling data.
+public struct Edf_sample_data
+{
+    public float4 xi;                      ///&lt; input: pseudo-random sample numbers in range [0, 1)
+    public float3 k1;                      ///&lt; output: outgoing direction
+    public float pdf;                      ///&lt; output: pdf (non-projected hemisphere)
+    public float3 edf_over_pdf;            ///&lt; output: edf * dot(normal,k1) / pdf
+    public Edf_event_type event_type;      ///&lt; output: the type of event for the generated sample
+    public int handle;                     ///&lt; output: handle of the sampled elemental EDF (lobe)
+};
+
+/// Input and output public structure for EDF evaluation data.
+public struct Edf_evaluate_data
+{
+    public float3 k1;                      ///&lt; input: outgoing direction
+    public float cos;                      ///&lt; output: dot(normal, k1)
+    public float3 edf;                     ///&lt; output: edf
+    public float pdf;                      ///&lt; output: pdf (non-projected hemisphere)
+};
+
+/// Input and output public structure for EDF PDF calculation data.
+public struct Edf_pdf_data
+{
+    public float3 k1;                      ///&lt; input: outgoing direction
+    public float pdf;                      ///&lt; output: pdf (non-projected hemisphere)
+};
+
+/// Input and output public structure for EDF PDF calculation data.
+public struct Edf_auxiliary_data
+{
+    public float3 k1;                      ///&lt; input: outgoing direction
+};</pre></body>

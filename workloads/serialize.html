@@ -1,0 +1,143 @@
+<!doctype html><meta charset=utf-8><title>serialize — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../report_per_workload.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>serialize</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>A large module of `n` public functions, compiled to a .slang-module.
+Stresses IR/AST serialization (writeSerializedModule*) — the write side of
+the cost whose read side (readSerializedModule*) the `minimal` floor test
+and module loading exercise.</p><p style='color:#666;font-size:13px'><b>bucket:</b> ir_infra &nbsp;·&nbsp; <b>compile mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 1500</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="680" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">serialize — full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">serialize<tspan fill="#888" font-weight="400" text-decoration="none">  0.70×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">119</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">239</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">26.9</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.10</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.11</text>
+<polygon points="68.0,503.0 588.0,502.6 1108.0,502.9 1108.0,516.0 588.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>serialize — parseTranslationUnit</title></polygon>
+<polygon points="68.0,253.7 588.0,251.0 1108.0,361.4 1108.0,502.9 588.0,502.6 68.0,503.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>serialize — SemanticChecking</title></polygon>
+<polygon points="68.0,147.1 588.0,143.2 1108.0,264.7 1108.0,361.4 588.0,251.0 68.0,253.7" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>serialize — generateIR</title></polygon>
+<polygon points="68.0,145.9 588.0,141.7 1108.0,263.3 1108.0,264.7 588.0,143.2 68.0,147.1" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>serialize — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,110.8 588.0,108.9 1108.0,231.1 1108.0,263.3 588.0,141.7 68.0,145.9" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>serialize — generateOutput (self)</title></polygon>
+<polygon points="68.0,110.7 588.0,108.6 1108.0,231.1 1108.0,231.1 588.0,108.9 68.0,110.8" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>serialize — compileInner (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="650" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="640" width="12" height="12" fill="#fd8d3c"/>
+<text x="305" y="650" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#e6550d"/>
+<text x="582" y="650" fill="#222">generateOutput (self)</text>
+<rect x="843" y="640" width="12" height="12" fill="#969696"/>
+<text x="859" y="650" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 1500); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>serialize.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+public float sfn_0(float x, float y) { return x * 1.0 + y * 1.0 + sin(x + 0.0); }
+public float sfn_1(float x, float y) { return x * 2.0 + y * 2.0 + sin(x + 1.0); }
+public float sfn_2(float x, float y) { return x * 3.0 + y * 3.0 + sin(x + 2.0); }
+public float sfn_3(float x, float y) { return x * 4.0 + y * 4.0 + sin(x + 3.0); }
+public float sfn_4(float x, float y) { return x * 5.0 + y * 5.0 + sin(x + 4.0); }
+public float sfn_5(float x, float y) { return x * 6.0 + y * 1.0 + sin(x + 5.0); }
+public float sfn_6(float x, float y) { return x * 7.0 + y * 2.0 + sin(x + 6.0); }
+public float sfn_7(float x, float y) { return x * 1.0 + y * 3.0 + sin(x + 7.0); }
+public float sfn_8(float x, float y) { return x * 2.0 + y * 4.0 + sin(x + 8.0); }
+public float sfn_9(float x, float y) { return x * 3.0 + y * 5.0 + sin(x + 9.0); }
+public float sfn_10(float x, float y) { return x * 4.0 + y * 1.0 + sin(x + 10.0); }
+public float sfn_11(float x, float y) { return x * 5.0 + y * 2.0 + sin(x + 11.0); }
+public float sfn_12(float x, float y) { return x * 6.0 + y * 3.0 + sin(x + 12.0); }
+public float sfn_13(float x, float y) { return x * 7.0 + y * 4.0 + sin(x + 13.0); }
+public float sfn_14(float x, float y) { return x * 1.0 + y * 5.0 + sin(x + 14.0); }
+public float sfn_15(float x, float y) { return x * 2.0 + y * 1.0 + sin(x + 15.0); }
+public float sfn_16(float x, float y) { return x * 3.0 + y * 2.0 + sin(x + 16.0); }
+public float sfn_17(float x, float y) { return x * 4.0 + y * 3.0 + sin(x + 17.0); }
+public float sfn_18(float x, float y) { return x * 5.0 + y * 4.0 + sin(x + 18.0); }
+public float sfn_19(float x, float y) { return x * 6.0 + y * 5.0 + sin(x + 19.0); }
+public float sfn_20(float x, float y) { return x * 7.0 + y * 1.0 + sin(x + 20.0); }
+public float sfn_21(float x, float y) { return x * 1.0 + y * 2.0 + sin(x + 21.0); }
+public float sfn_22(float x, float y) { return x * 2.0 + y * 3.0 + sin(x + 22.0); }
+public float sfn_23(float x, float y) { return x * 3.0 + y * 4.0 + sin(x + 23.0); }
+public float sfn_24(float x, float y) { return x * 4.0 + y * 5.0 + sin(x + 24.0); }
+public float sfn_25(float x, float y) { return x * 5.0 + y * 1.0 + sin(x + 25.0); }
+public float sfn_26(float x, float y) { return x * 6.0 + y * 2.0 + sin(x + 26.0); }
+public float sfn_27(float x, float y) { return x * 7.0 + y * 3.0 + sin(x + 27.0); }
+public float sfn_28(float x, float y) { return x * 1.0 + y * 4.0 + sin(x + 28.0); }
+public float sfn_29(float x, float y) { return x * 2.0 + y * 5.0 + sin(x + 29.0); }
+public float sfn_30(float x, float y) { return x * 3.0 + y * 1.0 + sin(x + 30.0); }
+public float sfn_31(float x, float y) { return x * 4.0 + y * 2.0 + sin(x + 31.0); }
+public float sfn_32(float x, float y) { return x * 5.0 + y * 3.0 + sin(x + 32.0); }
+public float sfn_33(float x, float y) { return x * 6.0 + y * 4.0 + sin(x + 33.0); }
+public float sfn_34(float x, float y) { return x * 7.0 + y * 5.0 + sin(x + 34.0); }
+public float sfn_35(float x, float y) { return x * 1.0 + y * 1.0 + sin(x + 35.0); }
+public float sfn_36(float x, float y) { return x * 2.0 + y * 2.0 + sin(x + 36.0); }
+public float sfn_37(float x, float y) { return x * 3.0 + y * 3.0 + sin(x + 37.0); }
+public float sfn_38(float x, float y) { return x * 4.0 + y * 4.0 + sin(x + 38.0); }
+
+// … 1421 lines omitted …
+
+public float sfn_1460(float x, float y) { return x * 5.0 + y * 1.0 + sin(x + 1460.0); }
+public float sfn_1461(float x, float y) { return x * 6.0 + y * 2.0 + sin(x + 1461.0); }
+public float sfn_1462(float x, float y) { return x * 7.0 + y * 3.0 + sin(x + 1462.0); }
+public float sfn_1463(float x, float y) { return x * 1.0 + y * 4.0 + sin(x + 1463.0); }
+public float sfn_1464(float x, float y) { return x * 2.0 + y * 5.0 + sin(x + 1464.0); }
+public float sfn_1465(float x, float y) { return x * 3.0 + y * 1.0 + sin(x + 1465.0); }
+public float sfn_1466(float x, float y) { return x * 4.0 + y * 2.0 + sin(x + 1466.0); }
+public float sfn_1467(float x, float y) { return x * 5.0 + y * 3.0 + sin(x + 1467.0); }
+public float sfn_1468(float x, float y) { return x * 6.0 + y * 4.0 + sin(x + 1468.0); }
+public float sfn_1469(float x, float y) { return x * 7.0 + y * 5.0 + sin(x + 1469.0); }
+public float sfn_1470(float x, float y) { return x * 1.0 + y * 1.0 + sin(x + 1470.0); }
+public float sfn_1471(float x, float y) { return x * 2.0 + y * 2.0 + sin(x + 1471.0); }
+public float sfn_1472(float x, float y) { return x * 3.0 + y * 3.0 + sin(x + 1472.0); }
+public float sfn_1473(float x, float y) { return x * 4.0 + y * 4.0 + sin(x + 1473.0); }
+public float sfn_1474(float x, float y) { return x * 5.0 + y * 5.0 + sin(x + 1474.0); }
+public float sfn_1475(float x, float y) { return x * 6.0 + y * 1.0 + sin(x + 1475.0); }
+public float sfn_1476(float x, float y) { return x * 7.0 + y * 2.0 + sin(x + 1476.0); }
+public float sfn_1477(float x, float y) { return x * 1.0 + y * 3.0 + sin(x + 1477.0); }
+public float sfn_1478(float x, float y) { return x * 2.0 + y * 4.0 + sin(x + 1478.0); }
+public float sfn_1479(float x, float y) { return x * 3.0 + y * 5.0 + sin(x + 1479.0); }
+public float sfn_1480(float x, float y) { return x * 4.0 + y * 1.0 + sin(x + 1480.0); }
+public float sfn_1481(float x, float y) { return x * 5.0 + y * 2.0 + sin(x + 1481.0); }
+public float sfn_1482(float x, float y) { return x * 6.0 + y * 3.0 + sin(x + 1482.0); }
+public float sfn_1483(float x, float y) { return x * 7.0 + y * 4.0 + sin(x + 1483.0); }
+public float sfn_1484(float x, float y) { return x * 1.0 + y * 5.0 + sin(x + 1484.0); }
+public float sfn_1485(float x, float y) { return x * 2.0 + y * 1.0 + sin(x + 1485.0); }
+public float sfn_1486(float x, float y) { return x * 3.0 + y * 2.0 + sin(x + 1486.0); }
+public float sfn_1487(float x, float y) { return x * 4.0 + y * 3.0 + sin(x + 1487.0); }
+public float sfn_1488(float x, float y) { return x * 5.0 + y * 4.0 + sin(x + 1488.0); }
+public float sfn_1489(float x, float y) { return x * 6.0 + y * 5.0 + sin(x + 1489.0); }
+public float sfn_1490(float x, float y) { return x * 7.0 + y * 1.0 + sin(x + 1490.0); }
+public float sfn_1491(float x, float y) { return x * 1.0 + y * 2.0 + sin(x + 1491.0); }
+public float sfn_1492(float x, float y) { return x * 2.0 + y * 3.0 + sin(x + 1492.0); }
+public float sfn_1493(float x, float y) { return x * 3.0 + y * 4.0 + sin(x + 1493.0); }
+public float sfn_1494(float x, float y) { return x * 4.0 + y * 5.0 + sin(x + 1494.0); }
+public float sfn_1495(float x, float y) { return x * 5.0 + y * 1.0 + sin(x + 1495.0); }
+public float sfn_1496(float x, float y) { return x * 6.0 + y * 2.0 + sin(x + 1496.0); }
+public float sfn_1497(float x, float y) { return x * 7.0 + y * 3.0 + sin(x + 1497.0); }
+public float sfn_1498(float x, float y) { return x * 1.0 + y * 4.0 + sin(x + 1498.0); }
+public float sfn_1499(float x, float y) { return x * 2.0 + y * 5.0 + sin(x + 1499.0); }</pre></body>
