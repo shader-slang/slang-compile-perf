@@ -1,0 +1,1346 @@
+<!doctype html><meta charset=utf-8><title>api_reflection — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>api_reflection</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>n kernels with deliberately parameter-rich signatures (nested constant
+buffers, arrays, textures, samplers) so that walking each compiled
+program's layout — the reflection query pattern every API client uses to
+build binding tables — has realistic work per program. Used with the
+driver's --reflect option, which walks the layout after each compile.</p><p style='color:#666;font-size:13px'><b>bucket:</b> api_overhead &nbsp;·&nbsp; <b>compile mode:</b> api &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 40</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="662" viewBox="0 0 1132 662" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="662" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">api_reflection — full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">api_reflection<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">364</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">727</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="766.8" y1="76.0" x2="766.8" y2="516.0" stroke="#e8731a" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="769.8" y="87.0" fill="#e8731a" font-size="11">daily →</text>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">25.14</text>
+<line x1="100.5" y1="516.0" x2="100.5" y2="519.0" stroke="#999"/>
+<text x="100.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 100.5 531.0)">25.15</text>
+<line x1="133.0" y1="516.0" x2="133.0" y2="519.0" stroke="#999"/>
+<text x="133.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 133.0 531.0)">25.16</text>
+<line x1="165.5" y1="516.0" x2="165.5" y2="519.0" stroke="#999"/>
+<text x="165.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 165.5 531.0)">25.17</text>
+<line x1="198.0" y1="516.0" x2="198.0" y2="519.0" stroke="#999"/>
+<text x="198.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 198.0 531.0)">25.18</text>
+<line x1="230.5" y1="516.0" x2="230.5" y2="519.0" stroke="#999"/>
+<text x="230.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 230.5 531.0)">25.19</text>
+<line x1="263.0" y1="516.0" x2="263.0" y2="519.0" stroke="#999"/>
+<text x="263.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 263.0 531.0)">25.20</text>
+<line x1="295.5" y1="516.0" x2="295.5" y2="519.0" stroke="#999"/>
+<text x="295.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 295.5 531.0)">25.21</text>
+<line x1="328.0" y1="516.0" x2="328.0" y2="519.0" stroke="#999"/>
+<text x="328.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 328.0 531.0)">25.22</text>
+<line x1="360.5" y1="516.0" x2="360.5" y2="519.0" stroke="#999"/>
+<text x="360.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 360.5 531.0)">25.23</text>
+<line x1="393.0" y1="516.0" x2="393.0" y2="519.0" stroke="#999"/>
+<text x="393.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 393.0 531.0)">25.24</text>
+<line x1="425.5" y1="516.0" x2="425.5" y2="519.0" stroke="#999"/>
+<text x="425.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 425.5 531.0)">26.1</text>
+<line x1="458.0" y1="516.0" x2="458.0" y2="519.0" stroke="#999"/>
+<text x="458.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 458.0 531.0)">26.2</text>
+<line x1="490.5" y1="516.0" x2="490.5" y2="519.0" stroke="#999"/>
+<text x="490.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 490.5 531.0)">26.3</text>
+<line x1="523.0" y1="516.0" x2="523.0" y2="519.0" stroke="#999"/>
+<text x="523.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 523.0 531.0)">26.4</text>
+<line x1="555.5" y1="516.0" x2="555.5" y2="519.0" stroke="#999"/>
+<text x="555.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 555.5 531.0)">26.5</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.7</text>
+<line x1="620.5" y1="516.0" x2="620.5" y2="519.0" stroke="#999"/>
+<text x="620.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 620.5 531.0)">26.8</text>
+<line x1="653.0" y1="516.0" x2="653.0" y2="519.0" stroke="#999"/>
+<text x="653.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 653.0 531.0)">26.9</text>
+<line x1="685.5" y1="516.0" x2="685.5" y2="519.0" stroke="#999"/>
+<text x="685.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 685.5 531.0)">26.10</text>
+<line x1="718.0" y1="516.0" x2="718.0" y2="519.0" stroke="#999"/>
+<text x="718.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 718.0 531.0)">26.11</text>
+<line x1="750.5" y1="516.0" x2="750.5" y2="519.0" stroke="#999"/>
+<text x="750.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 750.5 531.0)">26.12</text>
+<line x1="783.0" y1="516.0" x2="783.0" y2="519.0" stroke="#999"/>
+<text x="783.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 783.0 531.0)">06-25</text>
+<line x1="815.5" y1="516.0" x2="815.5" y2="519.0" stroke="#999"/>
+<text x="815.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 815.5 531.0)">06-26</text>
+<line x1="848.0" y1="516.0" x2="848.0" y2="519.0" stroke="#999"/>
+<text x="848.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 848.0 531.0)">06-28</text>
+<line x1="880.5" y1="516.0" x2="880.5" y2="519.0" stroke="#999"/>
+<text x="880.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 880.5 531.0)">07-01</text>
+<line x1="913.0" y1="516.0" x2="913.0" y2="519.0" stroke="#999"/>
+<text x="913.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 913.0 531.0)">07-02</text>
+<line x1="945.5" y1="516.0" x2="945.5" y2="519.0" stroke="#999"/>
+<text x="945.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 945.5 531.0)">07-03</text>
+<line x1="978.0" y1="516.0" x2="978.0" y2="519.0" stroke="#999"/>
+<text x="978.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 978.0 531.0)">07-07</text>
+<line x1="1010.5" y1="516.0" x2="1010.5" y2="519.0" stroke="#999"/>
+<text x="1010.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1010.5 531.0)">07-07</text>
+<line x1="1043.0" y1="516.0" x2="1043.0" y2="519.0" stroke="#999"/>
+<text x="1043.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1043.0 531.0)">07-09</text>
+<line x1="1075.5" y1="516.0" x2="1075.5" y2="519.0" stroke="#999"/>
+<text x="1075.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1075.5 531.0)">07-10</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">07-11</text>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">apiCreateGlobalSession</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">apiCreateSession</text>
+<rect x="566" y="586" width="12" height="12" fill="#2171b5"/>
+<text x="582" y="596" fill="#222">apiLoadModule</text>
+<rect x="843" y="586" width="12" height="12" fill="#6baed6"/>
+<text x="859" y="596" fill="#222">apiFindEntryPoint</text>
+<rect x="12" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="28" y="614" fill="#222">apiComposite</text>
+<rect x="289" y="604" width="12" height="12" fill="#807dba"/>
+<text x="305" y="614" fill="#222">apiSpecialize</text>
+<rect x="566" y="604" width="12" height="12" fill="#6a51a3"/>
+<text x="582" y="614" fill="#222">apiLink</text>
+<rect x="843" y="604" width="12" height="12" fill="#fd8d3c"/>
+<text x="859" y="614" fill="#222">apiGetCode</text>
+<rect x="12" y="622" width="12" height="12" fill="#b5bdc4"/>
+<text x="28" y="632" fill="#222">apiReflection</text>
+<rect x="289" y="622" width="12" height="12" fill="#969696"/>
+<text x="305" y="632" fill="#222">apiTotal (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 40); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_000.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_0
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_0
+{
+    Inner_0 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[2];
+}
+
+ConstantBuffer&lt;Params_0&gt; cb_0;
+StructuredBuffer&lt;float4&gt; inBuf_0;
+RWStructuredBuffer&lt;float4&gt; outBuf_0;
+Texture2D tex_0;
+SamplerState samp_0;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_0[tid.x];
+    v += tex_0.SampleLevel(samp_0, v.xy, 0);
+    v *= mul(cb_0.xf, v);
+    v.x += cb_0.inner[tid.x % 3].a.x + cb_0.blend[0];
+    outBuf_0[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_001.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_1
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_1
+{
+    Inner_1 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[3];
+}
+
+ConstantBuffer&lt;Params_1&gt; cb_1;
+StructuredBuffer&lt;float4&gt; inBuf_1;
+RWStructuredBuffer&lt;float4&gt; outBuf_1;
+Texture2D tex_1;
+SamplerState samp_1;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_1[tid.x];
+    v += tex_1.SampleLevel(samp_1, v.xy, 0);
+    v *= mul(cb_1.xf, v);
+    v.x += cb_1.inner[tid.x % 3].a.x + cb_1.blend[0];
+    outBuf_1[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_002.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_2
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_2
+{
+    Inner_2 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[4];
+}
+
+ConstantBuffer&lt;Params_2&gt; cb_2;
+StructuredBuffer&lt;float4&gt; inBuf_2;
+RWStructuredBuffer&lt;float4&gt; outBuf_2;
+Texture2D tex_2;
+SamplerState samp_2;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_2[tid.x];
+    v += tex_2.SampleLevel(samp_2, v.xy, 0);
+    v *= mul(cb_2.xf, v);
+    v.x += cb_2.inner[tid.x % 3].a.x + cb_2.blend[0];
+    outBuf_2[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_003.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_3
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_3
+{
+    Inner_3 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[5];
+}
+
+ConstantBuffer&lt;Params_3&gt; cb_3;
+StructuredBuffer&lt;float4&gt; inBuf_3;
+RWStructuredBuffer&lt;float4&gt; outBuf_3;
+Texture2D tex_3;
+SamplerState samp_3;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_3[tid.x];
+    v += tex_3.SampleLevel(samp_3, v.xy, 0);
+    v *= mul(cb_3.xf, v);
+    v.x += cb_3.inner[tid.x % 3].a.x + cb_3.blend[0];
+    outBuf_3[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_004.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_4
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_4
+{
+    Inner_4 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[6];
+}
+
+ConstantBuffer&lt;Params_4&gt; cb_4;
+StructuredBuffer&lt;float4&gt; inBuf_4;
+RWStructuredBuffer&lt;float4&gt; outBuf_4;
+Texture2D tex_4;
+SamplerState samp_4;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_4[tid.x];
+    v += tex_4.SampleLevel(samp_4, v.xy, 0);
+    v *= mul(cb_4.xf, v);
+    v.x += cb_4.inner[tid.x % 3].a.x + cb_4.blend[0];
+    outBuf_4[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_005.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_5
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_5
+{
+    Inner_5 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[2];
+}
+
+ConstantBuffer&lt;Params_5&gt; cb_5;
+StructuredBuffer&lt;float4&gt; inBuf_5;
+RWStructuredBuffer&lt;float4&gt; outBuf_5;
+Texture2D tex_5;
+SamplerState samp_5;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_5[tid.x];
+    v += tex_5.SampleLevel(samp_5, v.xy, 0);
+    v *= mul(cb_5.xf, v);
+    v.x += cb_5.inner[tid.x % 3].a.x + cb_5.blend[0];
+    outBuf_5[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_006.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_6
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_6
+{
+    Inner_6 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[3];
+}
+
+ConstantBuffer&lt;Params_6&gt; cb_6;
+StructuredBuffer&lt;float4&gt; inBuf_6;
+RWStructuredBuffer&lt;float4&gt; outBuf_6;
+Texture2D tex_6;
+SamplerState samp_6;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_6[tid.x];
+    v += tex_6.SampleLevel(samp_6, v.xy, 0);
+    v *= mul(cb_6.xf, v);
+    v.x += cb_6.inner[tid.x % 3].a.x + cb_6.blend[0];
+    outBuf_6[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_007.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_7
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_7
+{
+    Inner_7 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[4];
+}
+
+ConstantBuffer&lt;Params_7&gt; cb_7;
+StructuredBuffer&lt;float4&gt; inBuf_7;
+RWStructuredBuffer&lt;float4&gt; outBuf_7;
+Texture2D tex_7;
+SamplerState samp_7;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_7[tid.x];
+    v += tex_7.SampleLevel(samp_7, v.xy, 0);
+    v *= mul(cb_7.xf, v);
+    v.x += cb_7.inner[tid.x % 3].a.x + cb_7.blend[0];
+    outBuf_7[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_008.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_8
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_8
+{
+    Inner_8 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[5];
+}
+
+ConstantBuffer&lt;Params_8&gt; cb_8;
+StructuredBuffer&lt;float4&gt; inBuf_8;
+RWStructuredBuffer&lt;float4&gt; outBuf_8;
+Texture2D tex_8;
+SamplerState samp_8;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_8[tid.x];
+    v += tex_8.SampleLevel(samp_8, v.xy, 0);
+    v *= mul(cb_8.xf, v);
+    v.x += cb_8.inner[tid.x % 3].a.x + cb_8.blend[0];
+    outBuf_8[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_009.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_9
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_9
+{
+    Inner_9 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[6];
+}
+
+ConstantBuffer&lt;Params_9&gt; cb_9;
+StructuredBuffer&lt;float4&gt; inBuf_9;
+RWStructuredBuffer&lt;float4&gt; outBuf_9;
+Texture2D tex_9;
+SamplerState samp_9;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_9[tid.x];
+    v += tex_9.SampleLevel(samp_9, v.xy, 0);
+    v *= mul(cb_9.xf, v);
+    v.x += cb_9.inner[tid.x % 3].a.x + cb_9.blend[0];
+    outBuf_9[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_010.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_10
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_10
+{
+    Inner_10 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[2];
+}
+
+ConstantBuffer&lt;Params_10&gt; cb_10;
+StructuredBuffer&lt;float4&gt; inBuf_10;
+RWStructuredBuffer&lt;float4&gt; outBuf_10;
+Texture2D tex_10;
+SamplerState samp_10;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_10[tid.x];
+    v += tex_10.SampleLevel(samp_10, v.xy, 0);
+    v *= mul(cb_10.xf, v);
+    v.x += cb_10.inner[tid.x % 3].a.x + cb_10.blend[0];
+    outBuf_10[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_011.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_11
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_11
+{
+    Inner_11 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[3];
+}
+
+ConstantBuffer&lt;Params_11&gt; cb_11;
+StructuredBuffer&lt;float4&gt; inBuf_11;
+RWStructuredBuffer&lt;float4&gt; outBuf_11;
+Texture2D tex_11;
+SamplerState samp_11;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_11[tid.x];
+    v += tex_11.SampleLevel(samp_11, v.xy, 0);
+    v *= mul(cb_11.xf, v);
+    v.x += cb_11.inner[tid.x % 3].a.x + cb_11.blend[0];
+    outBuf_11[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_012.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_12
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_12
+{
+    Inner_12 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[4];
+}
+
+ConstantBuffer&lt;Params_12&gt; cb_12;
+StructuredBuffer&lt;float4&gt; inBuf_12;
+RWStructuredBuffer&lt;float4&gt; outBuf_12;
+Texture2D tex_12;
+SamplerState samp_12;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_12[tid.x];
+    v += tex_12.SampleLevel(samp_12, v.xy, 0);
+    v *= mul(cb_12.xf, v);
+    v.x += cb_12.inner[tid.x % 3].a.x + cb_12.blend[0];
+    outBuf_12[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_013.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_13
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_13
+{
+    Inner_13 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[5];
+}
+
+ConstantBuffer&lt;Params_13&gt; cb_13;
+StructuredBuffer&lt;float4&gt; inBuf_13;
+RWStructuredBuffer&lt;float4&gt; outBuf_13;
+Texture2D tex_13;
+SamplerState samp_13;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_13[tid.x];
+    v += tex_13.SampleLevel(samp_13, v.xy, 0);
+    v *= mul(cb_13.xf, v);
+    v.x += cb_13.inner[tid.x % 3].a.x + cb_13.blend[0];
+    outBuf_13[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_014.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_14
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_14
+{
+    Inner_14 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[6];
+}
+
+ConstantBuffer&lt;Params_14&gt; cb_14;
+StructuredBuffer&lt;float4&gt; inBuf_14;
+RWStructuredBuffer&lt;float4&gt; outBuf_14;
+Texture2D tex_14;
+SamplerState samp_14;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_14[tid.x];
+    v += tex_14.SampleLevel(samp_14, v.xy, 0);
+    v *= mul(cb_14.xf, v);
+    v.x += cb_14.inner[tid.x % 3].a.x + cb_14.blend[0];
+    outBuf_14[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_015.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_15
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_15
+{
+    Inner_15 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[2];
+}
+
+ConstantBuffer&lt;Params_15&gt; cb_15;
+StructuredBuffer&lt;float4&gt; inBuf_15;
+RWStructuredBuffer&lt;float4&gt; outBuf_15;
+Texture2D tex_15;
+SamplerState samp_15;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_15[tid.x];
+    v += tex_15.SampleLevel(samp_15, v.xy, 0);
+    v *= mul(cb_15.xf, v);
+    v.x += cb_15.inner[tid.x % 3].a.x + cb_15.blend[0];
+    outBuf_15[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_016.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_16
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_16
+{
+    Inner_16 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[3];
+}
+
+ConstantBuffer&lt;Params_16&gt; cb_16;
+StructuredBuffer&lt;float4&gt; inBuf_16;
+RWStructuredBuffer&lt;float4&gt; outBuf_16;
+Texture2D tex_16;
+SamplerState samp_16;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_16[tid.x];
+    v += tex_16.SampleLevel(samp_16, v.xy, 0);
+    v *= mul(cb_16.xf, v);
+    v.x += cb_16.inner[tid.x % 3].a.x + cb_16.blend[0];
+    outBuf_16[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_017.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_17
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_17
+{
+    Inner_17 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[4];
+}
+
+ConstantBuffer&lt;Params_17&gt; cb_17;
+StructuredBuffer&lt;float4&gt; inBuf_17;
+RWStructuredBuffer&lt;float4&gt; outBuf_17;
+Texture2D tex_17;
+SamplerState samp_17;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_17[tid.x];
+    v += tex_17.SampleLevel(samp_17, v.xy, 0);
+    v *= mul(cb_17.xf, v);
+    v.x += cb_17.inner[tid.x % 3].a.x + cb_17.blend[0];
+    outBuf_17[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_018.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_18
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_18
+{
+    Inner_18 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[5];
+}
+
+ConstantBuffer&lt;Params_18&gt; cb_18;
+StructuredBuffer&lt;float4&gt; inBuf_18;
+RWStructuredBuffer&lt;float4&gt; outBuf_18;
+Texture2D tex_18;
+SamplerState samp_18;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_18[tid.x];
+    v += tex_18.SampleLevel(samp_18, v.xy, 0);
+    v *= mul(cb_18.xf, v);
+    v.x += cb_18.inner[tid.x % 3].a.x + cb_18.blend[0];
+    outBuf_18[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_019.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_19
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_19
+{
+    Inner_19 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[6];
+}
+
+ConstantBuffer&lt;Params_19&gt; cb_19;
+StructuredBuffer&lt;float4&gt; inBuf_19;
+RWStructuredBuffer&lt;float4&gt; outBuf_19;
+Texture2D tex_19;
+SamplerState samp_19;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_19[tid.x];
+    v += tex_19.SampleLevel(samp_19, v.xy, 0);
+    v *= mul(cb_19.xf, v);
+    v.x += cb_19.inner[tid.x % 3].a.x + cb_19.blend[0];
+    outBuf_19[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_020.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_20
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_20
+{
+    Inner_20 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[2];
+}
+
+ConstantBuffer&lt;Params_20&gt; cb_20;
+StructuredBuffer&lt;float4&gt; inBuf_20;
+RWStructuredBuffer&lt;float4&gt; outBuf_20;
+Texture2D tex_20;
+SamplerState samp_20;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_20[tid.x];
+    v += tex_20.SampleLevel(samp_20, v.xy, 0);
+    v *= mul(cb_20.xf, v);
+    v.x += cb_20.inner[tid.x % 3].a.x + cb_20.blend[0];
+    outBuf_20[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_021.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_21
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_21
+{
+    Inner_21 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[3];
+}
+
+ConstantBuffer&lt;Params_21&gt; cb_21;
+StructuredBuffer&lt;float4&gt; inBuf_21;
+RWStructuredBuffer&lt;float4&gt; outBuf_21;
+Texture2D tex_21;
+SamplerState samp_21;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_21[tid.x];
+    v += tex_21.SampleLevel(samp_21, v.xy, 0);
+    v *= mul(cb_21.xf, v);
+    v.x += cb_21.inner[tid.x % 3].a.x + cb_21.blend[0];
+    outBuf_21[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_022.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_22
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_22
+{
+    Inner_22 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[4];
+}
+
+ConstantBuffer&lt;Params_22&gt; cb_22;
+StructuredBuffer&lt;float4&gt; inBuf_22;
+RWStructuredBuffer&lt;float4&gt; outBuf_22;
+Texture2D tex_22;
+SamplerState samp_22;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_22[tid.x];
+    v += tex_22.SampleLevel(samp_22, v.xy, 0);
+    v *= mul(cb_22.xf, v);
+    v.x += cb_22.inner[tid.x % 3].a.x + cb_22.blend[0];
+    outBuf_22[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_023.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_23
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_23
+{
+    Inner_23 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[5];
+}
+
+ConstantBuffer&lt;Params_23&gt; cb_23;
+StructuredBuffer&lt;float4&gt; inBuf_23;
+RWStructuredBuffer&lt;float4&gt; outBuf_23;
+Texture2D tex_23;
+SamplerState samp_23;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_23[tid.x];
+    v += tex_23.SampleLevel(samp_23, v.xy, 0);
+    v *= mul(cb_23.xf, v);
+    v.x += cb_23.inner[tid.x % 3].a.x + cb_23.blend[0];
+    outBuf_23[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_024.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_24
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_24
+{
+    Inner_24 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[6];
+}
+
+ConstantBuffer&lt;Params_24&gt; cb_24;
+StructuredBuffer&lt;float4&gt; inBuf_24;
+RWStructuredBuffer&lt;float4&gt; outBuf_24;
+Texture2D tex_24;
+SamplerState samp_24;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_24[tid.x];
+    v += tex_24.SampleLevel(samp_24, v.xy, 0);
+    v *= mul(cb_24.xf, v);
+    v.x += cb_24.inner[tid.x % 3].a.x + cb_24.blend[0];
+    outBuf_24[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_025.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_25
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_25
+{
+    Inner_25 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[2];
+}
+
+ConstantBuffer&lt;Params_25&gt; cb_25;
+StructuredBuffer&lt;float4&gt; inBuf_25;
+RWStructuredBuffer&lt;float4&gt; outBuf_25;
+Texture2D tex_25;
+SamplerState samp_25;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_25[tid.x];
+    v += tex_25.SampleLevel(samp_25, v.xy, 0);
+    v *= mul(cb_25.xf, v);
+    v.x += cb_25.inner[tid.x % 3].a.x + cb_25.blend[0];
+    outBuf_25[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_026.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_26
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_26
+{
+    Inner_26 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[3];
+}
+
+ConstantBuffer&lt;Params_26&gt; cb_26;
+StructuredBuffer&lt;float4&gt; inBuf_26;
+RWStructuredBuffer&lt;float4&gt; outBuf_26;
+Texture2D tex_26;
+SamplerState samp_26;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_26[tid.x];
+    v += tex_26.SampleLevel(samp_26, v.xy, 0);
+    v *= mul(cb_26.xf, v);
+    v.x += cb_26.inner[tid.x % 3].a.x + cb_26.blend[0];
+    outBuf_26[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_027.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_27
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_27
+{
+    Inner_27 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[4];
+}
+
+ConstantBuffer&lt;Params_27&gt; cb_27;
+StructuredBuffer&lt;float4&gt; inBuf_27;
+RWStructuredBuffer&lt;float4&gt; outBuf_27;
+Texture2D tex_27;
+SamplerState samp_27;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_27[tid.x];
+    v += tex_27.SampleLevel(samp_27, v.xy, 0);
+    v *= mul(cb_27.xf, v);
+    v.x += cb_27.inner[tid.x % 3].a.x + cb_27.blend[0];
+    outBuf_27[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_028.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_28
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_28
+{
+    Inner_28 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[5];
+}
+
+ConstantBuffer&lt;Params_28&gt; cb_28;
+StructuredBuffer&lt;float4&gt; inBuf_28;
+RWStructuredBuffer&lt;float4&gt; outBuf_28;
+Texture2D tex_28;
+SamplerState samp_28;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_28[tid.x];
+    v += tex_28.SampleLevel(samp_28, v.xy, 0);
+    v *= mul(cb_28.xf, v);
+    v.x += cb_28.inner[tid.x % 3].a.x + cb_28.blend[0];
+    outBuf_28[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_029.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_29
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_29
+{
+    Inner_29 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[6];
+}
+
+ConstantBuffer&lt;Params_29&gt; cb_29;
+StructuredBuffer&lt;float4&gt; inBuf_29;
+RWStructuredBuffer&lt;float4&gt; outBuf_29;
+Texture2D tex_29;
+SamplerState samp_29;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_29[tid.x];
+    v += tex_29.SampleLevel(samp_29, v.xy, 0);
+    v *= mul(cb_29.xf, v);
+    v.x += cb_29.inner[tid.x % 3].a.x + cb_29.blend[0];
+    outBuf_29[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_030.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_30
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_30
+{
+    Inner_30 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[2];
+}
+
+ConstantBuffer&lt;Params_30&gt; cb_30;
+StructuredBuffer&lt;float4&gt; inBuf_30;
+RWStructuredBuffer&lt;float4&gt; outBuf_30;
+Texture2D tex_30;
+SamplerState samp_30;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_30[tid.x];
+    v += tex_30.SampleLevel(samp_30, v.xy, 0);
+    v *= mul(cb_30.xf, v);
+    v.x += cb_30.inner[tid.x % 3].a.x + cb_30.blend[0];
+    outBuf_30[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_031.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_31
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_31
+{
+    Inner_31 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[3];
+}
+
+ConstantBuffer&lt;Params_31&gt; cb_31;
+StructuredBuffer&lt;float4&gt; inBuf_31;
+RWStructuredBuffer&lt;float4&gt; outBuf_31;
+Texture2D tex_31;
+SamplerState samp_31;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_31[tid.x];
+    v += tex_31.SampleLevel(samp_31, v.xy, 0);
+    v *= mul(cb_31.xf, v);
+    v.x += cb_31.inner[tid.x % 3].a.x + cb_31.blend[0];
+    outBuf_31[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_032.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_32
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_32
+{
+    Inner_32 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[4];
+}
+
+ConstantBuffer&lt;Params_32&gt; cb_32;
+StructuredBuffer&lt;float4&gt; inBuf_32;
+RWStructuredBuffer&lt;float4&gt; outBuf_32;
+Texture2D tex_32;
+SamplerState samp_32;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_32[tid.x];
+    v += tex_32.SampleLevel(samp_32, v.xy, 0);
+    v *= mul(cb_32.xf, v);
+    v.x += cb_32.inner[tid.x % 3].a.x + cb_32.blend[0];
+    outBuf_32[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_033.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_33
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_33
+{
+    Inner_33 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[5];
+}
+
+ConstantBuffer&lt;Params_33&gt; cb_33;
+StructuredBuffer&lt;float4&gt; inBuf_33;
+RWStructuredBuffer&lt;float4&gt; outBuf_33;
+Texture2D tex_33;
+SamplerState samp_33;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_33[tid.x];
+    v += tex_33.SampleLevel(samp_33, v.xy, 0);
+    v *= mul(cb_33.xf, v);
+    v.x += cb_33.inner[tid.x % 3].a.x + cb_33.blend[0];
+    outBuf_33[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_034.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_34
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_34
+{
+    Inner_34 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[6];
+}
+
+ConstantBuffer&lt;Params_34&gt; cb_34;
+StructuredBuffer&lt;float4&gt; inBuf_34;
+RWStructuredBuffer&lt;float4&gt; outBuf_34;
+Texture2D tex_34;
+SamplerState samp_34;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_34[tid.x];
+    v += tex_34.SampleLevel(samp_34, v.xy, 0);
+    v *= mul(cb_34.xf, v);
+    v.x += cb_34.inner[tid.x % 3].a.x + cb_34.blend[0];
+    outBuf_34[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_035.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_35
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_35
+{
+    Inner_35 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[2];
+}
+
+ConstantBuffer&lt;Params_35&gt; cb_35;
+StructuredBuffer&lt;float4&gt; inBuf_35;
+RWStructuredBuffer&lt;float4&gt; outBuf_35;
+Texture2D tex_35;
+SamplerState samp_35;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_35[tid.x];
+    v += tex_35.SampleLevel(samp_35, v.xy, 0);
+    v *= mul(cb_35.xf, v);
+    v.x += cb_35.inner[tid.x % 3].a.x + cb_35.blend[0];
+    outBuf_35[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_036.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_36
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_36
+{
+    Inner_36 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[3];
+}
+
+ConstantBuffer&lt;Params_36&gt; cb_36;
+StructuredBuffer&lt;float4&gt; inBuf_36;
+RWStructuredBuffer&lt;float4&gt; outBuf_36;
+Texture2D tex_36;
+SamplerState samp_36;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_36[tid.x];
+    v += tex_36.SampleLevel(samp_36, v.xy, 0);
+    v *= mul(cb_36.xf, v);
+    v.x += cb_36.inner[tid.x % 3].a.x + cb_36.blend[0];
+    outBuf_36[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_037.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_37
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_37
+{
+    Inner_37 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[4];
+}
+
+ConstantBuffer&lt;Params_37&gt; cb_37;
+StructuredBuffer&lt;float4&gt; inBuf_37;
+RWStructuredBuffer&lt;float4&gt; outBuf_37;
+Texture2D tex_37;
+SamplerState samp_37;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_37[tid.x];
+    v += tex_37.SampleLevel(samp_37, v.xy, 0);
+    v *= mul(cb_37.xf, v);
+    v.x += cb_37.inner[tid.x % 3].a.x + cb_37.blend[0];
+    outBuf_37[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_038.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_38
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_38
+{
+    Inner_38 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[5];
+}
+
+ConstantBuffer&lt;Params_38&gt; cb_38;
+StructuredBuffer&lt;float4&gt; inBuf_38;
+RWStructuredBuffer&lt;float4&gt; outBuf_38;
+Texture2D tex_38;
+SamplerState samp_38;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_38[tid.x];
+    v += tex_38.SampleLevel(samp_38, v.xy, 0);
+    v *= mul(cb_38.xf, v);
+    v.x += cb_38.inner[tid.x % 3].a.x + cb_38.blend[0];
+    outBuf_38[tid.x] = v;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_039.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+struct Inner_39
+{
+    float4 a;
+    float3 b;
+    int2 c[4];
+}
+
+struct Params_39
+{
+    Inner_39 inner[3];
+    float4x4 xf;
+    uint flags;
+    float blend[6];
+}
+
+ConstantBuffer&lt;Params_39&gt; cb_39;
+StructuredBuffer&lt;float4&gt; inBuf_39;
+RWStructuredBuffer&lt;float4&gt; outBuf_39;
+Texture2D tex_39;
+SamplerState samp_39;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float4 v = inBuf_39[tid.x];
+    v += tex_39.SampleLevel(samp_39, v.xy, 0);
+    v *= mul(cb_39.xf, v);
+    v.x += cb_39.inner[tid.x % 3].a.x + cb_39.blend[0];
+    outBuf_39[tid.x] = v;
+}</pre></body>

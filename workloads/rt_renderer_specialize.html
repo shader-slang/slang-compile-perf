@@ -1,0 +1,3635 @@
+<!doctype html><meta charset=utf-8><title>rt_renderer_specialize — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>rt_renderer_specialize</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>A renderer-shaped generated corpus: utility + scene + material layers
+behind IMaterial/IBSDF interfaces (n = material count), a raygen/
+closesthit/miss entry-point root importing the whole library, and a
+generic compute root for per-material specialization. Programs here are
+few×HEAVY — each imports the full library — complementing
+api_many_kernels' many×tiny per-compile-overhead probes.</p><p style='color:#666;font-size:13px'><b>bucket:</b> rt_renderer &nbsp;·&nbsp; <b>compile mode:</b> api &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 24</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="662" viewBox="0 0 1132 662" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="662" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">rt_renderer_specialize — full phase breakdown across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">rt_renderer_specialize<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">870</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">1739</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="766.8" y1="76.0" x2="766.8" y2="516.0" stroke="#e8731a" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="769.8" y="87.0" fill="#e8731a" font-size="11">daily →</text>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">25.14</text>
+<line x1="100.5" y1="516.0" x2="100.5" y2="519.0" stroke="#999"/>
+<text x="100.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 100.5 531.0)">25.15</text>
+<line x1="133.0" y1="516.0" x2="133.0" y2="519.0" stroke="#999"/>
+<text x="133.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 133.0 531.0)">25.16</text>
+<line x1="165.5" y1="516.0" x2="165.5" y2="519.0" stroke="#999"/>
+<text x="165.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 165.5 531.0)">25.17</text>
+<line x1="198.0" y1="516.0" x2="198.0" y2="519.0" stroke="#999"/>
+<text x="198.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 198.0 531.0)">25.18</text>
+<line x1="230.5" y1="516.0" x2="230.5" y2="519.0" stroke="#999"/>
+<text x="230.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 230.5 531.0)">25.19</text>
+<line x1="263.0" y1="516.0" x2="263.0" y2="519.0" stroke="#999"/>
+<text x="263.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 263.0 531.0)">25.20</text>
+<line x1="295.5" y1="516.0" x2="295.5" y2="519.0" stroke="#999"/>
+<text x="295.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 295.5 531.0)">25.21</text>
+<line x1="328.0" y1="516.0" x2="328.0" y2="519.0" stroke="#999"/>
+<text x="328.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 328.0 531.0)">25.22</text>
+<line x1="360.5" y1="516.0" x2="360.5" y2="519.0" stroke="#999"/>
+<text x="360.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 360.5 531.0)">25.23</text>
+<line x1="393.0" y1="516.0" x2="393.0" y2="519.0" stroke="#999"/>
+<text x="393.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 393.0 531.0)">25.24</text>
+<line x1="425.5" y1="516.0" x2="425.5" y2="519.0" stroke="#999"/>
+<text x="425.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 425.5 531.0)">26.1</text>
+<line x1="458.0" y1="516.0" x2="458.0" y2="519.0" stroke="#999"/>
+<text x="458.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 458.0 531.0)">26.2</text>
+<line x1="490.5" y1="516.0" x2="490.5" y2="519.0" stroke="#999"/>
+<text x="490.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 490.5 531.0)">26.3</text>
+<line x1="523.0" y1="516.0" x2="523.0" y2="519.0" stroke="#999"/>
+<text x="523.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 523.0 531.0)">26.4</text>
+<line x1="555.5" y1="516.0" x2="555.5" y2="519.0" stroke="#999"/>
+<text x="555.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 555.5 531.0)">26.5</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.7</text>
+<line x1="620.5" y1="516.0" x2="620.5" y2="519.0" stroke="#999"/>
+<text x="620.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 620.5 531.0)">26.8</text>
+<line x1="653.0" y1="516.0" x2="653.0" y2="519.0" stroke="#999"/>
+<text x="653.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 653.0 531.0)">26.9</text>
+<line x1="685.5" y1="516.0" x2="685.5" y2="519.0" stroke="#999"/>
+<text x="685.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 685.5 531.0)">26.10</text>
+<line x1="718.0" y1="516.0" x2="718.0" y2="519.0" stroke="#999"/>
+<text x="718.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 718.0 531.0)">26.11</text>
+<line x1="750.5" y1="516.0" x2="750.5" y2="519.0" stroke="#999"/>
+<text x="750.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 750.5 531.0)">26.12</text>
+<line x1="783.0" y1="516.0" x2="783.0" y2="519.0" stroke="#999"/>
+<text x="783.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 783.0 531.0)">06-25</text>
+<line x1="815.5" y1="516.0" x2="815.5" y2="519.0" stroke="#999"/>
+<text x="815.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 815.5 531.0)">06-26</text>
+<line x1="848.0" y1="516.0" x2="848.0" y2="519.0" stroke="#999"/>
+<text x="848.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 848.0 531.0)">06-28</text>
+<line x1="880.5" y1="516.0" x2="880.5" y2="519.0" stroke="#999"/>
+<text x="880.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 880.5 531.0)">07-01</text>
+<line x1="913.0" y1="516.0" x2="913.0" y2="519.0" stroke="#999"/>
+<text x="913.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 913.0 531.0)">07-02</text>
+<line x1="945.5" y1="516.0" x2="945.5" y2="519.0" stroke="#999"/>
+<text x="945.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 945.5 531.0)">07-03</text>
+<line x1="978.0" y1="516.0" x2="978.0" y2="519.0" stroke="#999"/>
+<text x="978.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 978.0 531.0)">07-07</text>
+<line x1="1010.5" y1="516.0" x2="1010.5" y2="519.0" stroke="#999"/>
+<text x="1010.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1010.5 531.0)">07-07</text>
+<line x1="1043.0" y1="516.0" x2="1043.0" y2="519.0" stroke="#999"/>
+<text x="1043.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1043.0 531.0)">07-09</text>
+<line x1="1075.5" y1="516.0" x2="1075.5" y2="519.0" stroke="#999"/>
+<text x="1075.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1075.5 531.0)">07-10</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">07-11</text>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">apiCreateGlobalSession</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">apiCreateSession</text>
+<rect x="566" y="586" width="12" height="12" fill="#2171b5"/>
+<text x="582" y="596" fill="#222">apiLoadModule</text>
+<rect x="843" y="586" width="12" height="12" fill="#6baed6"/>
+<text x="859" y="596" fill="#222">apiFindEntryPoint</text>
+<rect x="12" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="28" y="614" fill="#222">apiComposite</text>
+<rect x="289" y="604" width="12" height="12" fill="#807dba"/>
+<text x="305" y="614" fill="#222">apiSpecialize</text>
+<rect x="566" y="604" width="12" height="12" fill="#6a51a3"/>
+<text x="582" y="614" fill="#222">apiLink</text>
+<rect x="843" y="604" width="12" height="12" fill="#fd8d3c"/>
+<text x="859" y="614" fill="#222">apiGetCode</text>
+<rect x="12" y="622" width="12" height="12" fill="#b5bdc4"/>
+<text x="28" y="632" fill="#222">apiReflection</text>
+<rect x="289" y="622" width="12" height="12" fill="#969696"/>
+<text x="305" y="632" fill="#222">apiTotal (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 24); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_base.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_base;
+
+public float3 frac3(float3 v) { return frac(v); }
+public static const float kPi = 3.14159265358979;</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_base.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_base;
+
+public interface IBSDF
+{
+    float3 eval(float3 wi, float3 wo, float3 n);
+    float3 sample(float3 wi, float3 n, float2 u);
+    float pdf(float3 wi, float3 wo, float3 n);
+}
+
+public interface IMaterial
+{
+    static float3 evalStatic(float3 p, float3 n, float2 uv);
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_0.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_0;
+import rutil_base;
+
+public float3 util_hash_0(float x)
+{
+    float3 v = float3(x * 1.0, x + 0.0, x - 1.0);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_0(float3 s)
+{
+    float a = s.x * 1.0 + s.y * 0.0;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.0), b * sin(s.z * 1.0), a);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_0(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.0;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_1.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_1;
+import rutil_base;
+import rutil_0;
+
+public float3 util_hash_1(float x)
+{
+    float3 v = float3(x * 1.01, x + 0.1, x - 1.125);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_1(float3 s)
+{
+    float a = s.x * 1.01 + s.y * 0.1;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.125), b * sin(s.z * 1.125), a);
+    r += util_hash_0(r.x + 1.0) * 0.125;
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_1(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.125;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_2.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_2;
+import rutil_base;
+import rutil_1;
+
+public float3 util_hash_2(float x)
+{
+    float3 v = float3(x * 1.02, x + 0.2, x - 1.25);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_2(float3 s)
+{
+    float a = s.x * 1.02 + s.y * 0.2;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.25), b * sin(s.z * 1.25), a);
+    r += util_hash_1(r.x + 2.0) * 0.125;
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_2(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.25;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_3.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_3;
+import rutil_base;
+import rutil_1;
+import rutil_2;
+
+public float3 util_hash_3(float x)
+{
+    float3 v = float3(x * 1.03, x + 0.3, x - 1.375);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_3(float3 s)
+{
+    float a = s.x * 1.03 + s.y * 0.3;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.375), b * sin(s.z * 1.375), a);
+    r += util_hash_1(r.x + 3.0) * 0.125;
+    r = util_warp_2(r * 0.993);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_3(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.375;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_4.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_4;
+import rutil_base;
+import rutil_1;
+
+public float3 util_hash_4(float x)
+{
+    float3 v = float3(x * 1.04, x + 0.4, x - 1.5);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_4(float3 s)
+{
+    float a = s.x * 1.04 + s.y * 0.4;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.5), b * sin(s.z * 1.5), a);
+    r += util_hash_1(r.x + 4.0) * 0.125;
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_4(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.5;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_5.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_5;
+import rutil_base;
+import rutil_1;
+import rutil_0;
+
+public float3 util_hash_5(float x)
+{
+    float3 v = float3(x * 1.05, x + 0.5, x - 1.625);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_5(float3 s)
+{
+    float a = s.x * 1.05 + s.y * 0.5;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.625), b * sin(s.z * 1.625), a);
+    r += util_hash_1(r.x + 5.0) * 0.125;
+    r = util_warp_0(r * 0.995);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_5(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.625;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_6.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_6;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_6(float x)
+{
+    float3 v = float3(x * 1.06, x + 0.6, x - 1.75);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_6(float3 s)
+{
+    float a = s.x * 1.06 + s.y * 0.6;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.75), b * sin(s.z * 1.75), a);
+    r += util_hash_1(r.x + 6.0) * 0.125;
+    r = util_warp_5(r * 0.996);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_6(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.75;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_7.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_7;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_7(float x)
+{
+    float3 v = float3(x * 1.07, x + 0.7, x - 1.0);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_7(float3 s)
+{
+    float a = s.x * 1.07 + s.y * 0.7;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.0), b * sin(s.z * 1.0), a);
+    r += util_hash_1(r.x + 7.0) * 0.125;
+    r = util_warp_5(r * 0.997);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_7(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.0;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_8.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_8;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_8(float x)
+{
+    float3 v = float3(x * 1.08, x + 0.8, x - 1.125);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_8(float3 s)
+{
+    float a = s.x * 1.08 + s.y * 0.8;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.125), b * sin(s.z * 1.125), a);
+    r += util_hash_1(r.x + 8.0) * 0.125;
+    r = util_warp_5(r * 0.998);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_8(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.125;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_9.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_9;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_9(float x)
+{
+    float3 v = float3(x * 1.09, x + 0.9, x - 1.25);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_9(float3 s)
+{
+    float a = s.x * 1.09 + s.y * 0.9;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.25), b * sin(s.z * 1.25), a);
+    r += util_hash_1(r.x + 9.0) * 0.125;
+    r = util_warp_5(r * 0.999);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_9(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.25;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_10.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_10;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_10(float x)
+{
+    float3 v = float3(x * 1.1, x + 1.0, x - 1.375);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_10(float3 s)
+{
+    float a = s.x * 1.1 + s.y * 1.0;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.375), b * sin(s.z * 1.375), a);
+    r += util_hash_1(r.x + 10.0) * 0.125;
+    r = util_warp_5(r * 0.990);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_10(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.375;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_11.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_11;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_11(float x)
+{
+    float3 v = float3(x * 1.11, x + 1.1, x - 1.5);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_11(float3 s)
+{
+    float a = s.x * 1.11 + s.y * 1.1;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.5), b * sin(s.z * 1.5), a);
+    r += util_hash_1(r.x + 11.0) * 0.125;
+    r = util_warp_5(r * 0.991);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_11(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.5;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_12.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_12;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_12(float x)
+{
+    float3 v = float3(x * 1.12, x + 1.2, x - 1.625);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_12(float3 s)
+{
+    float a = s.x * 1.12 + s.y * 1.2;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.625), b * sin(s.z * 1.625), a);
+    r += util_hash_1(r.x + 12.0) * 0.125;
+    r = util_warp_5(r * 0.992);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_12(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.625;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_13.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_13;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_13(float x)
+{
+    float3 v = float3(x * 1.13, x + 1.3, x - 1.75);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_13(float3 s)
+{
+    float a = s.x * 1.13 + s.y * 1.3;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.75), b * sin(s.z * 1.75), a);
+    r += util_hash_1(r.x + 13.0) * 0.125;
+    r = util_warp_5(r * 0.993);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_13(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.75;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_14.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_14;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_14(float x)
+{
+    float3 v = float3(x * 1.1400000000000001, x + 1.4, x - 1.0);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_14(float3 s)
+{
+    float a = s.x * 1.1400000000000001 + s.y * 1.4;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.0), b * sin(s.z * 1.0), a);
+    r += util_hash_1(r.x + 14.0) * 0.125;
+    r = util_warp_5(r * 0.994);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_14(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.0;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_15.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_15;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_15(float x)
+{
+    float3 v = float3(x * 1.15, x + 1.5, x - 1.125);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_15(float3 s)
+{
+    float a = s.x * 1.15 + s.y * 1.5;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.125), b * sin(s.z * 1.125), a);
+    r += util_hash_1(r.x + 15.0) * 0.125;
+    r = util_warp_5(r * 0.995);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_15(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.125;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_16.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_16;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_16(float x)
+{
+    float3 v = float3(x * 1.16, x + 1.6, x - 1.25);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_16(float3 s)
+{
+    float a = s.x * 1.16 + s.y * 1.6;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.25), b * sin(s.z * 1.25), a);
+    r += util_hash_1(r.x + 16.0) * 0.125;
+    r = util_warp_5(r * 0.996);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_16(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.25;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_17.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_17;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_17(float x)
+{
+    float3 v = float3(x * 1.17, x + 1.7, x - 1.375);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_17(float3 s)
+{
+    float a = s.x * 1.17 + s.y * 1.7;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.375), b * sin(s.z * 1.375), a);
+    r += util_hash_1(r.x + 17.0) * 0.125;
+    r = util_warp_5(r * 0.997);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_17(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.375;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_18.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_18;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_18(float x)
+{
+    float3 v = float3(x * 1.18, x + 1.8, x - 1.5);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_18(float3 s)
+{
+    float a = s.x * 1.18 + s.y * 1.8;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.5), b * sin(s.z * 1.5), a);
+    r += util_hash_1(r.x + 18.0) * 0.125;
+    r = util_warp_5(r * 0.998);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_18(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.5;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_19.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_19;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_19(float x)
+{
+    float3 v = float3(x * 1.19, x + 1.9, x - 1.625);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_19(float3 s)
+{
+    float a = s.x * 1.19 + s.y * 1.9;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.625), b * sin(s.z * 1.625), a);
+    r += util_hash_1(r.x + 19.0) * 0.125;
+    r = util_warp_5(r * 0.999);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_19(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.625;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_20.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_20;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_20(float x)
+{
+    float3 v = float3(x * 1.2, x + 2.0, x - 1.75);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_20(float3 s)
+{
+    float a = s.x * 1.2 + s.y * 2.0;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.75), b * sin(s.z * 1.75), a);
+    r += util_hash_1(r.x + 20.0) * 0.125;
+    r = util_warp_5(r * 0.990);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_20(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.75;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_21.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_21;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_21(float x)
+{
+    float3 v = float3(x * 1.21, x + 2.1, x - 1.0);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_21(float3 s)
+{
+    float a = s.x * 1.21 + s.y * 2.1;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.0), b * sin(s.z * 1.0), a);
+    r += util_hash_1(r.x + 21.0) * 0.125;
+    r = util_warp_5(r * 0.991);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_21(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.0;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_22.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_22;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_22(float x)
+{
+    float3 v = float3(x * 1.22, x + 2.2, x - 1.125);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_22(float3 s)
+{
+    float a = s.x * 1.22 + s.y * 2.2;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.125), b * sin(s.z * 1.125), a);
+    r += util_hash_1(r.x + 22.0) * 0.125;
+    r = util_warp_5(r * 0.992);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_22(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.125;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_23.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_23;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_23(float x)
+{
+    float3 v = float3(x * 1.23, x + 2.3, x - 1.25);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_23(float3 s)
+{
+    float a = s.x * 1.23 + s.y * 2.3;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.25), b * sin(s.z * 1.25), a);
+    r += util_hash_1(r.x + 23.0) * 0.125;
+    r = util_warp_5(r * 0.993);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_23(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.25;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_24.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_24;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_24(float x)
+{
+    float3 v = float3(x * 1.24, x + 2.4, x - 1.375);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_24(float3 s)
+{
+    float a = s.x * 1.24 + s.y * 2.4;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.375), b * sin(s.z * 1.375), a);
+    r += util_hash_1(r.x + 24.0) * 0.125;
+    r = util_warp_5(r * 0.994);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_24(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.375;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_25.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_25;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_25(float x)
+{
+    float3 v = float3(x * 1.25, x + 2.5, x - 1.5);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_25(float3 s)
+{
+    float a = s.x * 1.25 + s.y * 2.5;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.5), b * sin(s.z * 1.5), a);
+    r += util_hash_1(r.x + 25.0) * 0.125;
+    r = util_warp_5(r * 0.995);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_25(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.5;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_26.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_26;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_26(float x)
+{
+    float3 v = float3(x * 1.26, x + 2.6, x - 1.625);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_26(float3 s)
+{
+    float a = s.x * 1.26 + s.y * 2.6;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.625), b * sin(s.z * 1.625), a);
+    r += util_hash_1(r.x + 26.0) * 0.125;
+    r = util_warp_5(r * 0.996);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_26(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.625;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_27.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_27;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_27(float x)
+{
+    float3 v = float3(x * 1.27, x + 2.7, x - 1.75);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_27(float3 s)
+{
+    float a = s.x * 1.27 + s.y * 2.7;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.75), b * sin(s.z * 1.75), a);
+    r += util_hash_1(r.x + 27.0) * 0.125;
+    r = util_warp_5(r * 0.997);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_27(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.75;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_28.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_28;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_28(float x)
+{
+    float3 v = float3(x * 1.28, x + 2.8, x - 1.0);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_28(float3 s)
+{
+    float a = s.x * 1.28 + s.y * 2.8;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.0), b * sin(s.z * 1.0), a);
+    r += util_hash_1(r.x + 28.0) * 0.125;
+    r = util_warp_5(r * 0.998);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_28(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.0;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_29.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_29;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_29(float x)
+{
+    float3 v = float3(x * 1.29, x + 2.9, x - 1.125);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_29(float3 s)
+{
+    float a = s.x * 1.29 + s.y * 2.9;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.125), b * sin(s.z * 1.125), a);
+    r += util_hash_1(r.x + 29.0) * 0.125;
+    r = util_warp_5(r * 0.999);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_29(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.125;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_30.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_30;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_30(float x)
+{
+    float3 v = float3(x * 1.3, x + 3.0, x - 1.25);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_30(float3 s)
+{
+    float a = s.x * 1.3 + s.y * 3.0;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.25), b * sin(s.z * 1.25), a);
+    r += util_hash_1(r.x + 30.0) * 0.125;
+    r = util_warp_5(r * 0.990);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_30(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.25;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_31.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_31;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_31(float x)
+{
+    float3 v = float3(x * 1.31, x + 0.0, x - 1.375);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_31(float3 s)
+{
+    float a = s.x * 1.31 + s.y * 0.0;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.375), b * sin(s.z * 1.375), a);
+    r += util_hash_1(r.x + 31.0) * 0.125;
+    r = util_warp_5(r * 0.991);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_31(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.375;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_32.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_32;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_32(float x)
+{
+    float3 v = float3(x * 1.32, x + 0.1, x - 1.5);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_32(float3 s)
+{
+    float a = s.x * 1.32 + s.y * 0.1;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.5), b * sin(s.z * 1.5), a);
+    r += util_hash_1(r.x + 32.0) * 0.125;
+    r = util_warp_5(r * 0.992);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_32(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.5;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_33.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_33;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_33(float x)
+{
+    float3 v = float3(x * 1.33, x + 0.2, x - 1.625);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_33(float3 s)
+{
+    float a = s.x * 1.33 + s.y * 0.2;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.625), b * sin(s.z * 1.625), a);
+    r += util_hash_1(r.x + 33.0) * 0.125;
+    r = util_warp_5(r * 0.993);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_33(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.625;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_34.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_34;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_34(float x)
+{
+    float3 v = float3(x * 1.34, x + 0.3, x - 1.75);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_34(float3 s)
+{
+    float a = s.x * 1.34 + s.y * 0.3;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.75), b * sin(s.z * 1.75), a);
+    r += util_hash_1(r.x + 34.0) * 0.125;
+    r = util_warp_5(r * 0.994);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_34(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.75;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_35.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_35;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_35(float x)
+{
+    float3 v = float3(x * 1.35, x + 0.4, x - 1.0);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_35(float3 s)
+{
+    float a = s.x * 1.35 + s.y * 0.4;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.0), b * sin(s.z * 1.0), a);
+    r += util_hash_1(r.x + 35.0) * 0.125;
+    r = util_warp_5(r * 0.995);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_35(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.0;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_36.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_36;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_36(float x)
+{
+    float3 v = float3(x * 1.3599999999999999, x + 0.5, x - 1.125);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_36(float3 s)
+{
+    float a = s.x * 1.3599999999999999 + s.y * 0.5;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.125), b * sin(s.z * 1.125), a);
+    r += util_hash_1(r.x + 36.0) * 0.125;
+    r = util_warp_5(r * 0.996);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_36(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.125;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_37.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_37;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_37(float x)
+{
+    float3 v = float3(x * 1.37, x + 0.6, x - 1.25);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_37(float3 s)
+{
+    float a = s.x * 1.37 + s.y * 0.6;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.25), b * sin(s.z * 1.25), a);
+    r += util_hash_1(r.x + 37.0) * 0.125;
+    r = util_warp_5(r * 0.997);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_37(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.25;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_38.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_38;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_38(float x)
+{
+    float3 v = float3(x * 1.38, x + 0.7, x - 1.375);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_38(float3 s)
+{
+    float a = s.x * 1.38 + s.y * 0.7;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.375), b * sin(s.z * 1.375), a);
+    r += util_hash_1(r.x + 38.0) * 0.125;
+    r = util_warp_5(r * 0.998);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_38(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.375;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_39.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_39;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_39(float x)
+{
+    float3 v = float3(x * 1.3900000000000001, x + 0.8, x - 1.5);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_39(float3 s)
+{
+    float a = s.x * 1.3900000000000001 + s.y * 0.8;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.5), b * sin(s.z * 1.5), a);
+    r += util_hash_1(r.x + 39.0) * 0.125;
+    r = util_warp_5(r * 0.999);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_39(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.5;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_40.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_40;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_40(float x)
+{
+    float3 v = float3(x * 1.4, x + 0.9, x - 1.625);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_40(float3 s)
+{
+    float a = s.x * 1.4 + s.y * 0.9;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.625), b * sin(s.z * 1.625), a);
+    r += util_hash_1(r.x + 40.0) * 0.125;
+    r = util_warp_5(r * 0.990);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_40(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.625;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_41.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_41;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_41(float x)
+{
+    float3 v = float3(x * 1.41, x + 1.0, x - 1.75);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_41(float3 s)
+{
+    float a = s.x * 1.41 + s.y * 1.0;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.75), b * sin(s.z * 1.75), a);
+    r += util_hash_1(r.x + 41.0) * 0.125;
+    r = util_warp_5(r * 0.991);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_41(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.75;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_42.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_42;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_42(float x)
+{
+    float3 v = float3(x * 1.42, x + 1.1, x - 1.0);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_42(float3 s)
+{
+    float a = s.x * 1.42 + s.y * 1.1;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.0), b * sin(s.z * 1.0), a);
+    r += util_hash_1(r.x + 42.0) * 0.125;
+    r = util_warp_5(r * 0.992);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_42(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.0;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_43.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_43;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_43(float x)
+{
+    float3 v = float3(x * 1.43, x + 1.2, x - 1.125);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_43(float3 s)
+{
+    float a = s.x * 1.43 + s.y * 1.2;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.125), b * sin(s.z * 1.125), a);
+    r += util_hash_1(r.x + 43.0) * 0.125;
+    r = util_warp_5(r * 0.993);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_43(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.125;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_44.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_44;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_44(float x)
+{
+    float3 v = float3(x * 1.44, x + 1.3, x - 1.25);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_44(float3 s)
+{
+    float a = s.x * 1.44 + s.y * 1.3;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.25), b * sin(s.z * 1.25), a);
+    r += util_hash_1(r.x + 44.0) * 0.125;
+    r = util_warp_5(r * 0.994);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_44(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.25;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_45.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_45;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_45(float x)
+{
+    float3 v = float3(x * 1.45, x + 1.4, x - 1.375);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_45(float3 s)
+{
+    float a = s.x * 1.45 + s.y * 1.4;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.375), b * sin(s.z * 1.375), a);
+    r += util_hash_1(r.x + 45.0) * 0.125;
+    r = util_warp_5(r * 0.995);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_45(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.375;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_46.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_46;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_46(float x)
+{
+    float3 v = float3(x * 1.46, x + 1.5, x - 1.5);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_46(float3 s)
+{
+    float a = s.x * 1.46 + s.y * 1.5;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.5), b * sin(s.z * 1.5), a);
+    r += util_hash_1(r.x + 46.0) * 0.125;
+    r = util_warp_5(r * 0.996);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_46(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.5;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_47.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rutil_47;
+import rutil_base;
+import rutil_1;
+import rutil_5;
+
+public float3 util_hash_47(float x)
+{
+    float3 v = float3(x * 1.47, x + 1.6, x - 1.625);
+    v = frac(sin(v * 127.1) * 43758.5453);
+    return v;
+}
+
+public float3 util_warp_47(float3 s)
+{
+    float a = s.x * 1.47 + s.y * 1.6;
+    float b = sqrt(max(1.0 - a * a, 0.0));
+    float3 r = float3(b * cos(s.z * 1.625), b * sin(s.z * 1.625), a);
+    r += util_hash_1(r.x + 47.0) * 0.125;
+    r = util_warp_5(r * 0.997);
+    return normalize(r + 1e-5);
+}
+
+public float util_lum_47(float3 c)
+{
+    return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.625;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_0.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_0;
+import rutil_base;
+import rutil_0;
+import rutil_11;
+import rutil_22;
+
+public struct Light_0
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_0(float3 p, float3 n)
+{
+    Light_0 light;
+    light.position = util_hash_0(p.x) * 10.0;
+    light.intensity = float3(1.0, 1.0 * 0.9, 1.0 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    return l;
+}
+
+public float scene_shadow_0(float3 p)
+{
+    return saturate(util_lum_11(util_warp_22(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_1.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_1;
+import rutil_base;
+import rutil_5;
+import rutil_16;
+import rutil_27;
+import rscene_0;
+
+public struct Light_1
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_1(float3 p, float3 n)
+{
+    Light_1 light;
+    light.position = util_hash_5(p.x) * 10.0;
+    light.intensity = float3(1.0625, 1.0625 * 0.9, 1.0625 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_0(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_1(float3 p)
+{
+    return saturate(util_lum_16(util_warp_27(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_2.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_2;
+import rutil_base;
+import rutil_10;
+import rutil_21;
+import rutil_32;
+import rscene_1;
+
+public struct Light_2
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_2(float3 p, float3 n)
+{
+    Light_2 light;
+    light.position = util_hash_10(p.x) * 10.0;
+    light.intensity = float3(1.125, 1.125 * 0.9, 1.125 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_1(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_2(float3 p)
+{
+    return saturate(util_lum_21(util_warp_32(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_3.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_3;
+import rutil_base;
+import rutil_15;
+import rutil_26;
+import rutil_37;
+import rscene_2;
+
+public struct Light_3
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_3(float3 p, float3 n)
+{
+    Light_3 light;
+    light.position = util_hash_15(p.x) * 10.0;
+    light.intensity = float3(1.1875, 1.1875 * 0.9, 1.1875 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_2(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_3(float3 p)
+{
+    return saturate(util_lum_26(util_warp_37(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_4.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_4;
+import rutil_base;
+import rutil_20;
+import rutil_31;
+import rutil_42;
+import rscene_3;
+
+public struct Light_4
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_4(float3 p, float3 n)
+{
+    Light_4 light;
+    light.position = util_hash_20(p.x) * 10.0;
+    light.intensity = float3(1.25, 1.25 * 0.9, 1.25 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_3(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_4(float3 p)
+{
+    return saturate(util_lum_31(util_warp_42(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_5.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_5;
+import rutil_base;
+import rutil_25;
+import rutil_36;
+import rutil_47;
+import rscene_4;
+
+public struct Light_5
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_5(float3 p, float3 n)
+{
+    Light_5 light;
+    light.position = util_hash_25(p.x) * 10.0;
+    light.intensity = float3(1.3125, 1.3125 * 0.9, 1.3125 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_4(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_5(float3 p)
+{
+    return saturate(util_lum_36(util_warp_47(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_6.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_6;
+import rutil_base;
+import rutil_30;
+import rutil_41;
+import rutil_4;
+import rscene_5;
+
+public struct Light_6
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_6(float3 p, float3 n)
+{
+    Light_6 light;
+    light.position = util_hash_30(p.x) * 10.0;
+    light.intensity = float3(1.375, 1.375 * 0.9, 1.375 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_5(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_6(float3 p)
+{
+    return saturate(util_lum_41(util_warp_4(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_7.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_7;
+import rutil_base;
+import rutil_35;
+import rutil_46;
+import rutil_9;
+import rscene_6;
+
+public struct Light_7
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_7(float3 p, float3 n)
+{
+    Light_7 light;
+    light.position = util_hash_35(p.x) * 10.0;
+    light.intensity = float3(1.4375, 1.4375 * 0.9, 1.4375 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_6(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_7(float3 p)
+{
+    return saturate(util_lum_46(util_warp_9(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_8.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_8;
+import rutil_base;
+import rutil_40;
+import rutil_3;
+import rutil_14;
+import rscene_7;
+
+public struct Light_8
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_8(float3 p, float3 n)
+{
+    Light_8 light;
+    light.position = util_hash_40(p.x) * 10.0;
+    light.intensity = float3(1.5, 1.5 * 0.9, 1.5 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_7(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_8(float3 p)
+{
+    return saturate(util_lum_3(util_warp_14(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_9.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_9;
+import rutil_base;
+import rutil_45;
+import rutil_8;
+import rutil_19;
+import rscene_8;
+
+public struct Light_9
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_9(float3 p, float3 n)
+{
+    Light_9 light;
+    light.position = util_hash_45(p.x) * 10.0;
+    light.intensity = float3(1.5625, 1.5625 * 0.9, 1.5625 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_8(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_9(float3 p)
+{
+    return saturate(util_lum_8(util_warp_19(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_10.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_10;
+import rutil_base;
+import rutil_2;
+import rutil_13;
+import rutil_24;
+import rscene_9;
+
+public struct Light_10
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_10(float3 p, float3 n)
+{
+    Light_10 light;
+    light.position = util_hash_2(p.x) * 10.0;
+    light.intensity = float3(1.625, 1.625 * 0.9, 1.625 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_9(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_10(float3 p)
+{
+    return saturate(util_lum_13(util_warp_24(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_11.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_11;
+import rutil_base;
+import rutil_7;
+import rutil_18;
+import rutil_29;
+import rscene_10;
+
+public struct Light_11
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_11(float3 p, float3 n)
+{
+    Light_11 light;
+    light.position = util_hash_7(p.x) * 10.0;
+    light.intensity = float3(1.6875, 1.6875 * 0.9, 1.6875 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_10(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_11(float3 p)
+{
+    return saturate(util_lum_18(util_warp_29(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_12.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_12;
+import rutil_base;
+import rutil_12;
+import rutil_23;
+import rutil_34;
+import rscene_11;
+
+public struct Light_12
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_12(float3 p, float3 n)
+{
+    Light_12 light;
+    light.position = util_hash_12(p.x) * 10.0;
+    light.intensity = float3(1.75, 1.75 * 0.9, 1.75 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_11(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_12(float3 p)
+{
+    return saturate(util_lum_23(util_warp_34(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_13.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_13;
+import rutil_base;
+import rutil_17;
+import rutil_28;
+import rutil_39;
+import rscene_12;
+
+public struct Light_13
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_13(float3 p, float3 n)
+{
+    Light_13 light;
+    light.position = util_hash_17(p.x) * 10.0;
+    light.intensity = float3(1.0, 1.0 * 0.9, 1.0 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_12(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_13(float3 p)
+{
+    return saturate(util_lum_28(util_warp_39(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_14.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_14;
+import rutil_base;
+import rutil_22;
+import rutil_33;
+import rutil_44;
+import rscene_13;
+
+public struct Light_14
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_14(float3 p, float3 n)
+{
+    Light_14 light;
+    light.position = util_hash_22(p.x) * 10.0;
+    light.intensity = float3(1.0625, 1.0625 * 0.9, 1.0625 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_13(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_14(float3 p)
+{
+    return saturate(util_lum_33(util_warp_44(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_15.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_15;
+import rutil_base;
+import rutil_27;
+import rutil_38;
+import rutil_1;
+import rscene_14;
+
+public struct Light_15
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_15(float3 p, float3 n)
+{
+    Light_15 light;
+    light.position = util_hash_27(p.x) * 10.0;
+    light.intensity = float3(1.125, 1.125 * 0.9, 1.125 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_14(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_15(float3 p)
+{
+    return saturate(util_lum_38(util_warp_1(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_16.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_16;
+import rutil_base;
+import rutil_32;
+import rutil_43;
+import rutil_6;
+import rscene_15;
+
+public struct Light_16
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_16(float3 p, float3 n)
+{
+    Light_16 light;
+    light.position = util_hash_32(p.x) * 10.0;
+    light.intensity = float3(1.1875, 1.1875 * 0.9, 1.1875 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_15(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_16(float3 p)
+{
+    return saturate(util_lum_43(util_warp_6(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_17.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_17;
+import rutil_base;
+import rutil_37;
+import rutil_0;
+import rutil_11;
+import rscene_16;
+
+public struct Light_17
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_17(float3 p, float3 n)
+{
+    Light_17 light;
+    light.position = util_hash_37(p.x) * 10.0;
+    light.intensity = float3(1.25, 1.25 * 0.9, 1.25 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_16(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_17(float3 p)
+{
+    return saturate(util_lum_0(util_warp_11(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_18.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_18;
+import rutil_base;
+import rutil_42;
+import rutil_5;
+import rutil_16;
+import rscene_17;
+
+public struct Light_18
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_18(float3 p, float3 n)
+{
+    Light_18 light;
+    light.position = util_hash_42(p.x) * 10.0;
+    light.intensity = float3(1.3125, 1.3125 * 0.9, 1.3125 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_17(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_18(float3 p)
+{
+    return saturate(util_lum_5(util_warp_16(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_19.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_19;
+import rutil_base;
+import rutil_47;
+import rutil_10;
+import rutil_21;
+import rscene_18;
+
+public struct Light_19
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_19(float3 p, float3 n)
+{
+    Light_19 light;
+    light.position = util_hash_47(p.x) * 10.0;
+    light.intensity = float3(1.375, 1.375 * 0.9, 1.375 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_18(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_19(float3 p)
+{
+    return saturate(util_lum_10(util_warp_21(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_20.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_20;
+import rutil_base;
+import rutil_4;
+import rutil_15;
+import rutil_26;
+import rscene_19;
+
+public struct Light_20
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_20(float3 p, float3 n)
+{
+    Light_20 light;
+    light.position = util_hash_4(p.x) * 10.0;
+    light.intensity = float3(1.4375, 1.4375 * 0.9, 1.4375 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_19(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_20(float3 p)
+{
+    return saturate(util_lum_15(util_warp_26(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_21.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_21;
+import rutil_base;
+import rutil_9;
+import rutil_20;
+import rutil_31;
+import rscene_20;
+
+public struct Light_21
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_21(float3 p, float3 n)
+{
+    Light_21 light;
+    light.position = util_hash_9(p.x) * 10.0;
+    light.intensity = float3(1.5, 1.5 * 0.9, 1.5 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_20(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_21(float3 p)
+{
+    return saturate(util_lum_20(util_warp_31(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_22.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_22;
+import rutil_base;
+import rutil_14;
+import rutil_25;
+import rutil_36;
+import rscene_21;
+
+public struct Light_22
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_22(float3 p, float3 n)
+{
+    Light_22 light;
+    light.position = util_hash_14(p.x) * 10.0;
+    light.intensity = float3(1.5625, 1.5625 * 0.9, 1.5625 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_21(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_22(float3 p)
+{
+    return saturate(util_lum_25(util_warp_36(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_23.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rscene_23;
+import rutil_base;
+import rutil_19;
+import rutil_30;
+import rutil_41;
+import rscene_22;
+
+public struct Light_23
+{
+    public float3 position;
+    public float3 intensity;
+    public float radius;
+}
+
+public float3 scene_light_23(float3 p, float3 n)
+{
+    Light_23 light;
+    light.position = util_hash_19(p.x) * 10.0;
+    light.intensity = float3(1.625, 1.625 * 0.9, 1.625 * 0.8);
+    light.radius = 0.5;
+    float3 toL = light.position - p;
+    float d2 = max(dot(toL, toL), 1e-4);
+    float3 l = light.intensity * max(dot(n, normalize(toL)), 0.0) / d2;
+    l += scene_light_22(p * 0.97, n);
+    return l;
+}
+
+public float scene_shadow_23(float3 p)
+{
+    return saturate(util_lum_30(util_warp_41(p)));
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_0.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_0;
+import rutil_base;
+import rmat_base;
+import rutil_0;
+import rutil_7;
+import rutil_14;
+import rutil_21;
+import rscene_0;
+
+public struct BSDF_0 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.1, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_0(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_7(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_0 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_0 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.1;
+        float3 li = scene_light_0(p, n) * scene_shadow_0(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_0 bsdf;
+        bsdf.albedo = util_hash_14(uv.x);
+        bsdf.roughness = 0.1;
+        float3 wi = util_warp_21(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_0(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_1.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_1;
+import rutil_base;
+import rmat_base;
+import rutil_17;
+import rutil_24;
+import rutil_31;
+import rutil_38;
+import rscene_3;
+
+public struct BSDF_1 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.2, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_17(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_24(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_1 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_1 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.2;
+        float3 li = scene_light_3(p, n) * scene_shadow_3(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_1 bsdf;
+        bsdf.albedo = util_hash_31(uv.x);
+        bsdf.roughness = 0.2;
+        float3 wi = util_warp_38(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_3(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_2.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_2;
+import rutil_base;
+import rmat_base;
+import rutil_34;
+import rutil_41;
+import rutil_0;
+import rutil_7;
+import rscene_6;
+
+public struct BSDF_2 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.30000000000000004, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_34(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_41(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_2 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_2 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.30000000000000004;
+        float3 li = scene_light_6(p, n) * scene_shadow_6(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_2 bsdf;
+        bsdf.albedo = util_hash_0(uv.x);
+        bsdf.roughness = 0.30000000000000004;
+        float3 wi = util_warp_7(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_6(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_3.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_3;
+import rutil_base;
+import rmat_base;
+import rutil_3;
+import rutil_10;
+import rutil_17;
+import rutil_24;
+import rscene_9;
+
+public struct BSDF_3 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.4, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_3(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_10(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_3 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_3 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.4;
+        float3 li = scene_light_9(p, n) * scene_shadow_9(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_3 bsdf;
+        bsdf.albedo = util_hash_17(uv.x);
+        bsdf.roughness = 0.4;
+        float3 wi = util_warp_24(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_9(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_4.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_4;
+import rutil_base;
+import rmat_base;
+import rutil_20;
+import rutil_27;
+import rutil_34;
+import rutil_41;
+import rscene_12;
+
+public struct BSDF_4 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.5, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_20(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_27(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_4 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_4 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.5;
+        float3 li = scene_light_12(p, n) * scene_shadow_12(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_4 bsdf;
+        bsdf.albedo = util_hash_34(uv.x);
+        bsdf.roughness = 0.5;
+        float3 wi = util_warp_41(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_12(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_5.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_5;
+import rutil_base;
+import rmat_base;
+import rutil_37;
+import rutil_44;
+import rutil_3;
+import rutil_10;
+import rscene_15;
+
+public struct BSDF_5 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.6, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_37(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_44(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_5 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_5 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.6;
+        float3 li = scene_light_15(p, n) * scene_shadow_15(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_5 bsdf;
+        bsdf.albedo = util_hash_3(uv.x);
+        bsdf.roughness = 0.6;
+        float3 wi = util_warp_10(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_15(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_6.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_6;
+import rutil_base;
+import rmat_base;
+import rutil_6;
+import rutil_13;
+import rutil_20;
+import rutil_27;
+import rscene_18;
+
+public struct BSDF_6 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.7, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_6(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_13(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_6 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_6 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.7;
+        float3 li = scene_light_18(p, n) * scene_shadow_18(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_6 bsdf;
+        bsdf.albedo = util_hash_20(uv.x);
+        bsdf.roughness = 0.7;
+        float3 wi = util_warp_27(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_18(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_7.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_7;
+import rutil_base;
+import rmat_base;
+import rutil_23;
+import rutil_30;
+import rutil_37;
+import rutil_44;
+import rscene_21;
+
+public struct BSDF_7 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.7999999999999999, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_23(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_30(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_7 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_7 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.7999999999999999;
+        float3 li = scene_light_21(p, n) * scene_shadow_21(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_7 bsdf;
+        bsdf.albedo = util_hash_37(uv.x);
+        bsdf.roughness = 0.7999999999999999;
+        float3 wi = util_warp_44(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_21(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_8.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_8;
+import rutil_base;
+import rmat_base;
+import rutil_40;
+import rutil_47;
+import rutil_6;
+import rutil_13;
+import rscene_0;
+
+public struct BSDF_8 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.9, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_40(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_47(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_8 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_8 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.9;
+        float3 li = scene_light_0(p, n) * scene_shadow_0(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_8 bsdf;
+        bsdf.albedo = util_hash_6(uv.x);
+        bsdf.roughness = 0.9;
+        float3 wi = util_warp_13(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_0(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_9.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_9;
+import rutil_base;
+import rmat_base;
+import rutil_9;
+import rutil_16;
+import rutil_23;
+import rutil_30;
+import rscene_3;
+
+public struct BSDF_9 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.1, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_9(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_16(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_9 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_9 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.1;
+        float3 li = scene_light_3(p, n) * scene_shadow_3(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_9 bsdf;
+        bsdf.albedo = util_hash_23(uv.x);
+        bsdf.roughness = 0.1;
+        float3 wi = util_warp_30(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_3(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_10.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_10;
+import rutil_base;
+import rmat_base;
+import rutil_26;
+import rutil_33;
+import rutil_40;
+import rutil_47;
+import rscene_6;
+
+public struct BSDF_10 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.2, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_26(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_33(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_10 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_10 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.2;
+        float3 li = scene_light_6(p, n) * scene_shadow_6(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_10 bsdf;
+        bsdf.albedo = util_hash_40(uv.x);
+        bsdf.roughness = 0.2;
+        float3 wi = util_warp_47(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_6(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_11.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_11;
+import rutil_base;
+import rmat_base;
+import rutil_43;
+import rutil_2;
+import rutil_9;
+import rutil_16;
+import rscene_9;
+
+public struct BSDF_11 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.30000000000000004, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_43(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_2(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_11 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_11 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.30000000000000004;
+        float3 li = scene_light_9(p, n) * scene_shadow_9(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_11 bsdf;
+        bsdf.albedo = util_hash_9(uv.x);
+        bsdf.roughness = 0.30000000000000004;
+        float3 wi = util_warp_16(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_9(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_12.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_12;
+import rutil_base;
+import rmat_base;
+import rutil_12;
+import rutil_19;
+import rutil_26;
+import rutil_33;
+import rscene_12;
+
+public struct BSDF_12 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.4, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_12(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_19(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_12 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_12 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.4;
+        float3 li = scene_light_12(p, n) * scene_shadow_12(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_12 bsdf;
+        bsdf.albedo = util_hash_26(uv.x);
+        bsdf.roughness = 0.4;
+        float3 wi = util_warp_33(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_12(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_13.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_13;
+import rutil_base;
+import rmat_base;
+import rutil_29;
+import rutil_36;
+import rutil_43;
+import rutil_2;
+import rscene_15;
+
+public struct BSDF_13 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.5, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_29(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_36(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_13 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_13 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.5;
+        float3 li = scene_light_15(p, n) * scene_shadow_15(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_13 bsdf;
+        bsdf.albedo = util_hash_43(uv.x);
+        bsdf.roughness = 0.5;
+        float3 wi = util_warp_2(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_15(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_14.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_14;
+import rutil_base;
+import rmat_base;
+import rutil_46;
+import rutil_5;
+import rutil_12;
+import rutil_19;
+import rscene_18;
+
+public struct BSDF_14 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.6, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_46(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_5(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_14 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_14 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.6;
+        float3 li = scene_light_18(p, n) * scene_shadow_18(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_14 bsdf;
+        bsdf.albedo = util_hash_12(uv.x);
+        bsdf.roughness = 0.6;
+        float3 wi = util_warp_19(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_18(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_15.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_15;
+import rutil_base;
+import rmat_base;
+import rutil_15;
+import rutil_22;
+import rutil_29;
+import rutil_36;
+import rscene_21;
+
+public struct BSDF_15 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.7, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_15(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_22(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_15 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_15 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.7;
+        float3 li = scene_light_21(p, n) * scene_shadow_21(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_15 bsdf;
+        bsdf.albedo = util_hash_29(uv.x);
+        bsdf.roughness = 0.7;
+        float3 wi = util_warp_36(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_21(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_16.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_16;
+import rutil_base;
+import rmat_base;
+import rutil_32;
+import rutil_39;
+import rutil_46;
+import rutil_5;
+import rscene_0;
+
+public struct BSDF_16 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.7999999999999999, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_32(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_39(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_16 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_16 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.7999999999999999;
+        float3 li = scene_light_0(p, n) * scene_shadow_0(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_16 bsdf;
+        bsdf.albedo = util_hash_46(uv.x);
+        bsdf.roughness = 0.7999999999999999;
+        float3 wi = util_warp_5(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_0(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_17.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_17;
+import rutil_base;
+import rmat_base;
+import rutil_1;
+import rutil_8;
+import rutil_15;
+import rutil_22;
+import rscene_3;
+
+public struct BSDF_17 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.9, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_1(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_8(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_17 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_17 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.9;
+        float3 li = scene_light_3(p, n) * scene_shadow_3(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_17 bsdf;
+        bsdf.albedo = util_hash_15(uv.x);
+        bsdf.roughness = 0.9;
+        float3 wi = util_warp_22(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_3(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_18.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_18;
+import rutil_base;
+import rmat_base;
+import rutil_18;
+import rutil_25;
+import rutil_32;
+import rutil_39;
+import rscene_6;
+
+public struct BSDF_18 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.1, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_18(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_25(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_18 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_18 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.1;
+        float3 li = scene_light_6(p, n) * scene_shadow_6(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_18 bsdf;
+        bsdf.albedo = util_hash_32(uv.x);
+        bsdf.roughness = 0.1;
+        float3 wi = util_warp_39(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_6(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_19.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_19;
+import rutil_base;
+import rmat_base;
+import rutil_35;
+import rutil_42;
+import rutil_1;
+import rutil_8;
+import rscene_9;
+
+public struct BSDF_19 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.2, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_35(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_42(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_19 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_19 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.2;
+        float3 li = scene_light_9(p, n) * scene_shadow_9(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_19 bsdf;
+        bsdf.albedo = util_hash_1(uv.x);
+        bsdf.roughness = 0.2;
+        float3 wi = util_warp_8(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_9(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_20.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_20;
+import rutil_base;
+import rmat_base;
+import rutil_4;
+import rutil_11;
+import rutil_18;
+import rutil_25;
+import rscene_12;
+
+public struct BSDF_20 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.30000000000000004, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_4(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_11(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_20 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_20 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.30000000000000004;
+        float3 li = scene_light_12(p, n) * scene_shadow_12(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_20 bsdf;
+        bsdf.albedo = util_hash_18(uv.x);
+        bsdf.roughness = 0.30000000000000004;
+        float3 wi = util_warp_25(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_12(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_21.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_21;
+import rutil_base;
+import rmat_base;
+import rutil_21;
+import rutil_28;
+import rutil_35;
+import rutil_42;
+import rscene_15;
+
+public struct BSDF_21 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.4, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_21(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_28(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_21 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_21 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.4;
+        float3 li = scene_light_15(p, n) * scene_shadow_15(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_21 bsdf;
+        bsdf.albedo = util_hash_35(uv.x);
+        bsdf.roughness = 0.4;
+        float3 wi = util_warp_42(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_15(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_22.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_22;
+import rutil_base;
+import rmat_base;
+import rutil_38;
+import rutil_45;
+import rutil_4;
+import rutil_11;
+import rscene_18;
+
+public struct BSDF_22 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.5, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_38(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_45(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_22 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_22 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.5;
+        float3 li = scene_light_18(p, n) * scene_shadow_18(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_22 bsdf;
+        bsdf.albedo = util_hash_4(uv.x);
+        bsdf.roughness = 0.5;
+        float3 wi = util_warp_11(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_18(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_23.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rmat_23;
+import rutil_base;
+import rmat_base;
+import rutil_7;
+import rutil_14;
+import rutil_21;
+import rutil_28;
+import rscene_21;
+
+public struct BSDF_23 : IBSDF
+{
+    public float3 albedo;
+    public float roughness;
+
+    public float3 eval(float3 wi, float3 wo, float3 n)
+    {
+        float3 h = normalize(wi + wo);
+        float d = pow(max(dot(n, h), 0.0), 1.0 / max(roughness * 0.6, 1e-3));
+        float3 f = albedo + (1.0 - albedo) * pow(1.0 - max(dot(wi, h), 0.0), 5.0);
+        return f * d * max(dot(n, wo), 0.0);
+    }
+
+    public float3 sample(float3 wi, float3 n, float2 u)
+    {
+        return util_warp_7(float3(u, roughness));
+    }
+
+    public float pdf(float3 wi, float3 wo, float3 n)
+    {
+        return max(util_lum_14(eval(wi, wo, n)), 1e-4);
+    }
+}
+
+public struct Material_23 : IMaterial
+{
+    public Texture2D albedoMap;
+    public SamplerState samp;
+    public float4 tint;
+
+    public float3 shade(float3 p, float3 n, float3 wi, float3 wo, float2 uv)
+    {
+        BSDF_23 bsdf;
+        bsdf.albedo = albedoMap.SampleLevel(samp, uv, 0).rgb * tint.rgb;
+        bsdf.roughness = tint.a * 0.6;
+        float3 li = scene_light_21(p, n) * scene_shadow_21(p);
+        return bsdf.eval(wi, wo, n) * li;
+    }
+
+    public static float3 evalStatic(float3 p, float3 n, float2 uv)
+    {
+        BSDF_23 bsdf;
+        bsdf.albedo = util_hash_21(uv.x);
+        bsdf.roughness = 0.6;
+        float3 wi = util_warp_28(float3(uv, 0.5));
+        return bsdf.eval(wi, n, n) + scene_light_21(p, n);
+    }
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rlib.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rlib;
+__exported import rutil_0;
+__exported import rutil_1;
+__exported import rutil_2;
+__exported import rutil_3;
+__exported import rutil_4;
+__exported import rutil_5;
+__exported import rutil_6;
+__exported import rutil_7;
+__exported import rutil_8;
+__exported import rutil_9;
+__exported import rutil_10;
+__exported import rutil_11;
+__exported import rutil_12;
+__exported import rutil_13;
+__exported import rutil_14;
+__exported import rutil_15;
+__exported import rutil_16;
+__exported import rutil_17;
+__exported import rutil_18;
+__exported import rutil_19;
+__exported import rutil_20;
+__exported import rutil_21;
+__exported import rutil_22;
+__exported import rutil_23;
+__exported import rutil_24;
+__exported import rutil_25;
+__exported import rutil_26;
+__exported import rutil_27;
+__exported import rutil_28;
+__exported import rutil_29;
+__exported import rutil_30;
+__exported import rutil_31;
+__exported import rutil_32;
+__exported import rutil_33;
+__exported import rutil_34;
+__exported import rutil_35;
+__exported import rutil_36;
+__exported import rutil_37;
+
+// … 19 lines omitted …
+
+__exported import rscene_9;
+__exported import rscene_10;
+__exported import rscene_11;
+__exported import rscene_12;
+__exported import rscene_13;
+__exported import rscene_14;
+__exported import rscene_15;
+__exported import rscene_16;
+__exported import rscene_17;
+__exported import rscene_18;
+__exported import rscene_19;
+__exported import rscene_20;
+__exported import rscene_21;
+__exported import rscene_22;
+__exported import rscene_23;
+__exported import rmat_base;
+__exported import rmat_0;
+__exported import rmat_1;
+__exported import rmat_2;
+__exported import rmat_3;
+__exported import rmat_4;
+__exported import rmat_5;
+__exported import rmat_6;
+__exported import rmat_7;
+__exported import rmat_8;
+__exported import rmat_9;
+__exported import rmat_10;
+__exported import rmat_11;
+__exported import rmat_12;
+__exported import rmat_13;
+__exported import rmat_14;
+__exported import rmat_15;
+__exported import rmat_16;
+__exported import rmat_17;
+__exported import rmat_18;
+__exported import rmat_19;
+__exported import rmat_20;
+__exported import rmat_21;
+__exported import rmat_22;
+__exported import rmat_23;</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rt_kernels.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rt_kernels;
+import rlib;
+
+RaytracingAccelerationStructure gScene;
+RWTexture2D&lt;float4&gt; gOutput;
+
+struct RayPayload
+{
+    float3 color;
+    uint depth;
+}
+
+[shader("raygen")]
+void rayGenMain()
+{
+    uint2 idx = DispatchRaysIndex().xy;
+    RayDesc ray;
+    ray.Origin = float3(idx.x * 0.001, idx.y * 0.001, -1.0);
+    ray.Direction = float3(0, 0, 1);
+    ray.TMin = 0.0;
+    ray.TMax = 1e30;
+    RayPayload payload = { float3(0, 0, 0), 0 };
+    TraceRay(gScene, RAY_FLAG_NONE, 0xff, 0, 0, 0, ray, payload);
+    gOutput[idx] = float4(payload.color, 1.0);
+}
+
+[shader("miss")]
+void missMain(inout RayPayload payload)
+{
+    payload.color = float3(0.1, 0.2, 0.4);
+}
+
+[shader("closesthit")]
+void closestHitMain(
+    inout RayPayload payload,
+    in BuiltInTriangleIntersectionAttributes attribs)
+{
+    float3 p = WorldRayOrigin() + WorldRayDirection() * RayTCurrent();
+    float3 n = float3(0, 1, 0);
+    float2 uv = attribs.barycentrics;
+    float3 c = float3(0, 0, 0);
+    c += Material_0.evalStatic(p, n, uv) * 0.0417;
+    c += Material_1.evalStatic(p, n, uv) * 0.0417;
+    c += Material_2.evalStatic(p, n, uv) * 0.0417;
+    c += Material_3.evalStatic(p, n, uv) * 0.0417;
+    c += Material_4.evalStatic(p, n, uv) * 0.0417;
+    c += Material_5.evalStatic(p, n, uv) * 0.0417;
+    c += Material_6.evalStatic(p, n, uv) * 0.0417;
+    c += Material_7.evalStatic(p, n, uv) * 0.0417;
+    c += Material_8.evalStatic(p, n, uv) * 0.0417;
+    c += Material_9.evalStatic(p, n, uv) * 0.0417;
+    c += Material_10.evalStatic(p, n, uv) * 0.0417;
+    c += Material_11.evalStatic(p, n, uv) * 0.0417;
+    c += Material_12.evalStatic(p, n, uv) * 0.0417;
+    c += Material_13.evalStatic(p, n, uv) * 0.0417;
+    c += Material_14.evalStatic(p, n, uv) * 0.0417;
+    c += Material_15.evalStatic(p, n, uv) * 0.0417;
+    c += Material_16.evalStatic(p, n, uv) * 0.0417;
+    c += Material_17.evalStatic(p, n, uv) * 0.0417;
+    c += Material_18.evalStatic(p, n, uv) * 0.0417;
+    c += Material_19.evalStatic(p, n, uv) * 0.0417;
+    c += Material_20.evalStatic(p, n, uv) * 0.0417;
+    c += Material_21.evalStatic(p, n, uv) * 0.0417;
+    c += Material_22.evalStatic(p, n, uv) * 0.0417;
+    c += Material_23.evalStatic(p, n, uv) * 0.0417;
+    payload.color = c;
+    payload.depth += 1;
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rt_compute.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+module rt_compute;
+import rlib;
+
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain&lt;T : IMaterial&gt;(uint3 tid : SV_DispatchThreadID)
+{
+    float2 uv = float2(tid.xy) * 0.001;
+    float3 c = T.evalStatic(float3(uv, 0.0), float3(0, 1, 0), uv);
+    outBuf[tid.x] = c.x + c.y + c.z;
+}</pre></body>
