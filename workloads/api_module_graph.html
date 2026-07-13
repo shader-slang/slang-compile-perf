@@ -6,7 +6,7 @@ calls — the shape of a real renderer shader library, loaded through the
 API's import-resolution path rather than precompiled .slang-module files.</p><p style='color:#666;font-size:13px'><b>bucket:</b> api_overhead &nbsp;·&nbsp; <b>compile mode:</b> api &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 150</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="662" viewBox="0 0 1132 662" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="662" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">api_module_graph — full phase breakdown across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">api_module_graph<tspan fill="#888" font-weight="400" text-decoration="none">  0.99×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">api_module_graph<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -85,14 +85,14 @@ API's import-resolution path rather than precompiled .slang-module files.</p><p 
 <text x="1076.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1076.5 531.0)">07-11</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
 <text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">07-11</text>
-<polygon points="1076.5,459.4 1108.0,460.4 1108.0,516.0 1076.5,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph — apiCreateGlobalSession</title></polygon>
-<polygon points="1076.5,459.4 1108.0,460.4 1108.0,460.4 1076.5,459.4" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph — apiCreateSession</title></polygon>
-<polygon points="1076.5,125.9 1108.0,129.1 1108.0,460.4 1076.5,459.4" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph — apiLoadModule</title></polygon>
-<polygon points="1076.5,125.9 1108.0,129.1 1108.0,129.1 1076.5,125.9" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph — apiFindEntryPoint</title></polygon>
-<polygon points="1076.5,125.8 1108.0,129.1 1108.0,129.1 1076.5,125.9" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph — apiComposite</title></polygon>
-<polygon points="1076.5,124.9 1108.0,128.2 1108.0,129.1 1076.5,125.8" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph — apiLink</title></polygon>
-<polygon points="1076.5,110.5 1108.0,114.9 1108.0,128.2 1076.5,124.9" fill="#fd8d3c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph — apiGetCode</title></polygon>
-<polygon points="1076.5,108.6 1108.0,114.4 1108.0,114.9 1076.5,110.5" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph — apiTotal (self)</title></polygon>
+<polygon points="918.9,461.0 1076.5,459.4 1108.0,460.4 1108.0,516.0 1076.5,516.0 918.9,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph — apiCreateGlobalSession</title></polygon>
+<polygon points="918.9,461.0 1076.5,459.4 1108.0,460.4 1108.0,460.4 1076.5,459.4 918.9,461.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph — apiCreateSession</title></polygon>
+<polygon points="918.9,135.1 1076.5,125.9 1108.0,129.1 1108.0,460.4 1076.5,459.4 918.9,461.0" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph — apiLoadModule</title></polygon>
+<polygon points="918.9,135.1 1076.5,125.9 1108.0,129.1 1108.0,129.1 1076.5,125.9 918.9,135.1" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph — apiFindEntryPoint</title></polygon>
+<polygon points="918.9,135.0 1076.5,125.8 1108.0,129.1 1108.0,129.1 1076.5,125.9 918.9,135.1" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph — apiComposite</title></polygon>
+<polygon points="918.9,134.1 1076.5,124.9 1108.0,128.2 1108.0,129.1 1076.5,125.8 918.9,135.0" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph — apiLink</title></polygon>
+<polygon points="918.9,119.1 1076.5,110.5 1108.0,114.9 1108.0,128.2 1076.5,124.9 918.9,134.1" fill="#fd8d3c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph — apiGetCode</title></polygon>
+<polygon points="918.9,115.9 1076.5,108.6 1108.0,114.4 1108.0,114.9 1076.5,110.5 918.9,119.1" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph — apiTotal (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">apiCreateGlobalSession</text>
@@ -114,12 +114,12 @@ API's import-resolution path rather than precompiled .slang-module files.</p><p 
 <text x="28" y="632" fill="#222">apiReflection</text>
 <rect x="289" y="622" width="12" height="12" fill="#969696"/>
 <text x="305" y="632" fill="#222">apiTotal (self)</text>
-</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 150); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_base.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 150); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_base.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_base;
 
 public interface IXform { float apply(float x); }
 
-public float applyTwice&lt;T : IXform&gt;(T t, float x) { return t.apply(t.apply(x)); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_0.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+public float applyTwice&lt;T : IXform&gt;(T t, float x) { return t.apply(t.apply(x)); }</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_0.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_0;
 import gmod_base;
 
@@ -135,7 +135,7 @@ public float chain_0(float x)
     Xf_0 xf;
     float r = applyTwice(xf, x);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_1.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_1.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_1;
 import gmod_base;
 
@@ -151,7 +151,7 @@ public float chain_1(float x)
     Xf_1 xf;
     float r = applyTwice(xf, x);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_2.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_2.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_2;
 import gmod_base;
 
@@ -167,7 +167,7 @@ public float chain_2(float x)
     Xf_2 xf;
     float r = applyTwice(xf, x);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_3.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_3.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_3;
 import gmod_base;
 
@@ -183,7 +183,7 @@ public float chain_3(float x)
     Xf_3 xf;
     float r = applyTwice(xf, x);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_4.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_4.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_4;
 import gmod_base;
 
@@ -199,7 +199,7 @@ public float chain_4(float x)
     Xf_4 xf;
     float r = applyTwice(xf, x);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_5.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_5.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_5;
 import gmod_base;
 
@@ -215,7 +215,7 @@ public float chain_5(float x)
     Xf_5 xf;
     float r = applyTwice(xf, x);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_6.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_6.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_6;
 import gmod_base;
 
@@ -231,7 +231,7 @@ public float chain_6(float x)
     Xf_6 xf;
     float r = applyTwice(xf, x);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_7.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_7.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_7;
 import gmod_base;
 
@@ -247,7 +247,7 @@ public float chain_7(float x)
     Xf_7 xf;
     float r = applyTwice(xf, x);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_8.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_8.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_8;
 import gmod_base;
 import gmod_0;
@@ -269,7 +269,7 @@ public float chain_8(float x)
     r += leaf_1(r * 0.991);
     r += leaf_2(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_9.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_9.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_9;
 import gmod_base;
 import gmod_1;
@@ -291,7 +291,7 @@ public float chain_9(float x)
     r += leaf_2(r * 0.991);
     r += leaf_3(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_10.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_10.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_10;
 import gmod_base;
 import gmod_2;
@@ -313,7 +313,7 @@ public float chain_10(float x)
     r += leaf_3(r * 0.991);
     r += leaf_4(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_11.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_11.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_11;
 import gmod_base;
 import gmod_3;
@@ -335,7 +335,7 @@ public float chain_11(float x)
     r += leaf_4(r * 0.991);
     r += leaf_5(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_12.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_12.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_12;
 import gmod_base;
 import gmod_4;
@@ -357,7 +357,7 @@ public float chain_12(float x)
     r += leaf_5(r * 0.991);
     r += leaf_6(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_13.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_13.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_13;
 import gmod_base;
 import gmod_5;
@@ -379,7 +379,7 @@ public float chain_13(float x)
     r += leaf_6(r * 0.991);
     r += leaf_7(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_14.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_14.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_14;
 import gmod_base;
 import gmod_6;
@@ -401,7 +401,7 @@ public float chain_14(float x)
     r += leaf_7(r * 0.991);
     r += leaf_0(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_15.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_15.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_15;
 import gmod_base;
 import gmod_7;
@@ -423,7 +423,7 @@ public float chain_15(float x)
     r += leaf_0(r * 0.991);
     r += leaf_1(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_16.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_16.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_16;
 import gmod_base;
 import gmod_8;
@@ -445,7 +445,7 @@ public float chain_16(float x)
     r += leaf_9(r * 0.991);
     r += leaf_10(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_17.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_17.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_17;
 import gmod_base;
 import gmod_9;
@@ -467,7 +467,7 @@ public float chain_17(float x)
     r += leaf_10(r * 0.991);
     r += leaf_11(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_18.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_18.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_18;
 import gmod_base;
 import gmod_10;
@@ -489,7 +489,7 @@ public float chain_18(float x)
     r += leaf_11(r * 0.991);
     r += leaf_12(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_19.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_19.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_19;
 import gmod_base;
 import gmod_11;
@@ -511,7 +511,7 @@ public float chain_19(float x)
     r += leaf_12(r * 0.991);
     r += leaf_13(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_20.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_20.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_20;
 import gmod_base;
 import gmod_12;
@@ -533,7 +533,7 @@ public float chain_20(float x)
     r += leaf_13(r * 0.991);
     r += leaf_14(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_21.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_21.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_21;
 import gmod_base;
 import gmod_13;
@@ -555,7 +555,7 @@ public float chain_21(float x)
     r += leaf_14(r * 0.991);
     r += leaf_15(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_22.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_22.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_22;
 import gmod_base;
 import gmod_14;
@@ -577,7 +577,7 @@ public float chain_22(float x)
     r += leaf_15(r * 0.991);
     r += leaf_8(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_23.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_23.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_23;
 import gmod_base;
 import gmod_15;
@@ -599,7 +599,7 @@ public float chain_23(float x)
     r += leaf_8(r * 0.991);
     r += leaf_9(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_24.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_24.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_24;
 import gmod_base;
 import gmod_16;
@@ -621,7 +621,7 @@ public float chain_24(float x)
     r += leaf_17(r * 0.991);
     r += leaf_18(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_25.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_25.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_25;
 import gmod_base;
 import gmod_17;
@@ -643,7 +643,7 @@ public float chain_25(float x)
     r += leaf_18(r * 0.991);
     r += leaf_19(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_26.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_26.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_26;
 import gmod_base;
 import gmod_18;
@@ -665,7 +665,7 @@ public float chain_26(float x)
     r += leaf_19(r * 0.991);
     r += leaf_20(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_27.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_27.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_27;
 import gmod_base;
 import gmod_19;
@@ -687,7 +687,7 @@ public float chain_27(float x)
     r += leaf_20(r * 0.991);
     r += leaf_21(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_28.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_28.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_28;
 import gmod_base;
 import gmod_20;
@@ -709,7 +709,7 @@ public float chain_28(float x)
     r += leaf_21(r * 0.991);
     r += leaf_22(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_29.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_29.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_29;
 import gmod_base;
 import gmod_21;
@@ -731,7 +731,7 @@ public float chain_29(float x)
     r += leaf_22(r * 0.991);
     r += leaf_23(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_30.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_30.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_30;
 import gmod_base;
 import gmod_22;
@@ -753,7 +753,7 @@ public float chain_30(float x)
     r += leaf_23(r * 0.991);
     r += leaf_16(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_31.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_31.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_31;
 import gmod_base;
 import gmod_23;
@@ -775,7 +775,7 @@ public float chain_31(float x)
     r += leaf_16(r * 0.991);
     r += leaf_17(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_32.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_32.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_32;
 import gmod_base;
 import gmod_24;
@@ -797,7 +797,7 @@ public float chain_32(float x)
     r += leaf_25(r * 0.991);
     r += leaf_26(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_33.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_33.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_33;
 import gmod_base;
 import gmod_25;
@@ -819,7 +819,7 @@ public float chain_33(float x)
     r += leaf_26(r * 0.991);
     r += leaf_27(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_34.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_34.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_34;
 import gmod_base;
 import gmod_26;
@@ -841,7 +841,7 @@ public float chain_34(float x)
     r += leaf_27(r * 0.991);
     r += leaf_28(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_35.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_35.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_35;
 import gmod_base;
 import gmod_27;
@@ -863,7 +863,7 @@ public float chain_35(float x)
     r += leaf_28(r * 0.991);
     r += leaf_29(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_36.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_36.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_36;
 import gmod_base;
 import gmod_28;
@@ -885,7 +885,7 @@ public float chain_36(float x)
     r += leaf_29(r * 0.991);
     r += leaf_30(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_37.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_37.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_37;
 import gmod_base;
 import gmod_29;
@@ -907,7 +907,7 @@ public float chain_37(float x)
     r += leaf_30(r * 0.991);
     r += leaf_31(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_38.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_38.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_38;
 import gmod_base;
 import gmod_30;
@@ -929,7 +929,7 @@ public float chain_38(float x)
     r += leaf_31(r * 0.991);
     r += leaf_24(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_39.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_39.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_39;
 import gmod_base;
 import gmod_31;
@@ -951,7 +951,7 @@ public float chain_39(float x)
     r += leaf_24(r * 0.991);
     r += leaf_25(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_40.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_40.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_40;
 import gmod_base;
 import gmod_32;
@@ -973,7 +973,7 @@ public float chain_40(float x)
     r += leaf_33(r * 0.991);
     r += leaf_34(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_41.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_41.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_41;
 import gmod_base;
 import gmod_33;
@@ -995,7 +995,7 @@ public float chain_41(float x)
     r += leaf_34(r * 0.991);
     r += leaf_35(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_42.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_42.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_42;
 import gmod_base;
 import gmod_34;
@@ -1017,7 +1017,7 @@ public float chain_42(float x)
     r += leaf_35(r * 0.991);
     r += leaf_36(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_43.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_43.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_43;
 import gmod_base;
 import gmod_35;
@@ -1039,7 +1039,7 @@ public float chain_43(float x)
     r += leaf_36(r * 0.991);
     r += leaf_37(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_44.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_44.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_44;
 import gmod_base;
 import gmod_36;
@@ -1061,7 +1061,7 @@ public float chain_44(float x)
     r += leaf_37(r * 0.991);
     r += leaf_38(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_45.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_45.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_45;
 import gmod_base;
 import gmod_37;
@@ -1083,7 +1083,7 @@ public float chain_45(float x)
     r += leaf_38(r * 0.991);
     r += leaf_39(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_46.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_46.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_46;
 import gmod_base;
 import gmod_38;
@@ -1105,7 +1105,7 @@ public float chain_46(float x)
     r += leaf_39(r * 0.991);
     r += leaf_32(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_47.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_47.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_47;
 import gmod_base;
 import gmod_39;
@@ -1127,7 +1127,7 @@ public float chain_47(float x)
     r += leaf_32(r * 0.991);
     r += leaf_33(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_48.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_48.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_48;
 import gmod_base;
 import gmod_40;
@@ -1149,7 +1149,7 @@ public float chain_48(float x)
     r += leaf_41(r * 0.991);
     r += leaf_42(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_49.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_49.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_49;
 import gmod_base;
 import gmod_41;
@@ -1171,7 +1171,7 @@ public float chain_49(float x)
     r += leaf_42(r * 0.991);
     r += leaf_43(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_50.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_50.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_50;
 import gmod_base;
 import gmod_42;
@@ -1193,7 +1193,7 @@ public float chain_50(float x)
     r += leaf_43(r * 0.991);
     r += leaf_44(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_51.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_51.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_51;
 import gmod_base;
 import gmod_43;
@@ -1215,7 +1215,7 @@ public float chain_51(float x)
     r += leaf_44(r * 0.991);
     r += leaf_45(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_52.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_52.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_52;
 import gmod_base;
 import gmod_44;
@@ -1237,7 +1237,7 @@ public float chain_52(float x)
     r += leaf_45(r * 0.991);
     r += leaf_46(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_53.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_53.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_53;
 import gmod_base;
 import gmod_45;
@@ -1259,7 +1259,7 @@ public float chain_53(float x)
     r += leaf_46(r * 0.991);
     r += leaf_47(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_54.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_54.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_54;
 import gmod_base;
 import gmod_46;
@@ -1281,7 +1281,7 @@ public float chain_54(float x)
     r += leaf_47(r * 0.991);
     r += leaf_40(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_55.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_55.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_55;
 import gmod_base;
 import gmod_47;
@@ -1303,7 +1303,7 @@ public float chain_55(float x)
     r += leaf_40(r * 0.991);
     r += leaf_41(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_56.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_56.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_56;
 import gmod_base;
 import gmod_48;
@@ -1325,7 +1325,7 @@ public float chain_56(float x)
     r += leaf_49(r * 0.991);
     r += leaf_50(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_57.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_57.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_57;
 import gmod_base;
 import gmod_49;
@@ -1347,7 +1347,7 @@ public float chain_57(float x)
     r += leaf_50(r * 0.991);
     r += leaf_51(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_58.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_58.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_58;
 import gmod_base;
 import gmod_50;
@@ -1369,7 +1369,7 @@ public float chain_58(float x)
     r += leaf_51(r * 0.991);
     r += leaf_52(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_59.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_59.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_59;
 import gmod_base;
 import gmod_51;
@@ -1391,7 +1391,7 @@ public float chain_59(float x)
     r += leaf_52(r * 0.991);
     r += leaf_53(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_60.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_60.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_60;
 import gmod_base;
 import gmod_52;
@@ -1413,7 +1413,7 @@ public float chain_60(float x)
     r += leaf_53(r * 0.991);
     r += leaf_54(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_61.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_61.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_61;
 import gmod_base;
 import gmod_53;
@@ -1435,7 +1435,7 @@ public float chain_61(float x)
     r += leaf_54(r * 0.991);
     r += leaf_55(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_62.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_62.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_62;
 import gmod_base;
 import gmod_54;
@@ -1457,7 +1457,7 @@ public float chain_62(float x)
     r += leaf_55(r * 0.991);
     r += leaf_48(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_63.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_63.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_63;
 import gmod_base;
 import gmod_55;
@@ -1479,7 +1479,7 @@ public float chain_63(float x)
     r += leaf_48(r * 0.991);
     r += leaf_49(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_64.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_64.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_64;
 import gmod_base;
 import gmod_56;
@@ -1501,7 +1501,7 @@ public float chain_64(float x)
     r += leaf_57(r * 0.991);
     r += leaf_58(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_65.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_65.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_65;
 import gmod_base;
 import gmod_57;
@@ -1523,7 +1523,7 @@ public float chain_65(float x)
     r += leaf_58(r * 0.991);
     r += leaf_59(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_66.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_66.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_66;
 import gmod_base;
 import gmod_58;
@@ -1545,7 +1545,7 @@ public float chain_66(float x)
     r += leaf_59(r * 0.991);
     r += leaf_60(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_67.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_67.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_67;
 import gmod_base;
 import gmod_59;
@@ -1567,7 +1567,7 @@ public float chain_67(float x)
     r += leaf_60(r * 0.991);
     r += leaf_61(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_68.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_68.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_68;
 import gmod_base;
 import gmod_60;
@@ -1589,7 +1589,7 @@ public float chain_68(float x)
     r += leaf_61(r * 0.991);
     r += leaf_62(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_69.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_69.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_69;
 import gmod_base;
 import gmod_61;
@@ -1611,7 +1611,7 @@ public float chain_69(float x)
     r += leaf_62(r * 0.991);
     r += leaf_63(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_70.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_70.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_70;
 import gmod_base;
 import gmod_62;
@@ -1633,7 +1633,7 @@ public float chain_70(float x)
     r += leaf_63(r * 0.991);
     r += leaf_56(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_71.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_71.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_71;
 import gmod_base;
 import gmod_63;
@@ -1655,7 +1655,7 @@ public float chain_71(float x)
     r += leaf_56(r * 0.991);
     r += leaf_57(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_72.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_72.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_72;
 import gmod_base;
 import gmod_64;
@@ -1677,7 +1677,7 @@ public float chain_72(float x)
     r += leaf_65(r * 0.991);
     r += leaf_66(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_73.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_73.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_73;
 import gmod_base;
 import gmod_65;
@@ -1699,7 +1699,7 @@ public float chain_73(float x)
     r += leaf_66(r * 0.991);
     r += leaf_67(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_74.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_74.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_74;
 import gmod_base;
 import gmod_66;
@@ -1721,7 +1721,7 @@ public float chain_74(float x)
     r += leaf_67(r * 0.991);
     r += leaf_68(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_75.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_75.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_75;
 import gmod_base;
 import gmod_67;
@@ -1743,7 +1743,7 @@ public float chain_75(float x)
     r += leaf_68(r * 0.991);
     r += leaf_69(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_76.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_76.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_76;
 import gmod_base;
 import gmod_68;
@@ -1765,7 +1765,7 @@ public float chain_76(float x)
     r += leaf_69(r * 0.991);
     r += leaf_70(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_77.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_77.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_77;
 import gmod_base;
 import gmod_69;
@@ -1787,7 +1787,7 @@ public float chain_77(float x)
     r += leaf_70(r * 0.991);
     r += leaf_71(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_78.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_78.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_78;
 import gmod_base;
 import gmod_70;
@@ -1809,7 +1809,7 @@ public float chain_78(float x)
     r += leaf_71(r * 0.991);
     r += leaf_64(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_79.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_79.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_79;
 import gmod_base;
 import gmod_71;
@@ -1831,7 +1831,7 @@ public float chain_79(float x)
     r += leaf_64(r * 0.991);
     r += leaf_65(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_80.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_80.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_80;
 import gmod_base;
 import gmod_72;
@@ -1853,7 +1853,7 @@ public float chain_80(float x)
     r += leaf_73(r * 0.991);
     r += leaf_74(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_81.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_81.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_81;
 import gmod_base;
 import gmod_73;
@@ -1875,7 +1875,7 @@ public float chain_81(float x)
     r += leaf_74(r * 0.991);
     r += leaf_75(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_82.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_82.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_82;
 import gmod_base;
 import gmod_74;
@@ -1897,7 +1897,7 @@ public float chain_82(float x)
     r += leaf_75(r * 0.991);
     r += leaf_76(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_83.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_83.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_83;
 import gmod_base;
 import gmod_75;
@@ -1919,7 +1919,7 @@ public float chain_83(float x)
     r += leaf_76(r * 0.991);
     r += leaf_77(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_84.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_84.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_84;
 import gmod_base;
 import gmod_76;
@@ -1941,7 +1941,7 @@ public float chain_84(float x)
     r += leaf_77(r * 0.991);
     r += leaf_78(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_85.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_85.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_85;
 import gmod_base;
 import gmod_77;
@@ -1963,7 +1963,7 @@ public float chain_85(float x)
     r += leaf_78(r * 0.991);
     r += leaf_79(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_86.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_86.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_86;
 import gmod_base;
 import gmod_78;
@@ -1985,7 +1985,7 @@ public float chain_86(float x)
     r += leaf_79(r * 0.991);
     r += leaf_72(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_87.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_87.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_87;
 import gmod_base;
 import gmod_79;
@@ -2007,7 +2007,7 @@ public float chain_87(float x)
     r += leaf_72(r * 0.991);
     r += leaf_73(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_88.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_88.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_88;
 import gmod_base;
 import gmod_80;
@@ -2029,7 +2029,7 @@ public float chain_88(float x)
     r += leaf_81(r * 0.991);
     r += leaf_82(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_89.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_89.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_89;
 import gmod_base;
 import gmod_81;
@@ -2051,7 +2051,7 @@ public float chain_89(float x)
     r += leaf_82(r * 0.991);
     r += leaf_83(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_90.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_90.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_90;
 import gmod_base;
 import gmod_82;
@@ -2073,7 +2073,7 @@ public float chain_90(float x)
     r += leaf_83(r * 0.991);
     r += leaf_84(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_91.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_91.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_91;
 import gmod_base;
 import gmod_83;
@@ -2095,7 +2095,7 @@ public float chain_91(float x)
     r += leaf_84(r * 0.991);
     r += leaf_85(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_92.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_92.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_92;
 import gmod_base;
 import gmod_84;
@@ -2117,7 +2117,7 @@ public float chain_92(float x)
     r += leaf_85(r * 0.991);
     r += leaf_86(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_93.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_93.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_93;
 import gmod_base;
 import gmod_85;
@@ -2139,7 +2139,7 @@ public float chain_93(float x)
     r += leaf_86(r * 0.991);
     r += leaf_87(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_94.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_94.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_94;
 import gmod_base;
 import gmod_86;
@@ -2161,7 +2161,7 @@ public float chain_94(float x)
     r += leaf_87(r * 0.991);
     r += leaf_80(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_95.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_95.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_95;
 import gmod_base;
 import gmod_87;
@@ -2183,7 +2183,7 @@ public float chain_95(float x)
     r += leaf_80(r * 0.991);
     r += leaf_81(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_96.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_96.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_96;
 import gmod_base;
 import gmod_88;
@@ -2205,7 +2205,7 @@ public float chain_96(float x)
     r += leaf_89(r * 0.991);
     r += leaf_90(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_97.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_97.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_97;
 import gmod_base;
 import gmod_89;
@@ -2227,7 +2227,7 @@ public float chain_97(float x)
     r += leaf_90(r * 0.991);
     r += leaf_91(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_98.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_98.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_98;
 import gmod_base;
 import gmod_90;
@@ -2249,7 +2249,7 @@ public float chain_98(float x)
     r += leaf_91(r * 0.991);
     r += leaf_92(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_99.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_99.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_99;
 import gmod_base;
 import gmod_91;
@@ -2271,7 +2271,7 @@ public float chain_99(float x)
     r += leaf_92(r * 0.991);
     r += leaf_93(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_100.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_100.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_100;
 import gmod_base;
 import gmod_92;
@@ -2293,7 +2293,7 @@ public float chain_100(float x)
     r += leaf_93(r * 0.991);
     r += leaf_94(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_101.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_101.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_101;
 import gmod_base;
 import gmod_93;
@@ -2315,7 +2315,7 @@ public float chain_101(float x)
     r += leaf_94(r * 0.991);
     r += leaf_95(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_102.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_102.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_102;
 import gmod_base;
 import gmod_94;
@@ -2337,7 +2337,7 @@ public float chain_102(float x)
     r += leaf_95(r * 0.991);
     r += leaf_88(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_103.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_103.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_103;
 import gmod_base;
 import gmod_95;
@@ -2359,7 +2359,7 @@ public float chain_103(float x)
     r += leaf_88(r * 0.991);
     r += leaf_89(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_104.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_104.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_104;
 import gmod_base;
 import gmod_96;
@@ -2381,7 +2381,7 @@ public float chain_104(float x)
     r += leaf_97(r * 0.991);
     r += leaf_98(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_105.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_105.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_105;
 import gmod_base;
 import gmod_97;
@@ -2403,7 +2403,7 @@ public float chain_105(float x)
     r += leaf_98(r * 0.991);
     r += leaf_99(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_106.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_106.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_106;
 import gmod_base;
 import gmod_98;
@@ -2425,7 +2425,7 @@ public float chain_106(float x)
     r += leaf_99(r * 0.991);
     r += leaf_100(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_107.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_107.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_107;
 import gmod_base;
 import gmod_99;
@@ -2447,7 +2447,7 @@ public float chain_107(float x)
     r += leaf_100(r * 0.991);
     r += leaf_101(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_108.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_108.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_108;
 import gmod_base;
 import gmod_100;
@@ -2469,7 +2469,7 @@ public float chain_108(float x)
     r += leaf_101(r * 0.991);
     r += leaf_102(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_109.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_109.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_109;
 import gmod_base;
 import gmod_101;
@@ -2491,7 +2491,7 @@ public float chain_109(float x)
     r += leaf_102(r * 0.991);
     r += leaf_103(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_110.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_110.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_110;
 import gmod_base;
 import gmod_102;
@@ -2513,7 +2513,7 @@ public float chain_110(float x)
     r += leaf_103(r * 0.991);
     r += leaf_96(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_111.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_111.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_111;
 import gmod_base;
 import gmod_103;
@@ -2535,7 +2535,7 @@ public float chain_111(float x)
     r += leaf_96(r * 0.991);
     r += leaf_97(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_112.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_112.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_112;
 import gmod_base;
 import gmod_104;
@@ -2557,7 +2557,7 @@ public float chain_112(float x)
     r += leaf_105(r * 0.991);
     r += leaf_106(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_113.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_113.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_113;
 import gmod_base;
 import gmod_105;
@@ -2579,7 +2579,7 @@ public float chain_113(float x)
     r += leaf_106(r * 0.991);
     r += leaf_107(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_114.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_114.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_114;
 import gmod_base;
 import gmod_106;
@@ -2601,7 +2601,7 @@ public float chain_114(float x)
     r += leaf_107(r * 0.991);
     r += leaf_108(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_115.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_115.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_115;
 import gmod_base;
 import gmod_107;
@@ -2623,7 +2623,7 @@ public float chain_115(float x)
     r += leaf_108(r * 0.991);
     r += leaf_109(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_116.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_116.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_116;
 import gmod_base;
 import gmod_108;
@@ -2645,7 +2645,7 @@ public float chain_116(float x)
     r += leaf_109(r * 0.991);
     r += leaf_110(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_117.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_117.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_117;
 import gmod_base;
 import gmod_109;
@@ -2667,7 +2667,7 @@ public float chain_117(float x)
     r += leaf_110(r * 0.991);
     r += leaf_111(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_118.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_118.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_118;
 import gmod_base;
 import gmod_110;
@@ -2689,7 +2689,7 @@ public float chain_118(float x)
     r += leaf_111(r * 0.991);
     r += leaf_104(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_119.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_119.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_119;
 import gmod_base;
 import gmod_111;
@@ -2711,7 +2711,7 @@ public float chain_119(float x)
     r += leaf_104(r * 0.991);
     r += leaf_105(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_120.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_120.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_120;
 import gmod_base;
 import gmod_112;
@@ -2733,7 +2733,7 @@ public float chain_120(float x)
     r += leaf_113(r * 0.991);
     r += leaf_114(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_121.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_121.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_121;
 import gmod_base;
 import gmod_113;
@@ -2755,7 +2755,7 @@ public float chain_121(float x)
     r += leaf_114(r * 0.991);
     r += leaf_115(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_122.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_122.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_122;
 import gmod_base;
 import gmod_114;
@@ -2777,7 +2777,7 @@ public float chain_122(float x)
     r += leaf_115(r * 0.991);
     r += leaf_116(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_123.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_123.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_123;
 import gmod_base;
 import gmod_115;
@@ -2799,7 +2799,7 @@ public float chain_123(float x)
     r += leaf_116(r * 0.991);
     r += leaf_117(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_124.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_124.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_124;
 import gmod_base;
 import gmod_116;
@@ -2821,7 +2821,7 @@ public float chain_124(float x)
     r += leaf_117(r * 0.991);
     r += leaf_118(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_125.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_125.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_125;
 import gmod_base;
 import gmod_117;
@@ -2843,7 +2843,7 @@ public float chain_125(float x)
     r += leaf_118(r * 0.991);
     r += leaf_119(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_126.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_126.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_126;
 import gmod_base;
 import gmod_118;
@@ -2865,7 +2865,7 @@ public float chain_126(float x)
     r += leaf_119(r * 0.991);
     r += leaf_112(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_127.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_127.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_127;
 import gmod_base;
 import gmod_119;
@@ -2887,7 +2887,7 @@ public float chain_127(float x)
     r += leaf_112(r * 0.991);
     r += leaf_113(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_128.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_128.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_128;
 import gmod_base;
 import gmod_120;
@@ -2909,7 +2909,7 @@ public float chain_128(float x)
     r += leaf_121(r * 0.991);
     r += leaf_122(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_129.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_129.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_129;
 import gmod_base;
 import gmod_121;
@@ -2931,7 +2931,7 @@ public float chain_129(float x)
     r += leaf_122(r * 0.991);
     r += leaf_123(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_130.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_130.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_130;
 import gmod_base;
 import gmod_122;
@@ -2953,7 +2953,7 @@ public float chain_130(float x)
     r += leaf_123(r * 0.991);
     r += leaf_124(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_131.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_131.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_131;
 import gmod_base;
 import gmod_123;
@@ -2975,7 +2975,7 @@ public float chain_131(float x)
     r += leaf_124(r * 0.991);
     r += leaf_125(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_132.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_132.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_132;
 import gmod_base;
 import gmod_124;
@@ -2997,7 +2997,7 @@ public float chain_132(float x)
     r += leaf_125(r * 0.991);
     r += leaf_126(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_133.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_133.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_133;
 import gmod_base;
 import gmod_125;
@@ -3019,7 +3019,7 @@ public float chain_133(float x)
     r += leaf_126(r * 0.991);
     r += leaf_127(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_134.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_134.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_134;
 import gmod_base;
 import gmod_126;
@@ -3041,7 +3041,7 @@ public float chain_134(float x)
     r += leaf_127(r * 0.991);
     r += leaf_120(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_135.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_135.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_135;
 import gmod_base;
 import gmod_127;
@@ -3063,7 +3063,7 @@ public float chain_135(float x)
     r += leaf_120(r * 0.991);
     r += leaf_121(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_136.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_136.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_136;
 import gmod_base;
 import gmod_128;
@@ -3085,7 +3085,7 @@ public float chain_136(float x)
     r += leaf_129(r * 0.991);
     r += leaf_130(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_137.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_137.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_137;
 import gmod_base;
 import gmod_129;
@@ -3107,7 +3107,7 @@ public float chain_137(float x)
     r += leaf_130(r * 0.991);
     r += leaf_131(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_138.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_138.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_138;
 import gmod_base;
 import gmod_130;
@@ -3129,7 +3129,7 @@ public float chain_138(float x)
     r += leaf_131(r * 0.991);
     r += leaf_132(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_139.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_139.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_139;
 import gmod_base;
 import gmod_131;
@@ -3151,7 +3151,7 @@ public float chain_139(float x)
     r += leaf_132(r * 0.991);
     r += leaf_133(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_140.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_140.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_140;
 import gmod_base;
 import gmod_132;
@@ -3173,7 +3173,7 @@ public float chain_140(float x)
     r += leaf_133(r * 0.991);
     r += leaf_134(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_141.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_141.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_141;
 import gmod_base;
 import gmod_133;
@@ -3195,7 +3195,7 @@ public float chain_141(float x)
     r += leaf_134(r * 0.991);
     r += leaf_135(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_142.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_142.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_142;
 import gmod_base;
 import gmod_134;
@@ -3217,7 +3217,7 @@ public float chain_142(float x)
     r += leaf_135(r * 0.991);
     r += leaf_128(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_143.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_143.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_143;
 import gmod_base;
 import gmod_135;
@@ -3239,7 +3239,7 @@ public float chain_143(float x)
     r += leaf_128(r * 0.991);
     r += leaf_129(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_144.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_144.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_144;
 import gmod_base;
 import gmod_136;
@@ -3261,7 +3261,7 @@ public float chain_144(float x)
     r += leaf_137(r * 0.991);
     r += leaf_138(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_145.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_145.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_145;
 import gmod_base;
 import gmod_137;
@@ -3283,7 +3283,7 @@ public float chain_145(float x)
     r += leaf_138(r * 0.991);
     r += leaf_139(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_146.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_146.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_146;
 import gmod_base;
 import gmod_138;
@@ -3305,7 +3305,7 @@ public float chain_146(float x)
     r += leaf_139(r * 0.991);
     r += leaf_140(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_147.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_147.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_147;
 import gmod_base;
 import gmod_139;
@@ -3327,7 +3327,7 @@ public float chain_147(float x)
     r += leaf_140(r * 0.991);
     r += leaf_141(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_148.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_148.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_148;
 import gmod_base;
 import gmod_140;
@@ -3349,7 +3349,7 @@ public float chain_148(float x)
     r += leaf_141(r * 0.991);
     r += leaf_142(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_149.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_149.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_149;
 import gmod_base;
 import gmod_141;
@@ -3371,7 +3371,7 @@ public float chain_149(float x)
     r += leaf_142(r * 0.991);
     r += leaf_143(r * 0.992);
     return r;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>graph_main.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>graph_main.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module graph_main;
 import gmod_144;
 import gmod_145;

@@ -3,13 +3,13 @@ harness (same source, varying -target) to isolate generateOutput cost.
 ``n`` scales the amount of straight-line math the backend must emit.</p><p style='color:#666;font-size:13px'><b>bucket:</b> codegen_source &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target hlsl -entry computeMain</code> &nbsp;·&nbsp; <b>default N:</b> 400</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="680" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">emit_hlsl — full phase breakdown across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">emit_hlsl<tspan fill="#888" font-weight="400" text-decoration="none">  0.98×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">emit_hlsl<tspan fill="#888" font-weight="400" text-decoration="none">  0.39×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
-<text x="64.0" y="299.0" text-anchor="end" fill="#999">177</text>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">454</text>
 <line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
-<text x="64.0" y="79.0" text-anchor="end" fill="#999">355</text>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">907</text>
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="745.6" y1="76.0" x2="745.6" y2="516.0" stroke="#e8731a" stroke-width="1.2" stroke-dasharray="4 3"/>
@@ -82,19 +82,19 @@ harness (same source, varying -target) to isolate generateOutput cost.
 <text x="1076.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1076.5 531.0)">07-11</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
 <text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">07-11</text>
-<polygon points="1076.5,514.9 1108.0,514.8 1108.0,516.0 1076.5,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — parseTranslationUnit</title></polygon>
-<polygon points="1076.5,468.4 1108.0,470.0 1108.0,514.8 1076.5,514.9" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — SemanticChecking</title></polygon>
-<polygon points="1076.5,455.6 1108.0,457.3 1108.0,470.0 1076.5,468.4" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — generateIR</title></polygon>
-<polygon points="1076.5,455.2 1108.0,456.9 1108.0,457.3 1076.5,455.6" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — frontEndExecute (self)</title></polygon>
-<polygon points="1076.5,440.7 1108.0,442.5 1108.0,456.9 1076.5,455.2" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — specializeModule</title></polygon>
-<polygon points="1076.5,428.7 1108.0,430.5 1108.0,442.5 1076.5,440.7" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — simplifyIR</title></polygon>
-<polygon points="1076.5,427.2 1108.0,428.9 1108.0,430.5 1076.5,428.7" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — linkIR</title></polygon>
-<polygon points="1076.5,427.2 1108.0,428.9 1108.0,428.9 1076.5,427.2" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — unrollLoopsInModule</title></polygon>
-<polygon points="1076.5,360.3 1108.0,363.0 1108.0,428.9 1076.5,427.2" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — legalizeResourceTypes</title></polygon>
-<polygon points="1076.5,291.5 1108.0,295.6 1108.0,363.0 1076.5,360.3" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — legalizeExistentialTypeLayout</title></polygon>
-<polygon points="1076.5,291.0 1108.0,295.1 1108.0,295.6 1076.5,291.5" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — performMandatoryEarlyInlining</title></polygon>
-<polygon points="1076.5,290.8 1108.0,294.9 1108.0,295.1 1076.5,291.0" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — performForceInlining</title></polygon>
-<polygon points="1076.5,108.6 1108.0,115.0 1108.0,294.9 1076.5,290.8" fill="#fd8d3c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — emitEntryPointsSourceFromIR</title></polygon>
+<polygon points="918.9,515.5 1076.5,515.6 1108.0,515.5 1108.0,516.0 1076.5,516.0 918.9,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — parseTranslationUnit</title></polygon>
+<polygon points="918.9,497.2 1076.5,497.4 1108.0,498.0 1108.0,515.5 1076.5,515.6 918.9,515.5" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — SemanticChecking</title></polygon>
+<polygon points="918.9,488.9 1076.5,492.3 1108.0,493.0 1108.0,498.0 1076.5,497.4 918.9,497.2" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — generateIR</title></polygon>
+<polygon points="918.9,488.4 1076.5,492.2 1108.0,492.9 1108.0,493.0 1076.5,492.3 918.9,488.9" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — frontEndExecute (self)</title></polygon>
+<polygon points="918.9,477.3 1076.5,486.5 1108.0,487.2 1108.0,492.9 1076.5,492.2 918.9,488.4" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — specializeModule</title></polygon>
+<polygon points="918.9,446.4 1076.5,481.8 1108.0,482.5 1108.0,487.2 1076.5,486.5 918.9,477.3" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — simplifyIR</title></polygon>
+<polygon points="918.9,445.7 1076.5,481.2 1108.0,481.9 1108.0,482.5 1076.5,481.8 918.9,446.4" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — linkIR</title></polygon>
+<polygon points="918.9,445.7 1076.5,481.2 1108.0,481.9 1108.0,481.9 1076.5,481.2 918.9,445.7" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — unrollLoopsInModule</title></polygon>
+<polygon points="918.9,375.1 1076.5,455.1 1108.0,456.1 1108.0,481.9 1076.5,481.2 918.9,445.7" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — legalizeResourceTypes</title></polygon>
+<polygon points="918.9,303.7 1076.5,428.1 1108.0,429.7 1108.0,456.1 1076.5,455.1 918.9,375.1" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="918.9,303.6 1076.5,428.0 1108.0,429.6 1108.0,429.7 1076.5,428.1 918.9,303.7" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — performMandatoryEarlyInlining</title></polygon>
+<polygon points="918.9,303.5 1076.5,427.9 1108.0,429.5 1108.0,429.6 1076.5,428.0 918.9,303.6" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — performForceInlining</title></polygon>
+<polygon points="918.9,108.6 1076.5,356.6 1108.0,359.1 1108.0,429.5 1076.5,427.9 918.9,303.5" fill="#fd8d3c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_hlsl — emitEntryPointsSourceFromIR</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
@@ -128,7 +128,7 @@ harness (same source, varying -target) to isolate generateOutput cost.
 <text x="582" y="650" fill="#222">generateOutput (self)</text>
 <rect x="843" y="640" width="12" height="12" fill="#969696"/>
 <text x="859" y="650" fill="#222">compileInner (self)</text>
-</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 400); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>codegen.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 400); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>codegen.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 RWStructuredBuffer&lt;float&gt; outBuf;
 
 [shader("compute")]

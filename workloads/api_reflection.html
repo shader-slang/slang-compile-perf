@@ -5,13 +5,13 @@ build binding tables — has realistic work per program. Used with the
 driver's --reflect option, which walks the layout after each compile.</p><p style='color:#666;font-size:13px'><b>bucket:</b> api_overhead &nbsp;·&nbsp; <b>compile mode:</b> api &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 40</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="662" viewBox="0 0 1132 662" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="662" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">api_reflection — full phase breakdown across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">api_reflection<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">api_reflection<tspan fill="#888" font-weight="400" text-decoration="none">  0.80×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
-<text x="64.0" y="299.0" text-anchor="end" fill="#999">364</text>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">455</text>
 <line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
-<text x="64.0" y="79.0" text-anchor="end" fill="#999">727</text>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">911</text>
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="745.6" y1="76.0" x2="745.6" y2="516.0" stroke="#e8731a" stroke-width="1.2" stroke-dasharray="4 3"/>
@@ -84,15 +84,15 @@ driver's --reflect option, which walks the layout after each compile.</p><p styl
 <text x="1076.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1076.5 531.0)">07-11</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
 <text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">07-11</text>
-<polygon points="1076.5,444.8 1108.0,447.3 1108.0,516.0 1076.5,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiCreateGlobalSession</title></polygon>
-<polygon points="1076.5,444.8 1108.0,447.2 1108.0,447.3 1076.5,444.8" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiCreateSession</title></polygon>
-<polygon points="1076.5,287.5 1108.0,290.2 1108.0,447.2 1076.5,444.8" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiLoadModule</title></polygon>
-<polygon points="1076.5,287.5 1108.0,290.2 1108.0,290.2 1076.5,287.5" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiFindEntryPoint</title></polygon>
-<polygon points="1076.5,287.4 1108.0,290.1 1108.0,290.2 1076.5,287.5" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiComposite</title></polygon>
-<polygon points="1076.5,287.4 1108.0,290.1 1108.0,290.1 1076.5,287.4" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiLink</title></polygon>
-<polygon points="1076.5,112.9 1108.0,115.7 1108.0,290.1 1076.5,287.4" fill="#fd8d3c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiGetCode</title></polygon>
-<polygon points="1076.5,109.5 1108.0,112.4 1108.0,115.7 1076.5,112.9" fill="#b5bdc4" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiReflection</title></polygon>
-<polygon points="1076.5,108.6 1108.0,109.9 1108.0,112.4 1076.5,109.5" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiTotal (self)</title></polygon>
+<polygon points="918.9,461.1 1076.5,459.2 1108.0,461.1 1108.0,516.0 1076.5,516.0 918.9,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiCreateGlobalSession</title></polygon>
+<polygon points="918.9,461.0 1076.5,459.2 1108.0,461.1 1108.0,461.1 1076.5,459.2 918.9,461.1" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiCreateSession</title></polygon>
+<polygon points="918.9,340.6 1076.5,333.6 1108.0,335.7 1108.0,461.1 1076.5,459.2 918.9,461.0" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiLoadModule</title></polygon>
+<polygon points="918.9,340.6 1076.5,333.6 1108.0,335.7 1108.0,335.7 1076.5,333.6 918.9,340.6" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiFindEntryPoint</title></polygon>
+<polygon points="918.9,340.5 1076.5,333.5 1108.0,335.6 1108.0,335.7 1076.5,333.6 918.9,340.6" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiComposite</title></polygon>
+<polygon points="918.9,340.5 1076.5,333.5 1108.0,335.6 1108.0,335.6 1076.5,333.5 918.9,340.5" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiLink</title></polygon>
+<polygon points="918.9,114.4 1076.5,194.2 1108.0,196.5 1108.0,335.6 1076.5,333.5 918.9,340.5" fill="#fd8d3c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiGetCode</title></polygon>
+<polygon points="918.9,111.7 1076.5,191.5 1108.0,193.8 1108.0,196.5 1076.5,194.2 918.9,114.4" fill="#b5bdc4" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiReflection</title></polygon>
+<polygon points="918.9,108.6 1076.5,190.8 1108.0,191.8 1108.0,193.8 1076.5,191.5 918.9,111.7" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_reflection — apiTotal (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">apiCreateGlobalSession</text>
@@ -114,7 +114,7 @@ driver's --reflect option, which walks the layout after each compile.</p><p styl
 <text x="28" y="632" fill="#222">apiReflection</text>
 <rect x="289" y="622" width="12" height="12" fill="#969696"/>
 <text x="305" y="632" fill="#222">apiTotal (self)</text>
-</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 40); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_000.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 40); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_000.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_0
 {
     float4 a;
@@ -145,7 +145,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_0.xf, v);
     v.x += cb_0.inner[tid.x % 3].a.x + cb_0.blend[0];
     outBuf_0[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_001.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_001.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_1
 {
     float4 a;
@@ -176,7 +176,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_1.xf, v);
     v.x += cb_1.inner[tid.x % 3].a.x + cb_1.blend[0];
     outBuf_1[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_002.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_002.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_2
 {
     float4 a;
@@ -207,7 +207,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_2.xf, v);
     v.x += cb_2.inner[tid.x % 3].a.x + cb_2.blend[0];
     outBuf_2[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_003.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_003.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_3
 {
     float4 a;
@@ -238,7 +238,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_3.xf, v);
     v.x += cb_3.inner[tid.x % 3].a.x + cb_3.blend[0];
     outBuf_3[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_004.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_004.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_4
 {
     float4 a;
@@ -269,7 +269,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_4.xf, v);
     v.x += cb_4.inner[tid.x % 3].a.x + cb_4.blend[0];
     outBuf_4[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_005.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_005.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_5
 {
     float4 a;
@@ -300,7 +300,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_5.xf, v);
     v.x += cb_5.inner[tid.x % 3].a.x + cb_5.blend[0];
     outBuf_5[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_006.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_006.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_6
 {
     float4 a;
@@ -331,7 +331,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_6.xf, v);
     v.x += cb_6.inner[tid.x % 3].a.x + cb_6.blend[0];
     outBuf_6[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_007.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_007.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_7
 {
     float4 a;
@@ -362,7 +362,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_7.xf, v);
     v.x += cb_7.inner[tid.x % 3].a.x + cb_7.blend[0];
     outBuf_7[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_008.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_008.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_8
 {
     float4 a;
@@ -393,7 +393,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_8.xf, v);
     v.x += cb_8.inner[tid.x % 3].a.x + cb_8.blend[0];
     outBuf_8[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_009.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_009.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_9
 {
     float4 a;
@@ -424,7 +424,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_9.xf, v);
     v.x += cb_9.inner[tid.x % 3].a.x + cb_9.blend[0];
     outBuf_9[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_010.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_010.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_10
 {
     float4 a;
@@ -455,7 +455,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_10.xf, v);
     v.x += cb_10.inner[tid.x % 3].a.x + cb_10.blend[0];
     outBuf_10[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_011.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_011.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_11
 {
     float4 a;
@@ -486,7 +486,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_11.xf, v);
     v.x += cb_11.inner[tid.x % 3].a.x + cb_11.blend[0];
     outBuf_11[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_012.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_012.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_12
 {
     float4 a;
@@ -517,7 +517,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_12.xf, v);
     v.x += cb_12.inner[tid.x % 3].a.x + cb_12.blend[0];
     outBuf_12[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_013.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_013.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_13
 {
     float4 a;
@@ -548,7 +548,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_13.xf, v);
     v.x += cb_13.inner[tid.x % 3].a.x + cb_13.blend[0];
     outBuf_13[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_014.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_014.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_14
 {
     float4 a;
@@ -579,7 +579,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_14.xf, v);
     v.x += cb_14.inner[tid.x % 3].a.x + cb_14.blend[0];
     outBuf_14[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_015.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_015.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_15
 {
     float4 a;
@@ -610,7 +610,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_15.xf, v);
     v.x += cb_15.inner[tid.x % 3].a.x + cb_15.blend[0];
     outBuf_15[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_016.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_016.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_16
 {
     float4 a;
@@ -641,7 +641,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_16.xf, v);
     v.x += cb_16.inner[tid.x % 3].a.x + cb_16.blend[0];
     outBuf_16[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_017.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_017.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_17
 {
     float4 a;
@@ -672,7 +672,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_17.xf, v);
     v.x += cb_17.inner[tid.x % 3].a.x + cb_17.blend[0];
     outBuf_17[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_018.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_018.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_18
 {
     float4 a;
@@ -703,7 +703,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_18.xf, v);
     v.x += cb_18.inner[tid.x % 3].a.x + cb_18.blend[0];
     outBuf_18[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_019.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_019.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_19
 {
     float4 a;
@@ -734,7 +734,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_19.xf, v);
     v.x += cb_19.inner[tid.x % 3].a.x + cb_19.blend[0];
     outBuf_19[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_020.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_020.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_20
 {
     float4 a;
@@ -765,7 +765,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_20.xf, v);
     v.x += cb_20.inner[tid.x % 3].a.x + cb_20.blend[0];
     outBuf_20[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_021.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_021.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_21
 {
     float4 a;
@@ -796,7 +796,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_21.xf, v);
     v.x += cb_21.inner[tid.x % 3].a.x + cb_21.blend[0];
     outBuf_21[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_022.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_022.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_22
 {
     float4 a;
@@ -827,7 +827,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_22.xf, v);
     v.x += cb_22.inner[tid.x % 3].a.x + cb_22.blend[0];
     outBuf_22[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_023.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_023.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_23
 {
     float4 a;
@@ -858,7 +858,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_23.xf, v);
     v.x += cb_23.inner[tid.x % 3].a.x + cb_23.blend[0];
     outBuf_23[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_024.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_024.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_24
 {
     float4 a;
@@ -889,7 +889,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_24.xf, v);
     v.x += cb_24.inner[tid.x % 3].a.x + cb_24.blend[0];
     outBuf_24[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_025.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_025.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_25
 {
     float4 a;
@@ -920,7 +920,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_25.xf, v);
     v.x += cb_25.inner[tid.x % 3].a.x + cb_25.blend[0];
     outBuf_25[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_026.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_026.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_26
 {
     float4 a;
@@ -951,7 +951,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_26.xf, v);
     v.x += cb_26.inner[tid.x % 3].a.x + cb_26.blend[0];
     outBuf_26[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_027.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_027.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_27
 {
     float4 a;
@@ -982,7 +982,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_27.xf, v);
     v.x += cb_27.inner[tid.x % 3].a.x + cb_27.blend[0];
     outBuf_27[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_028.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_028.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_28
 {
     float4 a;
@@ -1013,7 +1013,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_28.xf, v);
     v.x += cb_28.inner[tid.x % 3].a.x + cb_28.blend[0];
     outBuf_28[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_029.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_029.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_29
 {
     float4 a;
@@ -1044,7 +1044,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_29.xf, v);
     v.x += cb_29.inner[tid.x % 3].a.x + cb_29.blend[0];
     outBuf_29[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_030.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_030.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_30
 {
     float4 a;
@@ -1075,7 +1075,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_30.xf, v);
     v.x += cb_30.inner[tid.x % 3].a.x + cb_30.blend[0];
     outBuf_30[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_031.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_031.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_31
 {
     float4 a;
@@ -1106,7 +1106,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_31.xf, v);
     v.x += cb_31.inner[tid.x % 3].a.x + cb_31.blend[0];
     outBuf_31[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_032.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_032.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_32
 {
     float4 a;
@@ -1137,7 +1137,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_32.xf, v);
     v.x += cb_32.inner[tid.x % 3].a.x + cb_32.blend[0];
     outBuf_32[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_033.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_033.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_33
 {
     float4 a;
@@ -1168,7 +1168,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_33.xf, v);
     v.x += cb_33.inner[tid.x % 3].a.x + cb_33.blend[0];
     outBuf_33[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_034.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_034.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_34
 {
     float4 a;
@@ -1199,7 +1199,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_34.xf, v);
     v.x += cb_34.inner[tid.x % 3].a.x + cb_34.blend[0];
     outBuf_34[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_035.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_035.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_35
 {
     float4 a;
@@ -1230,7 +1230,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_35.xf, v);
     v.x += cb_35.inner[tid.x % 3].a.x + cb_35.blend[0];
     outBuf_35[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_036.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_036.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_36
 {
     float4 a;
@@ -1261,7 +1261,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_36.xf, v);
     v.x += cb_36.inner[tid.x % 3].a.x + cb_36.blend[0];
     outBuf_36[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_037.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_037.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_37
 {
     float4 a;
@@ -1292,7 +1292,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_37.xf, v);
     v.x += cb_37.inner[tid.x % 3].a.x + cb_37.blend[0];
     outBuf_37[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_038.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_038.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_38
 {
     float4 a;
@@ -1323,7 +1323,7 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     v *= mul(cb_38.xf, v);
     v.x += cb_38.inner[tid.x % 3].a.x + cb_38.blend[0];
     outBuf_38[tid.x] = v;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_039.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py — do not edit by hand.
+}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_039.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct Inner_39
 {
     float4 a;
