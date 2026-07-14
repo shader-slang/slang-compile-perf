@@ -1,0 +1,80 @@
+<!doctype html><meta charset="utf-8"><title>conformance — sweep (v2026.5)</title><style>
+body{font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#1a1a1a;background:#fafafa}
+.wrap{max-width:1240px;margin:0 auto;padding:28px}
+h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bottom:2px solid #eee;padding-bottom:4px}
+.sub{color:#666;margin:0 0 18px}
+table{border-collapse:collapse;width:100%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.06);margin:8px 0 4px}
+th,td{padding:6px 10px;text-align:left;border-bottom:1px solid #eee;font-variant-numeric:tabular-nums}
+th{background:#f4f5f7;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:#555}
+td.num{text-align:right} tr:hover td{background:#fafbfc}
+.reg{color:#c0392b;font-weight:600} .flat{color:#888}
+.chart{background:#fff;border:1px solid #eee;border-radius:6px;padding:8px;margin:10px 0;overflow:auto}
+.chart svg{display:block;max-width:100%;height:auto}
+code{background:#f0f1f3;padding:1px 5px;border-radius:3px;font-size:13px}
+.note{background:#fff8e1;border-left:4px solid #f0c000;padding:10px 14px;border-radius:4px;margin:10px 0}
+.small{color:#777;font-size:12px}
+</style><div class='wrap'><p><a href='../sweep_report.html'>&larr; all workloads</a></p><h1>conformance</h1><p style='color:#444;white-space:pre-wrap'>`n` structs each conforming to a shared interface. Stresses interface
+conformance checking / witness synthesis in the front end (compiled to a
+.slang-module so the signal is sema, not codegen).
+
+Scaling null: n scales conforming structs against ONE interface; ideal checking cost is O(n).</p><p class='small'><b>bucket:</b> sema &nbsp;·&nbsp; <b>mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code></p><h2>Phase composition vs N (stacked sub-counters)</h2><p class='small'>compileInner split into phase buckets (named leaves + <code>(self)</code> residuals) stacked across the sweep sizes — the top edge is compileInner, so you can see <i>which</i> phase drives the scaling.</p><div class='chart'><svg xmlns="http://www.w3.org/2000/svg" width="1092" height="648" viewBox="0 0 1092 648" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1092" height="648" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">conformance â€” phase composition vs N (v2026.5, median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600">conformance<tspan fill="#888" font-weight="400">  8.2Ã— over N 600â†’4800</tspan></text>
+<line x1="68.0" y1="496.0" x2="1068.0" y2="496.0" stroke="#eee"/>
+<text x="64.0" y="499.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="286.0" x2="1068.0" y2="286.0" stroke="#eee"/>
+<text x="64.0" y="289.0" text-anchor="end" fill="#999">331</text>
+<line x1="68.0" y1="76.0" x2="1068.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">663</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="496.0" stroke="#333"/>
+<line x1="68.0" y1="496.0" x2="1068.0" y2="496.0" stroke="#333"/>
+<line x1="68.0" y1="496.0" x2="68.0" y2="499.0" stroke="#999"/>
+<text x="68.0" y="512.0" text-anchor="middle" fill="#666">600</text>
+<line x1="210.9" y1="496.0" x2="210.9" y2="499.0" stroke="#999"/>
+<text x="210.9" y="512.0" text-anchor="middle" fill="#666">1200</text>
+<line x1="496.6" y1="496.0" x2="496.6" y2="499.0" stroke="#999"/>
+<text x="496.6" y="512.0" text-anchor="middle" fill="#666">2400</text>
+<line x1="1068.0" y1="496.0" x2="1068.0" y2="499.0" stroke="#999"/>
+<text x="1068.0" y="512.0" text-anchor="middle" fill="#666">4800</text>
+<text x="568" y="530" text-anchor="middle" fill="#444">N</text>
+<polygon points="68.0,493.3 210.9,490.3 496.6,484.1 1068.0,472.2 1068.0,496.0 496.6,496.0 210.9,496.0 68.0,496.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance â€” parseTranslationUnit</title></polygon>
+<polygon points="68.0,473.4 210.9,457.4 496.6,425.2 1068.0,360.4 1068.0,472.2 496.6,484.1 210.9,490.3 68.0,493.3" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance â€” SemanticChecking</title></polygon>
+<polygon points="68.0,460.3 210.9,430.1 496.6,367.1 1068.0,224.9 1068.0,360.4 496.6,425.2 210.9,457.4 68.0,473.4" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance â€” generateIR</title></polygon>
+<polygon points="68.0,460.1 210.9,430.0 496.6,366.7 1068.0,224.8 1068.0,224.9 496.6,367.1 210.9,430.1 68.0,460.3" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance â€” frontEndExecute (self)</title></polygon>
+<polygon points="68.0,448.6 210.9,406.5 496.6,314.3 1068.0,108.4 1068.0,224.8 496.6,366.7 210.9,430.0 68.0,460.1" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance â€” generateOutput (self)</title></polygon>
+<polygon points="68.0,448.6 210.9,405.6 496.6,314.3 1068.0,107.1 1068.0,108.4 496.6,314.3 210.9,406.5 68.0,448.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conformance â€” compileInner (self)</title></polygon>
+<text x="12" y="546" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="554" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="564" fill="#222">parseTranslationUnit</text>
+<rect x="279" y="554" width="12" height="12" fill="#41ab5d"/>
+<text x="295" y="564" fill="#222">SemanticChecking</text>
+<rect x="546" y="554" width="12" height="12" fill="#006d2c"/>
+<text x="562" y="564" fill="#222">generateIR</text>
+<rect x="813" y="554" width="12" height="12" fill="#74c476"/>
+<text x="829" y="564" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="572" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="582" fill="#222">specializeModule</text>
+<rect x="279" y="572" width="12" height="12" fill="#2171b5"/>
+<text x="295" y="582" fill="#222">simplifyIR</text>
+<rect x="546" y="572" width="12" height="12" fill="#08306b"/>
+<text x="562" y="582" fill="#222">linkIR</text>
+<rect x="813" y="572" width="12" height="12" fill="#9e9ac8"/>
+<text x="829" y="582" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="590" width="12" height="12" fill="#807dba"/>
+<text x="28" y="600" fill="#222">legalizeResourceTypes</text>
+<rect x="279" y="590" width="12" height="12" fill="#6a51a3"/>
+<text x="295" y="600" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="546" y="590" width="12" height="12" fill="#bcbddc"/>
+<text x="562" y="600" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="813" y="590" width="12" height="12" fill="#dadaeb"/>
+<text x="829" y="600" fill="#222">performForceInlining</text>
+<rect x="12" y="608" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="618" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="279" y="608" width="12" height="12" fill="#fd8d3c"/>
+<text x="295" y="618" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="546" y="608" width="12" height="12" fill="#e6550d"/>
+<text x="562" y="618" fill="#222">generateOutput (self)</text>
+<rect x="813" y="608" width="12" height="12" fill="#969696"/>
+<text x="829" y="618" fill="#222">compileInner (self)</text>
+</svg></div><h2>Scaling analysis</h2><p class='small'>floor-subtracted power-law fit <code>(t − floor) = a·N<sup>k</sup></code>; <b>floor</b> = the <code>minimal</code> workload (fixed per-compile cost), <b>k</b> the global exponent, <b>top-2×</b> the local high-end doubling ratio.</p><table><tr><th class=num>N range</th><th class=num>floor (ms)</th><th class=num>k (work)</th><th class=num>fit R²</th><th class=num>t(N<sub>min</sub>)</th><th class=num>t(N<sub>max</sub>)</th><th class=num>top-2×</th></tr><tr><td class=num>600–4800</td><td class=num>9</td><td class='num flat'>1.07</td><td class=num>1.000</td><td class=num>75</td><td class=num>614</td><td class='num flat'>2.14×</td></tr></table><h2>Growth attribution (N=600 &rarr; N=4800)</h2><p class='small'>compileInner grows by <b>539 ms</b> across the sweep; the mutually-exclusive phase buckets below partition that growth exactly (no nested-timer double counting). <b>&times; lin</b> is the same metric as the top-level panels, per bucket: the end point vs a linear expectation anchored to the bucket's share of the <code>minimal</code> floor and fitted on the low-N half — 1.0 = grew exactly linearly, &gt;1 bends up. The super-linearity lives where &times; lin (and k) are red.</p><table><tr><th>bucket</th><th class=num>t@N=600</th><th class=num>t@N=4800</th><th class=num>&Delta; ms</th><th class=num>share</th><th class=num>&times; lin</th><th class=num>&prop;N<sup>k</sup></th></tr><tr><td>generateIR</td><td class=num>21</td><td class=num>214</td><td class=num>+193</td><td class=num>36%</td><td class='num reg'>1.26&times;</td><td class='num flat'>1.13</td></tr><tr><td>generateOutput (self)</td><td class=num>18</td><td class=num>184</td><td class=num>+165</td><td class=num>31%</td><td class='num reg'>1.32&times;</td><td class='num reg'>1.17</td></tr><tr><td>SemanticChecking</td><td class=num>31</td><td class=num>176</td><td class=num>+145</td><td class=num>27%</td><td class='num flat'>0.89&times;</td><td class='num flat'>0.90</td></tr><tr><td>parseTranslationUnit</td><td class=num>4</td><td class=num>38</td><td class=num>+33</td><td class=num>6%</td><td class='num flat'>1.07&times;</td><td class='num flat'>1.06</td></tr></table><p class='small'><b>Near-constant</b> (&le;2% of growth each): compileInner (self) (0&rarr;2 ms), frontEndExecute (self) (0&rarr;0 ms).</p><h2>Sweep numbers (median ms)</h2><table><tr><th class=num>N</th><th class=num>compileInner</th><th class=num>SemanticChecking</th><th class=num>frontEndExecute</th></tr><tr><td class=num>600</td><td class=num>75</td><td class=num>31</td><td class=num>57</td></tr><tr><td class=num>1200</td><td class=num>143</td><td class=num>52</td><td class=num>104</td></tr><tr><td class=num>2400</td><td class=num>287</td><td class=num>93</td><td class=num>204</td></tr><tr><td class=num>4800</td><td class=num>614</td><td class=num>176</td><td class=num>428</td></tr></table></div>

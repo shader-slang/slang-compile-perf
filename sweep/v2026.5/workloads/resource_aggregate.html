@@ -1,0 +1,96 @@
+<!doctype html><meta charset="utf-8"><title>resource_aggregate — sweep (v2026.5)</title><style>
+body{font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#1a1a1a;background:#fafafa}
+.wrap{max-width:1240px;margin:0 auto;padding:28px}
+h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bottom:2px solid #eee;padding-bottom:4px}
+.sub{color:#666;margin:0 0 18px}
+table{border-collapse:collapse;width:100%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.06);margin:8px 0 4px}
+th,td{padding:6px 10px;text-align:left;border-bottom:1px solid #eee;font-variant-numeric:tabular-nums}
+th{background:#f4f5f7;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:#555}
+td.num{text-align:right} tr:hover td{background:#fafbfc}
+.reg{color:#c0392b;font-weight:600} .flat{color:#888}
+.chart{background:#fff;border:1px solid #eee;border-radius:6px;padding:8px;margin:10px 0;overflow:auto}
+.chart svg{display:block;max-width:100%;height:auto}
+code{background:#f0f1f3;padding:1px 5px;border-radius:3px;font-size:13px}
+.note{background:#fff8e1;border-left:4px solid #f0c000;padding:10px 14px;border-radius:4px;margin:10px 0}
+.small{color:#777;font-size:12px}
+</style><div class='wrap'><p><a href='../sweep_report.html'>&larr; all workloads</a></p><h1>resource_aggregate</h1><p style='color:#444;white-space:pre-wrap'>n resource-bundle structs (each holding two textures, a sampler and a
+StructuredBuffer) declared at global scope and all read in the entry point.
+Nesting resource handles inside an aggregate forces `legalizeResourceTypes`
+to flatten each struct&#x27;s resource fields into individually-bound resources
+before a target can consume them — a pass no other workload triggers (every
+other workload&#x27;s only resource is a bare RWStructuredBuffer). Resources are
+kept live (sampled / indexed into the output) so dead-code elimination can&#x27;t
+drop them before legalization runs. Scales by breadth = number of bundles,
+i.e. the count of resource fields the pass must legalize; legalizeResourceTypes
+grows super-linearly in n.
+
+Scaling null: n scales resource-carrying structs, each O(1); ideal legalization cost is O(n) — the measured ~N^1.8 in legalizeResourceTypes is a genuine compiler finding, not a workload property.</p><p class='small'><b>bucket:</b> resource_legalize &nbsp;·&nbsp; <b>mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code></p><h2>Phase composition vs N (stacked sub-counters)</h2><p class='small'>compileInner split into phase buckets (named leaves + <code>(self)</code> residuals) stacked across the sweep sizes — the top edge is compileInner, so you can see <i>which</i> phase drives the scaling.</p><div class='chart'><svg xmlns="http://www.w3.org/2000/svg" width="1092" height="648" viewBox="0 0 1092 648" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1092" height="648" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">resource_aggregate â€” phase composition vs N (v2026.5, median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600">resource_aggregate<tspan fill="#888" font-weight="400">  13.9Ã— over N 80â†’640</tspan></text>
+<line x1="68.0" y1="496.0" x2="1068.0" y2="496.0" stroke="#eee"/>
+<text x="64.0" y="499.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="286.0" x2="1068.0" y2="286.0" stroke="#eee"/>
+<text x="64.0" y="289.0" text-anchor="end" fill="#999">511</text>
+<line x1="68.0" y1="76.0" x2="1068.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">1022</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="496.0" stroke="#333"/>
+<line x1="68.0" y1="496.0" x2="1068.0" y2="496.0" stroke="#333"/>
+<line x1="68.0" y1="496.0" x2="68.0" y2="499.0" stroke="#999"/>
+<text x="68.0" y="512.0" text-anchor="middle" fill="#666">80</text>
+<line x1="210.9" y1="496.0" x2="210.9" y2="499.0" stroke="#999"/>
+<text x="210.9" y="512.0" text-anchor="middle" fill="#666">160</text>
+<line x1="496.6" y1="496.0" x2="496.6" y2="499.0" stroke="#999"/>
+<text x="496.6" y="512.0" text-anchor="middle" fill="#666">320</text>
+<line x1="1068.0" y1="496.0" x2="1068.0" y2="499.0" stroke="#999"/>
+<text x="1068.0" y="512.0" text-anchor="middle" fill="#666">640</text>
+<text x="568" y="530" text-anchor="middle" fill="#444">N</text>
+<polygon points="68.0,495.8 210.9,495.6 496.6,495.3 1068.0,494.7 1068.0,496.0 496.6,496.0 210.9,496.0 68.0,496.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” parseTranslationUnit</title></polygon>
+<polygon points="68.0,485.3 210.9,482.8 496.6,477.7 1068.0,467.0 1068.0,494.7 496.6,495.3 210.9,495.6 68.0,495.8" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” SemanticChecking</title></polygon>
+<polygon points="68.0,482.8 210.9,478.9 496.6,470.5 1068.0,452.4 1068.0,467.0 496.6,477.7 210.9,482.8 68.0,485.3" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” generateIR</title></polygon>
+<polygon points="68.0,482.1 210.9,477.7 496.6,468.7 1068.0,448.4 1068.0,452.4 496.6,470.5 210.9,478.9 68.0,482.8" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” frontEndExecute (self)</title></polygon>
+<polygon points="68.0,480.9 210.9,475.5 496.6,464.3 1068.0,439.4 1068.0,448.4 496.6,468.7 210.9,477.7 68.0,482.1" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” specializeModule</title></polygon>
+<polygon points="68.0,479.5 210.9,472.8 496.6,458.2 1068.0,426.7 1068.0,439.4 496.6,464.3 210.9,475.5 68.0,480.9" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” simplifyIR</title></polygon>
+<polygon points="68.0,478.9 210.9,471.9 496.6,457.0 1068.0,424.5 1068.0,426.7 496.6,458.2 210.9,472.8 68.0,479.5" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” linkIR</title></polygon>
+<polygon points="68.0,478.9 210.9,471.9 496.6,456.9 1068.0,424.5 1068.0,424.5 496.6,457.0 210.9,471.9 68.0,478.9" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” unrollLoopsInModule</title></polygon>
+<polygon points="68.0,477.3 210.9,465.2 496.6,431.1 1068.0,325.0 1068.0,424.5 496.6,456.9 210.9,471.9 68.0,478.9" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” legalizeResourceTypes</title></polygon>
+<polygon points="68.0,476.4 210.9,461.9 496.6,416.5 1068.0,267.7 1068.0,325.0 496.6,431.1 210.9,465.2 68.0,477.3" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,476.3 210.9,461.6 496.6,415.7 1068.0,265.5 1068.0,267.7 496.6,416.5 210.9,461.9 68.0,476.4" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,476.1 210.9,461.2 496.6,414.9 1068.0,263.8 1068.0,265.5 496.6,415.7 210.9,461.6 68.0,476.3" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” performForceInlining</title></polygon>
+<polygon points="68.0,474.4 210.9,457.9 496.6,408.2 1068.0,251.9 1068.0,263.8 496.6,414.9 210.9,461.2 68.0,476.1" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,468.9 210.9,443.4 496.6,365.6 1068.0,110.5 1068.0,251.9 496.6,408.2 210.9,457.9 68.0,474.4" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” generateOutput (self)</title></polygon>
+<polygon points="68.0,467.9 210.9,442.5 496.6,363.8 1068.0,107.1 1068.0,110.5 496.6,365.6 210.9,443.4 68.0,468.9" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate â€” compileInner (self)</title></polygon>
+<text x="12" y="546" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="554" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="564" fill="#222">parseTranslationUnit</text>
+<rect x="279" y="554" width="12" height="12" fill="#41ab5d"/>
+<text x="295" y="564" fill="#222">SemanticChecking</text>
+<rect x="546" y="554" width="12" height="12" fill="#006d2c"/>
+<text x="562" y="564" fill="#222">generateIR</text>
+<rect x="813" y="554" width="12" height="12" fill="#74c476"/>
+<text x="829" y="564" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="572" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="582" fill="#222">specializeModule</text>
+<rect x="279" y="572" width="12" height="12" fill="#2171b5"/>
+<text x="295" y="582" fill="#222">simplifyIR</text>
+<rect x="546" y="572" width="12" height="12" fill="#08306b"/>
+<text x="562" y="582" fill="#222">linkIR</text>
+<rect x="813" y="572" width="12" height="12" fill="#9e9ac8"/>
+<text x="829" y="582" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="590" width="12" height="12" fill="#807dba"/>
+<text x="28" y="600" fill="#222">legalizeResourceTypes</text>
+<rect x="279" y="590" width="12" height="12" fill="#6a51a3"/>
+<text x="295" y="600" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="546" y="590" width="12" height="12" fill="#bcbddc"/>
+<text x="562" y="600" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="813" y="590" width="12" height="12" fill="#dadaeb"/>
+<text x="829" y="600" fill="#222">performForceInlining</text>
+<rect x="12" y="608" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="618" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="279" y="608" width="12" height="12" fill="#fd8d3c"/>
+<text x="295" y="618" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="546" y="608" width="12" height="12" fill="#e6550d"/>
+<text x="562" y="618" fill="#222">generateOutput (self)</text>
+<rect x="813" y="608" width="12" height="12" fill="#969696"/>
+<text x="829" y="618" fill="#222">compileInner (self)</text>
+</svg></div><h2>Scaling analysis</h2><p class='small'>floor-subtracted power-law fit <code>(t − floor) = a·N<sup>k</sup></code>; <b>floor</b> = the <code>minimal</code> workload (fixed per-compile cost), <b>k</b> the global exponent, <b>top-2×</b> the local high-end doubling ratio.</p><table><tr><th class=num>N range</th><th class=num>floor (ms)</th><th class=num>k (work)</th><th class=num>fit R²</th><th class=num>t(N<sub>min</sub>)</th><th class=num>t(N<sub>max</sub>)</th><th class=num>top-2×</th></tr><tr><td class=num>80–640</td><td class=num>9</td><td class='num reg'>1.33</td><td class=num>0.992</td><td class=num>68</td><td class=num>946</td><td class='num reg'>2.94×</td></tr></table><h2>Growth attribution (N=80 &rarr; N=640)</h2><p class='small'>compileInner grows by <b>878 ms</b> across the sweep; the mutually-exclusive phase buckets below partition that growth exactly (no nested-timer double counting). <b>&times; lin</b> is the same metric as the top-level panels, per bucket: the end point vs a linear expectation anchored to the bucket's share of the <code>minimal</code> floor and fitted on the low-N half — 1.0 = grew exactly linearly, &gt;1 bends up. The super-linearity lives where &times; lin (and k) are red.</p><table><tr><th>bucket</th><th class=num>t@N=80</th><th class=num>t@N=640</th><th class=num>&Delta; ms</th><th class=num>share</th><th class=num>&times; lin</th><th class=num>&prop;N<sup>k</sup></th></tr><tr><td>generateOutput (self)</td><td class=num>13</td><td class=num>344</td><td class=num>+331</td><td class=num>38%</td><td class='num reg'>2.74&times;</td><td class='num reg'>1.64</td></tr><tr><td>legalizeResourceTypes</td><td class=num>4</td><td class=num>242</td><td class=num>+238</td><td class=num>27%</td><td class='num reg'>4.16&times;</td><td class='num reg'>1.99</td></tr><tr><td>legalizeExistentialTypeLayout</td><td class=num>2</td><td class=num>140</td><td class=num>+137</td><td class=num>16%</td><td class='num reg'>4.77&times;</td><td class='num reg'>2.03</td></tr><tr><td>SemanticChecking</td><td class=num>26</td><td class=num>67</td><td class=num>+42</td><td class=num>5%</td><td class='num flat'>0.55&times;</td><td class='num flat'>0.53</td></tr><tr><td>generateIR</td><td class=num>6</td><td class=num>36</td><td class=num>+30</td><td class=num>3%</td><td class='num flat'>0.91&times;</td><td class='num flat'>0.89</td></tr></table><p class='small'><b>Also growing</b> (below top-5): simplifyIR (+28 ms, 3%), linkAndOptimizeIR (self) (+25 ms, 3%), specializeModule (+19 ms, 2%).</p><p class='small'><b>Near-constant</b> (&le;2% of growth each): frontEndExecute (self) (2&rarr;10 ms), compileInner (self) (2&rarr;8 ms), linkIR (1&rarr;5 ms), performMandatoryEarlyInlining (0&rarr;5 ms), performForceInlining (0&rarr;4 ms), parseTranslationUnit (1&rarr;3 ms), unrollLoopsInModule (0&rarr;0 ms).</p><h2>Sweep numbers (median ms)</h2><table><tr><th class=num>N</th><th class=num>compileInner</th><th class=num>legalizeResourceTypes</th><th class=num>linkAndOptimizeIR</th></tr><tr><td class=num>80</td><td class=num>68</td><td class=num>4</td><td class=num>19</td></tr><tr><td class=num>160</td><td class=num>130</td><td class=num>16</td><td class=num>48</td></tr><tr><td class=num>320</td><td class=num>322</td><td class=num>63</td><td class=num>147</td></tr><tr><td class=num>640</td><td class=num>946</td><td class=num>242</td><td class=num>478</td></tr></table></div>
