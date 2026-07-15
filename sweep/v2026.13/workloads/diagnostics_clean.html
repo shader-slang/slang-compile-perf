@@ -1,0 +1,86 @@
+<!doctype html><meta charset="utf-8"><title>diagnostics_clean — sweep (v2026.13)</title><style>
+body{font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#1a1a1a;background:#fafafa}
+.wrap{max-width:1240px;margin:0 auto;padding:28px}
+h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bottom:2px solid #eee;padding-bottom:4px}
+.sub{color:#666;margin:0 0 18px}
+table{border-collapse:collapse;width:100%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.06);margin:8px 0 4px}
+th,td{padding:6px 10px;text-align:left;border-bottom:1px solid #eee;font-variant-numeric:tabular-nums}
+th{background:#f4f5f7;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:#555}
+td.num{text-align:right} tr:hover td{background:#fafbfc}
+.reg{color:#c0392b;font-weight:600} .flat{color:#888}
+.chart{background:#fff;border:1px solid #eee;border-radius:6px;padding:8px;margin:10px 0;overflow:auto}
+.chart svg{display:block;max-width:100%;height:auto}
+code{background:#f0f1f3;padding:1px 5px;border-radius:3px;font-size:13px}
+.note{background:#fff8e1;border-left:4px solid #f0c000;padding:10px 14px;border-radius:4px;margin:10px 0}
+.small{color:#777;font-size:12px}
+</style><div class='wrap'><p><a href='../sweep_report.html'>&larr; all workloads</a></p><h1>diagnostics_clean</h1><p style='color:#444;white-space:pre-wrap'>N functions with distinct compile-time constants, no errors.
+
+Scaling null: n scales independent declarations; ideal cost is O(n).</p><p class='small'><b>bucket:</b> diagnostics &nbsp;·&nbsp; <b>mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code></p><h2>Phase composition vs N (stacked sub-counters)</h2><p class='small'>compileInner split into phase buckets (named leaves + <code>(self)</code> residuals) stacked across the sweep sizes — the top edge is compileInner, so you can see <i>which</i> phase drives the scaling.</p><div class='chart'><svg xmlns="http://www.w3.org/2000/svg" width="1092" height="648" viewBox="0 0 1092 648" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1092" height="648" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">diagnostics_clean — phase composition vs N (v2026.13, median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600">diagnostics_clean<tspan fill="#888" font-weight="400">  4.5× over N 400→3200</tspan></text>
+<line x1="68.0" y1="496.0" x2="1068.0" y2="496.0" stroke="#eee"/>
+<text x="64.0" y="499.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="286.0" x2="1068.0" y2="286.0" stroke="#eee"/>
+<text x="64.0" y="289.0" text-anchor="end" fill="#999">64</text>
+<line x1="68.0" y1="76.0" x2="1068.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">127</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="496.0" stroke="#333"/>
+<line x1="68.0" y1="496.0" x2="1068.0" y2="496.0" stroke="#333"/>
+<line x1="68.0" y1="496.0" x2="68.0" y2="499.0" stroke="#999"/>
+<text x="68.0" y="512.0" text-anchor="middle" fill="#666">400</text>
+<line x1="210.9" y1="496.0" x2="210.9" y2="499.0" stroke="#999"/>
+<text x="210.9" y="512.0" text-anchor="middle" fill="#666">800</text>
+<line x1="496.6" y1="496.0" x2="496.6" y2="499.0" stroke="#999"/>
+<text x="496.6" y="512.0" text-anchor="middle" fill="#666">1600</text>
+<line x1="1068.0" y1="496.0" x2="1068.0" y2="499.0" stroke="#999"/>
+<text x="1068.0" y="512.0" text-anchor="middle" fill="#666">3200</text>
+<text x="568" y="530" text-anchor="middle" fill="#444">N</text>
+<polygon points="68.0,488.8 210.9,482.4 496.6,467.3 1068.0,437.4 1068.0,496.0 496.6,496.0 210.9,496.0 68.0,496.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean — parseTranslationUnit</title></polygon>
+<polygon points="68.0,452.0 210.9,433.1 496.6,392.8 1068.0,312.1 1068.0,437.4 496.6,467.3 210.9,482.4 68.0,488.8" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean — SemanticChecking</title></polygon>
+<polygon points="68.0,423.9 210.9,383.4 496.6,298.7 1068.0,124.1 1068.0,312.1 496.6,392.8 210.9,433.1 68.0,452.0" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean — generateIR</title></polygon>
+<polygon points="68.0,422.1 210.9,382.0 496.6,297.0 1068.0,122.8 1068.0,124.1 496.6,298.7 210.9,383.4 68.0,423.9" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,421.7 210.9,381.7 496.6,296.7 1068.0,122.6 1068.0,122.8 496.6,297.0 210.9,382.0 68.0,422.1" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean — specializeModule</title></polygon>
+<polygon points="68.0,421.2 210.9,381.1 496.6,296.2 1068.0,122.3 1068.0,122.6 496.6,296.7 210.9,381.7 68.0,421.7" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean — simplifyIR</title></polygon>
+<polygon points="68.0,420.5 210.9,380.3 496.6,295.3 1068.0,121.2 1068.0,122.3 496.6,296.2 210.9,381.1 68.0,421.2" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean — linkIR</title></polygon>
+<polygon points="68.0,420.4 210.9,380.2 496.6,295.2 1068.0,121.1 1068.0,121.2 496.6,295.3 210.9,380.3 68.0,420.5" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,420.2 210.9,380.1 496.6,295.1 1068.0,121.1 1068.0,121.1 496.6,295.2 210.9,380.2 68.0,420.4" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,419.4 210.9,378.5 496.6,292.6 1068.0,117.5 1068.0,121.1 496.6,295.1 210.9,380.1 68.0,420.2" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,419.4 210.9,378.4 496.6,292.5 1068.0,117.5 1068.0,117.5 496.6,292.6 210.9,378.5 68.0,419.4" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean — performForceInlining</title></polygon>
+<polygon points="68.0,418.0 210.9,377.8 496.6,292.5 1068.0,117.5 1068.0,117.5 496.6,292.5 210.9,378.4 68.0,419.4" fill="#4a1486" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean — linkAndOptimizeIR (self)</title></polygon>
+<polygon points="68.0,410.2 210.9,369.0 496.6,284.6 1068.0,108.0 1068.0,117.5 496.6,292.5 210.9,377.8 68.0,418.0" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean — generateOutput (self)</title></polygon>
+<polygon points="68.0,409.3 210.9,369.0 496.6,282.7 1068.0,107.1 1068.0,108.0 496.6,284.6 210.9,369.0 68.0,410.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics_clean — compileInner (self)</title></polygon>
+<text x="12" y="546" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="554" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="564" fill="#222">parseTranslationUnit</text>
+<rect x="279" y="554" width="12" height="12" fill="#41ab5d"/>
+<text x="295" y="564" fill="#222">SemanticChecking</text>
+<rect x="546" y="554" width="12" height="12" fill="#006d2c"/>
+<text x="562" y="564" fill="#222">generateIR</text>
+<rect x="813" y="554" width="12" height="12" fill="#74c476"/>
+<text x="829" y="564" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="572" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="582" fill="#222">specializeModule</text>
+<rect x="279" y="572" width="12" height="12" fill="#2171b5"/>
+<text x="295" y="582" fill="#222">simplifyIR</text>
+<rect x="546" y="572" width="12" height="12" fill="#08306b"/>
+<text x="562" y="582" fill="#222">linkIR</text>
+<rect x="813" y="572" width="12" height="12" fill="#9e9ac8"/>
+<text x="829" y="582" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="590" width="12" height="12" fill="#807dba"/>
+<text x="28" y="600" fill="#222">legalizeResourceTypes</text>
+<rect x="279" y="590" width="12" height="12" fill="#6a51a3"/>
+<text x="295" y="600" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="546" y="590" width="12" height="12" fill="#bcbddc"/>
+<text x="562" y="600" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="813" y="590" width="12" height="12" fill="#dadaeb"/>
+<text x="829" y="600" fill="#222">performForceInlining</text>
+<rect x="12" y="608" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="618" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="279" y="608" width="12" height="12" fill="#fd8d3c"/>
+<text x="295" y="618" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="546" y="608" width="12" height="12" fill="#e6550d"/>
+<text x="562" y="618" fill="#222">generateOutput (self)</text>
+<rect x="813" y="608" width="12" height="12" fill="#969696"/>
+<text x="829" y="618" fill="#222">compileInner (self)</text>
+</svg></div><h2>Scaling analysis</h2><p class='small'>floor-subtracted power-law fit <code>(t − floor) = a·N<sup>k</sup></code>; <b>floor</b> = the <code>minimal</code> workload (fixed per-compile cost), <b>k</b> the global exponent, <b>top-2×</b> the local high-end doubling ratio.</p><table><tr><th class=num>N range</th><th class=num>floor (ms)</th><th class=num>k (work)</th><th class=num>fit R²</th><th class=num>t(N<sub>min</sub>)</th><th class=num>t(N<sub>max</sub>)</th><th class=num>top-2×</th></tr><tr><td class=num>400–3200</td><td class=num>11</td><td class='num flat'>0.94</td><td class=num>0.999</td><td class=num>26</td><td class=num>118</td><td class='num flat'>1.82×</td></tr></table><h2>Growth attribution (N=400 &rarr; N=3200)</h2><p class='small'>compileInner grows by <b>91 ms</b> across the sweep; the mutually-exclusive phase buckets below partition that growth exactly (no nested-timer double counting). <b>&times; lin</b> is the same metric as the top-level panels, per bucket: the end point vs a linear expectation anchored to the bucket's share of the <code>minimal</code> floor and fitted on the low-N half — 1.0 = grew exactly linearly, &gt;1 bends up. The super-linearity lives where &times; lin (and k) are red.</p><table><tr><th>bucket</th><th class=num>t@N=400</th><th class=num>t@N=3200</th><th class=num>&Delta; ms</th><th class=num>share</th><th class=num>&times; lin</th><th class=num>&prop;N<sup>k</sup></th></tr><tr><td>generateIR</td><td class=num>9</td><td class=num>57</td><td class=num>+48</td><td class=num>53%</td><td class='num flat'>0.99&times;</td><td class='num flat'>0.97</td></tr><tr><td>SemanticChecking</td><td class=num>11</td><td class=num>38</td><td class=num>+27</td><td class=num>29%</td><td class='num flat'>0.84&times;</td><td class='num flat'>0.84</td></tr><tr><td>parseTranslationUnit</td><td class=num>2</td><td class=num>18</td><td class=num>+16</td><td class=num>17%</td><td class='num flat'>1.10&times;</td><td class='num flat'>1.04</td></tr></table><p class='small'><b>Near-constant</b> (&le;2% of growth each): generateOutput (self) (2&rarr;3 ms), performMandatoryEarlyInlining (0&rarr;1 ms), frontEndExecute (self) (1&rarr;0 ms), linkIR (0&rarr;0 ms), compileInner (self) (0&rarr;0 ms), simplifyIR (0&rarr;0 ms), specializeModule (0&rarr;0 ms), legalizeExistentialTypeLayout (0&rarr;0 ms), legalizeResourceTypes (0&rarr;0 ms), performForceInlining (0&rarr;0 ms), linkAndOptimizeIR (self) (0&rarr;0 ms).</p><h2>Sweep numbers (median ms)</h2><table><tr><th class=num>N</th><th class=num>compileInner</th><th class=num>frontEndExecute</th><th class=num>SemanticChecking</th></tr><tr><td class=num>400</td><td class=num>26</td><td class=num>22</td><td class=num>11</td></tr><tr><td class=num>800</td><td class=num>38</td><td class=num>34</td><td class=num>15</td></tr><tr><td class=num>1600</td><td class=num>65</td><td class=num>60</td><td class=num>23</td></tr><tr><td class=num>3200</td><td class=num>118</td><td class=num>113</td><td class=num>38</td></tr></table></div>
