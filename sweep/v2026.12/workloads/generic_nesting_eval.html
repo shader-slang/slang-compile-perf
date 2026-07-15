@@ -1,0 +1,85 @@
+<!doctype html><meta charset="utf-8"><title>generic_nesting_eval — sweep (v2026.12)</title><style>
+body{font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#1a1a1a;background:#fafafa}
+.wrap{max-width:1240px;margin:0 auto;padding:28px}
+h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bottom:2px solid #eee;padding-bottom:4px}
+.sub{color:#666;margin:0 0 18px}
+table{border-collapse:collapse;width:100%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.06);margin:8px 0 4px}
+th,td{padding:6px 10px;text-align:left;border-bottom:1px solid #eee;font-variant-numeric:tabular-nums}
+th{background:#f4f5f7;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:#555}
+td.num{text-align:right} tr:hover td{background:#fafbfc}
+.reg{color:#c0392b;font-weight:600} .flat{color:#888}
+.chart{background:#fff;border:1px solid #eee;border-radius:6px;padding:8px;margin:10px 0;overflow:auto}
+.chart svg{display:block;max-width:100%;height:auto}
+code{background:#f0f1f3;padding:1px 5px;border-radius:3px;font-size:13px}
+.note{background:#fff8e1;border-left:4px solid #f0c000;padding:10px 14px;border-radius:4px;margin:10px 0}
+.small{color:#777;font-size:12px}
+</style><div class='wrap'><p><a href='../sweep_report.html'>&larr; all workloads</a></p><h1>generic_nesting_eval</h1><p style='color:#444;white-space:pre-wrap'>The generic_nesting chain with a method REQUIRED by the constraint
+interface and called recursively through the witnesses (`first.eval() +
+second.eval()`), so overload resolution and inheritance-witness lookup run
+at every nesting level instead of only type checking the aliases. Same
+depth axis as generic_nesting, much steeper constant: measured ~2.9x per
+level when added (2026-07), vs ~3-4x per level from substitution alone
+but starting an order of magnitude higher at equal depth.
+
+Scaling null: each level adds O(1) declarations and one call site, so
+ideal front-end cost is O(n). The ladder tops out below generic_nesting&#x27;s
+because the per-level multiplier bites sooner.</p><p class='small'><b>bucket:</b> sema &nbsp;·&nbsp; <b>mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code></p><h2>Phase composition vs N (stacked sub-counters)</h2><p class='small'>compileInner split into phase buckets (named leaves + <code>(self)</code> residuals) stacked across the sweep sizes — the top edge is compileInner, so you can see <i>which</i> phase drives the scaling.</p><div class='chart'><svg xmlns="http://www.w3.org/2000/svg" width="1092" height="648" viewBox="0 0 1092 648" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1092" height="648" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">generic_nesting_eval — phase composition vs N (v2026.12, median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600">generic_nesting_eval<tspan fill="#888" font-weight="400">  142.2× over N 8→14</tspan></text>
+<line x1="68.0" y1="496.0" x2="1068.0" y2="496.0" stroke="#eee"/>
+<text x="64.0" y="499.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="286.0" x2="1068.0" y2="286.0" stroke="#eee"/>
+<text x="64.0" y="289.0" text-anchor="end" fill="#999">505</text>
+<line x1="68.0" y1="76.0" x2="1068.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">1010</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="496.0" stroke="#333"/>
+<line x1="68.0" y1="496.0" x2="1068.0" y2="496.0" stroke="#333"/>
+<line x1="68.0" y1="496.0" x2="68.0" y2="499.0" stroke="#999"/>
+<text x="68.0" y="512.0" text-anchor="middle" fill="#666">8</text>
+<line x1="401.3" y1="496.0" x2="401.3" y2="499.0" stroke="#999"/>
+<text x="401.3" y="512.0" text-anchor="middle" fill="#666">10</text>
+<line x1="734.7" y1="496.0" x2="734.7" y2="499.0" stroke="#999"/>
+<text x="734.7" y="512.0" text-anchor="middle" fill="#666">12</text>
+<line x1="1068.0" y1="496.0" x2="1068.0" y2="499.0" stroke="#999"/>
+<text x="1068.0" y="512.0" text-anchor="middle" fill="#666">14</text>
+<text x="568" y="530" text-anchor="middle" fill="#444">N</text>
+<polygon points="68.0,495.9 401.3,495.9 734.7,495.9 1068.0,495.9 1068.0,496.0 734.7,496.0 401.3,496.0 68.0,496.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_nesting_eval — parseTranslationUnit</title></polygon>
+<polygon points="68.0,495.2 401.3,495.1 734.7,495.2 1068.0,495.1 1068.0,495.9 734.7,495.9 401.3,495.9 68.0,495.9" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_nesting_eval — SemanticChecking</title></polygon>
+<polygon points="68.0,493.8 401.3,488.3 734.7,447.3 1068.0,107.7 1068.0,495.1 734.7,495.2 401.3,495.1 68.0,495.2" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_nesting_eval — generateIR</title></polygon>
+<polygon points="68.0,493.7 401.3,488.3 734.7,447.3 1068.0,107.6 1068.0,107.7 734.7,447.3 401.3,488.3 68.0,493.8" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_nesting_eval — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,493.3 401.3,487.8 734.7,446.8 1068.0,107.1 1068.0,107.6 734.7,447.3 401.3,488.3 68.0,493.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_nesting_eval — generateOutput (self)</title></polygon>
+<text x="12" y="546" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="554" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="564" fill="#222">parseTranslationUnit</text>
+<rect x="279" y="554" width="12" height="12" fill="#41ab5d"/>
+<text x="295" y="564" fill="#222">SemanticChecking</text>
+<rect x="546" y="554" width="12" height="12" fill="#006d2c"/>
+<text x="562" y="564" fill="#222">generateIR</text>
+<rect x="813" y="554" width="12" height="12" fill="#74c476"/>
+<text x="829" y="564" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="572" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="582" fill="#222">specializeModule</text>
+<rect x="279" y="572" width="12" height="12" fill="#2171b5"/>
+<text x="295" y="582" fill="#222">simplifyIR</text>
+<rect x="546" y="572" width="12" height="12" fill="#08306b"/>
+<text x="562" y="582" fill="#222">linkIR</text>
+<rect x="813" y="572" width="12" height="12" fill="#9e9ac8"/>
+<text x="829" y="582" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="590" width="12" height="12" fill="#807dba"/>
+<text x="28" y="600" fill="#222">legalizeResourceTypes</text>
+<rect x="279" y="590" width="12" height="12" fill="#6a51a3"/>
+<text x="295" y="600" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="546" y="590" width="12" height="12" fill="#bcbddc"/>
+<text x="562" y="600" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="813" y="590" width="12" height="12" fill="#dadaeb"/>
+<text x="829" y="600" fill="#222">performForceInlining</text>
+<rect x="12" y="608" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="618" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="279" y="608" width="12" height="12" fill="#fd8d3c"/>
+<text x="295" y="618" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="546" y="608" width="12" height="12" fill="#e6550d"/>
+<text x="562" y="618" fill="#222">generateOutput (self)</text>
+<rect x="813" y="608" width="12" height="12" fill="#969696"/>
+<text x="829" y="618" fill="#222">compileInner (self)</text>
+</svg></div><h2>Scaling analysis</h2><p class='small'>floor-subtracted power-law fit <code>(t − floor) = a·N<sup>k</sup></code>; <b>floor</b> = the <code>minimal</code> workload (fixed per-compile cost), <b>k</b> the global exponent, <b>top-2×</b> the local high-end doubling ratio.</p><table><tr><th class=num>N range</th><th class=num>floor (ms)</th><th class=num>k (work)</th><th class=num>fit R²</th><th class=num>t(N<sub>min</sub>)</th><th class=num>t(N<sub>max</sub>)</th><th class=num>top-2×</th></tr><tr><td class=num>8–14</td><td class=num>14</td><td class='num reg'>15.17</td><td class=num>0.999</td><td class=num>7</td><td class=num>936</td><td class='num reg'>7.91×</td></tr></table><h2>Growth attribution (N=8 &rarr; N=14)</h2><p class='small'>compileInner grows by <b>929 ms</b> across the sweep; the mutually-exclusive phase buckets below partition that growth exactly (no nested-timer double counting). <b>&times; lin</b> is the same metric as the top-level panels, per bucket: the end point vs a linear expectation anchored to the bucket's share of the <code>minimal</code> floor and fitted on the low-N half — 1.0 = grew exactly linearly, &gt;1 bends up. The super-linearity lives where &times; lin (and k) are red.</p><table><tr><th>bucket</th><th class=num>t@N=8</th><th class=num>t@N=14</th><th class=num>&Delta; ms</th><th class=num>share</th><th class=num>&times; lin</th><th class=num>&prop;N<sup>k</sup></th></tr><tr><td>generateIR</td><td class=num>3</td><td class=num>932</td><td class=num>+929</td><td class=num>100%</td><td class='num reg'>59.28&times;</td><td class='num reg'>10.77</td></tr></table><p class='small'><b>Near-constant</b> (&le;2% of growth each): SemanticChecking (2&rarr;2 ms), generateOutput (self) (1&rarr;1 ms), parseTranslationUnit (0&rarr;0 ms), frontEndExecute (self) (0&rarr;0 ms).</p><h2>Sweep numbers (median ms)</h2><table><tr><th class=num>N</th><th class=num>compileInner</th><th class=num>SemanticChecking</th><th class=num>frontEndExecute</th></tr><tr><td class=num>8</td><td class=num>7</td><td class=num>2</td><td class=num>5</td></tr><tr><td class=num>10</td><td class=num>20</td><td class=num>2</td><td class=num>19</td></tr><tr><td class=num>12</td><td class=num>118</td><td class=num>2</td><td class=num>117</td></tr><tr><td class=num>14</td><td class=num>936</td><td class=num>2</td><td class=num>934</td></tr></table></div>
