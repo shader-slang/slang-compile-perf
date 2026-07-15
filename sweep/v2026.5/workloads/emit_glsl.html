@@ -19,8 +19,8 @@ harness (same source, varying -target) to isolate generateOutput cost.
 
 Scaling null: n scales op count and the emitted output is O(n); ideal codegen cost is O(n).</p><p class='small'><b>bucket:</b> codegen_source &nbsp;·&nbsp; <b>mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target glsl -entry computeMain</code></p><h2>Phase composition vs N (stacked sub-counters)</h2><p class='small'>compileInner split into phase buckets (named leaves + <code>(self)</code> residuals) stacked across the sweep sizes — the top edge is compileInner, so you can see <i>which</i> phase drives the scaling.</p><div class='chart'><svg xmlns="http://www.w3.org/2000/svg" width="1092" height="648" viewBox="0 0 1092 648" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1092" height="648" fill="white"/>
-<text x="12" y="30" font-size="20" font-weight="bold">emit_glsl â€” phase composition vs N (v2026.5, median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600">emit_glsl<tspan fill="#888" font-weight="400">  28.9Ã— over N 100â†’800</tspan></text>
+<text x="12" y="30" font-size="20" font-weight="bold">emit_glsl — phase composition vs N (v2026.5, median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600">emit_glsl<tspan fill="#888" font-weight="400">  28.9× over N 100→800</tspan></text>
 <line x1="68.0" y1="496.0" x2="1068.0" y2="496.0" stroke="#eee"/>
 <text x="64.0" y="499.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="286.0" x2="1068.0" y2="286.0" stroke="#eee"/>
@@ -38,20 +38,20 @@ Scaling null: n scales op count and the emitted output is O(n); ideal codegen co
 <line x1="1068.0" y1="496.0" x2="1068.0" y2="499.0" stroke="#999"/>
 <text x="1068.0" y="512.0" text-anchor="middle" fill="#666">800</text>
 <text x="568" y="530" text-anchor="middle" fill="#444">N</text>
-<polygon points="68.0,495.9 210.9,495.9 496.6,495.8 1068.0,495.6 1068.0,496.0 496.6,496.0 210.9,496.0 68.0,496.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl â€” parseTranslationUnit</title></polygon>
-<polygon points="68.0,490.2 210.9,487.9 496.6,481.8 1068.0,473.9 1068.0,495.6 496.6,495.8 210.9,495.9 68.0,495.9" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl â€” SemanticChecking</title></polygon>
-<polygon points="68.0,489.4 210.9,486.7 496.6,479.6 1068.0,470.3 1068.0,473.9 496.6,481.8 210.9,487.9 68.0,490.2" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl â€” generateIR</title></polygon>
-<polygon points="68.0,489.3 210.9,486.6 496.6,479.5 1068.0,470.2 1068.0,470.3 496.6,479.6 210.9,486.7 68.0,489.4" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl â€” frontEndExecute (self)</title></polygon>
-<polygon points="68.0,489.0 210.9,486.0 496.6,478.3 1068.0,467.9 1068.0,470.2 496.6,479.5 210.9,486.6 68.0,489.3" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl â€” specializeModule</title></polygon>
-<polygon points="68.0,488.7 210.9,485.5 496.6,477.3 1068.0,466.1 1068.0,467.9 496.6,478.3 210.9,486.0 68.0,489.0" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl â€” simplifyIR</title></polygon>
-<polygon points="68.0,488.6 210.9,485.4 496.6,477.0 1068.0,465.8 1068.0,466.1 496.6,477.3 210.9,485.5 68.0,488.7" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl â€” linkIR</title></polygon>
-<polygon points="68.0,488.6 210.9,485.4 496.6,477.0 1068.0,465.8 1068.0,465.8 496.6,477.0 210.9,485.4 68.0,488.6" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl â€” unrollLoopsInModule</title></polygon>
-<polygon points="68.0,487.3 210.9,480.7 496.6,455.2 1068.0,377.7 1068.0,465.8 496.6,477.0 210.9,485.4 68.0,488.6" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl â€” legalizeResourceTypes</title></polygon>
-<polygon points="68.0,486.1 210.9,476.0 496.6,433.3 1068.0,289.6 1068.0,377.7 496.6,455.2 210.9,480.7 68.0,487.3" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl â€” legalizeExistentialTypeLayout</title></polygon>
-<polygon points="68.0,486.1 210.9,476.0 496.6,433.2 1068.0,289.5 1068.0,289.6 496.6,433.3 210.9,476.0 68.0,486.1" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl â€” performMandatoryEarlyInlining</title></polygon>
-<polygon points="68.0,486.1 210.9,476.0 496.6,433.2 1068.0,289.5 1068.0,289.5 496.6,433.2 210.9,476.0 68.0,486.1" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl â€” performForceInlining</title></polygon>
-<polygon points="68.0,482.6 210.9,465.0 496.6,385.8 1068.0,107.1 1068.0,289.5 496.6,433.2 210.9,476.0 68.0,486.1" fill="#fd8d3c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl â€” emitEntryPointsSourceFromIR</title></polygon>
-<polygon points="68.0,482.5 210.9,464.9 496.6,385.8 1068.0,107.1 1068.0,107.1 496.6,385.8 210.9,465.0 68.0,482.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl â€” compileInner (self)</title></polygon>
+<polygon points="68.0,495.9 210.9,495.9 496.6,495.8 1068.0,495.6 1068.0,496.0 496.6,496.0 210.9,496.0 68.0,496.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl — parseTranslationUnit</title></polygon>
+<polygon points="68.0,490.2 210.9,487.9 496.6,481.8 1068.0,473.9 1068.0,495.6 496.6,495.8 210.9,495.9 68.0,495.9" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl — SemanticChecking</title></polygon>
+<polygon points="68.0,489.4 210.9,486.7 496.6,479.6 1068.0,470.3 1068.0,473.9 496.6,481.8 210.9,487.9 68.0,490.2" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl — generateIR</title></polygon>
+<polygon points="68.0,489.3 210.9,486.6 496.6,479.5 1068.0,470.2 1068.0,470.3 496.6,479.6 210.9,486.7 68.0,489.4" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,489.0 210.9,486.0 496.6,478.3 1068.0,467.9 1068.0,470.2 496.6,479.5 210.9,486.6 68.0,489.3" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl — specializeModule</title></polygon>
+<polygon points="68.0,488.7 210.9,485.5 496.6,477.3 1068.0,466.1 1068.0,467.9 496.6,478.3 210.9,486.0 68.0,489.0" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl — simplifyIR</title></polygon>
+<polygon points="68.0,488.6 210.9,485.4 496.6,477.0 1068.0,465.8 1068.0,466.1 496.6,477.3 210.9,485.5 68.0,488.7" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl — linkIR</title></polygon>
+<polygon points="68.0,488.6 210.9,485.4 496.6,477.0 1068.0,465.8 1068.0,465.8 496.6,477.0 210.9,485.4 68.0,488.6" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl — unrollLoopsInModule</title></polygon>
+<polygon points="68.0,487.3 210.9,480.7 496.6,455.2 1068.0,377.7 1068.0,465.8 496.6,477.0 210.9,485.4 68.0,488.6" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl — legalizeResourceTypes</title></polygon>
+<polygon points="68.0,486.1 210.9,476.0 496.6,433.3 1068.0,289.6 1068.0,377.7 496.6,455.2 210.9,480.7 68.0,487.3" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="68.0,486.1 210.9,476.0 496.6,433.2 1068.0,289.5 1068.0,289.6 496.6,433.3 210.9,476.0 68.0,486.1" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl — performMandatoryEarlyInlining</title></polygon>
+<polygon points="68.0,486.1 210.9,476.0 496.6,433.2 1068.0,289.5 1068.0,289.5 496.6,433.2 210.9,476.0 68.0,486.1" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl — performForceInlining</title></polygon>
+<polygon points="68.0,482.6 210.9,465.0 496.6,385.8 1068.0,107.1 1068.0,289.5 496.6,433.2 210.9,476.0 68.0,486.1" fill="#fd8d3c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl — emitEntryPointsSourceFromIR</title></polygon>
+<polygon points="68.0,482.5 210.9,464.9 496.6,385.8 1068.0,107.1 1068.0,107.1 496.6,385.8 210.9,465.0 68.0,482.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>emit_glsl — compileInner (self)</title></polygon>
 <text x="12" y="546" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="554" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="564" fill="#222">parseTranslationUnit</text>
