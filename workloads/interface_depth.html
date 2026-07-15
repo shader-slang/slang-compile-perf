@@ -1,0 +1,184 @@
+<!doctype html><meta charset=utf-8><title>interface_depth — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; back</a></p><h1 style='font-size:21px;margin:0 0 6px'>interface_depth</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>A linear interface inheritance chain n deep (`interface I_k : I_{k-1}`)
+with one struct conforming to the most-derived interface (`I_n`) and one
+generic function constrained to the ROOT (`I0`), so satisfying the
+constraint walks the inheritance chain through all n levels.
+Scales the interface-hierarchy depth axis of calcInheritanceInfo — a
+different graph than generic_nesting's type-argument nesting.
+
+Scaling null: each level adds O(1) declarations, so ideal inheritance-
+info cost is O(n) (or O(n^2) for an all-pairs facet walk); measured
+~N^3.4 when added (2026-07).</p><p style='color:#666;font-size:13px'><b>bucket:</b> sema &nbsp;·&nbsp; <b>compile mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 64</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Across releases</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="680" viewBox="0 0 1132 680" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="680" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">interface_depth — Across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">interface_depth<tspan fill="#888" font-weight="400" text-decoration="none">  1.25×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">7.1</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">14</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">25.12</text>
+<line x1="113.2" y1="516.0" x2="113.2" y2="519.0" stroke="#999"/>
+<text x="113.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 113.2 531.0)">25.13</text>
+<line x1="158.4" y1="516.0" x2="158.4" y2="519.0" stroke="#999"/>
+<text x="158.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 158.4 531.0)">25.14</text>
+<line x1="203.7" y1="516.0" x2="203.7" y2="519.0" stroke="#999"/>
+<text x="203.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 203.7 531.0)">25.15</text>
+<line x1="248.9" y1="516.0" x2="248.9" y2="519.0" stroke="#999"/>
+<text x="248.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 248.9 531.0)">25.16</text>
+<line x1="294.1" y1="516.0" x2="294.1" y2="519.0" stroke="#999"/>
+<text x="294.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 294.1 531.0)">25.17</text>
+<line x1="339.3" y1="516.0" x2="339.3" y2="519.0" stroke="#999"/>
+<text x="339.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 339.3 531.0)">25.18</text>
+<line x1="384.5" y1="516.0" x2="384.5" y2="519.0" stroke="#999"/>
+<text x="384.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 384.5 531.0)">25.19</text>
+<line x1="429.7" y1="516.0" x2="429.7" y2="519.0" stroke="#999"/>
+<text x="429.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 429.7 531.0)">25.20</text>
+<line x1="475.0" y1="516.0" x2="475.0" y2="519.0" stroke="#999"/>
+<text x="475.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 475.0 531.0)">25.21</text>
+<line x1="520.2" y1="516.0" x2="520.2" y2="519.0" stroke="#999"/>
+<text x="520.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 520.2 531.0)">25.22</text>
+<line x1="565.4" y1="516.0" x2="565.4" y2="519.0" stroke="#999"/>
+<text x="565.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 565.4 531.0)">25.23</text>
+<line x1="610.6" y1="516.0" x2="610.6" y2="519.0" stroke="#999"/>
+<text x="610.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 610.6 531.0)">25.24</text>
+<line x1="655.8" y1="516.0" x2="655.8" y2="519.0" stroke="#999"/>
+<text x="655.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 655.8 531.0)">26.1</text>
+<line x1="701.0" y1="516.0" x2="701.0" y2="519.0" stroke="#999"/>
+<text x="701.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 701.0 531.0)">26.2</text>
+<line x1="746.3" y1="516.0" x2="746.3" y2="519.0" stroke="#999"/>
+<text x="746.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 746.3 531.0)">26.3</text>
+<line x1="791.5" y1="516.0" x2="791.5" y2="519.0" stroke="#999"/>
+<text x="791.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 791.5 531.0)">26.4</text>
+<line x1="836.7" y1="516.0" x2="836.7" y2="519.0" stroke="#999"/>
+<text x="836.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 836.7 531.0)">26.5</text>
+<line x1="881.9" y1="516.0" x2="881.9" y2="519.0" stroke="#999"/>
+<text x="881.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 881.9 531.0)">26.7</text>
+<line x1="927.1" y1="516.0" x2="927.1" y2="519.0" stroke="#999"/>
+<text x="927.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 927.1 531.0)">26.8</text>
+<line x1="972.3" y1="516.0" x2="972.3" y2="519.0" stroke="#999"/>
+<text x="972.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 972.3 531.0)">26.9</text>
+<line x1="1017.6" y1="516.0" x2="1017.6" y2="519.0" stroke="#999"/>
+<text x="1017.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1017.6 531.0)">26.10</text>
+<line x1="1062.8" y1="516.0" x2="1062.8" y2="519.0" stroke="#999"/>
+<text x="1062.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1062.8 531.0)">26.11</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.12</text>
+<polygon points="68.0,516.0 113.2,482.3 158.4,502.1 203.7,506.4 248.9,507.6 294.1,507.0 339.3,507.3 384.5,507.0 429.7,506.7 475.0,506.7 520.2,507.0 565.4,507.3 610.6,505.8 610.6,516.0 565.4,516.0 520.2,516.0 475.0,516.0 429.7,516.0 384.5,516.0 339.3,516.0 294.1,516.0 248.9,516.0 203.7,516.0 158.4,516.0 113.2,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>interface_depth — parseTranslationUnit</title></polygon>
+<polygon points="68.0,361.2 113.2,292.5 158.4,294.3 203.7,280.4 248.9,286.0 294.1,282.6 339.3,273.0 384.5,264.6 429.7,275.1 475.0,274.8 520.2,290.3 565.4,288.8 610.6,288.1 610.6,505.8 565.4,507.3 520.2,507.0 475.0,506.7 429.7,506.7 384.5,507.0 339.3,507.3 294.1,507.0 248.9,507.6 203.7,506.4 158.4,502.1 113.2,482.3 68.0,516.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>interface_depth — SemanticChecking</title></polygon>
+<polygon points="68.0,299.3 113.2,211.7 158.4,211.1 203.7,201.2 248.9,206.7 294.1,201.8 339.3,190.9 384.5,183.8 429.7,192.2 475.0,188.5 520.2,207.0 565.4,205.5 610.6,204.9 610.6,288.1 565.4,288.8 520.2,290.3 475.0,274.8 429.7,275.1 384.5,264.6 339.3,273.0 294.1,282.6 248.9,286.0 203.7,280.4 158.4,294.3 113.2,292.5 68.0,361.2" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>interface_depth — generateIR</title></polygon>
+<polygon points="68.0,268.3 113.2,208.9 158.4,203.0 203.7,194.0 248.9,203.6 294.1,198.1 339.3,188.8 384.5,175.2 429.7,189.1 475.0,171.4 520.2,193.7 565.4,205.5 610.6,200.5 610.6,204.9 565.4,205.5 520.2,207.0 475.0,188.5 429.7,192.2 384.5,183.8 339.3,190.9 294.1,201.8 248.9,206.7 203.7,201.2 158.4,211.1 113.2,211.7 68.0,299.3" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>interface_depth — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,237.4 113.2,149.1 158.4,143.3 203.7,136.5 248.9,145.4 294.1,135.8 339.3,125.9 384.5,114.8 429.7,126.5 475.0,108.6 520.2,125.9 565.4,138.7 610.6,129.6 610.6,200.5 565.4,205.5 520.2,193.7 475.0,171.4 429.7,189.1 384.5,175.2 339.3,188.8 294.1,198.1 248.9,203.6 203.7,194.0 158.4,203.0 113.2,208.9 68.0,268.3" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>interface_depth — generateOutput (self)</title></polygon>
+<polygon points="68.0,206.4 113.2,149.1 158.4,143.3 203.7,134.3 248.9,145.4 294.1,135.8 339.3,125.9 384.5,112.9 429.7,126.5 475.0,108.6 520.2,125.9 565.4,138.7 610.6,129.6 610.6,129.6 565.4,138.7 520.2,125.9 475.0,108.6 429.7,126.5 384.5,114.8 339.3,125.9 294.1,135.8 248.9,145.4 203.7,136.5 158.4,143.3 113.2,149.1 68.0,237.4" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>interface_depth — compileInner (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="650" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="640" width="12" height="12" fill="#fd8d3c"/>
+<text x="305" y="650" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#e6550d"/>
+<text x="582" y="650" fill="#222">generateOutput (self)</text>
+<rect x="843" y="640" width="12" height="12" fill="#969696"/>
+<text x="859" y="650" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 64); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>interface_depth.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+interface I0 { float get(); }
+interface I1 : I0 { }
+interface I2 : I1 { }
+interface I3 : I2 { }
+interface I4 : I3 { }
+interface I5 : I4 { }
+interface I6 : I5 { }
+interface I7 : I6 { }
+interface I8 : I7 { }
+interface I9 : I8 { }
+interface I10 : I9 { }
+interface I11 : I10 { }
+interface I12 : I11 { }
+interface I13 : I12 { }
+interface I14 : I13 { }
+interface I15 : I14 { }
+interface I16 : I15 { }
+interface I17 : I16 { }
+interface I18 : I17 { }
+interface I19 : I18 { }
+interface I20 : I19 { }
+interface I21 : I20 { }
+interface I22 : I21 { }
+interface I23 : I22 { }
+interface I24 : I23 { }
+interface I25 : I24 { }
+interface I26 : I25 { }
+interface I27 : I26 { }
+interface I28 : I27 { }
+interface I29 : I28 { }
+interface I30 : I29 { }
+interface I31 : I30 { }
+interface I32 : I31 { }
+interface I33 : I32 { }
+interface I34 : I33 { }
+interface I35 : I34 { }
+interface I36 : I35 { }
+interface I37 : I36 { }
+interface I38 : I37 { }
+interface I39 : I38 { }
+interface I40 : I39 { }
+interface I41 : I40 { }
+interface I42 : I41 { }
+interface I43 : I42 { }
+interface I44 : I43 { }
+interface I45 : I44 { }
+interface I46 : I45 { }
+interface I47 : I46 { }
+interface I48 : I47 { }
+interface I49 : I48 { }
+interface I50 : I49 { }
+interface I51 : I50 { }
+interface I52 : I51 { }
+interface I53 : I52 { }
+interface I54 : I53 { }
+interface I55 : I54 { }
+interface I56 : I55 { }
+interface I57 : I56 { }
+interface I58 : I57 { }
+interface I59 : I58 { }
+interface I60 : I59 { }
+interface I61 : I60 { }
+interface I62 : I61 { }
+interface I63 : I62 { }
+interface I64 : I63 { }
+
+struct S : I64 { float get() { return 1.0; } }
+
+float use&lt;T : I0&gt;(T t) { return t.get(); }
+
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+[shader("compute")]
+[numthreads(1, 1, 1)]
+void computeMain() { S s; outBuf[0] = use(s); }</pre></body>

@@ -1,12 +1,12 @@
-<!doctype html><meta charset=utf-8><title>api_module_graph_bin — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>api_module_graph_bin</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>n modules in a layered import DAG (width 8, each module importing up to
+<!doctype html><meta charset=utf-8><title>api_module_graph_bin — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; back</a></p><h1 style='font-size:21px;margin:0 0 6px'>api_module_graph_bin</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>n modules in a layered import DAG (width 8, each module importing up to
 3 from the previous layer) plus a shared interface base and a root that the
 driver loads by name. Unlike module_link's flat one-function modules, each
 module carries an interface conformance, a generic call, and cross-module
 calls — the shape of a real renderer shader library, loaded through the
-API's import-resolution path rather than precompiled .slang-module files.</p><p style='color:#666;font-size:13px'><b>bucket:</b> api_overhead &nbsp;·&nbsp; <b>compile mode:</b> api &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 150</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="662" viewBox="0 0 1132 662" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+API's import-resolution path rather than precompiled .slang-module files.</p><p style='color:#666;font-size:13px'><b>bucket:</b> api_overhead &nbsp;·&nbsp; <b>compile mode:</b> api &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 150</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Across releases</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="662" viewBox="0 0 1132 662" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="662" fill="white"/>
-<text x="12" y="30" font-size="20" font-weight="bold">api_module_graph_bin — full phase breakdown across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">api_module_graph_bin<tspan fill="#888" font-weight="400" text-decoration="none">  1.25×</tspan></text>
+<text x="12" y="30" font-size="20" font-weight="bold">api_module_graph_bin — Across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">api_module_graph_bin<tspan fill="#888" font-weight="400" text-decoration="none">  1.46×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -15,87 +15,61 @@ API's import-resolution path rather than precompiled .slang-module files.</p><p 
 <text x="64.0" y="79.0" text-anchor="end" fill="#999">221</text>
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
-<line x1="706.9" y1="76.0" x2="706.9" y2="516.0" stroke="#e8731a" stroke-width="1.2" stroke-dasharray="4 3"/>
-<text x="709.9" y="87.0" fill="#e8731a" font-size="11">daily →</text>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">25.14</text>
-<line x1="97.7" y1="516.0" x2="97.7" y2="519.0" stroke="#999"/>
-<text x="97.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 97.7 531.0)">25.15</text>
-<line x1="127.4" y1="516.0" x2="127.4" y2="519.0" stroke="#999"/>
-<text x="127.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 127.4 531.0)">25.16</text>
-<line x1="157.1" y1="516.0" x2="157.1" y2="519.0" stroke="#999"/>
-<text x="157.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 157.1 531.0)">25.17</text>
-<line x1="186.9" y1="516.0" x2="186.9" y2="519.0" stroke="#999"/>
-<text x="186.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 186.9 531.0)">25.18</text>
-<line x1="216.6" y1="516.0" x2="216.6" y2="519.0" stroke="#999"/>
-<text x="216.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 216.6 531.0)">25.19</text>
-<line x1="246.3" y1="516.0" x2="246.3" y2="519.0" stroke="#999"/>
-<text x="246.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 246.3 531.0)">25.20</text>
-<line x1="276.0" y1="516.0" x2="276.0" y2="519.0" stroke="#999"/>
-<text x="276.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 276.0 531.0)">25.21</text>
-<line x1="305.7" y1="516.0" x2="305.7" y2="519.0" stroke="#999"/>
-<text x="305.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 305.7 531.0)">25.22</text>
-<line x1="335.4" y1="516.0" x2="335.4" y2="519.0" stroke="#999"/>
-<text x="335.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 335.4 531.0)">25.23</text>
-<line x1="365.1" y1="516.0" x2="365.1" y2="519.0" stroke="#999"/>
-<text x="365.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 365.1 531.0)">25.24</text>
-<line x1="394.9" y1="516.0" x2="394.9" y2="519.0" stroke="#999"/>
-<text x="394.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 394.9 531.0)">26.1</text>
-<line x1="424.6" y1="516.0" x2="424.6" y2="519.0" stroke="#999"/>
-<text x="424.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 424.6 531.0)">26.2</text>
-<line x1="454.3" y1="516.0" x2="454.3" y2="519.0" stroke="#999"/>
-<text x="454.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 454.3 531.0)">26.3</text>
-<line x1="484.0" y1="516.0" x2="484.0" y2="519.0" stroke="#999"/>
-<text x="484.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 484.0 531.0)">26.4</text>
-<line x1="513.7" y1="516.0" x2="513.7" y2="519.0" stroke="#999"/>
-<text x="513.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 513.7 531.0)">26.5</text>
-<line x1="543.4" y1="516.0" x2="543.4" y2="519.0" stroke="#999"/>
-<text x="543.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 543.4 531.0)">26.7</text>
-<line x1="573.1" y1="516.0" x2="573.1" y2="519.0" stroke="#999"/>
-<text x="573.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 573.1 531.0)">26.8</text>
-<line x1="602.9" y1="516.0" x2="602.9" y2="519.0" stroke="#999"/>
-<text x="602.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 602.9 531.0)">26.9</text>
-<line x1="632.6" y1="516.0" x2="632.6" y2="519.0" stroke="#999"/>
-<text x="632.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 632.6 531.0)">26.10</text>
-<line x1="662.3" y1="516.0" x2="662.3" y2="519.0" stroke="#999"/>
-<text x="662.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 662.3 531.0)">26.11</text>
-<line x1="692.0" y1="516.0" x2="692.0" y2="519.0" stroke="#999"/>
-<text x="692.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 692.0 531.0)">26.12</text>
-<line x1="721.7" y1="516.0" x2="721.7" y2="519.0" stroke="#999"/>
-<text x="721.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 721.7 531.0)">06-25</text>
-<line x1="751.4" y1="516.0" x2="751.4" y2="519.0" stroke="#999"/>
-<text x="751.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 751.4 531.0)">06-26</text>
-<line x1="781.1" y1="516.0" x2="781.1" y2="519.0" stroke="#999"/>
-<text x="781.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 781.1 531.0)">06-28</text>
-<line x1="810.9" y1="516.0" x2="810.9" y2="519.0" stroke="#999"/>
-<text x="810.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 810.9 531.0)">07-01</text>
-<line x1="840.6" y1="516.0" x2="840.6" y2="519.0" stroke="#999"/>
-<text x="840.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 840.6 531.0)">07-02</text>
-<line x1="870.3" y1="516.0" x2="870.3" y2="519.0" stroke="#999"/>
-<text x="870.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 870.3 531.0)">07-03</text>
-<line x1="900.0" y1="516.0" x2="900.0" y2="519.0" stroke="#999"/>
-<text x="900.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 900.0 531.0)">07-06</text>
-<line x1="929.7" y1="516.0" x2="929.7" y2="519.0" stroke="#999"/>
-<text x="929.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 929.7 531.0)">07-07</text>
-<line x1="959.4" y1="516.0" x2="959.4" y2="519.0" stroke="#999"/>
-<text x="959.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 959.4 531.0)">07-08</text>
-<line x1="989.1" y1="516.0" x2="989.1" y2="519.0" stroke="#999"/>
-<text x="989.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 989.1 531.0)">07-09</text>
-<line x1="1018.9" y1="516.0" x2="1018.9" y2="519.0" stroke="#999"/>
-<text x="1018.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1018.9 531.0)">07-10</text>
-<line x1="1048.6" y1="516.0" x2="1048.6" y2="519.0" stroke="#999"/>
-<text x="1048.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1048.6 531.0)">07-11</text>
-<line x1="1078.3" y1="516.0" x2="1078.3" y2="519.0" stroke="#999"/>
-<text x="1078.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1078.3 531.0)">07-14</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">25.12</text>
+<line x1="113.2" y1="516.0" x2="113.2" y2="519.0" stroke="#999"/>
+<text x="113.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 113.2 531.0)">25.13</text>
+<line x1="158.4" y1="516.0" x2="158.4" y2="519.0" stroke="#999"/>
+<text x="158.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 158.4 531.0)">25.14</text>
+<line x1="203.7" y1="516.0" x2="203.7" y2="519.0" stroke="#999"/>
+<text x="203.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 203.7 531.0)">25.15</text>
+<line x1="248.9" y1="516.0" x2="248.9" y2="519.0" stroke="#999"/>
+<text x="248.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 248.9 531.0)">25.16</text>
+<line x1="294.1" y1="516.0" x2="294.1" y2="519.0" stroke="#999"/>
+<text x="294.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 294.1 531.0)">25.17</text>
+<line x1="339.3" y1="516.0" x2="339.3" y2="519.0" stroke="#999"/>
+<text x="339.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 339.3 531.0)">25.18</text>
+<line x1="384.5" y1="516.0" x2="384.5" y2="519.0" stroke="#999"/>
+<text x="384.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 384.5 531.0)">25.19</text>
+<line x1="429.7" y1="516.0" x2="429.7" y2="519.0" stroke="#999"/>
+<text x="429.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 429.7 531.0)">25.20</text>
+<line x1="475.0" y1="516.0" x2="475.0" y2="519.0" stroke="#999"/>
+<text x="475.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 475.0 531.0)">25.21</text>
+<line x1="520.2" y1="516.0" x2="520.2" y2="519.0" stroke="#999"/>
+<text x="520.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 520.2 531.0)">25.22</text>
+<line x1="565.4" y1="516.0" x2="565.4" y2="519.0" stroke="#999"/>
+<text x="565.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 565.4 531.0)">25.23</text>
+<line x1="610.6" y1="516.0" x2="610.6" y2="519.0" stroke="#999"/>
+<text x="610.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 610.6 531.0)">25.24</text>
+<line x1="655.8" y1="516.0" x2="655.8" y2="519.0" stroke="#999"/>
+<text x="655.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 655.8 531.0)">26.1</text>
+<line x1="701.0" y1="516.0" x2="701.0" y2="519.0" stroke="#999"/>
+<text x="701.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 701.0 531.0)">26.2</text>
+<line x1="746.3" y1="516.0" x2="746.3" y2="519.0" stroke="#999"/>
+<text x="746.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 746.3 531.0)">26.3</text>
+<line x1="791.5" y1="516.0" x2="791.5" y2="519.0" stroke="#999"/>
+<text x="791.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 791.5 531.0)">26.4</text>
+<line x1="836.7" y1="516.0" x2="836.7" y2="519.0" stroke="#999"/>
+<text x="836.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 836.7 531.0)">26.5</text>
+<line x1="881.9" y1="516.0" x2="881.9" y2="519.0" stroke="#999"/>
+<text x="881.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 881.9 531.0)">26.7</text>
+<line x1="927.1" y1="516.0" x2="927.1" y2="519.0" stroke="#999"/>
+<text x="927.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 927.1 531.0)">26.8</text>
+<line x1="972.3" y1="516.0" x2="972.3" y2="519.0" stroke="#999"/>
+<text x="972.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 972.3 531.0)">26.9</text>
+<line x1="1017.6" y1="516.0" x2="1017.6" y2="519.0" stroke="#999"/>
+<text x="1017.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1017.6 531.0)">26.10</text>
+<line x1="1062.8" y1="516.0" x2="1062.8" y2="519.0" stroke="#999"/>
+<text x="1062.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1062.8 531.0)">26.11</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">07-15</text>
-<polygon points="68.0,369.2 97.7,438.3 127.4,441.0 157.1,413.5 186.9,424.0 216.6,424.8 246.3,428.6 276.0,430.0 305.7,454.1 335.4,454.6 365.1,454.3 394.9,452.3 424.6,451.9 454.3,452.0 484.0,449.5 513.7,447.7 543.4,382.4 573.1,381.5 602.9,368.3 632.6,350.8 662.3,394.8 692.0,391.3 721.7,386.5 751.4,387.2 781.1,384.8 810.9,386.7 840.6,386.7 870.3,385.2 900.0,385.7 929.7,388.8 959.4,385.9 989.1,387.3 1018.9,385.6 1048.6,387.1 1078.3,389.6 1108.0,396.8 1108.0,516.0 1078.3,516.0 1048.6,516.0 1018.9,516.0 989.1,516.0 959.4,516.0 929.7,516.0 900.0,516.0 870.3,516.0 840.6,516.0 810.9,516.0 781.1,516.0 751.4,516.0 721.7,516.0 692.0,516.0 662.3,516.0 632.6,516.0 602.9,516.0 573.1,516.0 543.4,516.0 513.7,516.0 484.0,516.0 454.3,516.0 424.6,516.0 394.9,516.0 365.1,516.0 335.4,516.0 305.7,516.0 276.0,516.0 246.3,516.0 216.6,516.0 186.9,516.0 157.1,516.0 127.4,516.0 97.7,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiCreateGlobalSession</title></polygon>
-<polygon points="68.0,369.2 97.7,438.3 127.4,441.0 157.1,413.4 186.9,424.0 216.6,424.8 246.3,428.6 276.0,429.9 305.7,454.1 335.4,454.6 365.1,454.3 394.9,452.3 424.6,451.8 454.3,452.0 484.0,449.5 513.7,447.6 543.4,382.4 573.1,381.5 602.9,368.3 632.6,350.8 662.3,394.8 692.0,391.2 721.7,386.5 751.4,387.1 781.1,384.8 810.9,386.7 840.6,386.7 870.3,385.2 900.0,385.7 929.7,388.8 959.4,385.9 989.1,387.3 1018.9,385.6 1048.6,387.1 1078.3,389.6 1108.0,396.8 1108.0,396.8 1078.3,389.6 1048.6,387.1 1018.9,385.6 989.1,387.3 959.4,385.9 929.7,388.8 900.0,385.7 870.3,385.2 840.6,386.7 810.9,386.7 781.1,384.8 751.4,387.2 721.7,386.5 692.0,391.3 662.3,394.8 632.6,350.8 602.9,368.3 573.1,381.5 543.4,382.4 513.7,447.7 484.0,449.5 454.3,452.0 424.6,451.9 394.9,452.3 365.1,454.3 335.4,454.6 305.7,454.1 276.0,430.0 246.3,428.6 216.6,424.8 186.9,424.0 157.1,413.5 127.4,441.0 97.7,438.3 68.0,369.2" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiCreateSession</title></polygon>
-<polygon points="68.0,317.0 97.7,349.2 127.4,355.7 157.1,275.8 186.9,302.2 216.6,307.4 246.3,304.3 276.0,312.1 305.7,322.6 335.4,317.2 365.1,314.3 394.9,303.6 424.6,304.0 454.3,304.9 484.0,294.1 513.7,299.1 543.4,235.3 573.1,231.0 602.9,204.0 632.6,191.4 662.3,267.8 692.0,270.9 721.7,245.6 751.4,252.3 781.1,257.5 810.9,256.0 840.6,253.3 870.3,247.0 900.0,255.3 929.7,253.3 959.4,249.5 989.1,254.8 1018.9,259.1 1048.6,248.4 1078.3,258.3 1108.0,283.9 1108.0,396.8 1078.3,389.6 1048.6,387.1 1018.9,385.6 989.1,387.3 959.4,385.9 929.7,388.8 900.0,385.7 870.3,385.2 840.6,386.7 810.9,386.7 781.1,384.8 751.4,387.1 721.7,386.5 692.0,391.2 662.3,394.8 632.6,350.8 602.9,368.3 573.1,381.5 543.4,382.4 513.7,447.6 484.0,449.5 454.3,452.0 424.6,451.8 394.9,452.3 365.1,454.3 335.4,454.6 305.7,454.1 276.0,429.9 246.3,428.6 216.6,424.8 186.9,424.0 157.1,413.4 127.4,441.0 97.7,438.3 68.0,369.2" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiLoadModule</title></polygon>
-<polygon points="68.0,317.0 97.7,349.2 127.4,355.7 157.1,275.8 186.9,302.2 216.6,307.4 246.3,304.3 276.0,312.1 305.7,322.6 335.4,317.2 365.1,314.3 394.9,303.6 424.6,304.0 454.3,304.9 484.0,294.1 513.7,299.1 543.4,235.3 573.1,230.9 602.9,204.0 632.6,191.4 662.3,267.8 692.0,270.9 721.7,245.6 751.4,252.3 781.1,257.5 810.9,256.0 840.6,253.2 870.3,247.0 900.0,255.3 929.7,253.3 959.4,249.5 989.1,254.8 1018.9,259.1 1048.6,248.4 1078.3,258.3 1108.0,283.9 1108.0,283.9 1078.3,258.3 1048.6,248.4 1018.9,259.1 989.1,254.8 959.4,249.5 929.7,253.3 900.0,255.3 870.3,247.0 840.6,253.3 810.9,256.0 781.1,257.5 751.4,252.3 721.7,245.6 692.0,270.9 662.3,267.8 632.6,191.4 602.9,204.0 573.1,231.0 543.4,235.3 513.7,299.1 484.0,294.1 454.3,304.9 424.6,304.0 394.9,303.6 365.1,314.3 335.4,317.2 305.7,322.6 276.0,312.1 246.3,304.3 216.6,307.4 186.9,302.2 157.1,275.8 127.4,355.7 97.7,349.2 68.0,317.0" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiFindEntryPoint</title></polygon>
-<polygon points="68.0,317.0 97.7,349.1 127.4,355.6 157.1,275.8 186.9,302.2 216.6,307.4 246.3,304.2 276.0,312.1 305.7,322.6 335.4,317.2 365.1,314.2 394.9,303.6 424.6,304.0 454.3,304.9 484.0,294.0 513.7,299.0 543.4,235.1 573.1,230.8 602.9,203.9 632.6,191.3 662.3,267.7 692.0,270.8 721.7,245.5 751.4,252.2 781.1,257.4 810.9,255.9 840.6,253.1 870.3,246.9 900.0,255.2 929.7,253.2 959.4,249.4 989.1,254.7 1018.9,259.0 1048.6,248.2 1078.3,258.2 1108.0,283.8 1108.0,283.9 1078.3,258.3 1048.6,248.4 1018.9,259.1 989.1,254.8 959.4,249.5 929.7,253.3 900.0,255.3 870.3,247.0 840.6,253.2 810.9,256.0 781.1,257.5 751.4,252.3 721.7,245.6 692.0,270.9 662.3,267.8 632.6,191.4 602.9,204.0 573.1,230.9 543.4,235.3 513.7,299.1 484.0,294.1 454.3,304.9 424.6,304.0 394.9,303.6 365.1,314.3 335.4,317.2 305.7,322.6 276.0,312.1 246.3,304.3 216.6,307.4 186.9,302.2 157.1,275.8 127.4,355.7 97.7,349.2 68.0,317.0" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiComposite</title></polygon>
-<polygon points="68.0,316.8 97.7,348.6 127.4,355.1 157.1,275.1 186.9,301.7 216.6,306.9 246.3,303.8 276.0,311.6 305.7,322.0 335.4,316.6 365.1,313.7 394.9,302.9 424.6,303.4 454.3,304.4 484.0,291.1 513.7,296.5 543.4,232.9 573.1,228.4 602.9,201.4 632.6,188.9 662.3,265.4 692.0,269.0 721.7,243.4 751.4,250.2 781.1,255.2 810.9,253.9 840.6,251.1 870.3,244.7 900.0,253.3 929.7,251.1 959.4,247.3 989.1,252.7 1018.9,257.2 1048.6,246.1 1078.3,256.0 1108.0,281.5 1108.0,283.8 1078.3,258.2 1048.6,248.2 1018.9,259.0 989.1,254.7 959.4,249.4 929.7,253.2 900.0,255.2 870.3,246.9 840.6,253.1 810.9,255.9 781.1,257.4 751.4,252.2 721.7,245.5 692.0,270.8 662.3,267.7 632.6,191.3 602.9,203.9 573.1,230.8 543.4,235.1 513.7,299.0 484.0,294.0 454.3,304.9 424.6,304.0 394.9,303.6 365.1,314.2 335.4,317.2 305.7,322.6 276.0,312.1 246.3,304.2 216.6,307.4 186.9,302.2 157.1,275.8 127.4,355.6 97.7,349.1 68.0,317.0" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiLink</title></polygon>
-<polygon points="68.0,306.9 97.7,329.9 127.4,336.0 157.1,243.6 186.9,277.2 216.6,282.9 246.3,278.8 276.0,287.0 305.7,295.3 335.4,288.1 365.1,284.2 394.9,274.3 424.6,273.0 454.3,274.1 484.0,261.6 513.7,265.7 543.4,159.4 573.1,154.1 602.9,113.3 632.6,108.6 662.3,229.2 692.0,235.8 721.7,208.6 751.4,213.8 781.1,221.7 810.9,219.0 840.6,215.1 870.3,209.5 900.0,218.4 929.7,219.0 959.4,212.1 989.1,220.0 1018.9,225.5 1048.6,213.1 1078.3,222.3 1108.0,254.2 1108.0,281.5 1078.3,256.0 1048.6,246.1 1018.9,257.2 989.1,252.7 959.4,247.3 929.7,251.1 900.0,253.3 870.3,244.7 840.6,251.1 810.9,253.9 781.1,255.2 751.4,250.2 721.7,243.4 692.0,269.0 662.3,265.4 632.6,188.9 602.9,201.4 573.1,228.4 543.4,232.9 513.7,296.5 484.0,291.1 454.3,304.4 424.6,303.4 394.9,302.9 365.1,313.7 335.4,316.6 305.7,322.0 276.0,311.6 246.3,303.8 216.6,306.9 186.9,301.7 157.1,275.1 127.4,355.1 97.7,348.6 68.0,316.8" fill="#fd8d3c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiGetCode</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.12</text>
+<polygon points="68.0,376.2 113.2,364.4 158.4,336.8 203.7,434.1 248.9,436.4 294.1,434.8 339.3,434.1 384.5,433.6 429.7,432.8 475.0,430.4 520.2,454.8 565.4,455.3 610.6,454.4 655.8,452.3 701.0,451.9 746.3,452.0 791.5,449.5 836.7,447.7 881.9,382.4 927.1,381.5 972.3,368.3 1017.6,350.8 1062.8,394.8 1108.0,391.3 1108.0,516.0 1062.8,516.0 1017.6,516.0 972.3,516.0 927.1,516.0 881.9,516.0 836.7,516.0 791.5,516.0 746.3,516.0 701.0,516.0 655.8,516.0 610.6,516.0 565.4,516.0 520.2,516.0 475.0,516.0 429.7,516.0 384.5,516.0 339.3,516.0 294.1,516.0 248.9,516.0 203.7,516.0 158.4,516.0 113.2,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiCreateGlobalSession</title></polygon>
+<polygon points="68.0,375.9 113.2,364.2 158.4,336.7 203.7,434.1 248.9,436.3 294.1,434.8 339.3,434.0 384.5,433.6 429.7,432.7 475.0,430.4 520.2,454.8 565.4,455.3 610.6,454.4 655.8,452.3 701.0,451.8 746.3,452.0 791.5,449.5 836.7,447.6 881.9,382.4 927.1,381.5 972.3,368.3 1017.6,350.8 1062.8,394.8 1108.0,391.2 1108.0,391.3 1062.8,394.8 1017.6,350.8 972.3,368.3 927.1,381.5 881.9,382.4 836.7,447.7 791.5,449.5 746.3,452.0 701.0,451.9 655.8,452.3 610.6,454.4 565.4,455.3 520.2,454.8 475.0,430.4 429.7,432.8 384.5,433.6 339.3,434.1 294.1,434.8 248.9,436.4 203.7,434.1 158.4,336.8 113.2,364.4 68.0,376.2" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiCreateSession</title></polygon>
+<polygon points="68.0,332.4 113.2,308.9 158.4,266.2 203.7,345.0 248.9,345.4 294.1,328.2 339.3,326.4 384.5,323.3 429.7,321.0 475.0,309.6 520.2,317.0 565.4,325.6 610.6,310.5 655.8,303.6 701.0,304.0 746.3,304.9 791.5,294.1 836.7,299.1 881.9,235.3 927.1,231.0 972.3,204.0 1017.6,191.4 1062.8,267.8 1108.0,270.9 1108.0,391.2 1062.8,394.8 1017.6,350.8 972.3,368.3 927.1,381.5 881.9,382.4 836.7,447.6 791.5,449.5 746.3,452.0 701.0,451.8 655.8,452.3 610.6,454.4 565.4,455.3 520.2,454.8 475.0,430.4 429.7,432.7 384.5,433.6 339.3,434.0 294.1,434.8 248.9,436.3 203.7,434.1 158.4,336.7 113.2,364.2 68.0,375.9" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiLoadModule</title></polygon>
+<polygon points="68.0,332.4 113.2,308.9 158.4,266.2 203.7,345.0 248.9,345.4 294.1,328.2 339.3,326.4 384.5,323.3 429.7,321.0 475.0,309.6 520.2,317.0 565.4,325.6 610.6,310.5 655.8,303.6 701.0,304.0 746.3,304.9 791.5,294.1 836.7,299.1 881.9,235.3 927.1,230.9 972.3,204.0 1017.6,191.4 1062.8,267.8 1108.0,270.9 1108.0,270.9 1062.8,267.8 1017.6,191.4 972.3,204.0 927.1,231.0 881.9,235.3 836.7,299.1 791.5,294.1 746.3,304.9 701.0,304.0 655.8,303.6 610.6,310.5 565.4,325.6 520.2,317.0 475.0,309.6 429.7,321.0 384.5,323.3 339.3,326.4 294.1,328.2 248.9,345.4 203.7,345.0 158.4,266.2 113.2,308.9 68.0,332.4" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiFindEntryPoint</title></polygon>
+<polygon points="68.0,332.4 113.2,308.9 158.4,266.2 203.7,345.0 248.9,345.4 294.1,328.2 339.3,326.4 384.5,323.3 429.7,320.9 475.0,309.5 520.2,317.0 565.4,325.5 610.6,310.5 655.8,303.6 701.0,304.0 746.3,304.9 791.5,294.0 836.7,299.0 881.9,235.1 927.1,230.8 972.3,203.9 1017.6,191.3 1062.8,267.7 1108.0,270.8 1108.0,270.9 1062.8,267.8 1017.6,191.4 972.3,204.0 927.1,230.9 881.9,235.3 836.7,299.1 791.5,294.1 746.3,304.9 701.0,304.0 655.8,303.6 610.6,310.5 565.4,325.6 520.2,317.0 475.0,309.6 429.7,321.0 384.5,323.3 339.3,326.4 294.1,328.2 248.9,345.4 203.7,345.0 158.4,266.2 113.2,308.9 68.0,332.4" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiComposite</title></polygon>
+<polygon points="68.0,332.2 113.2,308.6 158.4,265.9 203.7,344.5 248.9,344.8 294.1,327.8 339.3,325.9 384.5,322.8 429.7,320.5 475.0,309.1 520.2,316.4 565.4,324.9 610.6,309.9 655.8,302.9 701.0,303.4 746.3,304.4 791.5,291.1 836.7,296.5 881.9,232.9 927.1,228.4 972.3,201.4 1017.6,188.9 1062.8,265.4 1108.0,269.0 1108.0,270.8 1062.8,267.7 1017.6,191.3 972.3,203.9 927.1,230.8 881.9,235.1 836.7,299.0 791.5,294.0 746.3,304.9 701.0,304.0 655.8,303.6 610.6,310.5 565.4,325.5 520.2,317.0 475.0,309.5 429.7,320.9 384.5,323.3 339.3,326.4 294.1,328.2 248.9,345.4 203.7,345.0 158.4,266.2 113.2,308.9 68.0,332.4" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiLink</title></polygon>
+<polygon points="68.0,324.4 113.2,298.2 158.4,253.0 203.7,326.0 248.9,324.9 294.1,306.1 339.3,304.3 384.5,301.1 429.7,299.0 475.0,286.6 520.2,290.4 565.4,298.2 610.6,282.9 655.8,274.3 701.0,273.0 746.3,274.1 791.5,261.6 836.7,265.7 881.9,159.4 927.1,154.1 972.3,113.3 1017.6,108.6 1062.8,229.2 1108.0,235.8 1108.0,269.0 1062.8,265.4 1017.6,188.9 972.3,201.4 927.1,228.4 881.9,232.9 836.7,296.5 791.5,291.1 746.3,304.4 701.0,303.4 655.8,302.9 610.6,309.9 565.4,324.9 520.2,316.4 475.0,309.1 429.7,320.5 384.5,322.8 339.3,325.9 294.1,327.8 248.9,344.8 203.7,344.5 158.4,265.9 113.2,308.6 68.0,332.2" fill="#fd8d3c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiGetCode</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">apiCreateGlobalSession</text>
@@ -117,7 +91,75 @@ API's import-resolution path rather than precompiled .slang-module files.</p><p 
 <text x="28" y="632" fill="#222">apiReflection</text>
 <rect x="289" y="622" width="12" height="12" fill="#969696"/>
 <text x="305" y="632" fill="#222">apiTotal (self)</text>
-</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 150); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_base.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+</svg><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="662" viewBox="0 0 1132 662" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="662" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">api_module_graph_bin — Daily tip-of-tree (last 30 days) (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">api_module_graph_bin<tspan fill="#888" font-weight="400" text-decoration="none">  0.85×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">83</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">167</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">06-25</text>
+<line x1="148.0" y1="516.0" x2="148.0" y2="519.0" stroke="#999"/>
+<text x="148.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 148.0 531.0)">06-26</text>
+<line x1="228.0" y1="516.0" x2="228.0" y2="519.0" stroke="#999"/>
+<text x="228.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 228.0 531.0)">06-28</text>
+<line x1="308.0" y1="516.0" x2="308.0" y2="519.0" stroke="#999"/>
+<text x="308.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 308.0 531.0)">07-01</text>
+<line x1="388.0" y1="516.0" x2="388.0" y2="519.0" stroke="#999"/>
+<text x="388.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 388.0 531.0)">07-02</text>
+<line x1="468.0" y1="516.0" x2="468.0" y2="519.0" stroke="#999"/>
+<text x="468.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 468.0 531.0)">07-03</text>
+<line x1="548.0" y1="516.0" x2="548.0" y2="519.0" stroke="#999"/>
+<text x="548.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 548.0 531.0)">07-06</text>
+<line x1="628.0" y1="516.0" x2="628.0" y2="519.0" stroke="#999"/>
+<text x="628.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 628.0 531.0)">07-07</text>
+<line x1="708.0" y1="516.0" x2="708.0" y2="519.0" stroke="#999"/>
+<text x="708.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 708.0 531.0)">07-08</text>
+<line x1="788.0" y1="516.0" x2="788.0" y2="519.0" stroke="#999"/>
+<text x="788.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 788.0 531.0)">07-09</text>
+<line x1="868.0" y1="516.0" x2="868.0" y2="519.0" stroke="#999"/>
+<text x="868.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 868.0 531.0)">07-10</text>
+<line x1="948.0" y1="516.0" x2="948.0" y2="519.0" stroke="#999"/>
+<text x="948.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 948.0 531.0)">07-11</text>
+<line x1="1028.0" y1="516.0" x2="1028.0" y2="519.0" stroke="#999"/>
+<text x="1028.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1028.0 531.0)">07-14</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">07-15</text>
+<polygon points="68.0,344.3 148.0,345.2 228.0,342.2 308.0,344.7 388.0,344.6 468.0,342.7 548.0,343.3 628.0,347.4 708.0,343.6 788.0,345.4 868.0,343.2 948.0,345.1 1028.0,348.5 1108.0,358.0 1108.0,516.0 1028.0,516.0 948.0,516.0 868.0,516.0 788.0,516.0 708.0,516.0 628.0,516.0 548.0,516.0 468.0,516.0 388.0,516.0 308.0,516.0 228.0,516.0 148.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiCreateGlobalSession</title></polygon>
+<polygon points="68.0,344.3 148.0,345.2 228.0,342.1 308.0,344.6 388.0,344.6 468.0,342.6 548.0,343.3 628.0,347.4 708.0,343.6 788.0,345.4 868.0,343.1 948.0,345.1 1028.0,348.5 1108.0,358.0 1108.0,358.0 1028.0,348.5 948.0,345.1 868.0,343.2 788.0,345.4 708.0,343.6 628.0,347.4 548.0,343.3 468.0,342.7 388.0,344.6 308.0,344.7 228.0,342.2 148.0,345.2 68.0,344.3" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiCreateSession</title></polygon>
+<polygon points="68.0,157.6 148.0,166.5 228.0,173.3 308.0,171.4 388.0,167.7 468.0,159.4 548.0,170.5 628.0,167.8 708.0,162.7 788.0,169.8 868.0,175.5 948.0,161.2 1028.0,174.4 1108.0,208.3 1108.0,358.0 1028.0,348.5 948.0,345.1 868.0,343.1 788.0,345.4 708.0,343.6 628.0,347.4 548.0,343.3 468.0,342.6 388.0,344.6 308.0,344.6 228.0,342.1 148.0,345.2 68.0,344.3" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiLoadModule</title></polygon>
+<polygon points="68.0,157.6 148.0,166.5 228.0,173.3 308.0,171.4 388.0,167.7 468.0,159.4 548.0,170.5 628.0,167.8 708.0,162.7 788.0,169.8 868.0,175.5 948.0,161.2 1028.0,174.4 1108.0,208.3 1108.0,208.3 1028.0,174.4 948.0,161.2 868.0,175.5 788.0,169.8 708.0,162.7 628.0,167.8 548.0,170.5 468.0,159.4 388.0,167.7 308.0,171.4 228.0,173.3 148.0,166.5 68.0,157.6" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiFindEntryPoint</title></polygon>
+<polygon points="68.0,157.5 148.0,166.4 228.0,173.2 308.0,171.2 388.0,167.6 468.0,159.3 548.0,170.4 628.0,167.7 708.0,162.6 788.0,169.6 868.0,175.4 948.0,161.1 1028.0,174.3 1108.0,208.2 1108.0,208.3 1028.0,174.4 948.0,161.2 868.0,175.5 788.0,169.8 708.0,162.7 628.0,167.8 548.0,170.5 468.0,159.4 388.0,167.7 308.0,171.4 228.0,173.3 148.0,166.5 68.0,157.6" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiComposite</title></polygon>
+<polygon points="68.0,154.7 148.0,163.6 228.0,170.3 308.0,168.6 388.0,164.9 468.0,156.4 548.0,167.8 628.0,164.8 708.0,159.9 788.0,166.9 868.0,173.0 948.0,158.3 1028.0,171.3 1108.0,205.1 1108.0,208.2 1028.0,174.3 948.0,161.1 868.0,175.4 788.0,169.6 708.0,162.6 628.0,167.7 548.0,170.4 468.0,159.3 388.0,167.6 308.0,171.2 228.0,173.2 148.0,166.4 68.0,157.5" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiLink</title></polygon>
+<polygon points="68.0,108.6 148.0,115.4 228.0,125.8 308.0,122.3 388.0,117.2 468.0,109.7 548.0,121.6 628.0,122.3 708.0,113.2 788.0,123.6 868.0,130.9 948.0,114.5 1028.0,126.6 1108.0,169.0 1108.0,205.1 1028.0,171.3 948.0,158.3 868.0,173.0 788.0,166.9 708.0,159.9 628.0,164.8 548.0,167.8 468.0,156.4 388.0,164.9 308.0,168.6 228.0,170.3 148.0,163.6 68.0,154.7" fill="#fd8d3c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_module_graph_bin — apiGetCode</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">apiCreateGlobalSession</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">apiCreateSession</text>
+<rect x="566" y="586" width="12" height="12" fill="#2171b5"/>
+<text x="582" y="596" fill="#222">apiLoadModule</text>
+<rect x="843" y="586" width="12" height="12" fill="#6baed6"/>
+<text x="859" y="596" fill="#222">apiFindEntryPoint</text>
+<rect x="12" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="28" y="614" fill="#222">apiComposite</text>
+<rect x="289" y="604" width="12" height="12" fill="#807dba"/>
+<text x="305" y="614" fill="#222">apiSpecialize</text>
+<rect x="566" y="604" width="12" height="12" fill="#6a51a3"/>
+<text x="582" y="614" fill="#222">apiLink</text>
+<rect x="843" y="604" width="12" height="12" fill="#fd8d3c"/>
+<text x="859" y="614" fill="#222">apiGetCode</text>
+<rect x="12" y="622" width="12" height="12" fill="#b5bdc4"/>
+<text x="28" y="632" fill="#222">apiReflection</text>
+<rect x="289" y="622" width="12" height="12" fill="#969696"/>
+<text x="305" y="632" fill="#222">apiTotal (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Daily window progress</h2><p style='font-size:15px'>Overall <code>apiTotal</code>: 154.4 &rarr; 131.5 ms &nbsp;<b style='color:#1e8449'>-14.8%</b><span style='color:#666;font-size:13px'> &nbsp;(2026-06-25 ed15ffc94 &rarr; 2026-07-15 c5d4d76e6)</span></p><p style='color:#666;font-size:13px;margin:10px 0 4px'>Contributors — the mutually-exclusive phase buckets (named leaves + <code>(self)</code> residuals) that tile apiTotal; the pp column sums to the overall %. Buckets moving the total by &ge;0.2% are listed, the rest fold into the remainder row. Below them, every other reported counter (nested/overlapping, e.g. serialized-module reads — own change only):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>counter</th><th>&Delta; ms</th><th>own %</th><th>of total</th></tr><tr><td>apiLoadModule</td><td align=right>-14.0</td><td align=right>-19.8%</td><td align=right>-9.1pp</td></tr><tr><td>apiCreateGlobalSession</td><td align=right>-5.2</td><td align=right>-8.0%</td><td align=right>-3.4pp</td></tr><tr><td>apiGetCode</td><td align=right>-3.8</td><td align=right>-21.6%</td><td align=right>-2.4pp</td></tr><tr><td>(remaining 4 buckets)</td><td align=right>+0.1</td><td align=right>&ndash;</td><td align=right>+0.1pp</td></tr><tr><td>apiLoadModuleSource</td><td align=right>-12.0</td><td align=right>-10.0%</td><td align=right style='color:#aaa'>&ndash;</td></tr><tr><td>apiWriteModule</td><td align=right>+5.1</td><td align=right>+0.8%</td><td align=right style='color:#aaa'>&ndash;</td></tr></table><p style='color:#666;font-size:13px;margin:14px 0 4px'>Largest day steps (&ge;5% of the previous day, both directions; bisect with <code>git log &lt;c0&gt;..&lt;c1&gt; -- source/</code>):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>boundary</th><th>% vs prev day</th><th style='text-align:left'>commits</th><th style='text-align:left'>top buckets (own %)</th></tr><tr><td>2026-07-14 &rarr; 2026-07-15</td><td align=right style='color:#1e8449;font-weight:600'>-10.9%</td><td><code>a9c6ff78e..c5d4d76e6</code></td><td>apiLoadModule -14%, apiCreateGlobalSession -6%, apiGetCode -19%</td></tr></table><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 150); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>gmod_base.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module gmod_base;
 
 public interface IXform { float apply(float x); }

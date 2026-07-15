@@ -1,11 +1,11 @@
-<!doctype html><meta charset=utf-8><title>api_many_kernels — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; all workloads</a></p><h1 style='font-size:21px;margin:0 0 6px'>api_many_kernels</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>n small, mutually independent compute kernels, one file each, the way
+<!doctype html><meta charset=utf-8><title>api_many_kernels — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; back</a></p><h1 style='font-size:21px;margin:0 0 6px'>api_many_kernels</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>n small, mutually independent compute kernels, one file each, the way
 application middleware (e.g. slangpy) generates one kernel per call
 signature. Each kernel is deliberately tiny so per-compile fixed overhead
 (module setup, link, codegen floor) dominates — the dimension where
-small-program regressions amplify.</p><p style='color:#666;font-size:13px'><b>bucket:</b> api_overhead &nbsp;·&nbsp; <b>compile mode:</b> api &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 100</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="662" viewBox="0 0 1132 662" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+small-program regressions amplify.</p><p style='color:#666;font-size:13px'><b>bucket:</b> api_overhead &nbsp;·&nbsp; <b>compile mode:</b> api &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 100</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Across releases</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="662" viewBox="0 0 1132 662" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="662" fill="white"/>
-<text x="12" y="30" font-size="20" font-weight="bold">api_many_kernels — full phase breakdown across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">api_many_kernels<tspan fill="#888" font-weight="400" text-decoration="none">  1.20×</tspan></text>
+<text x="12" y="30" font-size="20" font-weight="bold">api_many_kernels — Across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">api_many_kernels<tspan fill="#888" font-weight="400" text-decoration="none">  1.54×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -14,88 +14,62 @@ small-program regressions amplify.</p><p style='color:#666;font-size:13px'><b>bu
 <text x="64.0" y="79.0" text-anchor="end" fill="#999">2890</text>
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
-<line x1="706.9" y1="76.0" x2="706.9" y2="516.0" stroke="#e8731a" stroke-width="1.2" stroke-dasharray="4 3"/>
-<text x="709.9" y="87.0" fill="#e8731a" font-size="11">daily →</text>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">25.14</text>
-<line x1="97.7" y1="516.0" x2="97.7" y2="519.0" stroke="#999"/>
-<text x="97.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 97.7 531.0)">25.15</text>
-<line x1="127.4" y1="516.0" x2="127.4" y2="519.0" stroke="#999"/>
-<text x="127.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 127.4 531.0)">25.16</text>
-<line x1="157.1" y1="516.0" x2="157.1" y2="519.0" stroke="#999"/>
-<text x="157.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 157.1 531.0)">25.17</text>
-<line x1="186.9" y1="516.0" x2="186.9" y2="519.0" stroke="#999"/>
-<text x="186.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 186.9 531.0)">25.18</text>
-<line x1="216.6" y1="516.0" x2="216.6" y2="519.0" stroke="#999"/>
-<text x="216.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 216.6 531.0)">25.19</text>
-<line x1="246.3" y1="516.0" x2="246.3" y2="519.0" stroke="#999"/>
-<text x="246.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 246.3 531.0)">25.20</text>
-<line x1="276.0" y1="516.0" x2="276.0" y2="519.0" stroke="#999"/>
-<text x="276.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 276.0 531.0)">25.21</text>
-<line x1="305.7" y1="516.0" x2="305.7" y2="519.0" stroke="#999"/>
-<text x="305.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 305.7 531.0)">25.22</text>
-<line x1="335.4" y1="516.0" x2="335.4" y2="519.0" stroke="#999"/>
-<text x="335.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 335.4 531.0)">25.23</text>
-<line x1="365.1" y1="516.0" x2="365.1" y2="519.0" stroke="#999"/>
-<text x="365.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 365.1 531.0)">25.24</text>
-<line x1="394.9" y1="516.0" x2="394.9" y2="519.0" stroke="#999"/>
-<text x="394.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 394.9 531.0)">26.1</text>
-<line x1="424.6" y1="516.0" x2="424.6" y2="519.0" stroke="#999"/>
-<text x="424.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 424.6 531.0)">26.2</text>
-<line x1="454.3" y1="516.0" x2="454.3" y2="519.0" stroke="#999"/>
-<text x="454.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 454.3 531.0)">26.3</text>
-<line x1="484.0" y1="516.0" x2="484.0" y2="519.0" stroke="#999"/>
-<text x="484.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 484.0 531.0)">26.4</text>
-<line x1="513.7" y1="516.0" x2="513.7" y2="519.0" stroke="#999"/>
-<text x="513.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 513.7 531.0)">26.5</text>
-<line x1="543.4" y1="516.0" x2="543.4" y2="519.0" stroke="#999"/>
-<text x="543.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 543.4 531.0)">26.7</text>
-<line x1="573.1" y1="516.0" x2="573.1" y2="519.0" stroke="#999"/>
-<text x="573.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 573.1 531.0)">26.8</text>
-<line x1="602.9" y1="516.0" x2="602.9" y2="519.0" stroke="#999"/>
-<text x="602.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 602.9 531.0)">26.9</text>
-<line x1="632.6" y1="516.0" x2="632.6" y2="519.0" stroke="#999"/>
-<text x="632.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 632.6 531.0)">26.10</text>
-<line x1="662.3" y1="516.0" x2="662.3" y2="519.0" stroke="#999"/>
-<text x="662.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 662.3 531.0)">26.11</text>
-<line x1="692.0" y1="516.0" x2="692.0" y2="519.0" stroke="#999"/>
-<text x="692.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 692.0 531.0)">26.12</text>
-<line x1="721.7" y1="516.0" x2="721.7" y2="519.0" stroke="#999"/>
-<text x="721.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 721.7 531.0)">06-25</text>
-<line x1="751.4" y1="516.0" x2="751.4" y2="519.0" stroke="#999"/>
-<text x="751.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 751.4 531.0)">06-26</text>
-<line x1="781.1" y1="516.0" x2="781.1" y2="519.0" stroke="#999"/>
-<text x="781.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 781.1 531.0)">06-28</text>
-<line x1="810.9" y1="516.0" x2="810.9" y2="519.0" stroke="#999"/>
-<text x="810.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 810.9 531.0)">07-01</text>
-<line x1="840.6" y1="516.0" x2="840.6" y2="519.0" stroke="#999"/>
-<text x="840.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 840.6 531.0)">07-02</text>
-<line x1="870.3" y1="516.0" x2="870.3" y2="519.0" stroke="#999"/>
-<text x="870.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 870.3 531.0)">07-03</text>
-<line x1="900.0" y1="516.0" x2="900.0" y2="519.0" stroke="#999"/>
-<text x="900.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 900.0 531.0)">07-06</text>
-<line x1="929.7" y1="516.0" x2="929.7" y2="519.0" stroke="#999"/>
-<text x="929.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 929.7 531.0)">07-07</text>
-<line x1="959.4" y1="516.0" x2="959.4" y2="519.0" stroke="#999"/>
-<text x="959.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 959.4 531.0)">07-08</text>
-<line x1="989.1" y1="516.0" x2="989.1" y2="519.0" stroke="#999"/>
-<text x="989.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 989.1 531.0)">07-09</text>
-<line x1="1018.9" y1="516.0" x2="1018.9" y2="519.0" stroke="#999"/>
-<text x="1018.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1018.9 531.0)">07-10</text>
-<line x1="1048.6" y1="516.0" x2="1048.6" y2="519.0" stroke="#999"/>
-<text x="1048.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1048.6 531.0)">07-11</text>
-<line x1="1078.3" y1="516.0" x2="1078.3" y2="519.0" stroke="#999"/>
-<text x="1078.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1078.3 531.0)">07-14</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">25.12</text>
+<line x1="113.2" y1="516.0" x2="113.2" y2="519.0" stroke="#999"/>
+<text x="113.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 113.2 531.0)">25.13</text>
+<line x1="158.4" y1="516.0" x2="158.4" y2="519.0" stroke="#999"/>
+<text x="158.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 158.4 531.0)">25.14</text>
+<line x1="203.7" y1="516.0" x2="203.7" y2="519.0" stroke="#999"/>
+<text x="203.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 203.7 531.0)">25.15</text>
+<line x1="248.9" y1="516.0" x2="248.9" y2="519.0" stroke="#999"/>
+<text x="248.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 248.9 531.0)">25.16</text>
+<line x1="294.1" y1="516.0" x2="294.1" y2="519.0" stroke="#999"/>
+<text x="294.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 294.1 531.0)">25.17</text>
+<line x1="339.3" y1="516.0" x2="339.3" y2="519.0" stroke="#999"/>
+<text x="339.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 339.3 531.0)">25.18</text>
+<line x1="384.5" y1="516.0" x2="384.5" y2="519.0" stroke="#999"/>
+<text x="384.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 384.5 531.0)">25.19</text>
+<line x1="429.7" y1="516.0" x2="429.7" y2="519.0" stroke="#999"/>
+<text x="429.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 429.7 531.0)">25.20</text>
+<line x1="475.0" y1="516.0" x2="475.0" y2="519.0" stroke="#999"/>
+<text x="475.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 475.0 531.0)">25.21</text>
+<line x1="520.2" y1="516.0" x2="520.2" y2="519.0" stroke="#999"/>
+<text x="520.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 520.2 531.0)">25.22</text>
+<line x1="565.4" y1="516.0" x2="565.4" y2="519.0" stroke="#999"/>
+<text x="565.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 565.4 531.0)">25.23</text>
+<line x1="610.6" y1="516.0" x2="610.6" y2="519.0" stroke="#999"/>
+<text x="610.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 610.6 531.0)">25.24</text>
+<line x1="655.8" y1="516.0" x2="655.8" y2="519.0" stroke="#999"/>
+<text x="655.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 655.8 531.0)">26.1</text>
+<line x1="701.0" y1="516.0" x2="701.0" y2="519.0" stroke="#999"/>
+<text x="701.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 701.0 531.0)">26.2</text>
+<line x1="746.3" y1="516.0" x2="746.3" y2="519.0" stroke="#999"/>
+<text x="746.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 746.3 531.0)">26.3</text>
+<line x1="791.5" y1="516.0" x2="791.5" y2="519.0" stroke="#999"/>
+<text x="791.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 791.5 531.0)">26.4</text>
+<line x1="836.7" y1="516.0" x2="836.7" y2="519.0" stroke="#999"/>
+<text x="836.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 836.7 531.0)">26.5</text>
+<line x1="881.9" y1="516.0" x2="881.9" y2="519.0" stroke="#999"/>
+<text x="881.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 881.9 531.0)">26.7</text>
+<line x1="927.1" y1="516.0" x2="927.1" y2="519.0" stroke="#999"/>
+<text x="927.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 927.1 531.0)">26.8</text>
+<line x1="972.3" y1="516.0" x2="972.3" y2="519.0" stroke="#999"/>
+<text x="972.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 972.3 531.0)">26.9</text>
+<line x1="1017.6" y1="516.0" x2="1017.6" y2="519.0" stroke="#999"/>
+<text x="1017.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1017.6 531.0)">26.10</text>
+<line x1="1062.8" y1="516.0" x2="1062.8" y2="519.0" stroke="#999"/>
+<text x="1062.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1062.8 531.0)">26.11</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">07-15</text>
-<polygon points="68.0,478.4 97.7,505.8 127.4,505.9 157.1,503.7 186.9,504.7 216.6,504.6 246.3,505.2 276.0,505.6 305.7,509.4 335.4,509.4 365.1,509.7 394.9,509.7 424.6,509.5 454.3,509.3 484.0,509.2 513.7,509.2 543.4,500.4 573.1,499.8 602.9,495.7 632.6,495.8 662.3,500.6 692.0,499.2 721.7,498.5 751.4,498.4 781.1,497.9 810.9,498.7 840.6,498.5 870.3,498.5 900.0,498.3 929.7,498.8 959.4,498.7 989.1,498.7 1018.9,498.9 1048.6,499.1 1078.3,498.7 1108.0,499.1 1108.0,516.0 1078.3,516.0 1048.6,516.0 1018.9,516.0 989.1,516.0 959.4,516.0 929.7,516.0 900.0,516.0 870.3,516.0 840.6,516.0 810.9,516.0 781.1,516.0 751.4,516.0 721.7,516.0 692.0,516.0 662.3,516.0 632.6,516.0 602.9,516.0 573.1,516.0 543.4,516.0 513.7,516.0 484.0,516.0 454.3,516.0 424.6,516.0 394.9,516.0 365.1,516.0 335.4,516.0 305.7,516.0 276.0,516.0 246.3,516.0 216.6,516.0 186.9,516.0 157.1,516.0 127.4,516.0 97.7,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiCreateGlobalSession</title></polygon>
-<polygon points="68.0,478.4 97.7,505.8 127.4,505.9 157.1,503.7 186.9,504.7 216.6,504.6 246.3,505.2 276.0,505.6 305.7,509.4 335.4,509.4 365.1,509.6 394.9,509.7 424.6,509.5 454.3,509.3 484.0,509.2 513.7,509.2 543.4,500.4 573.1,499.8 602.9,495.7 632.6,495.8 662.3,500.6 692.0,499.2 721.7,498.5 751.4,498.4 781.1,497.9 810.9,498.7 840.6,498.5 870.3,498.5 900.0,498.3 929.7,498.8 959.4,498.7 989.1,498.7 1018.9,498.9 1048.6,499.1 1078.3,498.7 1108.0,499.1 1108.0,499.1 1078.3,498.7 1048.6,499.1 1018.9,498.9 989.1,498.7 959.4,498.7 929.7,498.8 900.0,498.3 870.3,498.5 840.6,498.5 810.9,498.7 781.1,497.9 751.4,498.4 721.7,498.5 692.0,499.2 662.3,500.6 632.6,495.8 602.9,495.7 573.1,499.8 543.4,500.4 513.7,509.2 484.0,509.2 454.3,509.3 424.6,509.5 394.9,509.7 365.1,509.7 335.4,509.4 305.7,509.4 276.0,505.6 246.3,505.2 216.6,504.6 186.9,504.7 157.1,503.7 127.4,505.9 97.7,505.8 68.0,478.4" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiCreateSession</title></polygon>
-<polygon points="68.0,448.4 97.7,474.3 127.4,474.7 157.1,465.0 186.9,469.8 216.6,469.7 246.3,470.0 276.0,472.3 305.7,475.8 335.4,475.5 365.1,476.0 394.9,473.9 424.6,472.3 454.3,471.6 484.0,471.2 513.7,471.6 543.4,448.3 573.1,446.5 602.9,430.1 632.6,436.7 662.3,452.0 692.0,449.9 721.7,446.5 751.4,446.6 781.1,446.3 810.9,447.0 840.6,445.3 870.3,444.8 900.0,445.0 929.7,444.8 959.4,444.6 989.1,444.8 1018.9,444.9 1048.6,445.4 1078.3,445.5 1108.0,448.1 1108.0,499.1 1078.3,498.7 1048.6,499.1 1018.9,498.9 989.1,498.7 959.4,498.7 929.7,498.8 900.0,498.3 870.3,498.5 840.6,498.5 810.9,498.7 781.1,497.9 751.4,498.4 721.7,498.5 692.0,499.2 662.3,500.6 632.6,495.8 602.9,495.7 573.1,499.8 543.4,500.4 513.7,509.2 484.0,509.2 454.3,509.3 424.6,509.5 394.9,509.7 365.1,509.6 335.4,509.4 305.7,509.4 276.0,505.6 246.3,505.2 216.6,504.6 186.9,504.7 157.1,503.7 127.4,505.9 97.7,505.8 68.0,478.4" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiLoadModule</title></polygon>
-<polygon points="68.0,448.4 97.7,474.3 127.4,474.7 157.1,465.0 186.9,469.7 216.6,469.7 246.3,470.0 276.0,472.3 305.7,475.8 335.4,475.5 365.1,476.0 394.9,473.9 424.6,472.3 454.3,471.6 484.0,471.2 513.7,471.6 543.4,448.3 573.1,446.5 602.9,430.1 632.6,436.7 662.3,452.0 692.0,449.9 721.7,446.5 751.4,446.5 781.1,446.3 810.9,447.0 840.6,445.3 870.3,444.8 900.0,445.0 929.7,444.8 959.4,444.6 989.1,444.8 1018.9,444.9 1048.6,445.4 1078.3,445.5 1108.0,448.1 1108.0,448.1 1078.3,445.5 1048.6,445.4 1018.9,444.9 989.1,444.8 959.4,444.6 929.7,444.8 900.0,445.0 870.3,444.8 840.6,445.3 810.9,447.0 781.1,446.3 751.4,446.6 721.7,446.5 692.0,449.9 662.3,452.0 632.6,436.7 602.9,430.1 573.1,446.5 543.4,448.3 513.7,471.6 484.0,471.2 454.3,471.6 424.6,472.3 394.9,473.9 365.1,476.0 335.4,475.5 305.7,475.8 276.0,472.3 246.3,470.0 216.6,469.7 186.9,469.8 157.1,465.0 127.4,474.7 97.7,474.3 68.0,448.4" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiFindEntryPoint</title></polygon>
-<polygon points="68.0,448.3 97.7,474.3 127.4,474.7 157.1,464.9 186.9,469.7 216.6,469.7 246.3,470.0 276.0,472.2 305.7,475.8 335.4,475.4 365.1,475.9 394.9,473.8 424.6,472.2 454.3,471.5 484.0,471.1 513.7,471.6 543.4,448.3 573.1,446.5 602.9,430.0 632.6,436.7 662.3,451.9 692.0,449.8 721.7,446.4 751.4,446.5 781.1,446.3 810.9,447.0 840.6,445.2 870.3,444.8 900.0,445.0 929.7,444.7 959.4,444.5 989.1,444.8 1018.9,444.9 1048.6,445.3 1078.3,445.5 1108.0,448.1 1108.0,448.1 1078.3,445.5 1048.6,445.4 1018.9,444.9 989.1,444.8 959.4,444.6 929.7,444.8 900.0,445.0 870.3,444.8 840.6,445.3 810.9,447.0 781.1,446.3 751.4,446.5 721.7,446.5 692.0,449.9 662.3,452.0 632.6,436.7 602.9,430.1 573.1,446.5 543.4,448.3 513.7,471.6 484.0,471.2 454.3,471.6 424.6,472.3 394.9,473.9 365.1,476.0 335.4,475.5 305.7,475.8 276.0,472.3 246.3,470.0 216.6,469.7 186.9,469.7 157.1,465.0 127.4,474.7 97.7,474.3 68.0,448.4" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiComposite</title></polygon>
-<polygon points="68.0,448.3 97.7,474.3 127.4,474.7 157.1,464.9 186.9,469.7 216.6,469.7 246.3,470.0 276.0,472.2 305.7,475.8 335.4,475.4 365.1,475.9 394.9,473.8 424.6,472.2 454.3,471.5 484.0,471.1 513.7,471.6 543.4,448.2 573.1,446.5 602.9,430.0 632.6,436.7 662.3,451.9 692.0,449.8 721.7,446.4 751.4,446.5 781.1,446.3 810.9,447.0 840.6,445.2 870.3,444.8 900.0,445.0 929.7,444.7 959.4,444.5 989.1,444.8 1018.9,444.9 1048.6,445.3 1078.3,445.5 1108.0,448.1 1108.0,448.1 1078.3,445.5 1048.6,445.3 1018.9,444.9 989.1,444.8 959.4,444.5 929.7,444.7 900.0,445.0 870.3,444.8 840.6,445.2 810.9,447.0 781.1,446.3 751.4,446.5 721.7,446.4 692.0,449.8 662.3,451.9 632.6,436.7 602.9,430.0 573.1,446.5 543.4,448.3 513.7,471.6 484.0,471.1 454.3,471.5 424.6,472.2 394.9,473.8 365.1,475.9 335.4,475.4 305.7,475.8 276.0,472.2 246.3,470.0 216.6,469.7 186.9,469.7 157.1,464.9 127.4,474.7 97.7,474.3 68.0,448.3" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiLink</title></polygon>
-<polygon points="68.0,427.0 97.7,453.0 127.4,453.6 157.1,436.2 186.9,444.3 216.6,443.8 246.3,445.0 276.0,446.9 305.7,450.4 335.4,450.1 365.1,446.3 394.9,444.1 424.6,441.1 454.3,440.5 484.0,439.5 513.7,440.3 543.4,260.2 573.1,240.6 602.9,110.1 632.6,194.2 662.3,370.5 692.0,379.1 721.7,368.0 751.4,368.0 781.1,368.9 810.9,369.3 840.6,365.9 870.3,366.2 900.0,365.9 929.7,397.7 959.4,397.8 989.1,398.1 1018.9,398.0 1048.6,399.2 1078.3,399.4 1108.0,409.2 1108.0,448.1 1078.3,445.5 1048.6,445.3 1018.9,444.9 989.1,444.8 959.4,444.5 929.7,444.7 900.0,445.0 870.3,444.8 840.6,445.2 810.9,447.0 781.1,446.3 751.4,446.5 721.7,446.4 692.0,449.8 662.3,451.9 632.6,436.7 602.9,430.0 573.1,446.5 543.4,448.2 513.7,471.6 484.0,471.1 454.3,471.5 424.6,472.2 394.9,473.8 365.1,475.9 335.4,475.4 305.7,475.8 276.0,472.2 246.3,470.0 216.6,469.7 186.9,469.7 157.1,464.9 127.4,474.7 97.7,474.3 68.0,448.3" fill="#fd8d3c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiGetCode</title></polygon>
-<polygon points="68.0,426.2 97.7,451.9 127.4,452.6 157.1,434.8 186.9,442.6 216.6,442.0 246.3,443.4 276.0,445.2 305.7,449.1 335.4,448.6 365.1,444.7 394.9,442.4 424.6,439.2 454.3,438.8 484.0,438.0 513.7,438.3 543.4,258.9 573.1,239.0 602.9,108.6 632.6,194.2 662.3,368.9 692.0,377.7 721.7,366.7 751.4,366.9 781.1,367.3 810.9,367.7 840.6,364.6 870.3,364.7 900.0,363.7 929.7,396.1 959.4,396.1 989.1,396.7 1018.9,396.7 1048.6,397.2 1078.3,397.8 1108.0,408.0 1108.0,409.2 1078.3,399.4 1048.6,399.2 1018.9,398.0 989.1,398.1 959.4,397.8 929.7,397.7 900.0,365.9 870.3,366.2 840.6,365.9 810.9,369.3 781.1,368.9 751.4,368.0 721.7,368.0 692.0,379.1 662.3,370.5 632.6,194.2 602.9,110.1 573.1,240.6 543.4,260.2 513.7,440.3 484.0,439.5 454.3,440.5 424.6,441.1 394.9,444.1 365.1,446.3 335.4,450.1 305.7,450.4 276.0,446.9 246.3,445.0 216.6,443.8 186.9,444.3 157.1,436.2 127.4,453.6 97.7,453.0 68.0,427.0" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiTotal (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.12</text>
+<polygon points="68.0,476.6 113.2,478.8 158.4,468.0 203.7,504.5 248.9,505.8 294.1,505.9 339.3,505.8 384.5,505.3 429.7,505.6 475.0,505.7 520.2,509.6 565.4,509.3 610.6,509.6 655.8,509.7 701.0,509.5 746.3,509.3 791.5,509.2 836.7,509.2 881.9,500.4 927.1,499.8 972.3,495.7 1017.6,495.8 1062.8,500.6 1108.0,499.2 1108.0,516.0 1062.8,516.0 1017.6,516.0 972.3,516.0 927.1,516.0 881.9,516.0 836.7,516.0 791.5,516.0 746.3,516.0 701.0,516.0 655.8,516.0 610.6,516.0 565.4,516.0 520.2,516.0 475.0,516.0 429.7,516.0 384.5,516.0 339.3,516.0 294.1,516.0 248.9,516.0 203.7,516.0 158.4,516.0 113.2,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiCreateGlobalSession</title></polygon>
+<polygon points="68.0,476.5 113.2,478.8 158.4,468.0 203.7,504.5 248.9,505.8 294.1,505.9 339.3,505.8 384.5,505.3 429.7,505.6 475.0,505.7 520.2,509.6 565.4,509.3 610.6,509.6 655.8,509.7 701.0,509.5 746.3,509.3 791.5,509.2 836.7,509.2 881.9,500.4 927.1,499.8 972.3,495.7 1017.6,495.8 1062.8,500.6 1108.0,499.2 1108.0,499.2 1062.8,500.6 1017.6,495.8 972.3,495.7 927.1,499.8 881.9,500.4 836.7,509.2 791.5,509.2 746.3,509.3 701.0,509.5 655.8,509.7 610.6,509.6 565.4,509.3 520.2,509.6 475.0,505.7 429.7,505.6 384.5,505.3 339.3,505.8 294.1,505.9 248.9,505.8 203.7,504.5 158.4,468.0 113.2,478.8 68.0,476.6" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiCreateSession</title></polygon>
+<polygon points="68.0,447.4 113.2,448.3 158.4,432.9 203.7,470.3 248.9,473.9 294.1,472.2 339.3,471.7 384.5,471.8 429.7,472.0 475.0,471.8 520.2,475.6 565.4,475.3 610.6,475.1 655.8,473.9 701.0,472.3 746.3,471.6 791.5,471.2 836.7,471.6 881.9,448.3 927.1,446.5 972.3,430.1 1017.6,436.7 1062.8,452.0 1108.0,449.9 1108.0,499.2 1062.8,500.6 1017.6,495.8 972.3,495.7 927.1,499.8 881.9,500.4 836.7,509.2 791.5,509.2 746.3,509.3 701.0,509.5 655.8,509.7 610.6,509.6 565.4,509.3 520.2,509.6 475.0,505.7 429.7,505.6 384.5,505.3 339.3,505.8 294.1,505.9 248.9,505.8 203.7,504.5 158.4,468.0 113.2,478.8 68.0,476.5" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiLoadModule</title></polygon>
+<polygon points="68.0,447.4 113.2,448.3 158.4,432.9 203.7,470.3 248.9,473.9 294.1,472.1 339.3,471.7 384.5,471.8 429.7,472.0 475.0,471.8 520.2,475.6 565.4,475.3 610.6,475.1 655.8,473.9 701.0,472.3 746.3,471.6 791.5,471.2 836.7,471.6 881.9,448.3 927.1,446.5 972.3,430.1 1017.6,436.7 1062.8,452.0 1108.0,449.9 1108.0,449.9 1062.8,452.0 1017.6,436.7 972.3,430.1 927.1,446.5 881.9,448.3 836.7,471.6 791.5,471.2 746.3,471.6 701.0,472.3 655.8,473.9 610.6,475.1 565.4,475.3 520.2,475.6 475.0,471.8 429.7,472.0 384.5,471.8 339.3,471.7 294.1,472.2 248.9,473.9 203.7,470.3 158.4,432.9 113.2,448.3 68.0,447.4" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiFindEntryPoint</title></polygon>
+<polygon points="68.0,447.4 113.2,448.3 158.4,432.8 203.7,470.3 248.9,473.9 294.1,472.1 339.3,471.7 384.5,471.7 429.7,471.9 475.0,471.7 520.2,475.6 565.4,475.3 610.6,475.1 655.8,473.8 701.0,472.2 746.3,471.5 791.5,471.1 836.7,471.6 881.9,448.3 927.1,446.5 972.3,430.0 1017.6,436.7 1062.8,451.9 1108.0,449.8 1108.0,449.9 1062.8,452.0 1017.6,436.7 972.3,430.1 927.1,446.5 881.9,448.3 836.7,471.6 791.5,471.2 746.3,471.6 701.0,472.3 655.8,473.9 610.6,475.1 565.4,475.3 520.2,475.6 475.0,471.8 429.7,472.0 384.5,471.8 339.3,471.7 294.1,472.1 248.9,473.9 203.7,470.3 158.4,432.9 113.2,448.3 68.0,447.4" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiComposite</title></polygon>
+<polygon points="68.0,447.4 113.2,448.3 158.4,432.8 203.7,470.3 248.9,473.9 294.1,472.1 339.3,471.7 384.5,471.7 429.7,471.9 475.0,471.7 520.2,475.6 565.4,475.3 610.6,475.1 655.8,473.8 701.0,472.2 746.3,471.5 791.5,471.1 836.7,471.6 881.9,448.2 927.1,446.5 972.3,430.0 1017.6,436.7 1062.8,451.9 1108.0,449.8 1108.0,449.8 1062.8,451.9 1017.6,436.7 972.3,430.0 927.1,446.5 881.9,448.3 836.7,471.6 791.5,471.1 746.3,471.5 701.0,472.2 655.8,473.8 610.6,475.1 565.4,475.3 520.2,475.6 475.0,471.7 429.7,471.9 384.5,471.7 339.3,471.7 294.1,472.1 248.9,473.9 203.7,470.3 158.4,432.8 113.2,448.3 68.0,447.4" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiLink</title></polygon>
+<polygon points="68.0,427.4 113.2,427.4 158.4,409.0 203.7,447.9 248.9,452.4 294.1,447.3 339.3,446.8 384.5,446.7 429.7,447.3 475.0,446.4 520.2,450.3 565.4,450.0 610.6,445.0 655.8,444.1 701.0,441.1 746.3,440.5 791.5,439.5 836.7,440.3 881.9,260.2 927.1,240.6 972.3,110.1 1017.6,194.2 1062.8,370.5 1108.0,379.1 1108.0,449.8 1062.8,451.9 1017.6,436.7 972.3,430.0 927.1,446.5 881.9,448.2 836.7,471.6 791.5,471.1 746.3,471.5 701.0,472.2 655.8,473.8 610.6,475.1 565.4,475.3 520.2,475.6 475.0,471.7 429.7,471.9 384.5,471.7 339.3,471.7 294.1,472.1 248.9,473.9 203.7,470.3 158.4,432.8 113.2,448.3 68.0,447.4" fill="#fd8d3c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiGetCode</title></polygon>
+<polygon points="68.0,426.3 113.2,426.2 158.4,404.1 203.7,445.4 248.9,451.2 294.1,446.0 339.3,445.5 384.5,445.4 429.7,445.7 475.0,444.8 520.2,448.9 565.4,448.8 610.6,443.4 655.8,442.4 701.0,439.2 746.3,438.8 791.5,438.0 836.7,438.3 881.9,258.9 927.1,239.0 972.3,108.6 1017.6,194.2 1062.8,368.9 1108.0,377.7 1108.0,379.1 1062.8,370.5 1017.6,194.2 972.3,110.1 927.1,240.6 881.9,260.2 836.7,440.3 791.5,439.5 746.3,440.5 701.0,441.1 655.8,444.1 610.6,445.0 565.4,450.0 520.2,450.3 475.0,446.4 429.7,447.3 384.5,446.7 339.3,446.8 294.1,447.3 248.9,452.4 203.7,447.9 158.4,409.0 113.2,427.4 68.0,427.4" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiTotal (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">apiCreateGlobalSession</text>
@@ -117,7 +91,76 @@ small-program regressions amplify.</p><p style='color:#666;font-size:13px'><b>bu
 <text x="28" y="632" fill="#222">apiReflection</text>
 <rect x="289" y="622" width="12" height="12" fill="#969696"/>
 <text x="305" y="632" fill="#222">apiTotal (self)</text>
-</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 100); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_000.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+</svg><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="662" viewBox="0 0 1132 662" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="662" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">api_many_kernels — Daily tip-of-tree (last 30 days) (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">api_many_kernels<tspan fill="#888" font-weight="400" text-decoration="none">  0.72×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">540</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">1080</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">06-25</text>
+<line x1="148.0" y1="516.0" x2="148.0" y2="519.0" stroke="#999"/>
+<text x="148.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 148.0 531.0)">06-26</text>
+<line x1="228.0" y1="516.0" x2="228.0" y2="519.0" stroke="#999"/>
+<text x="228.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 228.0 531.0)">06-28</text>
+<line x1="308.0" y1="516.0" x2="308.0" y2="519.0" stroke="#999"/>
+<text x="308.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 308.0 531.0)">07-01</text>
+<line x1="388.0" y1="516.0" x2="388.0" y2="519.0" stroke="#999"/>
+<text x="388.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 388.0 531.0)">07-02</text>
+<line x1="468.0" y1="516.0" x2="468.0" y2="519.0" stroke="#999"/>
+<text x="468.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 468.0 531.0)">07-03</text>
+<line x1="548.0" y1="516.0" x2="548.0" y2="519.0" stroke="#999"/>
+<text x="548.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 548.0 531.0)">07-06</text>
+<line x1="628.0" y1="516.0" x2="628.0" y2="519.0" stroke="#999"/>
+<text x="628.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 628.0 531.0)">07-07</text>
+<line x1="708.0" y1="516.0" x2="708.0" y2="519.0" stroke="#999"/>
+<text x="708.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 708.0 531.0)">07-08</text>
+<line x1="788.0" y1="516.0" x2="788.0" y2="519.0" stroke="#999"/>
+<text x="788.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 788.0 531.0)">07-09</text>
+<line x1="868.0" y1="516.0" x2="868.0" y2="519.0" stroke="#999"/>
+<text x="868.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 868.0 531.0)">07-10</text>
+<line x1="948.0" y1="516.0" x2="948.0" y2="519.0" stroke="#999"/>
+<text x="948.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 948.0 531.0)">07-11</text>
+<line x1="1028.0" y1="516.0" x2="1028.0" y2="519.0" stroke="#999"/>
+<text x="1028.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1028.0 531.0)">07-14</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">07-15</text>
+<polygon points="68.0,469.1 148.0,468.9 228.0,467.5 308.0,469.8 388.0,469.3 468.0,469.3 548.0,468.7 628.0,469.9 708.0,469.6 788.0,469.8 868.0,470.2 948.0,470.7 1028.0,469.7 1108.0,470.9 1108.0,516.0 1028.0,516.0 948.0,516.0 868.0,516.0 788.0,516.0 708.0,516.0 628.0,516.0 548.0,516.0 468.0,516.0 388.0,516.0 308.0,516.0 228.0,516.0 148.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiCreateGlobalSession</title></polygon>
+<polygon points="68.0,469.1 148.0,468.9 228.0,467.5 308.0,469.8 388.0,469.3 468.0,469.2 548.0,468.7 628.0,469.9 708.0,469.6 788.0,469.8 868.0,470.2 948.0,470.7 1028.0,469.7 1108.0,470.9 1108.0,470.9 1028.0,469.7 948.0,470.7 868.0,470.2 788.0,469.8 708.0,469.6 628.0,469.9 548.0,468.7 468.0,469.3 388.0,469.3 308.0,469.8 228.0,467.5 148.0,468.9 68.0,469.1" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiCreateSession</title></polygon>
+<polygon points="68.0,330.0 148.0,330.2 228.0,329.7 308.0,331.6 388.0,326.9 468.0,325.7 548.0,326.2 628.0,325.5 708.0,325.0 788.0,325.7 868.0,325.9 948.0,327.1 1028.0,327.5 1108.0,334.5 1108.0,470.9 1028.0,469.7 948.0,470.7 868.0,470.2 788.0,469.8 708.0,469.6 628.0,469.9 548.0,468.7 468.0,469.2 388.0,469.3 308.0,469.8 228.0,467.5 148.0,468.9 68.0,469.1" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiLoadModule</title></polygon>
+<polygon points="68.0,330.0 148.0,330.2 228.0,329.7 308.0,331.6 388.0,326.9 468.0,325.7 548.0,326.2 628.0,325.5 708.0,325.0 788.0,325.7 868.0,325.9 948.0,327.1 1028.0,327.5 1108.0,334.5 1108.0,334.5 1028.0,327.5 948.0,327.1 868.0,325.9 788.0,325.7 708.0,325.0 628.0,325.5 548.0,326.2 468.0,325.7 388.0,326.9 308.0,331.6 228.0,329.7 148.0,330.2 68.0,330.0" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiFindEntryPoint</title></polygon>
+<polygon points="68.0,329.9 148.0,330.1 228.0,329.6 308.0,331.4 388.0,326.7 468.0,325.5 548.0,326.1 628.0,325.4 708.0,324.9 788.0,325.6 868.0,325.7 948.0,326.9 1028.0,327.4 1108.0,334.4 1108.0,334.5 1028.0,327.5 948.0,327.1 868.0,325.9 788.0,325.7 708.0,325.0 628.0,325.5 548.0,326.2 468.0,325.7 388.0,326.9 308.0,331.6 228.0,329.7 148.0,330.2 68.0,330.0" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiComposite</title></polygon>
+<polygon points="68.0,329.9 148.0,330.1 228.0,329.5 308.0,331.4 388.0,326.7 468.0,325.5 548.0,326.1 628.0,325.4 708.0,324.9 788.0,325.5 868.0,325.7 948.0,326.9 1028.0,327.3 1108.0,334.4 1108.0,334.4 1028.0,327.4 948.0,326.9 868.0,325.7 788.0,325.6 708.0,324.9 628.0,325.4 548.0,326.1 468.0,325.5 388.0,326.7 308.0,331.4 228.0,329.6 148.0,330.1 68.0,329.9" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiLink</title></polygon>
+<polygon points="68.0,120.1 148.0,120.1 228.0,122.7 308.0,123.6 388.0,114.5 468.0,115.3 548.0,114.6 628.0,199.7 708.0,199.9 788.0,200.5 868.0,200.5 948.0,203.5 1028.0,204.2 1108.0,230.3 1108.0,334.4 1028.0,327.3 948.0,326.9 868.0,325.7 788.0,325.5 708.0,324.9 628.0,325.4 548.0,326.1 468.0,325.5 388.0,326.7 308.0,331.4 228.0,329.5 148.0,330.1 68.0,329.9" fill="#fd8d3c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiGetCode</title></polygon>
+<polygon points="68.0,116.8 148.0,117.3 228.0,118.3 308.0,119.3 388.0,111.0 468.0,111.3 548.0,108.6 628.0,195.2 708.0,195.3 788.0,196.8 868.0,197.0 948.0,198.2 1028.0,199.9 1108.0,227.2 1108.0,230.3 1028.0,204.2 948.0,203.5 868.0,200.5 788.0,200.5 708.0,199.9 628.0,199.7 548.0,114.6 468.0,115.3 388.0,114.5 308.0,123.6 228.0,122.7 148.0,120.1 68.0,120.1" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_many_kernels — apiTotal (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">apiCreateGlobalSession</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">apiCreateSession</text>
+<rect x="566" y="586" width="12" height="12" fill="#2171b5"/>
+<text x="582" y="596" fill="#222">apiLoadModule</text>
+<rect x="843" y="586" width="12" height="12" fill="#6baed6"/>
+<text x="859" y="596" fill="#222">apiFindEntryPoint</text>
+<rect x="12" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="28" y="614" fill="#222">apiComposite</text>
+<rect x="289" y="604" width="12" height="12" fill="#807dba"/>
+<text x="305" y="614" fill="#222">apiSpecialize</text>
+<rect x="566" y="604" width="12" height="12" fill="#6a51a3"/>
+<text x="582" y="614" fill="#222">apiLink</text>
+<rect x="843" y="604" width="12" height="12" fill="#fd8d3c"/>
+<text x="859" y="614" fill="#222">apiGetCode</text>
+<rect x="12" y="622" width="12" height="12" fill="#b5bdc4"/>
+<text x="28" y="632" fill="#222">apiReflection</text>
+<rect x="289" y="622" width="12" height="12" fill="#969696"/>
+<text x="305" y="632" fill="#222">apiTotal (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Daily window progress</h2><p style='font-size:15px'>Overall <code>apiTotal</code>: 980.3 &rarr; 709.1 ms &nbsp;<b style='color:#1e8449'>-27.7%</b><span style='color:#666;font-size:13px'> &nbsp;(2026-06-25 ed15ffc94 &rarr; 2026-07-15 c5d4d76e6)</span></p><p style='color:#666;font-size:13px;margin:10px 0 4px'>Contributors — the mutually-exclusive phase buckets (named leaves + <code>(self)</code> residuals) that tile apiTotal; the pp column sums to the overall %. Buckets moving the total by &ge;0.2% are listed, the rest fold into the remainder row. Below them, every other reported counter (nested/overlapping, e.g. serialized-module reads — own change only):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>counter</th><th>&Delta; ms</th><th>own %</th><th>of total</th></tr><tr><td>apiGetCode</td><td align=right>-259.7</td><td align=right>-50.4%</td><td align=right>-26.5pp</td></tr><tr><td>apiLoadModule</td><td align=right>-6.5</td><td align=right>-1.9%</td><td align=right>-0.7pp</td></tr><tr><td>apiCreateGlobalSession</td><td align=right>-4.4</td><td align=right>-3.8%</td><td align=right>-0.4pp</td></tr><tr><td>(remaining 5 buckets)</td><td align=right>-0.6</td><td align=right>&ndash;</td><td align=right>-0.1pp</td></tr></table><p style='color:#666;font-size:13px;margin:14px 0 4px'>Largest day steps (&ge;5% of the previous day, both directions; bisect with <code>git log &lt;c0&gt;..&lt;c1&gt; -- source/</code>):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>boundary</th><th>% vs prev day</th><th style='text-align:left'>commits</th><th style='text-align:left'>top buckets (own %)</th></tr><tr><td>2026-07-06 &rarr; 2026-07-07</td><td align=right style='color:#1e8449;font-weight:600'>-21.3%</td><td><code>526e68813..33f9ed0ce</code></td><td>apiGetCode -41%, apiLoadModule +1%, apiTotal (self) -26%</td></tr><tr><td>2026-07-14 &rarr; 2026-07-15</td><td align=right style='color:#1e8449;font-weight:600'>-8.6%</td><td><code>a9c6ff78e..c5d4d76e6</code></td><td>apiGetCode -16%, apiLoadModule -4%, apiCreateGlobalSession -3%</td></tr></table><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 100); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>kernel_000.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 RWStructuredBuffer&lt;float&gt; buf_0;
 
 float helper_0(float x) { return sin(x * 1.0) + x * 0.0; }
