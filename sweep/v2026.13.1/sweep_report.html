@@ -1,0 +1,784 @@
+<!doctype html><meta charset="utf-8">
+<title>Slang compile-perf — complexity sweep (v2026.13.1)</title>
+<style>
+body{font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#1a1a1a;background:#fafafa}
+.wrap{max-width:1240px;margin:0 auto;padding:28px}
+h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bottom:2px solid #eee;padding-bottom:4px}
+.sub{color:#666;margin:0 0 18px}
+table{border-collapse:collapse;width:100%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.06);margin:8px 0 4px}
+th,td{padding:6px 10px;text-align:left;border-bottom:1px solid #eee;font-variant-numeric:tabular-nums}
+th{background:#f4f5f7;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:#555}
+td.num{text-align:right} tr:hover td{background:#fafbfc}
+.reg{color:#c0392b;font-weight:600} .flat{color:#888}
+.chart{background:#fff;border:1px solid #eee;border-radius:6px;padding:8px;margin:10px 0;overflow:auto}
+.chart svg{display:block;max-width:100%;height:auto}
+code{background:#f0f1f3;padding:1px 5px;border-radius:3px;font-size:13px}
+.note{background:#fff8e1;border-left:4px solid #f0c000;padding:10px 14px;border-radius:4px;margin:10px 0}
+.small{color:#777;font-size:12px}
+</style>
+<div class="wrap">
+<h1>Slang compile-time performance — complexity sweep</h1>
+<p class="sub">build <b>v2026.13.1</b> · metric: median (ms) · 29 swept workload(s) · compile time vs workload size <code>N</code>, each curve a single binary scaled simple→complex.</p>
+<h2>Scaling curves (compileInner)</h2>
+<p class="small">Each panel is one workload's <b>compileInner</b> vs <code>N</code> on a zero-based linear axis, flagged with the floor-subtracted exponent <b>∝N<sup>k</sup></b> (red ⇒ super-linear, k&gt;1.15). <b>Click a workload name</b> for its sub-counter stacked view, the full scaling analysis (floor 10 ms / k / top-2×), and the raw sweep numbers.</p>
+<div class="chart"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1164" height="2920" viewBox="0 0 1164 2920" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="11">
+<rect width="1164" height="2920" fill="white"/>
+<text x="12" y="30" font-size="17" font-weight="bold">Complexity sweep — compileInner vs workload size N (median ms, linear)</text>
+<text x="12" y="46" font-size="11" fill="#666">dashed = linear expectation: measured floor (the minimal workload) + slope fitted on the low-N half, extrapolated; the end-point label is actual/linear at max N (red when ≥1.15× — super-linear)</text>
+<a xlink:href="workloads/complexity_ladder.html" href="workloads/complexity_ladder.html" target="_top"><text x="64" y="58" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">complexity_ladder</text></a>
+<text x="364" y="58" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">∝N^1.22</text>
+<line x1="64.0" y1="268.0" x2="364.0" y2="268.0" stroke="#eee"/>
+<text x="60.0" y="271.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="64.0" y1="174.0" x2="364.0" y2="174.0" stroke="#eee"/>
+<text x="60.0" y="177.0" text-anchor="end" fill="#999">1400</text>
+<line x1="64.0" y1="80.0" x2="364.0" y2="80.0" stroke="#eee"/>
+<text x="60.0" y="83.0" text-anchor="end" fill="#999">2800</text>
+<line x1="64.0" y1="80.0" x2="64.0" y2="268.0" stroke="#333"/>
+<line x1="64.0" y1="268.0" x2="364.0" y2="268.0" stroke="#333"/>
+<line x1="64.0" y1="268.0" x2="64.0" y2="271.0" stroke="#999"/>
+<text x="64.0" y="283.0" text-anchor="middle" fill="#666">160</text>
+<line x1="106.9" y1="268.0" x2="106.9" y2="271.0" stroke="#999"/>
+<text x="106.9" y="283.0" text-anchor="middle" fill="#666">320</text>
+<line x1="192.6" y1="268.0" x2="192.6" y2="271.0" stroke="#999"/>
+<text x="192.6" y="283.0" text-anchor="middle" fill="#666">640</text>
+<line x1="364.0" y1="268.0" x2="364.0" y2="271.0" stroke="#999"/>
+<text x="364.0" y="283.0" text-anchor="middle" fill="#666">1280</text>
+<text x="214" y="302" text-anchor="middle" fill="#444">N</text>
+<line x1="64.0" y1="252.5" x2="364.0" y2="149.1" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="360.0" y="87.9" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">1.46× lin</text>
+<polyline points="64.0,253.8 106.9,237.1 192.6,200.4 364.0,93.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="64.0" cy="253.8" r="2.4" fill="#2171b5"/>
+<circle cx="106.9" cy="237.1" r="2.4" fill="#2171b5"/>
+<circle cx="192.6" cy="200.4" r="2.4" fill="#2171b5"/>
+<circle cx="364.0" cy="93.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/parse.html" href="workloads/parse.html" target="_top"><text x="444" y="58" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">parse</text></a>
+<text x="744" y="58" text-anchor="end" font-size="11" fill="#888" font-weight="600">∝N^1.13</text>
+<line x1="444.0" y1="268.0" x2="744.0" y2="268.0" stroke="#eee"/>
+<text x="440.0" y="271.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="444.0" y1="174.0" x2="744.0" y2="174.0" stroke="#eee"/>
+<text x="440.0" y="177.0" text-anchor="end" fill="#999">199</text>
+<line x1="444.0" y1="80.0" x2="744.0" y2="80.0" stroke="#eee"/>
+<text x="440.0" y="83.0" text-anchor="end" fill="#999">397</text>
+<line x1="444.0" y1="80.0" x2="444.0" y2="268.0" stroke="#333"/>
+<line x1="444.0" y1="268.0" x2="744.0" y2="268.0" stroke="#333"/>
+<line x1="444.0" y1="268.0" x2="444.0" y2="271.0" stroke="#999"/>
+<text x="444.0" y="283.0" text-anchor="middle" fill="#666">250</text>
+<line x1="486.9" y1="268.0" x2="486.9" y2="271.0" stroke="#999"/>
+<text x="486.9" y="283.0" text-anchor="middle" fill="#666">500</text>
+<line x1="572.6" y1="268.0" x2="572.6" y2="271.0" stroke="#999"/>
+<text x="572.6" y="283.0" text-anchor="middle" fill="#666">1000</text>
+<line x1="744.0" y1="268.0" x2="744.0" y2="271.0" stroke="#999"/>
+<text x="744.0" y="283.0" text-anchor="middle" fill="#666">2000</text>
+<text x="594" y="302" text-anchor="middle" fill="#444">N</text>
+<line x1="444.0" y1="245.3" x2="744.0" y2="121.2" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="740.0" y="87.9" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">1.19× lin</text>
+<polyline points="444.0,246.9 486.9,226.8 572.6,185.1 744.0,93.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="444.0" cy="246.9" r="2.4" fill="#2171b5"/>
+<circle cx="486.9" cy="226.8" r="2.4" fill="#2171b5"/>
+<circle cx="572.6" cy="185.1" r="2.4" fill="#2171b5"/>
+<circle cx="744.0" cy="93.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/diagnostics_clean.html" href="workloads/diagnostics_clean.html" target="_top"><text x="824" y="58" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">diagnostics_clean</text></a>
+<text x="1124" y="58" text-anchor="end" font-size="11" fill="#888" font-weight="600">∝N^0.93</text>
+<line x1="824.0" y1="268.0" x2="1124.0" y2="268.0" stroke="#eee"/>
+<text x="820.0" y="271.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="824.0" y1="174.0" x2="1124.0" y2="174.0" stroke="#eee"/>
+<text x="820.0" y="177.0" text-anchor="end" fill="#999">68</text>
+<line x1="824.0" y1="80.0" x2="1124.0" y2="80.0" stroke="#eee"/>
+<text x="820.0" y="83.0" text-anchor="end" fill="#999">137</text>
+<line x1="824.0" y1="80.0" x2="824.0" y2="268.0" stroke="#333"/>
+<line x1="824.0" y1="268.0" x2="1124.0" y2="268.0" stroke="#333"/>
+<line x1="824.0" y1="268.0" x2="824.0" y2="271.0" stroke="#999"/>
+<text x="824.0" y="283.0" text-anchor="middle" fill="#666">400</text>
+<line x1="866.9" y1="268.0" x2="866.9" y2="271.0" stroke="#999"/>
+<text x="866.9" y="283.0" text-anchor="middle" fill="#666">800</text>
+<line x1="952.6" y1="268.0" x2="952.6" y2="271.0" stroke="#999"/>
+<text x="952.6" y="283.0" text-anchor="middle" fill="#666">1600</text>
+<line x1="1124.0" y1="268.0" x2="1124.0" y2="271.0" stroke="#999"/>
+<text x="1124.0" y="283.0" text-anchor="middle" fill="#666">3200</text>
+<text x="974" y="302" text-anchor="middle" fill="#444">N</text>
+<line x1="824.0" y1="233.7" x2="1124.0" y2="93.9" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="1120.0" y="99.8" text-anchor="end" font-size="11" fill="#888" font-weight="600">0.93× lin</text>
+<polyline points="824.0,232.4 866.9,214.4 952.6,179.4 1124.0,105.8" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="824.0" cy="232.4" r="2.4" fill="#2171b5"/>
+<circle cx="866.9" cy="214.4" r="2.4" fill="#2171b5"/>
+<circle cx="952.6" cy="179.4" r="2.4" fill="#2171b5"/>
+<circle cx="1124.0" cy="105.8" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/sema_generics.html" href="workloads/sema_generics.html" target="_top"><text x="64" y="344" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">sema_generics</text></a>
+<text x="364" y="344" text-anchor="end" font-size="11" fill="#888" font-weight="600">∝N^0.97</text>
+<line x1="64.0" y1="554.0" x2="364.0" y2="554.0" stroke="#eee"/>
+<text x="60.0" y="557.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="64.0" y1="460.0" x2="364.0" y2="460.0" stroke="#eee"/>
+<text x="60.0" y="463.0" text-anchor="end" fill="#999">479</text>
+<line x1="64.0" y1="366.0" x2="364.0" y2="366.0" stroke="#eee"/>
+<text x="60.0" y="369.0" text-anchor="end" fill="#999">958</text>
+<line x1="64.0" y1="366.0" x2="64.0" y2="554.0" stroke="#333"/>
+<line x1="64.0" y1="554.0" x2="364.0" y2="554.0" stroke="#333"/>
+<line x1="64.0" y1="554.0" x2="64.0" y2="557.0" stroke="#999"/>
+<text x="64.0" y="569.0" text-anchor="middle" fill="#666">125</text>
+<line x1="106.9" y1="554.0" x2="106.9" y2="557.0" stroke="#999"/>
+<text x="106.9" y="569.0" text-anchor="middle" fill="#666">250</text>
+<line x1="192.6" y1="554.0" x2="192.6" y2="557.0" stroke="#999"/>
+<text x="192.6" y="569.0" text-anchor="middle" fill="#666">500</text>
+<line x1="364.0" y1="554.0" x2="364.0" y2="557.0" stroke="#999"/>
+<text x="364.0" y="569.0" text-anchor="middle" fill="#666">1000</text>
+<text x="214" y="588" text-anchor="middle" fill="#444">N</text>
+<line x1="64.0" y1="530.5" x2="364.0" y2="379.9" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="360.0" y="375.6" text-anchor="end" font-size="11" fill="#888" font-weight="600">0.99× lin</text>
+<polyline points="64.0,529.3 106.9,509.5 192.6,469.4 364.0,381.6" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="64.0" cy="529.3" r="2.4" fill="#2171b5"/>
+<circle cx="106.9" cy="509.5" r="2.4" fill="#2171b5"/>
+<circle cx="192.6" cy="469.4" r="2.4" fill="#2171b5"/>
+<circle cx="364.0" cy="381.6" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/generic_nesting.html" href="workloads/generic_nesting.html" target="_top"><text x="444" y="344" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">generic_nesting</text></a>
+<text x="744" y="344" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">∝N^12.77</text>
+<line x1="444.0" y1="554.0" x2="744.0" y2="554.0" stroke="#eee"/>
+<text x="440.0" y="557.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="444.0" y1="460.0" x2="744.0" y2="460.0" stroke="#eee"/>
+<text x="440.0" y="463.0" text-anchor="end" fill="#999">842</text>
+<line x1="444.0" y1="366.0" x2="744.0" y2="366.0" stroke="#eee"/>
+<text x="440.0" y="369.0" text-anchor="end" fill="#999">1683</text>
+<line x1="444.0" y1="366.0" x2="444.0" y2="554.0" stroke="#333"/>
+<line x1="444.0" y1="554.0" x2="744.0" y2="554.0" stroke="#333"/>
+<line x1="444.0" y1="554.0" x2="444.0" y2="557.0" stroke="#999"/>
+<text x="444.0" y="569.0" text-anchor="middle" fill="#666">8</text>
+<line x1="544.0" y1="554.0" x2="544.0" y2="557.0" stroke="#999"/>
+<text x="544.0" y="569.0" text-anchor="middle" fill="#666">12</text>
+<line x1="644.0" y1="554.0" x2="644.0" y2="557.0" stroke="#999"/>
+<text x="644.0" y="569.0" text-anchor="middle" fill="#666">16</text>
+<line x1="744.0" y1="554.0" x2="744.0" y2="557.0" stroke="#999"/>
+<text x="744.0" y="569.0" text-anchor="middle" fill="#666">20</text>
+<text x="594" y="588" text-anchor="middle" fill="#444">N</text>
+<line x1="444.0" y1="553.1" x2="744.0" y2="553.6" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="740.0" y="373.9" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">411.54× lin</text>
+<polyline points="444.0,553.6 544.0,553.0 644.0,542.8 744.0,379.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="444.0" cy="553.6" r="2.4" fill="#2171b5"/>
+<circle cx="544.0" cy="553.0" r="2.4" fill="#2171b5"/>
+<circle cx="644.0" cy="542.8" r="2.4" fill="#2171b5"/>
+<circle cx="744.0" cy="379.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/generic_nesting_eval.html" href="workloads/generic_nesting_eval.html" target="_top"><text x="824" y="344" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">generic_nesting_eval</text></a>
+<text x="1124" y="344" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">∝N^14.04</text>
+<line x1="824.0" y1="554.0" x2="1124.0" y2="554.0" stroke="#eee"/>
+<text x="820.0" y="557.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="824.0" y1="460.0" x2="1124.0" y2="460.0" stroke="#eee"/>
+<text x="820.0" y="463.0" text-anchor="end" fill="#999">510</text>
+<line x1="824.0" y1="366.0" x2="1124.0" y2="366.0" stroke="#eee"/>
+<text x="820.0" y="369.0" text-anchor="end" fill="#999">1021</text>
+<line x1="824.0" y1="366.0" x2="824.0" y2="554.0" stroke="#333"/>
+<line x1="824.0" y1="554.0" x2="1124.0" y2="554.0" stroke="#333"/>
+<line x1="824.0" y1="554.0" x2="824.0" y2="557.0" stroke="#999"/>
+<text x="824.0" y="569.0" text-anchor="middle" fill="#666">8</text>
+<line x1="924.0" y1="554.0" x2="924.0" y2="557.0" stroke="#999"/>
+<text x="924.0" y="569.0" text-anchor="middle" fill="#666">10</text>
+<line x1="1024.0" y1="554.0" x2="1024.0" y2="557.0" stroke="#999"/>
+<text x="1024.0" y="569.0" text-anchor="middle" fill="#666">12</text>
+<line x1="1124.0" y1="554.0" x2="1124.0" y2="557.0" stroke="#999"/>
+<text x="1124.0" y="569.0" text-anchor="middle" fill="#666">14</text>
+<text x="974" y="588" text-anchor="middle" fill="#444">N</text>
+<line x1="824.0" y1="551.6" x2="1124.0" y2="551.3" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="1120.0" y="373.9" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">63.50× lin</text>
+<polyline points="824.0,552.8 924.0,550.6 1024.0,532.4 1124.0,379.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="824.0" cy="552.8" r="2.4" fill="#2171b5"/>
+<circle cx="924.0" cy="550.6" r="2.4" fill="#2171b5"/>
+<circle cx="1024.0" cy="532.4" r="2.4" fill="#2171b5"/>
+<circle cx="1124.0" cy="379.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/interface_depth.html" href="workloads/interface_depth.html" target="_top"><text x="64" y="630" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">interface_depth</text></a>
+<text x="364" y="630" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">∝N^3.74</text>
+<line x1="64.0" y1="840.0" x2="364.0" y2="840.0" stroke="#eee"/>
+<text x="60.0" y="843.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="64.0" y1="746.0" x2="364.0" y2="746.0" stroke="#eee"/>
+<text x="60.0" y="749.0" text-anchor="end" fill="#999">175</text>
+<line x1="64.0" y1="652.0" x2="364.0" y2="652.0" stroke="#eee"/>
+<text x="60.0" y="655.0" text-anchor="end" fill="#999">350</text>
+<line x1="64.0" y1="652.0" x2="64.0" y2="840.0" stroke="#333"/>
+<line x1="64.0" y1="840.0" x2="364.0" y2="840.0" stroke="#333"/>
+<line x1="64.0" y1="840.0" x2="64.0" y2="843.0" stroke="#999"/>
+<text x="64.0" y="855.0" text-anchor="middle" fill="#666">16</text>
+<line x1="106.9" y1="840.0" x2="106.9" y2="843.0" stroke="#999"/>
+<text x="106.9" y="855.0" text-anchor="middle" fill="#666">32</text>
+<line x1="192.6" y1="840.0" x2="192.6" y2="843.0" stroke="#999"/>
+<text x="192.6" y="855.0" text-anchor="middle" fill="#666">64</text>
+<line x1="364.0" y1="840.0" x2="364.0" y2="843.0" stroke="#999"/>
+<text x="364.0" y="855.0" text-anchor="middle" fill="#666">128</text>
+<text x="214" y="874" text-anchor="middle" fill="#444">N</text>
+<line x1="64.0" y1="835.4" x2="364.0" y2="840.0" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<polyline points="64.0,837.3 106.9,835.4 192.6,821.8 364.0,665.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="64.0" cy="837.3" r="2.4" fill="#2171b5"/>
+<circle cx="106.9" cy="835.4" r="2.4" fill="#2171b5"/>
+<circle cx="192.6" cy="821.8" r="2.4" fill="#2171b5"/>
+<circle cx="364.0" cy="665.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/conformance.html" href="workloads/conformance.html" target="_top"><text x="444" y="630" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">conformance</text></a>
+<text x="744" y="630" text-anchor="end" font-size="11" fill="#888" font-weight="600">∝N^1.14</text>
+<line x1="444.0" y1="840.0" x2="744.0" y2="840.0" stroke="#eee"/>
+<text x="440.0" y="843.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="444.0" y1="746.0" x2="744.0" y2="746.0" stroke="#eee"/>
+<text x="440.0" y="749.0" text-anchor="end" fill="#999">280</text>
+<line x1="444.0" y1="652.0" x2="744.0" y2="652.0" stroke="#eee"/>
+<text x="440.0" y="655.0" text-anchor="end" fill="#999">560</text>
+<line x1="444.0" y1="652.0" x2="444.0" y2="840.0" stroke="#333"/>
+<line x1="444.0" y1="840.0" x2="744.0" y2="840.0" stroke="#333"/>
+<line x1="444.0" y1="840.0" x2="444.0" y2="843.0" stroke="#999"/>
+<text x="444.0" y="855.0" text-anchor="middle" fill="#666">600</text>
+<line x1="486.9" y1="840.0" x2="486.9" y2="843.0" stroke="#999"/>
+<text x="486.9" y="855.0" text-anchor="middle" fill="#666">1200</text>
+<line x1="572.6" y1="840.0" x2="572.6" y2="843.0" stroke="#999"/>
+<text x="572.6" y="855.0" text-anchor="middle" fill="#666">2400</text>
+<line x1="744.0" y1="840.0" x2="744.0" y2="843.0" stroke="#999"/>
+<text x="744.0" y="855.0" text-anchor="middle" fill="#666">4800</text>
+<text x="594" y="874" text-anchor="middle" fill="#444">N</text>
+<line x1="444.0" y1="819.2" x2="744.0" y2="697.8" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="740.0" y="659.9" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">1.22× lin</text>
+<polyline points="444.0,820.5 486.9,801.2 572.6,758.4 744.0,665.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="444.0" cy="820.5" r="2.4" fill="#2171b5"/>
+<circle cx="486.9" cy="801.2" r="2.4" fill="#2171b5"/>
+<circle cx="572.6" cy="758.4" r="2.4" fill="#2171b5"/>
+<circle cx="744.0" cy="665.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/operator_typecheck.html" href="workloads/operator_typecheck.html" target="_top"><text x="824" y="630" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">operator_typecheck</text></a>
+<text x="1124" y="630" text-anchor="end" font-size="11" fill="#888" font-weight="600">∝N^1.01</text>
+<line x1="824.0" y1="840.0" x2="1124.0" y2="840.0" stroke="#eee"/>
+<text x="820.0" y="843.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="824.0" y1="746.0" x2="1124.0" y2="746.0" stroke="#eee"/>
+<text x="820.0" y="749.0" text-anchor="end" fill="#999">189</text>
+<line x1="824.0" y1="652.0" x2="1124.0" y2="652.0" stroke="#eee"/>
+<text x="820.0" y="655.0" text-anchor="end" fill="#999">377</text>
+<line x1="824.0" y1="652.0" x2="824.0" y2="840.0" stroke="#333"/>
+<line x1="824.0" y1="840.0" x2="1124.0" y2="840.0" stroke="#333"/>
+<line x1="824.0" y1="840.0" x2="824.0" y2="843.0" stroke="#999"/>
+<text x="824.0" y="855.0" text-anchor="middle" fill="#666">200</text>
+<line x1="866.9" y1="840.0" x2="866.9" y2="843.0" stroke="#999"/>
+<text x="866.9" y="855.0" text-anchor="middle" fill="#666">400</text>
+<line x1="952.6" y1="840.0" x2="952.6" y2="843.0" stroke="#999"/>
+<text x="952.6" y="855.0" text-anchor="middle" fill="#666">800</text>
+<line x1="1124.0" y1="840.0" x2="1124.0" y2="843.0" stroke="#999"/>
+<text x="1124.0" y="855.0" text-anchor="middle" fill="#666">1600</text>
+<text x="974" y="874" text-anchor="middle" fill="#444">N</text>
+<line x1="824.0" y1="814.5" x2="1124.0" y2="671.9" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="1120.0" y="659.9" text-anchor="end" font-size="11" fill="#888" font-weight="600">1.04× lin</text>
+<polyline points="824.0,814.3 866.9,794.2 952.6,752.8 1124.0,665.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="824.0" cy="814.3" r="2.4" fill="#2171b5"/>
+<circle cx="866.9" cy="794.2" r="2.4" fill="#2171b5"/>
+<circle cx="952.6" cy="752.8" r="2.4" fill="#2171b5"/>
+<circle cx="1124.0" cy="665.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/implicit_conversion.html" href="workloads/implicit_conversion.html" target="_top"><text x="64" y="916" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">implicit_conversion</text></a>
+<text x="364" y="916" text-anchor="end" font-size="11" fill="#888" font-weight="600">∝N^1.01</text>
+<line x1="64.0" y1="1126.0" x2="364.0" y2="1126.0" stroke="#eee"/>
+<text x="60.0" y="1129.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="64.0" y1="1032.0" x2="364.0" y2="1032.0" stroke="#eee"/>
+<text x="60.0" y="1035.0" text-anchor="end" fill="#999">226</text>
+<line x1="64.0" y1="938.0" x2="364.0" y2="938.0" stroke="#eee"/>
+<text x="60.0" y="941.0" text-anchor="end" fill="#999">451</text>
+<line x1="64.0" y1="938.0" x2="64.0" y2="1126.0" stroke="#333"/>
+<line x1="64.0" y1="1126.0" x2="364.0" y2="1126.0" stroke="#333"/>
+<line x1="64.0" y1="1126.0" x2="64.0" y2="1129.0" stroke="#999"/>
+<text x="64.0" y="1141.0" text-anchor="middle" fill="#666">300</text>
+<line x1="106.9" y1="1126.0" x2="106.9" y2="1129.0" stroke="#999"/>
+<text x="106.9" y="1141.0" text-anchor="middle" fill="#666">600</text>
+<line x1="192.6" y1="1126.0" x2="192.6" y2="1129.0" stroke="#999"/>
+<text x="192.6" y="1141.0" text-anchor="middle" fill="#666">1200</text>
+<line x1="364.0" y1="1126.0" x2="364.0" y2="1129.0" stroke="#999"/>
+<text x="364.0" y="1141.0" text-anchor="middle" fill="#666">2400</text>
+<text x="214" y="1160" text-anchor="middle" fill="#444">N</text>
+<line x1="64.0" y1="1100.7" x2="364.0" y2="953.7" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="360.0" y="945.9" text-anchor="end" font-size="11" fill="#888" font-weight="600">1.01× lin</text>
+<polyline points="64.0,1100.5 106.9,1079.7 192.6,1035.9 364.0,951.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="64.0" cy="1100.5" r="2.4" fill="#2171b5"/>
+<circle cx="106.9" cy="1079.7" r="2.4" fill="#2171b5"/>
+<circle cx="192.6" cy="1035.9" r="2.4" fill="#2171b5"/>
+<circle cx="364.0" cy="951.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/overload_resolution.html" href="workloads/overload_resolution.html" target="_top"><text x="444" y="916" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">overload_resolution</text></a>
+<text x="744" y="916" text-anchor="end" font-size="11" fill="#888" font-weight="600">∝N^0.94</text>
+<line x1="444.0" y1="1126.0" x2="744.0" y2="1126.0" stroke="#eee"/>
+<text x="440.0" y="1129.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="444.0" y1="1032.0" x2="744.0" y2="1032.0" stroke="#eee"/>
+<text x="440.0" y="1035.0" text-anchor="end" fill="#999">112</text>
+<line x1="444.0" y1="938.0" x2="744.0" y2="938.0" stroke="#eee"/>
+<text x="440.0" y="941.0" text-anchor="end" fill="#999">224</text>
+<line x1="444.0" y1="938.0" x2="444.0" y2="1126.0" stroke="#333"/>
+<line x1="444.0" y1="1126.0" x2="744.0" y2="1126.0" stroke="#333"/>
+<line x1="444.0" y1="1126.0" x2="444.0" y2="1129.0" stroke="#999"/>
+<text x="444.0" y="1141.0" text-anchor="middle" fill="#666">600</text>
+<line x1="486.9" y1="1126.0" x2="486.9" y2="1129.0" stroke="#999"/>
+<text x="486.9" y="1141.0" text-anchor="middle" fill="#666">1200</text>
+<line x1="572.6" y1="1126.0" x2="572.6" y2="1129.0" stroke="#999"/>
+<text x="572.6" y="1141.0" text-anchor="middle" fill="#666">2400</text>
+<line x1="744.0" y1="1126.0" x2="744.0" y2="1129.0" stroke="#999"/>
+<text x="744.0" y="1141.0" text-anchor="middle" fill="#666">4800</text>
+<text x="594" y="1160" text-anchor="middle" fill="#444">N</text>
+<line x1="444.0" y1="1096.6" x2="744.0" y2="951.9" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="740.0" y="960.3" text-anchor="end" font-size="11" fill="#888" font-weight="600">0.92× lin</text>
+<polyline points="444.0,1095.8 486.9,1076.3 572.6,1039.4 744.0,966.3" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="444.0" cy="1095.8" r="2.4" fill="#2171b5"/>
+<circle cx="486.9" cy="1076.3" r="2.4" fill="#2171b5"/>
+<circle cx="572.6" cy="1039.4" r="2.4" fill="#2171b5"/>
+<circle cx="744.0" cy="966.3" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/ir_builder.html" href="workloads/ir_builder.html" target="_top"><text x="824" y="916" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">ir_builder</text></a>
+<text x="1124" y="916" text-anchor="end" font-size="11" fill="#888" font-weight="600">∝N^0.93</text>
+<line x1="824.0" y1="1126.0" x2="1124.0" y2="1126.0" stroke="#eee"/>
+<text x="820.0" y="1129.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="824.0" y1="1032.0" x2="1124.0" y2="1032.0" stroke="#eee"/>
+<text x="820.0" y="1035.0" text-anchor="end" fill="#999">36</text>
+<line x1="824.0" y1="938.0" x2="1124.0" y2="938.0" stroke="#eee"/>
+<text x="820.0" y="941.0" text-anchor="end" fill="#999">72</text>
+<line x1="824.0" y1="938.0" x2="824.0" y2="1126.0" stroke="#333"/>
+<line x1="824.0" y1="1126.0" x2="1124.0" y2="1126.0" stroke="#333"/>
+<line x1="824.0" y1="1126.0" x2="824.0" y2="1129.0" stroke="#999"/>
+<text x="824.0" y="1141.0" text-anchor="middle" fill="#666">500</text>
+<line x1="866.9" y1="1126.0" x2="866.9" y2="1129.0" stroke="#999"/>
+<text x="866.9" y="1141.0" text-anchor="middle" fill="#666">1000</text>
+<line x1="952.6" y1="1126.0" x2="952.6" y2="1129.0" stroke="#999"/>
+<text x="952.6" y="1141.0" text-anchor="middle" fill="#666">2000</text>
+<line x1="1124.0" y1="1126.0" x2="1124.0" y2="1129.0" stroke="#999"/>
+<text x="1124.0" y="1141.0" text-anchor="middle" fill="#666">4000</text>
+<text x="974" y="1160" text-anchor="middle" fill="#444">N</text>
+<line x1="824.0" y1="1080.5" x2="1124.0" y2="951.9" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="1120.0" y="946.7" text-anchor="end" font-size="11" fill="#888" font-weight="600">1.00× lin</text>
+<polyline points="824.0,1077.1 866.9,1063.8 952.6,1026.8 1124.0,952.7" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="824.0" cy="1077.1" r="2.4" fill="#2171b5"/>
+<circle cx="866.9" cy="1063.8" r="2.4" fill="#2171b5"/>
+<circle cx="952.6" cy="1026.8" r="2.4" fill="#2171b5"/>
+<circle cx="1124.0" cy="952.7" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/serialize.html" href="workloads/serialize.html" target="_top"><text x="64" y="1202" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">serialize</text></a>
+<text x="364" y="1202" text-anchor="end" font-size="11" fill="#888" font-weight="600">∝N^1.10</text>
+<line x1="64.0" y1="1412.0" x2="364.0" y2="1412.0" stroke="#eee"/>
+<text x="60.0" y="1415.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="64.0" y1="1318.0" x2="364.0" y2="1318.0" stroke="#eee"/>
+<text x="60.0" y="1321.0" text-anchor="end" fill="#999">182</text>
+<line x1="64.0" y1="1224.0" x2="364.0" y2="1224.0" stroke="#eee"/>
+<text x="60.0" y="1227.0" text-anchor="end" fill="#999">365</text>
+<line x1="64.0" y1="1224.0" x2="64.0" y2="1412.0" stroke="#333"/>
+<line x1="64.0" y1="1412.0" x2="364.0" y2="1412.0" stroke="#333"/>
+<line x1="64.0" y1="1412.0" x2="64.0" y2="1415.0" stroke="#999"/>
+<text x="64.0" y="1427.0" text-anchor="middle" fill="#666">375</text>
+<line x1="106.9" y1="1412.0" x2="106.9" y2="1415.0" stroke="#999"/>
+<text x="106.9" y="1427.0" text-anchor="middle" fill="#666">750</text>
+<line x1="192.6" y1="1412.0" x2="192.6" y2="1415.0" stroke="#999"/>
+<text x="192.6" y="1427.0" text-anchor="middle" fill="#666">1500</text>
+<line x1="364.0" y1="1412.0" x2="364.0" y2="1415.0" stroke="#999"/>
+<text x="364.0" y="1427.0" text-anchor="middle" fill="#666">3000</text>
+<text x="214" y="1446" text-anchor="middle" fill="#444">N</text>
+<line x1="64.0" y1="1389.6" x2="364.0" y2="1270.4" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="360.0" y="1231.9" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">1.23× lin</text>
+<polyline points="64.0,1389.8 106.9,1372.5 192.6,1336.8 364.0,1237.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="64.0" cy="1389.8" r="2.4" fill="#2171b5"/>
+<circle cx="106.9" cy="1372.5" r="2.4" fill="#2171b5"/>
+<circle cx="192.6" cy="1336.8" r="2.4" fill="#2171b5"/>
+<circle cx="364.0" cy="1237.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/module_link.html" href="workloads/module_link.html" target="_top"><text x="444" y="1202" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">module_link</text></a>
+<text x="744" y="1202" text-anchor="end" font-size="11" fill="#888" font-weight="600">∝N^1.06</text>
+<line x1="444.0" y1="1412.0" x2="744.0" y2="1412.0" stroke="#eee"/>
+<text x="440.0" y="1415.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="444.0" y1="1318.0" x2="744.0" y2="1318.0" stroke="#eee"/>
+<text x="440.0" y="1321.0" text-anchor="end" fill="#999">226</text>
+<line x1="444.0" y1="1224.0" x2="744.0" y2="1224.0" stroke="#eee"/>
+<text x="440.0" y="1227.0" text-anchor="end" fill="#999">452</text>
+<line x1="444.0" y1="1224.0" x2="444.0" y2="1412.0" stroke="#333"/>
+<line x1="444.0" y1="1412.0" x2="744.0" y2="1412.0" stroke="#333"/>
+<line x1="444.0" y1="1412.0" x2="444.0" y2="1415.0" stroke="#999"/>
+<text x="444.0" y="1427.0" text-anchor="middle" fill="#666">50</text>
+<line x1="486.9" y1="1412.0" x2="486.9" y2="1415.0" stroke="#999"/>
+<text x="486.9" y="1427.0" text-anchor="middle" fill="#666">100</text>
+<line x1="572.6" y1="1412.0" x2="572.6" y2="1415.0" stroke="#999"/>
+<text x="572.6" y="1427.0" text-anchor="middle" fill="#666">200</text>
+<line x1="744.0" y1="1412.0" x2="744.0" y2="1415.0" stroke="#999"/>
+<text x="744.0" y="1427.0" text-anchor="middle" fill="#666">400</text>
+<text x="594" y="1446" text-anchor="middle" fill="#444">N</text>
+<line x1="444.0" y1="1388.2" x2="744.0" y2="1252.2" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="740.0" y="1231.9" text-anchor="end" font-size="11" fill="#888" font-weight="600">1.09× lin</text>
+<polyline points="444.0,1388.9 486.9,1368.5 572.6,1326.7 744.0,1237.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="444.0" cy="1388.9" r="2.4" fill="#2171b5"/>
+<circle cx="486.9" cy="1368.5" r="2.4" fill="#2171b5"/>
+<circle cx="572.6" cy="1326.7" r="2.4" fill="#2171b5"/>
+<circle cx="744.0" cy="1237.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/specialization.html" href="workloads/specialization.html" target="_top"><text x="824" y="1202" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">specialization</text></a>
+<text x="1124" y="1202" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">∝N^1.19</text>
+<line x1="824.0" y1="1412.0" x2="1124.0" y2="1412.0" stroke="#eee"/>
+<text x="820.0" y="1415.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="824.0" y1="1318.0" x2="1124.0" y2="1318.0" stroke="#eee"/>
+<text x="820.0" y="1321.0" text-anchor="end" fill="#999">186</text>
+<line x1="824.0" y1="1224.0" x2="1124.0" y2="1224.0" stroke="#eee"/>
+<text x="820.0" y="1227.0" text-anchor="end" fill="#999">372</text>
+<line x1="824.0" y1="1224.0" x2="824.0" y2="1412.0" stroke="#333"/>
+<line x1="824.0" y1="1412.0" x2="1124.0" y2="1412.0" stroke="#333"/>
+<line x1="824.0" y1="1412.0" x2="824.0" y2="1415.0" stroke="#999"/>
+<text x="824.0" y="1427.0" text-anchor="middle" fill="#666">75</text>
+<line x1="866.9" y1="1412.0" x2="866.9" y2="1415.0" stroke="#999"/>
+<text x="866.9" y="1427.0" text-anchor="middle" fill="#666">150</text>
+<line x1="952.6" y1="1412.0" x2="952.6" y2="1415.0" stroke="#999"/>
+<text x="952.6" y="1427.0" text-anchor="middle" fill="#666">300</text>
+<line x1="1124.0" y1="1412.0" x2="1124.0" y2="1415.0" stroke="#999"/>
+<text x="1124.0" y="1427.0" text-anchor="middle" fill="#666">600</text>
+<text x="974" y="1446" text-anchor="middle" fill="#444">N</text>
+<line x1="824.0" y1="1392.0" x2="1124.0" y2="1288.9" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="1120.0" y="1231.9" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">1.41× lin</text>
+<polyline points="824.0,1392.5 866.9,1377.0 952.6,1339.3 1124.0,1237.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="824.0" cy="1392.5" r="2.4" fill="#2171b5"/>
+<circle cx="866.9" cy="1377.0" r="2.4" fill="#2171b5"/>
+<circle cx="952.6" cy="1339.3" r="2.4" fill="#2171b5"/>
+<circle cx="1124.0" cy="1237.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/dynamic_dispatch.html" href="workloads/dynamic_dispatch.html" target="_top"><text x="64" y="1488" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">dynamic_dispatch</text></a>
+<text x="364" y="1488" text-anchor="end" font-size="11" fill="#888" font-weight="600">∝N^0.96</text>
+<line x1="64.0" y1="1698.0" x2="364.0" y2="1698.0" stroke="#eee"/>
+<text x="60.0" y="1701.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="64.0" y1="1604.0" x2="364.0" y2="1604.0" stroke="#eee"/>
+<text x="60.0" y="1607.0" text-anchor="end" fill="#999">159</text>
+<line x1="64.0" y1="1510.0" x2="364.0" y2="1510.0" stroke="#eee"/>
+<text x="60.0" y="1513.0" text-anchor="end" fill="#999">317</text>
+<line x1="64.0" y1="1510.0" x2="64.0" y2="1698.0" stroke="#333"/>
+<line x1="64.0" y1="1698.0" x2="364.0" y2="1698.0" stroke="#333"/>
+<line x1="64.0" y1="1698.0" x2="64.0" y2="1701.0" stroke="#999"/>
+<text x="64.0" y="1713.0" text-anchor="middle" fill="#666">50</text>
+<line x1="106.9" y1="1698.0" x2="106.9" y2="1701.0" stroke="#999"/>
+<text x="106.9" y="1713.0" text-anchor="middle" fill="#666">100</text>
+<line x1="192.6" y1="1698.0" x2="192.6" y2="1701.0" stroke="#999"/>
+<text x="192.6" y="1713.0" text-anchor="middle" fill="#666">200</text>
+<line x1="364.0" y1="1698.0" x2="364.0" y2="1701.0" stroke="#999"/>
+<text x="364.0" y="1713.0" text-anchor="middle" fill="#666">400</text>
+<text x="214" y="1732" text-anchor="middle" fill="#444">N</text>
+<line x1="64.0" y1="1671.0" x2="364.0" y2="1525.3" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="360.0" y="1517.9" text-anchor="end" font-size="11" fill="#888" font-weight="600">1.01× lin</text>
+<polyline points="64.0,1668.8 106.9,1651.3 192.6,1612.7 364.0,1523.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="64.0" cy="1668.8" r="2.4" fill="#2171b5"/>
+<circle cx="106.9" cy="1651.3" r="2.4" fill="#2171b5"/>
+<circle cx="192.6" cy="1612.7" r="2.4" fill="#2171b5"/>
+<circle cx="364.0" cy="1523.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/existential_aggregate.html" href="workloads/existential_aggregate.html" target="_top"><text x="444" y="1488" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">existential_aggregate</text></a>
+<text x="744" y="1488" text-anchor="end" font-size="11" fill="#888" font-weight="600">∝N^1.13</text>
+<line x1="444.0" y1="1698.0" x2="744.0" y2="1698.0" stroke="#eee"/>
+<text x="440.0" y="1701.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="444.0" y1="1604.0" x2="744.0" y2="1604.0" stroke="#eee"/>
+<text x="440.0" y="1607.0" text-anchor="end" fill="#999">252</text>
+<line x1="444.0" y1="1510.0" x2="744.0" y2="1510.0" stroke="#eee"/>
+<text x="440.0" y="1513.0" text-anchor="end" fill="#999">503</text>
+<line x1="444.0" y1="1510.0" x2="444.0" y2="1698.0" stroke="#333"/>
+<line x1="444.0" y1="1698.0" x2="744.0" y2="1698.0" stroke="#333"/>
+<line x1="444.0" y1="1698.0" x2="444.0" y2="1701.0" stroke="#999"/>
+<text x="444.0" y="1713.0" text-anchor="middle" fill="#666">50</text>
+<line x1="486.9" y1="1698.0" x2="486.9" y2="1701.0" stroke="#999"/>
+<text x="486.9" y="1713.0" text-anchor="middle" fill="#666">100</text>
+<line x1="572.6" y1="1698.0" x2="572.6" y2="1701.0" stroke="#999"/>
+<text x="572.6" y="1713.0" text-anchor="middle" fill="#666">200</text>
+<line x1="744.0" y1="1698.0" x2="744.0" y2="1701.0" stroke="#999"/>
+<text x="744.0" y="1713.0" text-anchor="middle" fill="#666">400</text>
+<text x="594" y="1732" text-anchor="middle" fill="#444">N</text>
+<line x1="444.0" y1="1678.7" x2="744.0" y2="1570.6" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="740.0" y="1517.9" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">1.37× lin</text>
+<polyline points="444.0,1677.9 486.9,1663.6 572.6,1627.4 744.0,1523.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="444.0" cy="1677.9" r="2.4" fill="#2171b5"/>
+<circle cx="486.9" cy="1663.6" r="2.4" fill="#2171b5"/>
+<circle cx="572.6" cy="1627.4" r="2.4" fill="#2171b5"/>
+<circle cx="744.0" cy="1523.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/autodiff.html" href="workloads/autodiff.html" target="_top"><text x="824" y="1488" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">autodiff</text></a>
+<text x="1124" y="1488" text-anchor="end" font-size="11" fill="#888" font-weight="600">∝N^0.92</text>
+<line x1="824.0" y1="1698.0" x2="1124.0" y2="1698.0" stroke="#eee"/>
+<text x="820.0" y="1701.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="824.0" y1="1604.0" x2="1124.0" y2="1604.0" stroke="#eee"/>
+<text x="820.0" y="1607.0" text-anchor="end" fill="#999">487</text>
+<line x1="824.0" y1="1510.0" x2="1124.0" y2="1510.0" stroke="#eee"/>
+<text x="820.0" y="1513.0" text-anchor="end" fill="#999">974</text>
+<line x1="824.0" y1="1510.0" x2="824.0" y2="1698.0" stroke="#333"/>
+<line x1="824.0" y1="1698.0" x2="1124.0" y2="1698.0" stroke="#333"/>
+<line x1="824.0" y1="1698.0" x2="824.0" y2="1701.0" stroke="#999"/>
+<text x="824.0" y="1713.0" text-anchor="middle" fill="#666">25</text>
+<line x1="866.9" y1="1698.0" x2="866.9" y2="1701.0" stroke="#999"/>
+<text x="866.9" y="1713.0" text-anchor="middle" fill="#666">50</text>
+<line x1="952.6" y1="1698.0" x2="952.6" y2="1701.0" stroke="#999"/>
+<text x="952.6" y="1713.0" text-anchor="middle" fill="#666">100</text>
+<line x1="1124.0" y1="1698.0" x2="1124.0" y2="1701.0" stroke="#999"/>
+<text x="1124.0" y="1713.0" text-anchor="middle" fill="#666">200</text>
+<text x="974" y="1732" text-anchor="middle" fill="#444">N</text>
+<line x1="824.0" y1="1674.5" x2="1124.0" y2="1523.9" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="1120.0" y="1525.8" text-anchor="end" font-size="11" fill="#888" font-weight="600">0.95× lin</text>
+<polyline points="824.0,1671.9 866.9,1654.3 952.6,1617.3 1124.0,1531.8" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="824.0" cy="1671.9" r="2.4" fill="#2171b5"/>
+<circle cx="866.9" cy="1654.3" r="2.4" fill="#2171b5"/>
+<circle cx="952.6" cy="1617.3" r="2.4" fill="#2171b5"/>
+<circle cx="1124.0" cy="1531.8" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/inlining.html" href="workloads/inlining.html" target="_top"><text x="64" y="1774" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">inlining</text></a>
+<text x="364" y="1774" text-anchor="end" font-size="11" fill="#888" font-weight="600">∝N^0.95</text>
+<line x1="64.0" y1="1984.0" x2="364.0" y2="1984.0" stroke="#eee"/>
+<text x="60.0" y="1987.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="64.0" y1="1890.0" x2="364.0" y2="1890.0" stroke="#eee"/>
+<text x="60.0" y="1893.0" text-anchor="end" fill="#999">115</text>
+<line x1="64.0" y1="1796.0" x2="364.0" y2="1796.0" stroke="#eee"/>
+<text x="60.0" y="1799.0" text-anchor="end" fill="#999">230</text>
+<line x1="64.0" y1="1796.0" x2="64.0" y2="1984.0" stroke="#333"/>
+<line x1="64.0" y1="1984.0" x2="364.0" y2="1984.0" stroke="#333"/>
+<line x1="64.0" y1="1984.0" x2="64.0" y2="1987.0" stroke="#999"/>
+<text x="64.0" y="1999.0" text-anchor="middle" fill="#666">100</text>
+<line x1="106.9" y1="1984.0" x2="106.9" y2="1987.0" stroke="#999"/>
+<text x="106.9" y="1999.0" text-anchor="middle" fill="#666">200</text>
+<line x1="192.6" y1="1984.0" x2="192.6" y2="1987.0" stroke="#999"/>
+<text x="192.6" y="1999.0" text-anchor="middle" fill="#666">400</text>
+<line x1="364.0" y1="1984.0" x2="364.0" y2="1987.0" stroke="#999"/>
+<text x="364.0" y="1999.0" text-anchor="middle" fill="#666">800</text>
+<text x="214" y="2018" text-anchor="middle" fill="#444">N</text>
+<line x1="64.0" y1="1954.8" x2="364.0" y2="1809.9" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="360.0" y="1804.2" text-anchor="end" font-size="11" fill="#888" font-weight="600">1.00× lin</text>
+<polyline points="64.0,1952.6 106.9,1935.2 192.6,1896.4 364.0,1810.2" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="64.0" cy="1952.6" r="2.4" fill="#2171b5"/>
+<circle cx="106.9" cy="1935.2" r="2.4" fill="#2171b5"/>
+<circle cx="192.6" cy="1896.4" r="2.4" fill="#2171b5"/>
+<circle cx="364.0" cy="1810.2" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/loop_unroll.html" href="workloads/loop_unroll.html" target="_top"><text x="444" y="1774" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">loop_unroll</text></a>
+<text x="744" y="1774" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">∝N^1.71</text>
+<line x1="444.0" y1="1984.0" x2="744.0" y2="1984.0" stroke="#eee"/>
+<text x="440.0" y="1987.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="444.0" y1="1890.0" x2="744.0" y2="1890.0" stroke="#eee"/>
+<text x="440.0" y="1893.0" text-anchor="end" fill="#999">610</text>
+<line x1="444.0" y1="1796.0" x2="744.0" y2="1796.0" stroke="#eee"/>
+<text x="440.0" y="1799.0" text-anchor="end" fill="#999">1221</text>
+<line x1="444.0" y1="1796.0" x2="444.0" y2="1984.0" stroke="#333"/>
+<line x1="444.0" y1="1984.0" x2="744.0" y2="1984.0" stroke="#333"/>
+<line x1="444.0" y1="1984.0" x2="444.0" y2="1987.0" stroke="#999"/>
+<text x="444.0" y="1999.0" text-anchor="middle" fill="#666">75</text>
+<line x1="486.9" y1="1984.0" x2="486.9" y2="1987.0" stroke="#999"/>
+<text x="486.9" y="1999.0" text-anchor="middle" fill="#666">150</text>
+<line x1="572.6" y1="1984.0" x2="572.6" y2="1987.0" stroke="#999"/>
+<text x="572.6" y="1999.0" text-anchor="middle" fill="#666">300</text>
+<line x1="744.0" y1="1984.0" x2="744.0" y2="1987.0" stroke="#999"/>
+<text x="744.0" y="1999.0" text-anchor="middle" fill="#666">600</text>
+<text x="594" y="2018" text-anchor="middle" fill="#444">N</text>
+<line x1="444.0" y1="1976.6" x2="744.0" y2="1936.2" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="740.0" y="1803.9" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">3.64× lin</text>
+<polyline points="444.0,1977.5 486.9,1970.4 572.6,1943.0 744.0,1809.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="444.0" cy="1977.5" r="2.4" fill="#2171b5"/>
+<circle cx="486.9" cy="1970.4" r="2.4" fill="#2171b5"/>
+<circle cx="572.6" cy="1943.0" r="2.4" fill="#2171b5"/>
+<circle cx="744.0" cy="1809.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/control_flow_ssa.html" href="workloads/control_flow_ssa.html" target="_top"><text x="824" y="1774" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">control_flow_ssa</text></a>
+<text x="1124" y="1774" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">∝N^1.43</text>
+<line x1="824.0" y1="1984.0" x2="1124.0" y2="1984.0" stroke="#eee"/>
+<text x="820.0" y="1987.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="824.0" y1="1890.0" x2="1124.0" y2="1890.0" stroke="#eee"/>
+<text x="820.0" y="1893.0" text-anchor="end" fill="#999">864</text>
+<line x1="824.0" y1="1796.0" x2="1124.0" y2="1796.0" stroke="#eee"/>
+<text x="820.0" y="1799.0" text-anchor="end" fill="#999">1728</text>
+<line x1="824.0" y1="1796.0" x2="824.0" y2="1984.0" stroke="#333"/>
+<line x1="824.0" y1="1984.0" x2="1124.0" y2="1984.0" stroke="#333"/>
+<line x1="824.0" y1="1984.0" x2="824.0" y2="1987.0" stroke="#999"/>
+<text x="824.0" y="1999.0" text-anchor="middle" fill="#666">60</text>
+<line x1="866.9" y1="1984.0" x2="866.9" y2="1987.0" stroke="#999"/>
+<text x="866.9" y="1999.0" text-anchor="middle" fill="#666">120</text>
+<line x1="952.6" y1="1984.0" x2="952.6" y2="1987.0" stroke="#999"/>
+<text x="952.6" y="1999.0" text-anchor="middle" fill="#666">240</text>
+<line x1="1124.0" y1="1984.0" x2="1124.0" y2="1987.0" stroke="#999"/>
+<text x="1124.0" y="1999.0" text-anchor="middle" fill="#666">480</text>
+<text x="974" y="2018" text-anchor="middle" fill="#444">N</text>
+<line x1="824.0" y1="1972.5" x2="1124.0" y2="1899.7" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="1120.0" y="1803.9" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">2.07× lin</text>
+<polyline points="824.0,1974.0 866.9,1961.3 952.6,1926.1 1124.0,1809.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="824.0" cy="1974.0" r="2.4" fill="#2171b5"/>
+<circle cx="866.9" cy="1961.3" r="2.4" fill="#2171b5"/>
+<circle cx="952.6" cy="1926.1" r="2.4" fill="#2171b5"/>
+<circle cx="1124.0" cy="1809.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/resource_aggregate.html" href="workloads/resource_aggregate.html" target="_top"><text x="64" y="2060" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">resource_aggregate</text></a>
+<text x="364" y="2060" text-anchor="end" font-size="11" fill="#888" font-weight="600">∝N^0.99</text>
+<line x1="64.0" y1="2270.0" x2="364.0" y2="2270.0" stroke="#eee"/>
+<text x="60.0" y="2273.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="64.0" y1="2176.0" x2="364.0" y2="2176.0" stroke="#eee"/>
+<text x="60.0" y="2179.0" text-anchor="end" fill="#999">176</text>
+<line x1="64.0" y1="2082.0" x2="364.0" y2="2082.0" stroke="#eee"/>
+<text x="60.0" y="2085.0" text-anchor="end" fill="#999">352</text>
+<line x1="64.0" y1="2082.0" x2="64.0" y2="2270.0" stroke="#333"/>
+<line x1="64.0" y1="2270.0" x2="364.0" y2="2270.0" stroke="#333"/>
+<line x1="64.0" y1="2270.0" x2="64.0" y2="2273.0" stroke="#999"/>
+<text x="64.0" y="2285.0" text-anchor="middle" fill="#666">80</text>
+<line x1="106.9" y1="2270.0" x2="106.9" y2="2273.0" stroke="#999"/>
+<text x="106.9" y="2285.0" text-anchor="middle" fill="#666">160</text>
+<line x1="192.6" y1="2270.0" x2="192.6" y2="2273.0" stroke="#999"/>
+<text x="192.6" y="2285.0" text-anchor="middle" fill="#666">320</text>
+<line x1="364.0" y1="2270.0" x2="364.0" y2="2273.0" stroke="#999"/>
+<text x="364.0" y="2285.0" text-anchor="middle" fill="#666">640</text>
+<text x="214" y="2304" text-anchor="middle" fill="#444">N</text>
+<line x1="64.0" y1="2243.6" x2="364.0" y2="2097.5" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="360.0" y="2089.9" text-anchor="end" font-size="11" fill="#888" font-weight="600">1.01× lin</text>
+<polyline points="64.0,2242.8 106.9,2223.1 192.6,2182.7 364.0,2095.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="64.0" cy="2242.8" r="2.4" fill="#2171b5"/>
+<circle cx="106.9" cy="2223.1" r="2.4" fill="#2171b5"/>
+<circle cx="192.6" cy="2182.7" r="2.4" fill="#2171b5"/>
+<circle cx="364.0" cy="2095.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/reflection_layout.html" href="workloads/reflection_layout.html" target="_top"><text x="444" y="2060" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">reflection_layout</text></a>
+<text x="744" y="2060" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">∝N^1.30</text>
+<line x1="444.0" y1="2270.0" x2="744.0" y2="2270.0" stroke="#eee"/>
+<text x="440.0" y="2273.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="444.0" y1="2176.0" x2="744.0" y2="2176.0" stroke="#eee"/>
+<text x="440.0" y="2179.0" text-anchor="end" fill="#999">287</text>
+<line x1="444.0" y1="2082.0" x2="744.0" y2="2082.0" stroke="#eee"/>
+<text x="440.0" y="2085.0" text-anchor="end" fill="#999">574</text>
+<line x1="444.0" y1="2082.0" x2="444.0" y2="2270.0" stroke="#333"/>
+<line x1="444.0" y1="2270.0" x2="744.0" y2="2270.0" stroke="#333"/>
+<line x1="444.0" y1="2270.0" x2="444.0" y2="2273.0" stroke="#999"/>
+<text x="444.0" y="2285.0" text-anchor="middle" fill="#666">30</text>
+<line x1="486.9" y1="2270.0" x2="486.9" y2="2273.0" stroke="#999"/>
+<text x="486.9" y="2285.0" text-anchor="middle" fill="#666">60</text>
+<line x1="572.6" y1="2270.0" x2="572.6" y2="2273.0" stroke="#999"/>
+<text x="572.6" y="2285.0" text-anchor="middle" fill="#666">120</text>
+<line x1="744.0" y1="2270.0" x2="744.0" y2="2273.0" stroke="#999"/>
+<text x="744.0" y="2285.0" text-anchor="middle" fill="#666">240</text>
+<text x="594" y="2304" text-anchor="middle" fill="#444">N</text>
+<line x1="444.0" y1="2254.7" x2="744.0" y2="2171.1" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="740.0" y="2089.9" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">1.76× lin</text>
+<polyline points="444.0,2255.1 486.9,2242.5 572.6,2208.3 744.0,2095.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="444.0" cy="2255.1" r="2.4" fill="#2171b5"/>
+<circle cx="486.9" cy="2242.5" r="2.4" fill="#2171b5"/>
+<circle cx="572.6" cy="2208.3" r="2.4" fill="#2171b5"/>
+<circle cx="744.0" cy="2095.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/codegen_spirv.html" href="workloads/codegen_spirv.html" target="_top"><text x="824" y="2060" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">codegen_spirv</text></a>
+<text x="1124" y="2060" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">∝N^1.65</text>
+<line x1="824.0" y1="2270.0" x2="1124.0" y2="2270.0" stroke="#eee"/>
+<text x="820.0" y="2273.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="824.0" y1="2176.0" x2="1124.0" y2="2176.0" stroke="#eee"/>
+<text x="820.0" y="2179.0" text-anchor="end" fill="#999">699</text>
+<line x1="824.0" y1="2082.0" x2="1124.0" y2="2082.0" stroke="#eee"/>
+<text x="820.0" y="2085.0" text-anchor="end" fill="#999">1399</text>
+<line x1="824.0" y1="2082.0" x2="824.0" y2="2270.0" stroke="#333"/>
+<line x1="824.0" y1="2270.0" x2="1124.0" y2="2270.0" stroke="#333"/>
+<line x1="824.0" y1="2270.0" x2="824.0" y2="2273.0" stroke="#999"/>
+<text x="824.0" y="2285.0" text-anchor="middle" fill="#666">100</text>
+<line x1="866.9" y1="2270.0" x2="866.9" y2="2273.0" stroke="#999"/>
+<text x="866.9" y="2285.0" text-anchor="middle" fill="#666">200</text>
+<line x1="952.6" y1="2270.0" x2="952.6" y2="2273.0" stroke="#999"/>
+<text x="952.6" y="2285.0" text-anchor="middle" fill="#666">400</text>
+<line x1="1124.0" y1="2270.0" x2="1124.0" y2="2273.0" stroke="#999"/>
+<text x="1124.0" y="2285.0" text-anchor="middle" fill="#666">800</text>
+<text x="974" y="2304" text-anchor="middle" fill="#444">N</text>
+<line x1="824.0" y1="2262.0" x2="1124.0" y2="2216.1" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="1120.0" y="2089.9" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">3.23× lin</text>
+<polyline points="824.0,2262.9 866.9,2255.1 952.6,2223.4 1124.0,2095.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="824.0" cy="2262.9" r="2.4" fill="#2171b5"/>
+<circle cx="866.9" cy="2255.1" r="2.4" fill="#2171b5"/>
+<circle cx="952.6" cy="2223.4" r="2.4" fill="#2171b5"/>
+<circle cx="1124.0" cy="2095.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/emit_metal.html" href="workloads/emit_metal.html" target="_top"><text x="64" y="2346" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">emit_metal</text></a>
+<text x="364" y="2346" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">∝N^1.66</text>
+<line x1="64.0" y1="2556.0" x2="364.0" y2="2556.0" stroke="#eee"/>
+<text x="60.0" y="2559.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="64.0" y1="2462.0" x2="364.0" y2="2462.0" stroke="#eee"/>
+<text x="60.0" y="2465.0" text-anchor="end" fill="#999">659</text>
+<line x1="64.0" y1="2368.0" x2="364.0" y2="2368.0" stroke="#eee"/>
+<text x="60.0" y="2371.0" text-anchor="end" fill="#999">1318</text>
+<line x1="64.0" y1="2368.0" x2="64.0" y2="2556.0" stroke="#333"/>
+<line x1="64.0" y1="2556.0" x2="364.0" y2="2556.0" stroke="#333"/>
+<line x1="64.0" y1="2556.0" x2="64.0" y2="2559.0" stroke="#999"/>
+<text x="64.0" y="2571.0" text-anchor="middle" fill="#666">100</text>
+<line x1="106.9" y1="2556.0" x2="106.9" y2="2559.0" stroke="#999"/>
+<text x="106.9" y="2571.0" text-anchor="middle" fill="#666">200</text>
+<line x1="192.6" y1="2556.0" x2="192.6" y2="2559.0" stroke="#999"/>
+<text x="192.6" y="2571.0" text-anchor="middle" fill="#666">400</text>
+<line x1="364.0" y1="2556.0" x2="364.0" y2="2559.0" stroke="#999"/>
+<text x="364.0" y="2571.0" text-anchor="middle" fill="#666">800</text>
+<text x="214" y="2590" text-anchor="middle" fill="#444">N</text>
+<line x1="64.0" y1="2547.9" x2="364.0" y2="2501.2" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="360.0" y="2375.9" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">3.18× lin</text>
+<polyline points="64.0,2549.0 106.9,2540.6 192.6,2508.6 364.0,2381.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="64.0" cy="2549.0" r="2.4" fill="#2171b5"/>
+<circle cx="106.9" cy="2540.6" r="2.4" fill="#2171b5"/>
+<circle cx="192.6" cy="2508.6" r="2.4" fill="#2171b5"/>
+<circle cx="364.0" cy="2381.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/emit_wgsl.html" href="workloads/emit_wgsl.html" target="_top"><text x="444" y="2346" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">emit_wgsl</text></a>
+<text x="744" y="2346" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">∝N^1.67</text>
+<line x1="444.0" y1="2556.0" x2="744.0" y2="2556.0" stroke="#eee"/>
+<text x="440.0" y="2559.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="444.0" y1="2462.0" x2="744.0" y2="2462.0" stroke="#eee"/>
+<text x="440.0" y="2465.0" text-anchor="end" fill="#999">660</text>
+<line x1="444.0" y1="2368.0" x2="744.0" y2="2368.0" stroke="#eee"/>
+<text x="440.0" y="2371.0" text-anchor="end" fill="#999">1320</text>
+<line x1="444.0" y1="2368.0" x2="444.0" y2="2556.0" stroke="#333"/>
+<line x1="444.0" y1="2556.0" x2="744.0" y2="2556.0" stroke="#333"/>
+<line x1="444.0" y1="2556.0" x2="444.0" y2="2559.0" stroke="#999"/>
+<text x="444.0" y="2571.0" text-anchor="middle" fill="#666">100</text>
+<line x1="486.9" y1="2556.0" x2="486.9" y2="2559.0" stroke="#999"/>
+<text x="486.9" y="2571.0" text-anchor="middle" fill="#666">200</text>
+<line x1="572.6" y1="2556.0" x2="572.6" y2="2559.0" stroke="#999"/>
+<text x="572.6" y="2571.0" text-anchor="middle" fill="#666">400</text>
+<line x1="744.0" y1="2556.0" x2="744.0" y2="2559.0" stroke="#999"/>
+<text x="744.0" y="2571.0" text-anchor="middle" fill="#666">800</text>
+<text x="594" y="2590" text-anchor="middle" fill="#444">N</text>
+<line x1="444.0" y1="2548.1" x2="744.0" y2="2503.0" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="740.0" y="2375.9" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">3.28× lin</text>
+<polyline points="444.0,2549.1 486.9,2541.1 572.6,2510.4 744.0,2381.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="444.0" cy="2549.1" r="2.4" fill="#2171b5"/>
+<circle cx="486.9" cy="2541.1" r="2.4" fill="#2171b5"/>
+<circle cx="572.6" cy="2510.4" r="2.4" fill="#2171b5"/>
+<circle cx="744.0" cy="2381.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/emit_hlsl.html" href="workloads/emit_hlsl.html" target="_top"><text x="824" y="2346" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">emit_hlsl</text></a>
+<text x="1124" y="2346" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">∝N^1.68</text>
+<line x1="824.0" y1="2556.0" x2="1124.0" y2="2556.0" stroke="#eee"/>
+<text x="820.0" y="2559.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="824.0" y1="2462.0" x2="1124.0" y2="2462.0" stroke="#eee"/>
+<text x="820.0" y="2465.0" text-anchor="end" fill="#999">649</text>
+<line x1="824.0" y1="2368.0" x2="1124.0" y2="2368.0" stroke="#eee"/>
+<text x="820.0" y="2371.0" text-anchor="end" fill="#999">1297</text>
+<line x1="824.0" y1="2368.0" x2="824.0" y2="2556.0" stroke="#333"/>
+<line x1="824.0" y1="2556.0" x2="1124.0" y2="2556.0" stroke="#333"/>
+<line x1="824.0" y1="2556.0" x2="824.0" y2="2559.0" stroke="#999"/>
+<text x="824.0" y="2571.0" text-anchor="middle" fill="#666">100</text>
+<line x1="866.9" y1="2556.0" x2="866.9" y2="2559.0" stroke="#999"/>
+<text x="866.9" y="2571.0" text-anchor="middle" fill="#666">200</text>
+<line x1="952.6" y1="2556.0" x2="952.6" y2="2559.0" stroke="#999"/>
+<text x="952.6" y="2571.0" text-anchor="middle" fill="#666">400</text>
+<line x1="1124.0" y1="2556.0" x2="1124.0" y2="2559.0" stroke="#999"/>
+<text x="1124.0" y="2571.0" text-anchor="middle" fill="#666">800</text>
+<text x="974" y="2590" text-anchor="middle" fill="#444">N</text>
+<line x1="824.0" y1="2548.0" x2="1124.0" y2="2503.0" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="1120.0" y="2375.9" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">3.28× lin</text>
+<polyline points="824.0,2549.2 866.9,2541.0 952.6,2511.2 1124.0,2381.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="824.0" cy="2549.2" r="2.4" fill="#2171b5"/>
+<circle cx="866.9" cy="2541.0" r="2.4" fill="#2171b5"/>
+<circle cx="952.6" cy="2511.2" r="2.4" fill="#2171b5"/>
+<circle cx="1124.0" cy="2381.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/emit_glsl.html" href="workloads/emit_glsl.html" target="_top"><text x="64" y="2632" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">emit_glsl</text></a>
+<text x="364" y="2632" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">∝N^1.65</text>
+<line x1="64.0" y1="2842.0" x2="364.0" y2="2842.0" stroke="#eee"/>
+<text x="60.0" y="2845.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="64.0" y1="2748.0" x2="364.0" y2="2748.0" stroke="#eee"/>
+<text x="60.0" y="2751.0" text-anchor="end" fill="#999">650</text>
+<line x1="64.0" y1="2654.0" x2="364.0" y2="2654.0" stroke="#eee"/>
+<text x="60.0" y="2657.0" text-anchor="end" fill="#999">1299</text>
+<line x1="64.0" y1="2654.0" x2="64.0" y2="2842.0" stroke="#333"/>
+<line x1="64.0" y1="2842.0" x2="364.0" y2="2842.0" stroke="#333"/>
+<line x1="64.0" y1="2842.0" x2="64.0" y2="2845.0" stroke="#999"/>
+<text x="64.0" y="2857.0" text-anchor="middle" fill="#666">100</text>
+<line x1="106.9" y1="2842.0" x2="106.9" y2="2845.0" stroke="#999"/>
+<text x="106.9" y="2857.0" text-anchor="middle" fill="#666">200</text>
+<line x1="192.6" y1="2842.0" x2="192.6" y2="2845.0" stroke="#999"/>
+<text x="192.6" y="2857.0" text-anchor="middle" fill="#666">400</text>
+<line x1="364.0" y1="2842.0" x2="364.0" y2="2845.0" stroke="#999"/>
+<text x="364.0" y="2857.0" text-anchor="middle" fill="#666">800</text>
+<text x="214" y="2876" text-anchor="middle" fill="#444">N</text>
+<line x1="64.0" y1="2833.7" x2="364.0" y2="2786.4" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="360.0" y="2661.9" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">3.13× lin</text>
+<polyline points="64.0,2834.9 106.9,2826.4 192.6,2794.8 364.0,2667.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="64.0" cy="2834.9" r="2.4" fill="#2171b5"/>
+<circle cx="106.9" cy="2826.4" r="2.4" fill="#2171b5"/>
+<circle cx="192.6" cy="2794.8" r="2.4" fill="#2171b5"/>
+<circle cx="364.0" cy="2667.9" r="2.4" fill="#2171b5"/>
+<a xlink:href="workloads/emit_cuda.html" href="workloads/emit_cuda.html" target="_top"><text x="444" y="2632" font-size="13" font-weight="600" fill="#1a5fb4" text-decoration="underline">emit_cuda</text></a>
+<text x="744" y="2632" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">∝N^1.57</text>
+<line x1="444.0" y1="2842.0" x2="744.0" y2="2842.0" stroke="#eee"/>
+<text x="440.0" y="2845.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="444.0" y1="2748.0" x2="744.0" y2="2748.0" stroke="#eee"/>
+<text x="440.0" y="2751.0" text-anchor="end" fill="#999">498</text>
+<line x1="444.0" y1="2654.0" x2="744.0" y2="2654.0" stroke="#eee"/>
+<text x="440.0" y="2657.0" text-anchor="end" fill="#999">996</text>
+<line x1="444.0" y1="2654.0" x2="444.0" y2="2842.0" stroke="#333"/>
+<line x1="444.0" y1="2842.0" x2="744.0" y2="2842.0" stroke="#333"/>
+<line x1="444.0" y1="2842.0" x2="444.0" y2="2845.0" stroke="#999"/>
+<text x="444.0" y="2857.0" text-anchor="middle" fill="#666">100</text>
+<line x1="486.9" y1="2842.0" x2="486.9" y2="2845.0" stroke="#999"/>
+<text x="486.9" y="2857.0" text-anchor="middle" fill="#666">200</text>
+<line x1="572.6" y1="2842.0" x2="572.6" y2="2845.0" stroke="#999"/>
+<text x="572.6" y="2857.0" text-anchor="middle" fill="#666">400</text>
+<line x1="744.0" y1="2842.0" x2="744.0" y2="2845.0" stroke="#999"/>
+<text x="744.0" y="2857.0" text-anchor="middle" fill="#666">800</text>
+<text x="594" y="2876" text-anchor="middle" fill="#444">N</text>
+<line x1="444.0" y1="2832.5" x2="744.0" y2="2779.9" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="740.0" y="2661.9" text-anchor="end" font-size="11" fill="#c0392b" font-weight="600">2.81× lin</text>
+<polyline points="444.0,2833.4 486.9,2824.6 572.6,2793.2 744.0,2667.9" fill="none" stroke="#2171b5" stroke-width="2.6"/>
+<circle cx="444.0" cy="2833.4" r="2.4" fill="#2171b5"/>
+<circle cx="486.9" cy="2824.6" r="2.4" fill="#2171b5"/>
+<circle cx="572.6" cy="2793.2" r="2.4" fill="#2171b5"/>
+<circle cx="744.0" cy="2667.9" r="2.4" fill="#2171b5"/>
+</svg></div>
+<div class="note"><b>Reading these:</b> these synthetic workloads amplify one compiler pass each — the curve <i>shape</i> (the exponent <b>k</b> of the floor-subtracted fit <code>(t − floor) = a·N<sup>k</sup></code>), not the absolute ms, is the signal. <b>k≈1</b> ⇒ cost is linear in code size; <b>k&gt;1</b> ⇒ a pass whose cost grows faster than its input, where regressions on large real shaders hide. The fixed <b>floor</b> is the <code>minimal</code> workload (subtracted before the fit, not refitted per workload), also the suite's standalone canary for "the stdlib got heavier". Per-workload pages carry the full analysis and numbers.</div>
+<p class="small">Generated by perf-suite/sweep_report.py from results/v2026.13.1/results.json. Companion to report.py (cross-release) and ladder_scaling.py (cross-release fit table).</p>
+</div>
