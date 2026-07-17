@@ -1,0 +1,6080 @@
+[
+  {
+    "workload": "mdl_dxr",
+    "bucket": "real_world",
+    "size": 0,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 1281.3299,
+      "min": 1274.2532,
+      "mean": 1284.0881,
+      "stdev": 8.5312,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 312.38,
+        "min": 307.01,
+        "mean": 312.286,
+        "stdev": 4.1258,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 557.36,
+        "min": 549.96,
+        "mean": 559.352,
+        "stdev": 7.2929,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 1121.35,
+        "min": 1113.9,
+        "mean": 1123.708,
+        "stdev": 9.2988,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 1121.35,
+        "min": 1113.9,
+        "mean": 1123.708,
+        "stdev": 9.2988,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 318.19,
+        "min": 312.9,
+        "mean": 318.148,
+        "stdev": 4.1508,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 3.9,
+        "min": 3.88,
+        "mean": 3.906,
+        "stdev": 0.0241,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 95.5,
+        "min": 95.19,
+        "mean": 97.594,
+        "stdev": 3.6939,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 804.48,
+        "min": 793.93,
+        "mean": 804.008,
+        "stdev": 6.7163,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 9.85,
+        "min": 9.76,
+        "mean": 10.044,
+        "stdev": 0.487,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 8.7,
+        "min": 8.66,
+        "mean": 8.766,
+        "stdev": 0.1581,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 350.17,
+        "min": 346.77,
+        "mean": 349.33,
+        "stdev": 1.8172,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 12.87,
+        "min": 12.37,
+        "mean": 12.774,
+        "stdev": 0.2829,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 119.46,
+        "min": 116.74,
+        "mean": 119.21,
+        "stdev": 1.5974,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 11.45,
+        "min": 11.26,
+        "mean": 11.466,
+        "stdev": 0.1448,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 3.02,
+        "min": 2.98,
+        "mean": 3.016,
+        "stdev": 0.027,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 3.11,
+        "min": 3.08,
+        "mean": 3.126,
+        "stdev": 0.0546,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 35.58,
+        "min": 31.95,
+        "mean": 34.962,
+        "stdev": 1.779,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 66.02,
+        "min": 64.71,
+        "mean": 65.922,
+        "stdev": 0.7837,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 133.25,
+        "min": 132.9,
+        "mean": 133.892,
+        "stdev": 1.1553,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 84.98,
+        "min": 84.73,
+        "mean": 85.384,
+        "stdev": 0.89,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.51,
+        "min": 0.5,
+        "mean": 0.506,
+        "stdev": 0.0055,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "compileInner",
+      "frontEndExecute",
+      "linkAndOptimizeIR"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\mdl_dxr_n0 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\mdl_dxr_n0\\hit.slang -target spirv -emit-spirv-directly -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\mdl_dxr_n0\\out.spv",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "complexity_ladder",
+    "bucket": "realistic_scaling",
+    "size": 160,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 364.0956,
+      "min": 360.2549,
+      "mean": 364.0359,
+      "stdev": 3.6628,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 49.36,
+        "min": 48.62,
+        "mean": 49.53,
+        "stdev": 0.8056,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 49.36,
+        "min": 48.62,
+        "mean": 49.53,
+        "stdev": 0.8056,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 210.73,
+        "min": 210.15,
+        "mean": 211.564,
+        "stdev": 1.7841,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 210.73,
+        "min": 210.15,
+        "mean": 211.564,
+        "stdev": 1.7841,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 69.2,
+        "min": 67.95,
+        "mean": 69.024,
+        "stdev": 1.0078,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 17.3,
+        "min": 16.76,
+        "mean": 17.536,
+        "stdev": 0.8232,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 17.3,
+        "min": 16.76,
+        "mean": 17.536,
+        "stdev": 0.8232,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 142.28,
+        "min": 140.28,
+        "mean": 142.43,
+        "stdev": 1.657,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 4.36,
+        "min": 4.21,
+        "mean": 4.416,
+        "stdev": 0.2006,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 4.02,
+        "min": 3.88,
+        "mean": 4.044,
+        "stdev": 0.1518,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 75.98,
+        "min": 75.21,
+        "mean": 76.088,
+        "stdev": 0.7528,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 1.99,
+        "min": 1.93,
+        "mean": 1.988,
+        "stdev": 0.0402,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 120.88,
+        "min": 119.21,
+        "mean": 122.154,
+        "stdev": 4.2868,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 1.57,
+        "min": 1.54,
+        "mean": 1.64,
+        "stdev": 0.1347,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.56,
+        "min": 0.55,
+        "mean": 0.56,
+        "stdev": 0.01,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 1.26,
+        "min": 1.26,
+        "mean": 1.274,
+        "stdev": 0.0195,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 36.3,
+        "min": 35.06,
+        "mean": 37.464,
+        "stdev": 2.7953,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.98,
+        "min": 65.33,
+        "mean": 65.988,
+        "stdev": 0.74,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 22.88,
+        "min": 22.8,
+        "mean": 23.046,
+        "stdev": 0.297,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 20.47,
+        "min": 20.11,
+        "mean": 20.386,
+        "stdev": 0.2631,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.26,
+        "min": 0.26,
+        "mean": 0.264,
+        "stdev": 0.0055,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "compileInner",
+      "frontEndExecute",
+      "linkAndOptimizeIR",
+      "simplifyIR"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\complexity_ladder_n160 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\complexity_ladder_n160\\complexity_ladder.slang -target spirv -emit-spirv-directly -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\complexity_ladder_n160\\out.spv",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "rt_renderer",
+    "bucket": "rt_renderer",
+    "size": 24,
+    "mode": "api",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 884.2537,
+      "min": 873.3754,
+      "mean": 881.5274,
+      "stdev": 6.8238,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "apiComposite": {
+        "median": 0.063,
+        "min": 0.0592,
+        "mean": 0.0655,
+        "stdev": 0.0079,
+        "n": 5
+      },
+      "apiCreateGlobalSession": {
+        "median": 113.7424,
+        "min": 108.3178,
+        "mean": 112.8654,
+        "stdev": 2.9561,
+        "n": 5
+      },
+      "apiCreateSession": {
+        "median": 0.0244,
+        "min": 0.0216,
+        "mean": 0.0237,
+        "stdev": 0.0014,
+        "n": 5
+      },
+      "apiFindEntryPoint": {
+        "median": 0.003,
+        "min": 0.0029,
+        "mean": 0.003,
+        "stdev": 0.0001,
+        "n": 5
+      },
+      "apiGetCode": {
+        "median": 88.6544,
+        "min": 88.081,
+        "mean": 88.9083,
+        "stdev": 1.0867,
+        "n": 5
+      },
+      "apiLink": {
+        "median": 0.2159,
+        "min": 0.2046,
+        "mean": 0.2149,
+        "stdev": 0.0072,
+        "n": 5
+      },
+      "apiLoadModule": {
+        "median": 645.7541,
+        "min": 642.4657,
+        "mean": 646.3701,
+        "stdev": 3.682,
+        "n": 5
+      },
+      "apiTotal": {
+        "median": 851.0961,
+        "min": 840.319,
+        "mean": 848.46,
+        "stdev": 6.7397,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "apiTotal",
+      "apiLoadModule",
+      "apiGetCode"
+    ],
+    "cmd": "C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\api-driver.exe W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slang-compiler.dll rt-composite --dir C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\rt_renderer_n24 --root rt_kernels",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "rt_renderer_specialize",
+    "bucket": "rt_renderer",
+    "size": 24,
+    "mode": "api",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 1567.7757,
+      "min": 1565.3652,
+      "mean": 1570.4358,
+      "stdev": 6.9949,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "apiComposite": {
+        "median": 1.0742,
+        "min": 0.9453,
+        "mean": 1.0937,
+        "stdev": 0.1175,
+        "n": 5
+      },
+      "apiCreateGlobalSession": {
+        "median": 110.0355,
+        "min": 109.4853,
+        "mean": 110.3654,
+        "stdev": 1.0327,
+        "n": 5
+      },
+      "apiCreateSession": {
+        "median": 0.0245,
+        "min": 0.024,
+        "mean": 0.0256,
+        "stdev": 0.0028,
+        "n": 5
+      },
+      "apiGetCode": {
+        "median": 760.5054,
+        "min": 757.9142,
+        "mean": 759.822,
+        "stdev": 1.5958,
+        "n": 5
+      },
+      "apiLink": {
+        "median": 4.8425,
+        "min": 4.426,
+        "mean": 4.8345,
+        "stdev": 0.4493,
+        "n": 5
+      },
+      "apiLoadModule": {
+        "median": 637.6482,
+        "min": 634.5048,
+        "mean": 639.5126,
+        "stdev": 6.1111,
+        "n": 5
+      },
+      "apiSpecialize": {
+        "median": 19.7148,
+        "min": 19.3572,
+        "mean": 19.6991,
+        "stdev": 0.2496,
+        "n": 5
+      },
+      "apiTotal": {
+        "median": 1534.8936,
+        "min": 1530.7139,
+        "mean": 1536.8698,
+        "stdev": 7.2346,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "apiTotal",
+      "apiGetCode",
+      "apiSpecialize"
+    ],
+    "cmd": "C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\api-driver.exe W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slang-compiler.dll specialize --dir C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\rt_renderer_specialize_n24 --root rt_compute --impl-prefix Material_",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "api_session_create",
+    "bucket": "api_overhead",
+    "size": 10,
+    "mode": "api",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 1152.0449,
+      "min": 1142.928,
+      "mean": 1157.8914,
+      "stdev": 16.6615,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "apiCreateGlobalSession": {
+        "median": 1041.5089,
+        "min": 1021.4932,
+        "mean": 1044.1402,
+        "stdev": 19.0652,
+        "n": 5
+      },
+      "apiCreateSession": {
+        "median": 0.1565,
+        "min": 0.1432,
+        "mean": 0.1549,
+        "stdev": 0.008,
+        "n": 5
+      },
+      "apiTotal": {
+        "median": 1139.744,
+        "min": 1130.0658,
+        "mean": 1145.2571,
+        "stdev": 16.6279,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "apiCreateGlobalSession",
+      "apiCreateSession",
+      "apiTotal"
+    ],
+    "cmd": "C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\api-driver.exe W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slang-compiler.dll session-create --iters 10",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "api_many_kernels",
+    "bucket": "api_overhead",
+    "size": 100,
+    "mode": "api",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 783.5328,
+      "min": 776.7828,
+      "mean": 784.3692,
+      "stdev": 5.8605,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "apiComposite": {
+        "median": 0.2362,
+        "min": 0.2325,
+        "mean": 0.2371,
+        "stdev": 0.0037,
+        "n": 5
+      },
+      "apiCreateGlobalSession": {
+        "median": 111.1234,
+        "min": 108.828,
+        "mean": 110.6268,
+        "stdev": 1.3045,
+        "n": 5
+      },
+      "apiCreateSession": {
+        "median": 0.0225,
+        "min": 0.0223,
+        "mean": 0.0233,
+        "stdev": 0.0013,
+        "n": 5
+      },
+      "apiFindEntryPoint": {
+        "median": 0.0258,
+        "min": 0.0252,
+        "mean": 0.0256,
+        "stdev": 0.0003,
+        "n": 5
+      },
+      "apiGetCode": {
+        "median": 255.7042,
+        "min": 252.8275,
+        "mean": 255.4269,
+        "stdev": 1.9045,
+        "n": 5
+      },
+      "apiLink": {
+        "median": 0.0237,
+        "min": 0.0229,
+        "mean": 0.0237,
+        "stdev": 0.0005,
+        "n": 5
+      },
+      "apiLoadModule": {
+        "median": 379.3541,
+        "min": 375.6367,
+        "mean": 379.7487,
+        "stdev": 3.1971,
+        "n": 5
+      },
+      "apiTotal": {
+        "median": 753.8696,
+        "min": 746.7146,
+        "mean": 754.3333,
+        "stdev": 5.8347,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "apiTotal",
+      "apiLoadModule",
+      "apiGetCode"
+    ],
+    "cmd": "C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\api-driver.exe W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slang-compiler.dll many-kernels --dir C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\api_many_kernels_n100",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "api_module_graph",
+    "bucket": "api_overhead",
+    "size": 150,
+    "mode": "api",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 918.457,
+      "min": 917.3604,
+      "mean": 923.2404,
+      "stdev": 11.4932,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "apiComposite": {
+        "median": 0.127,
+        "min": 0.1059,
+        "mean": 0.1258,
+        "stdev": 0.0167,
+        "n": 5
+      },
+      "apiCreateGlobalSession": {
+        "median": 111.0223,
+        "min": 106.9876,
+        "mean": 114.3899,
+        "stdev": 9.7576,
+        "n": 5
+      },
+      "apiCreateSession": {
+        "median": 0.0249,
+        "min": 0.0234,
+        "mean": 0.025,
+        "stdev": 0.0012,
+        "n": 5
+      },
+      "apiFindEntryPoint": {
+        "median": 0.0017,
+        "min": 0.0016,
+        "mean": 0.0018,
+        "stdev": 0.0002,
+        "n": 5
+      },
+      "apiGetCode": {
+        "median": 24.2719,
+        "min": 23.7223,
+        "mean": 24.176,
+        "stdev": 0.2576,
+        "n": 5
+      },
+      "apiLink": {
+        "median": 2.2165,
+        "min": 2.049,
+        "mean": 2.2134,
+        "stdev": 0.1288,
+        "n": 5
+      },
+      "apiLoadModule": {
+        "median": 747.2616,
+        "min": 745.6477,
+        "mean": 748.1901,
+        "stdev": 2.7415,
+        "n": 5
+      },
+      "apiTotal": {
+        "median": 884.1984,
+        "min": 883.2197,
+        "mean": 889.1546,
+        "stdev": 11.51,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "apiTotal",
+      "apiLoadModule",
+      "apiGetCode"
+    ],
+    "cmd": "C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\api-driver.exe W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slang-compiler.dll module-graph --dir C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\api_module_graph_n150 --root graph_main",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "api_module_graph_bin",
+    "bucket": "api_overhead",
+    "size": 150,
+    "mode": "api",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 1029.159,
+      "min": 1017.0309,
+      "mean": 1028.5618,
+      "stdev": 11.0437,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "apiComposite": {
+        "median": 0.0947,
+        "min": 0.088,
+        "mean": 0.0963,
+        "stdev": 0.0065,
+        "n": 5
+      },
+      "apiCreateGlobalSession": {
+        "median": 107.3694,
+        "min": 106.7103,
+        "mean": 110.2195,
+        "stdev": 5.9891,
+        "n": 5
+      },
+      "apiCreateSession": {
+        "median": 0.0107,
+        "min": 0.0099,
+        "mean": 0.0108,
+        "stdev": 0.001,
+        "n": 5
+      },
+      "apiFindEntryPoint": {
+        "median": 0.0031,
+        "min": 0.0029,
+        "mean": 0.0036,
+        "stdev": 0.0011,
+        "n": 5
+      },
+      "apiGetCode": {
+        "median": 25.7449,
+        "min": 24.4729,
+        "mean": 25.6127,
+        "stdev": 0.676,
+        "n": 5
+      },
+      "apiLink": {
+        "median": 2.0552,
+        "min": 1.9692,
+        "mean": 2.0638,
+        "stdev": 0.1011,
+        "n": 5
+      },
+      "apiLoadModule": {
+        "median": 101.862,
+        "min": 99.8939,
+        "mean": 104.3108,
+        "stdev": 7.5618,
+        "n": 5
+      },
+      "apiLoadModuleSource": {
+        "median": 106.1718,
+        "min": 104.2514,
+        "mean": 114.6135,
+        "stdev": 12.6755,
+        "n": 5
+      },
+      "apiTotal": {
+        "median": 129.7053,
+        "min": 126.5938,
+        "mean": 132.1452,
+        "stdev": 7.7208,
+        "n": 5
+      },
+      "apiWriteModule": {
+        "median": 626.6051,
+        "min": 616.8311,
+        "mean": 629.555,
+        "stdev": 10.9965,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "apiTotal",
+      "apiLoadModule"
+    ],
+    "cmd": "C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\api-driver.exe W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slang-compiler.dll module-graph-bin --dir C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\api_module_graph_bin_n150 --root graph_main",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "api_reflection",
+    "bucket": "api_overhead",
+    "size": 40,
+    "mode": "api",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 689.2368,
+      "min": 677.8314,
+      "mean": 690.0848,
+      "stdev": 9.4615,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "apiComposite": {
+        "median": 0.1016,
+        "min": 0.1001,
+        "mean": 0.1014,
+        "stdev": 0.0013,
+        "n": 5
+      },
+      "apiCreateGlobalSession": {
+        "median": 112.6192,
+        "min": 110.2433,
+        "mean": 112.8142,
+        "stdev": 2.672,
+        "n": 5
+      },
+      "apiCreateSession": {
+        "median": 0.0244,
+        "min": 0.0226,
+        "mean": 0.0251,
+        "stdev": 0.0026,
+        "n": 5
+      },
+      "apiFindEntryPoint": {
+        "median": 0.0121,
+        "min": 0.0113,
+        "mean": 0.012,
+        "stdev": 0.0004,
+        "n": 5
+      },
+      "apiGetCode": {
+        "median": 254.5291,
+        "min": 251.0798,
+        "mean": 255.1266,
+        "stdev": 3.5678,
+        "n": 5
+      },
+      "apiLink": {
+        "median": 0.0099,
+        "min": 0.0097,
+        "mean": 0.0099,
+        "stdev": 0.0002,
+        "n": 5
+      },
+      "apiLoadModule": {
+        "median": 286.3781,
+        "min": 281.4439,
+        "mean": 286.1746,
+        "stdev": 4.8812,
+        "n": 5
+      },
+      "apiReflection": {
+        "median": 5.4889,
+        "min": 5.4215,
+        "mean": 5.5219,
+        "stdev": 0.1084,
+        "n": 5
+      },
+      "apiTotal": {
+        "median": 662.4484,
+        "min": 651.6665,
+        "mean": 663.1556,
+        "stdev": 8.9361,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "apiReflection",
+      "apiTotal",
+      "apiGetCode"
+    ],
+    "cmd": "C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\api-driver.exe W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slang-compiler.dll many-kernels --dir C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\api_reflection_n40 --reflect",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "api_specialize",
+    "bucket": "api_overhead",
+    "size": 60,
+    "mode": "api",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 308.1482,
+      "min": 304.8801,
+      "mean": 307.6666,
+      "stdev": 1.9921,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "apiComposite": {
+        "median": 0.1436,
+        "min": 0.143,
+        "mean": 0.1443,
+        "stdev": 0.0018,
+        "n": 5
+      },
+      "apiCreateGlobalSession": {
+        "median": 112.8636,
+        "min": 110.1475,
+        "mean": 113.1692,
+        "stdev": 2.4885,
+        "n": 5
+      },
+      "apiCreateSession": {
+        "median": 0.0242,
+        "min": 0.0235,
+        "mean": 0.0266,
+        "stdev": 0.0044,
+        "n": 5
+      },
+      "apiGetCode": {
+        "median": 142.0107,
+        "min": 140.5695,
+        "mean": 142.2274,
+        "stdev": 1.4371,
+        "n": 5
+      },
+      "apiLink": {
+        "median": 0.0124,
+        "min": 0.012,
+        "mean": 0.0124,
+        "stdev": 0.0003,
+        "n": 5
+      },
+      "apiLoadModule": {
+        "median": 17.7841,
+        "min": 17.534,
+        "mean": 17.89,
+        "stdev": 0.3686,
+        "n": 5
+      },
+      "apiSpecialize": {
+        "median": 8.549,
+        "min": 8.3121,
+        "mean": 8.5399,
+        "stdev": 0.1579,
+        "n": 5
+      },
+      "apiTotal": {
+        "median": 284.8184,
+        "min": 281.1159,
+        "mean": 284.3109,
+        "stdev": 2.1081,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "apiSpecialize",
+      "apiLink",
+      "apiGetCode",
+      "apiTotal"
+    ],
+    "cmd": "C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\api-driver.exe W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slang-compiler.dll specialize --dir C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\api_specialize_n60 --root spec_root",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "minimal",
+    "bucket": "core_link",
+    "size": 0,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 154.3532,
+      "min": 153.0271,
+      "mean": 157.1544,
+      "stdev": 5.7784,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 6.53,
+        "min": 6.52,
+        "mean": 6.686,
+        "stdev": 0.3169,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 6.53,
+        "min": 6.52,
+        "mean": 6.686,
+        "stdev": 0.3169,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 10.97,
+        "min": 10.57,
+        "mean": 10.89,
+        "stdev": 0.2497,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 10.97,
+        "min": 10.57,
+        "mean": 10.89,
+        "stdev": 0.2497,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 8.07,
+        "min": 7.95,
+        "mean": 8.158,
+        "stdev": 0.2693,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 1.02,
+        "min": 0.97,
+        "mean": 1.032,
+        "stdev": 0.0563,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 1.02,
+        "min": 0.97,
+        "mean": 1.032,
+        "stdev": 0.0563,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 2.5,
+        "min": 2.44,
+        "mean": 2.6,
+        "stdev": 0.1713,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 0.03,
+        "min": 0.03,
+        "mean": 0.032,
+        "stdev": 0.0045,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 0.02,
+        "min": 0.01,
+        "mean": 0.018,
+        "stdev": 0.0045,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 0.73,
+        "min": 0.73,
+        "mean": 0.74,
+        "stdev": 0.0141,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 0.11,
+        "min": 0.09,
+        "mean": 0.11,
+        "stdev": 0.0122,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 116.11,
+        "min": 115.52,
+        "mean": 116.954,
+        "stdev": 1.4714,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 0.13,
+        "min": 0.13,
+        "mean": 0.14,
+        "stdev": 0.0141,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.0,
+        "min": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.0,
+        "min": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 32.08,
+        "min": 31.54,
+        "mean": 32.786,
+        "stdev": 1.4028,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.46,
+        "min": 65.04,
+        "mean": 65.482,
+        "stdev": 0.3137,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 0.06,
+        "min": 0.06,
+        "mean": 0.062,
+        "stdev": 0.0045,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 0.07,
+        "min": 0.07,
+        "mean": 0.076,
+        "stdev": 0.0089,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.0,
+        "min": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "compileInner",
+      "linkIR",
+      "readSerializedModuleIR",
+      "loadBuiltinModule"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\minimal_n0 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\minimal_n0\\minimal.slang -target spirv -emit-spirv-directly -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\minimal_n0\\out.spv",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "parse",
+    "bucket": "parse",
+    "size": 2000,
+    "mode": "module",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 543.483,
+      "min": 538.4682,
+      "mean": 543.0861,
+      "stdev": 4.0438,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 120.84,
+        "min": 120.73,
+        "mean": 120.996,
+        "stdev": 0.3877,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 120.84,
+        "min": 120.73,
+        "mean": 120.996,
+        "stdev": 0.3877,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 370.63,
+        "min": 365.18,
+        "mean": 369.178,
+        "stdev": 2.5483,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 370.63,
+        "min": 365.18,
+        "mean": 369.178,
+        "stdev": 2.5483,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 295.63,
+        "min": 292.69,
+        "mean": 295.634,
+        "stdev": 2.0203,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 144.02,
+        "min": 141.93,
+        "mean": 144.444,
+        "stdev": 1.972,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 144.02,
+        "min": 141.93,
+        "mean": 144.444,
+        "stdev": 1.972,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 72.58,
+        "min": 71.29,
+        "mean": 73.53,
+        "stdev": 2.0544,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 120.26,
+        "min": 117.19,
+        "mean": 122.488,
+        "stdev": 5.5061,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 29.89,
+        "min": 29.68,
+        "mean": 29.976,
+        "stdev": 0.3034,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 3.35,
+        "min": 3.34,
+        "mean": 3.358,
+        "stdev": 0.0164,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 35.91,
+        "min": 33.53,
+        "mean": 36.326,
+        "stdev": 3.2797,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.47,
+        "min": 64.67,
+        "mean": 67.604,
+        "stdev": 4.8083,
+        "n": 5
+      },
+      "writeSerializedModuleAST": {
+        "median": 11.84,
+        "min": 11.38,
+        "mean": 12.766,
+        "stdev": 2.4037,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "parseTranslationUnit",
+      "frontEndExecute"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\parse_n2000\\parse.slang -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\parse_n2000\\out.slang-module",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "diagnostics_clean",
+    "bucket": "diagnostics",
+    "size": 400,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 175.2432,
+      "min": 172.8982,
+      "mean": 177.2812,
+      "stdev": 5.6584,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 11.58,
+        "min": 11.36,
+        "mean": 11.644,
+        "stdev": 0.2641,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 11.58,
+        "min": 11.36,
+        "mean": 11.644,
+        "stdev": 0.2641,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 25.88,
+        "min": 25.51,
+        "mean": 25.948,
+        "stdev": 0.4225,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 25.88,
+        "min": 25.51,
+        "mean": 25.948,
+        "stdev": 0.4225,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 22.71,
+        "min": 22.29,
+        "mean": 22.792,
+        "stdev": 0.4626,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 8.76,
+        "min": 8.47,
+        "mean": 8.78,
+        "stdev": 0.2112,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 8.76,
+        "min": 8.47,
+        "mean": 8.78,
+        "stdev": 0.2112,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 3.04,
+        "min": 2.96,
+        "mean": 3.042,
+        "stdev": 0.0826,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 0.04,
+        "min": 0.04,
+        "mean": 0.04,
+        "stdev": 0.0,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 0.02,
+        "min": 0.02,
+        "mean": 0.02,
+        "stdev": 0.0,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 0.95,
+        "min": 0.92,
+        "mean": 0.94,
+        "stdev": 0.0187,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 0.17,
+        "min": 0.16,
+        "mean": 0.176,
+        "stdev": 0.0134,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 121.76,
+        "min": 119.3,
+        "mean": 124.044,
+        "stdev": 5.6373,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 2.05,
+        "min": 2.0,
+        "mean": 2.044,
+        "stdev": 0.0288,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.01,
+        "min": 0.01,
+        "mean": 0.01,
+        "stdev": 0.0,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.25,
+        "min": 0.23,
+        "mean": 0.25,
+        "stdev": 0.0212,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 35.93,
+        "min": 35.46,
+        "mean": 38.392,
+        "stdev": 5.4863,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 66.24,
+        "min": 65.28,
+        "mean": 66.91,
+        "stdev": 1.8299,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 0.14,
+        "min": 0.14,
+        "mean": 0.142,
+        "stdev": 0.0045,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 0.09,
+        "min": 0.08,
+        "mean": 0.088,
+        "stdev": 0.0084,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.0,
+        "min": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "frontEndExecute",
+      "SemanticChecking",
+      "compileInner"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\diagnostics_clean_n400 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\diagnostics_clean_n400\\diagnostics_clean.slang -target spirv -emit-spirv-directly -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\diagnostics_clean_n400\\out.spv",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "sema_generics",
+    "bucket": "sema",
+    "size": 1000,
+    "mode": "module",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 1128.1492,
+      "min": 1126.0076,
+      "mean": 1132.8902,
+      "stdev": 9.786,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 794.35,
+        "min": 792.27,
+        "mean": 796.938,
+        "stdev": 6.0512,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 794.35,
+        "min": 792.27,
+        "mean": 796.938,
+        "stdev": 6.0512,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 970.35,
+        "min": 966.52,
+        "mean": 973.332,
+        "stdev": 7.5188,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 970.35,
+        "min": 966.52,
+        "mean": 973.332,
+        "stdev": 7.5188,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 924.28,
+        "min": 919.01,
+        "mean": 926.958,
+        "stdev": 7.9774,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 120.51,
+        "min": 116.92,
+        "mean": 120.464,
+        "stdev": 2.2527,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 120.51,
+        "min": 116.92,
+        "mean": 120.462,
+        "stdev": 2.2498,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 46.06,
+        "min": 45.75,
+        "mean": 46.364,
+        "stdev": 0.6955,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 119.54,
+        "min": 116.66,
+        "mean": 119.532,
+        "stdev": 2.307,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 9.33,
+        "min": 9.18,
+        "mean": 9.392,
+        "stdev": 0.1906,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 53.82,
+        "min": 53.39,
+        "mean": 53.826,
+        "stdev": 0.4374,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 35.4,
+        "min": 33.88,
+        "mean": 35.152,
+        "stdev": 0.8239,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 64.96,
+        "min": 64.57,
+        "mean": 65.926,
+        "stdev": 1.7505,
+        "n": 5
+      },
+      "writeSerializedModuleAST": {
+        "median": 27.3,
+        "min": 27.03,
+        "mean": 27.242,
+        "stdev": 0.1195,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "SemanticChecking",
+      "frontEndExecute"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\sema_generics_n1000\\sema_generics.slang -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\sema_generics_n1000\\out.slang-module",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "generic_nesting",
+    "bucket": "sema",
+    "size": 16,
+    "mode": "module",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 147.4123,
+      "min": 143.5654,
+      "mean": 148.071,
+      "stdev": 3.2538,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 0.8,
+        "min": 0.79,
+        "mean": 0.8,
+        "stdev": 0.0122,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 0.8,
+        "min": 0.79,
+        "mean": 0.8,
+        "stdev": 0.0122,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 3.26,
+        "min": 3.13,
+        "mean": 3.25,
+        "stdev": 0.0794,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 3.26,
+        "min": 3.13,
+        "mean": 3.248,
+        "stdev": 0.0804,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 2.29,
+        "min": 2.23,
+        "mean": 2.286,
+        "stdev": 0.0503,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 1.16,
+        "min": 1.1,
+        "mean": 1.166,
+        "stdev": 0.0483,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 1.16,
+        "min": 1.1,
+        "mean": 1.166,
+        "stdev": 0.0483,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 0.95,
+        "min": 0.88,
+        "mean": 0.956,
+        "stdev": 0.0709,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 118.89,
+        "min": 115.14,
+        "mean": 119.184,
+        "stdev": 2.6726,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 0.19,
+        "min": 0.18,
+        "mean": 0.192,
+        "stdev": 0.013,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.0,
+        "min": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 35.62,
+        "min": 31.31,
+        "mean": 34.054,
+        "stdev": 2.4078,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.28,
+        "min": 64.61,
+        "mean": 66.91,
+        "stdev": 3.3291,
+        "n": 5
+      },
+      "writeSerializedModuleAST": {
+        "median": 0.28,
+        "min": 0.25,
+        "mean": 0.282,
+        "stdev": 0.0342,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "SemanticChecking",
+      "frontEndExecute"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\generic_nesting_n16\\generic_nesting.slang -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\generic_nesting_n16\\out.slang-module",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "generic_nesting_eval",
+    "bucket": "sema",
+    "size": 12,
+    "mode": "module",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 148.3045,
+      "min": 145.4967,
+      "mean": 150.3882,
+      "stdev": 7.0211,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 1.9,
+        "min": 1.86,
+        "mean": 1.898,
+        "stdev": 0.0228,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 1.9,
+        "min": 1.86,
+        "mean": 1.898,
+        "stdev": 0.0228,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 4.74,
+        "min": 4.57,
+        "mean": 4.71,
+        "stdev": 0.0815,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 4.73,
+        "min": 4.57,
+        "mean": 4.708,
+        "stdev": 0.0807,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 3.5,
+        "min": 3.42,
+        "mean": 3.474,
+        "stdev": 0.0371,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 1.26,
+        "min": 1.2,
+        "mean": 1.252,
+        "stdev": 0.0327,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 1.25,
+        "min": 1.19,
+        "mean": 1.246,
+        "stdev": 0.0336,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 1.25,
+        "min": 1.14,
+        "mean": 1.226,
+        "stdev": 0.0564,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 117.42,
+        "min": 115.01,
+        "mean": 119.878,
+        "stdev": 6.8513,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 0.2,
+        "min": 0.19,
+        "mean": 0.198,
+        "stdev": 0.0045,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.01,
+        "min": 0.01,
+        "mean": 0.01,
+        "stdev": 0.0,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 32.9,
+        "min": 31.38,
+        "mean": 35.21,
+        "stdev": 6.0856,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.74,
+        "min": 65.03,
+        "mean": 66.068,
+        "stdev": 0.8966,
+        "n": 5
+      },
+      "writeSerializedModuleAST": {
+        "median": 0.54,
+        "min": 0.49,
+        "mean": 0.526,
+        "stdev": 0.0219,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "SemanticChecking",
+      "frontEndExecute"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\generic_nesting_eval_n12\\generic_nesting_eval.slang -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\generic_nesting_eval_n12\\out.slang-module",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "interface_depth",
+    "bucket": "sema",
+    "size": 64,
+    "mode": "module",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 196.0487,
+      "min": 192.4746,
+      "mean": 195.7631,
+      "stdev": 2.7221,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 43.65,
+        "min": 42.06,
+        "mean": 43.55,
+        "stdev": 0.9022,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 43.65,
+        "min": 42.06,
+        "mean": 43.55,
+        "stdev": 0.9022,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 49.98,
+        "min": 48.42,
+        "mean": 50.23,
+        "stdev": 1.3449,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 49.98,
+        "min": 48.42,
+        "mean": 50.23,
+        "stdev": 1.3449,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 47.69,
+        "min": 46.0,
+        "mean": 47.908,
+        "stdev": 1.382,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 3.62,
+        "min": 3.47,
+        "mean": 3.91,
+        "stdev": 0.7352,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 3.61,
+        "min": 3.47,
+        "mean": 3.908,
+        "stdev": 0.7362,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 2.33,
+        "min": 2.24,
+        "mean": 2.318,
+        "stdev": 0.0782,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 118.67,
+        "min": 117.01,
+        "mean": 119.4,
+        "stdev": 2.525,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 0.32,
+        "min": 0.3,
+        "mean": 0.318,
+        "stdev": 0.0179,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.01,
+        "min": 0.01,
+        "mean": 0.012,
+        "stdev": 0.0045,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 35.29,
+        "min": 31.94,
+        "mean": 34.986,
+        "stdev": 2.1137,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 66.27,
+        "min": 65.15,
+        "mean": 66.166,
+        "stdev": 0.7323,
+        "n": 5
+      },
+      "writeSerializedModuleAST": {
+        "median": 1.22,
+        "min": 1.15,
+        "mean": 1.23,
+        "stdev": 0.062,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "SemanticChecking",
+      "frontEndExecute"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\interface_depth_n64\\interface_depth.slang -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\interface_depth_n64\\out.slang-module",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "conformance",
+    "bucket": "sema",
+    "size": 600,
+    "mode": "module",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 205.7409,
+      "min": 203.1984,
+      "mean": 206.832,
+      "stdev": 3.5523,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 12.11,
+        "min": 11.74,
+        "mean": 12.226,
+        "stdev": 0.3973,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 12.11,
+        "min": 11.74,
+        "mean": 12.226,
+        "stdev": 0.3973,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 59.74,
+        "min": 58.4,
+        "mean": 60.106,
+        "stdev": 1.6718,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 59.74,
+        "min": 58.4,
+        "mean": 60.106,
+        "stdev": 1.6718,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 39.35,
+        "min": 38.52,
+        "mean": 39.55,
+        "stdev": 1.0834,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 22.3,
+        "min": 22.01,
+        "mean": 22.714,
+        "stdev": 1.1314,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 22.3,
+        "min": 22.01,
+        "mean": 22.714,
+        "stdev": 1.1314,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 20.43,
+        "min": 19.88,
+        "mean": 20.548,
+        "stdev": 0.5945,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 118.11,
+        "min": 115.03,
+        "mean": 117.486,
+        "stdev": 1.8162,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 4.44,
+        "min": 4.33,
+        "mean": 4.468,
+        "stdev": 0.1427,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.38,
+        "min": 0.38,
+        "mean": 0.386,
+        "stdev": 0.0134,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 32.52,
+        "min": 32.13,
+        "mean": 33.368,
+        "stdev": 1.4446,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.16,
+        "min": 64.28,
+        "mean": 65.332,
+        "stdev": 0.7636,
+        "n": 5
+      },
+      "writeSerializedModuleAST": {
+        "median": 11.2,
+        "min": 10.69,
+        "mean": 11.116,
+        "stdev": 0.2656,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "SemanticChecking",
+      "frontEndExecute"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\conformance_n600\\conformance.slang -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\conformance_n600\\out.slang-module",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "operator_typecheck",
+    "bucket": "typecheck",
+    "size": 800,
+    "mode": "module",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 341.2862,
+      "min": 339.0444,
+      "mean": 343.1431,
+      "stdev": 5.0451,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 78.63,
+        "min": 78.12,
+        "mean": 78.67,
+        "stdev": 0.3678,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 78.63,
+        "min": 78.12,
+        "mean": 78.668,
+        "stdev": 0.3649,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 186.41,
+        "min": 185.04,
+        "mean": 187.71,
+        "stdev": 3.7834,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 186.41,
+        "min": 185.04,
+        "mean": 187.71,
+        "stdev": 3.7834,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 156.74,
+        "min": 155.94,
+        "mean": 156.856,
+        "stdev": 0.6742,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 68.78,
+        "min": 68.58,
+        "mean": 68.816,
+        "stdev": 0.1804,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 68.78,
+        "min": 68.58,
+        "mean": 68.814,
+        "stdev": 0.1812,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 29.48,
+        "min": 29.09,
+        "mean": 30.846,
+        "stdev": 3.2556,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 119.27,
+        "min": 118.36,
+        "mean": 119.634,
+        "stdev": 1.4501,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 9.11,
+        "min": 8.92,
+        "mean": 9.216,
+        "stdev": 0.2694,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 2.29,
+        "min": 2.27,
+        "mean": 2.29,
+        "stdev": 0.0158,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 35.11,
+        "min": 32.66,
+        "mean": 34.466,
+        "stdev": 1.4998,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 66.6,
+        "min": 64.93,
+        "mean": 66.52,
+        "stdev": 1.3962,
+        "n": 5
+      },
+      "writeSerializedModuleAST": {
+        "median": 7.85,
+        "min": 7.76,
+        "mean": 7.854,
+        "stdev": 0.1014,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "SemanticChecking",
+      "frontEndExecute"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\operator_typecheck_n800\\operator_typecheck.slang -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\operator_typecheck_n800\\out.slang-module",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "implicit_conversion",
+    "bucket": "typecheck",
+    "size": 600,
+    "mode": "module",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 276.4609,
+      "min": 273.0309,
+      "mean": 277.3974,
+      "stdev": 4.4012,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 80.1,
+        "min": 77.4,
+        "mean": 80.574,
+        "stdev": 2.7517,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 80.1,
+        "min": 77.4,
+        "mean": 80.574,
+        "stdev": 2.7517,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 129.63,
+        "min": 128.29,
+        "mean": 130.97,
+        "stdev": 2.8191,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 129.63,
+        "min": 128.29,
+        "mean": 130.97,
+        "stdev": 2.8191,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 121.38,
+        "min": 120.46,
+        "mean": 122.962,
+        "stdev": 2.8693,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 36.1,
+        "min": 35.47,
+        "mean": 36.848,
+        "stdev": 2.0817,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 36.1,
+        "min": 35.47,
+        "mean": 36.846,
+        "stdev": 2.0827,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 7.94,
+        "min": 7.82,
+        "mean": 8.0,
+        "stdev": 0.1636,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 117.35,
+        "min": 114.69,
+        "mean": 117.246,
+        "stdev": 2.4008,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 5.13,
+        "min": 4.89,
+        "mean": 5.374,
+        "stdev": 0.789,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.94,
+        "min": 0.89,
+        "mean": 0.932,
+        "stdev": 0.0259,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 31.76,
+        "min": 31.69,
+        "mean": 32.518,
+        "stdev": 1.179,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.16,
+        "min": 64.89,
+        "mean": 65.988,
+        "stdev": 1.3527,
+        "n": 5
+      },
+      "writeSerializedModuleAST": {
+        "median": 1.65,
+        "min": 1.61,
+        "mean": 1.654,
+        "stdev": 0.0297,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "SemanticChecking",
+      "frontEndExecute"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\implicit_conversion_n600\\implicit_conversion.slang -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\implicit_conversion_n600\\out.slang-module",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "overload_resolution",
+    "bucket": "typecheck",
+    "size": 600,
+    "mode": "module",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 184.7313,
+      "min": 178.9336,
+      "mean": 186.5043,
+      "stdev": 5.6867,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 22.75,
+        "min": 22.25,
+        "mean": 22.754,
+        "stdev": 0.3828,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 22.75,
+        "min": 22.24,
+        "mean": 22.75,
+        "stdev": 0.3874,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 39.15,
+        "min": 38.22,
+        "mean": 39.208,
+        "stdev": 0.6719,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 39.15,
+        "min": 38.22,
+        "mean": 39.208,
+        "stdev": 0.6719,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 33.72,
+        "min": 32.98,
+        "mean": 33.774,
+        "stdev": 0.562,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 9.28,
+        "min": 9.04,
+        "mean": 9.278,
+        "stdev": 0.1878,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 9.28,
+        "min": 9.04,
+        "mean": 9.276,
+        "stdev": 0.1858,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 5.42,
+        "min": 5.22,
+        "mean": 5.422,
+        "stdev": 0.1436,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 117.79,
+        "min": 113.99,
+        "mean": 119.548,
+        "stdev": 5.7072,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 1.61,
+        "min": 1.56,
+        "mean": 1.608,
+        "stdev": 0.0327,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.57,
+        "min": 0.56,
+        "mean": 0.568,
+        "stdev": 0.0084,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 33.39,
+        "min": 31.45,
+        "mean": 34.172,
+        "stdev": 3.0004,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 66.34,
+        "min": 64.57,
+        "mean": 66.578,
+        "stdev": 1.7682,
+        "n": 5
+      },
+      "writeSerializedModuleAST": {
+        "median": 2.04,
+        "min": 1.98,
+        "mean": 2.058,
+        "stdev": 0.0893,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "SemanticChecking",
+      "frontEndExecute"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\overload_resolution_n600\\overload_resolution.slang -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\overload_resolution_n600\\out.slang-module",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "ir_builder",
+    "bucket": "ir_infra",
+    "size": 4000,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 214.1154,
+      "min": 213.2945,
+      "mean": 214.9118,
+      "stdev": 2.4008,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 15.4,
+        "min": 15.27,
+        "mean": 15.472,
+        "stdev": 0.2762,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 15.4,
+        "min": 15.27,
+        "mean": 15.472,
+        "stdev": 0.2762,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 66.4,
+        "min": 66.12,
+        "mean": 66.418,
+        "stdev": 0.2554,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 66.4,
+        "min": 66.12,
+        "mean": 66.418,
+        "stdev": 0.2554,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 24.62,
+        "min": 24.47,
+        "mean": 24.732,
+        "stdev": 0.3435,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 7.21,
+        "min": 7.13,
+        "mean": 7.252,
+        "stdev": 0.1092,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 7.21,
+        "min": 7.13,
+        "mean": 7.252,
+        "stdev": 0.1092,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 41.58,
+        "min": 40.96,
+        "mean": 41.58,
+        "stdev": 0.4745,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 1.48,
+        "min": 1.43,
+        "mean": 1.482,
+        "stdev": 0.037,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 1.32,
+        "min": 1.31,
+        "mean": 1.344,
+        "stdev": 0.0378,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 24.35,
+        "min": 24.07,
+        "mean": 24.418,
+        "stdev": 0.2681,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 1.54,
+        "min": 1.51,
+        "mean": 1.548,
+        "stdev": 0.0396,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 119.56,
+        "min": 118.15,
+        "mean": 120.38,
+        "stdev": 2.5623,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 1.7,
+        "min": 1.64,
+        "mean": 1.698,
+        "stdev": 0.0487,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.16,
+        "min": 0.16,
+        "mean": 0.162,
+        "stdev": 0.0045,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.11,
+        "min": 0.11,
+        "mean": 0.114,
+        "stdev": 0.0055,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 36.05,
+        "min": 35.45,
+        "mean": 36.754,
+        "stdev": 1.7194,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.4,
+        "min": 64.78,
+        "mean": 65.426,
+        "stdev": 0.6016,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 8.25,
+        "min": 8.05,
+        "mean": 8.252,
+        "stdev": 0.1305,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 3.44,
+        "min": 3.4,
+        "mean": 3.432,
+        "stdev": 0.0259,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.0,
+        "min": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "generateIR",
+      "simplifyIR",
+      "compileInner"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\ir_builder_n4000 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\ir_builder_n4000\\ir_builder.slang -target spirv -emit-spirv-directly -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\ir_builder_n4000\\out.spv",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "serialize",
+    "bucket": "ir_infra",
+    "size": 1500,
+    "mode": "module",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 303.0118,
+      "min": 298.8165,
+      "mean": 303.6275,
+      "stdev": 3.8404,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 76.56,
+        "min": 75.64,
+        "mean": 76.482,
+        "stdev": 0.6256,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 76.56,
+        "min": 75.64,
+        "mean": 76.482,
+        "stdev": 0.6256,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 152.53,
+        "min": 151.87,
+        "mean": 153.812,
+        "stdev": 2.7135,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 152.53,
+        "min": 151.87,
+        "mean": 153.812,
+        "stdev": 2.7135,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 129.06,
+        "min": 128.44,
+        "mean": 129.324,
+        "stdev": 0.8146,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 45.3,
+        "min": 44.95,
+        "mean": 45.418,
+        "stdev": 0.4111,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 45.29,
+        "min": 44.95,
+        "mean": 45.416,
+        "stdev": 0.4118,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 23.61,
+        "min": 23.42,
+        "mean": 24.48,
+        "stdev": 2.0785,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 119.61,
+        "min": 116.45,
+        "mean": 119.09,
+        "stdev": 1.563,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 7.31,
+        "min": 7.05,
+        "mean": 7.262,
+        "stdev": 0.1199,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.63,
+        "min": 0.61,
+        "mean": 0.626,
+        "stdev": 0.0114,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 34.95,
+        "min": 32.17,
+        "mean": 34.61,
+        "stdev": 1.5127,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.81,
+        "min": 65.35,
+        "mean": 65.904,
+        "stdev": 0.3944,
+        "n": 5
+      },
+      "writeSerializedModuleAST": {
+        "median": 12.54,
+        "min": 12.28,
+        "mean": 12.532,
+        "stdev": 0.2284,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "writeSerializedModuleAST",
+      "writeSerializedModuleIR",
+      "compileInner"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\serialize_n1500\\serialize.slang -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\serialize_n1500\\out.slang-module",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "module_link",
+    "bucket": "module_link",
+    "size": 100,
+    "mode": "link",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 253.3995,
+      "min": 245.7786,
+      "mean": 254.332,
+      "stdev": 6.6072,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 67.71,
+        "min": 63.53,
+        "mean": 67.814,
+        "stdev": 3.2708,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 67.71,
+        "min": 63.53,
+        "mean": 67.814,
+        "stdev": 3.2708,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 100.33,
+        "min": 95.05,
+        "mean": 99.698,
+        "stdev": 3.5837,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 100.33,
+        "min": 95.05,
+        "mean": 99.698,
+        "stdev": 3.5837,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 71.78,
+        "min": 67.92,
+        "mean": 72.194,
+        "stdev": 3.3586,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 3.67,
+        "min": 3.31,
+        "mean": 3.636,
+        "stdev": 0.1987,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 3.67,
+        "min": 3.31,
+        "mean": 3.632,
+        "stdev": 0.1963,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 27.16,
+        "min": 26.71,
+        "mean": 27.33,
+        "stdev": 0.6488,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 0.35,
+        "min": 0.33,
+        "mean": 0.346,
+        "stdev": 0.0114,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 0.33,
+        "min": 0.32,
+        "mean": 0.328,
+        "stdev": 0.0084,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 20.13,
+        "min": 19.79,
+        "mean": 20.326,
+        "stdev": 0.5627,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 8.67,
+        "min": 8.48,
+        "mean": 8.824,
+        "stdev": 0.4971,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 119.28,
+        "min": 115.08,
+        "mean": 121.736,
+        "stdev": 6.0886,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 0.34,
+        "min": 0.32,
+        "mean": 0.34,
+        "stdev": 0.0158,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.11,
+        "min": 0.11,
+        "mean": 0.114,
+        "stdev": 0.0089,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.1,
+        "min": 0.09,
+        "mean": 0.096,
+        "stdev": 0.0055,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 35.54,
+        "min": 32.05,
+        "mean": 38.192,
+        "stdev": 5.6405,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 88.18,
+        "min": 86.66,
+        "mean": 87.992,
+        "stdev": 0.9109,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 3.49,
+        "min": 3.45,
+        "mean": 3.49,
+        "stdev": 0.0394,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 3.42,
+        "min": 3.4,
+        "mean": 3.462,
+        "stdev": 0.0856,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.04,
+        "min": 0.04,
+        "mean": 0.04,
+        "stdev": 0.0,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "linkIR",
+      "compileInner"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\module_link_n100 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\module_link_n100\\link_main.slang -target spirv -emit-spirv-directly -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\module_link_n100\\out.spv",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "specialization",
+    "bucket": "specialization",
+    "size": 300,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 287.4454,
+      "min": 285.4124,
+      "mean": 287.6382,
+      "stdev": 1.7398,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 22.53,
+        "min": 22.35,
+        "mean": 22.826,
+        "stdev": 0.5719,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 22.53,
+        "min": 22.35,
+        "mean": 22.826,
+        "stdev": 0.5719,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 140.09,
+        "min": 139.44,
+        "mean": 140.096,
+        "stdev": 0.6601,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 140.09,
+        "min": 139.44,
+        "mean": 140.096,
+        "stdev": 0.6601,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 37.57,
+        "min": 37.45,
+        "mean": 37.794,
+        "stdev": 0.4073,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 13.07,
+        "min": 12.74,
+        "mean": 13.06,
+        "stdev": 0.2201,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 13.06,
+        "min": 12.74,
+        "mean": 13.056,
+        "stdev": 0.2203,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 102.49,
+        "min": 101.5,
+        "mean": 102.184,
+        "stdev": 0.4998,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 19.43,
+        "min": 19.33,
+        "mean": 19.476,
+        "stdev": 0.1585,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 2.12,
+        "min": 2.11,
+        "mean": 2.13,
+        "stdev": 0.0235,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 79.03,
+        "min": 78.44,
+        "mean": 78.88,
+        "stdev": 0.3912,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 2.12,
+        "min": 2.06,
+        "mean": 2.15,
+        "stdev": 0.0951,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 118.38,
+        "min": 117.41,
+        "mean": 118.8,
+        "stdev": 1.2273,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 1.58,
+        "min": 1.55,
+        "mean": 1.584,
+        "stdev": 0.0321,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.58,
+        "min": 0.57,
+        "mean": 0.584,
+        "stdev": 0.0114,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 2.08,
+        "min": 2.06,
+        "mean": 2.084,
+        "stdev": 0.023,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 35.19,
+        "min": 32.85,
+        "mean": 34.63,
+        "stdev": 1.2148,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.68,
+        "min": 64.64,
+        "mean": 65.646,
+        "stdev": 1.0736,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 14.14,
+        "min": 14.09,
+        "mean": 14.196,
+        "stdev": 0.1148,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 20.82,
+        "min": 20.73,
+        "mean": 20.824,
+        "stdev": 0.0896,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.3,
+        "min": 0.29,
+        "mean": 0.296,
+        "stdev": 0.0055,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "specializeModule",
+      "linkAndOptimizeIR",
+      "compileInner"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\specialization_n300 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\specialization_n300\\specialization.slang -target spirv -emit-spirv-directly -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\specialization_n300\\out.spv",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "dynamic_dispatch",
+    "bucket": "dynamic_dispatch",
+    "size": 200,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 288.2065,
+      "min": 282.9103,
+      "mean": 288.7958,
+      "stdev": 4.4595,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 22.63,
+        "min": 22.37,
+        "mean": 22.752,
+        "stdev": 0.4989,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 22.63,
+        "min": 22.37,
+        "mean": 22.752,
+        "stdev": 0.4989,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 140.38,
+        "min": 139.23,
+        "mean": 140.354,
+        "stdev": 0.7934,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 140.38,
+        "min": 139.23,
+        "mean": 140.354,
+        "stdev": 0.7934,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 34.91,
+        "min": 34.59,
+        "mean": 35.206,
+        "stdev": 0.7237,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 10.61,
+        "min": 10.45,
+        "mean": 10.646,
+        "stdev": 0.2228,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 10.61,
+        "min": 10.45,
+        "mean": 10.646,
+        "stdev": 0.2228,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 104.91,
+        "min": 103.91,
+        "mean": 105.042,
+        "stdev": 1.0128,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 3.01,
+        "min": 2.96,
+        "mean": 3.042,
+        "stdev": 0.1028,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 2.09,
+        "min": 2.08,
+        "mean": 2.11,
+        "stdev": 0.0394,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 79.25,
+        "min": 78.94,
+        "mean": 79.688,
+        "stdev": 0.9922,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 1.75,
+        "min": 1.71,
+        "mean": 1.792,
+        "stdev": 0.082,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 118.52,
+        "min": 115.26,
+        "mean": 119.496,
+        "stdev": 3.8291,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 1.49,
+        "min": 1.46,
+        "mean": 1.49,
+        "stdev": 0.0212,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.57,
+        "min": 0.56,
+        "mean": 0.576,
+        "stdev": 0.0134,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.85,
+        "min": 0.84,
+        "mean": 0.852,
+        "stdev": 0.0084,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 35.12,
+        "min": 31.35,
+        "mean": 34.636,
+        "stdev": 1.9831,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.31,
+        "min": 64.96,
+        "mean": 66.29,
+        "stdev": 2.3541,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 21.51,
+        "min": 21.26,
+        "mean": 21.53,
+        "stdev": 0.2244,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 29.16,
+        "min": 28.84,
+        "mean": 29.528,
+        "stdev": 1.0105,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.51,
+        "min": 0.48,
+        "mean": 0.508,
+        "stdev": 0.0217,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "compileInner",
+      "specializeModule",
+      "linkIR",
+      "linkAndOptimizeIR"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\dynamic_dispatch_n200 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\dynamic_dispatch_n200\\dynamic_dispatch.slang -target spirv -emit-spirv-directly -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\dynamic_dispatch_n200\\out.spv",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "existential_aggregate",
+    "bucket": "dynamic_dispatch",
+    "size": 100,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 239.2278,
+      "min": 231.3987,
+      "mean": 239.4153,
+      "stdev": 5.6617,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 17.43,
+        "min": 17.31,
+        "mean": 17.45,
+        "stdev": 0.1699,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 17.43,
+        "min": 17.31,
+        "mean": 17.45,
+        "stdev": 0.1699,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 89.95,
+        "min": 89.01,
+        "mean": 89.916,
+        "stdev": 0.7883,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 89.95,
+        "min": 89.01,
+        "mean": 89.916,
+        "stdev": 0.7883,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 26.6,
+        "min": 26.32,
+        "mean": 26.622,
+        "stdev": 0.2093,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 7.9,
+        "min": 7.84,
+        "mean": 7.976,
+        "stdev": 0.1566,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 7.9,
+        "min": 7.84,
+        "mean": 7.974,
+        "stdev": 0.1526,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 63.27,
+        "min": 62.29,
+        "mean": 63.174,
+        "stdev": 0.8196,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 1.59,
+        "min": 1.55,
+        "mean": 1.578,
+        "stdev": 0.0217,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 1.03,
+        "min": 1.02,
+        "mean": 1.036,
+        "stdev": 0.0152,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 48.97,
+        "min": 48.06,
+        "mean": 48.828,
+        "stdev": 0.5664,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 1.13,
+        "min": 1.12,
+        "mean": 1.154,
+        "stdev": 0.0378,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 119.61,
+        "min": 115.1,
+        "mean": 121.754,
+        "stdev": 5.4444,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 0.87,
+        "min": 0.81,
+        "mean": 0.864,
+        "stdev": 0.0397,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.29,
+        "min": 0.28,
+        "mean": 0.292,
+        "stdev": 0.0084,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.46,
+        "min": 0.45,
+        "mean": 0.458,
+        "stdev": 0.0045,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 35.65,
+        "min": 31.73,
+        "mean": 34.286,
+        "stdev": 2.3382,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 69.32,
+        "min": 64.64,
+        "mean": 69.02,
+        "stdev": 4.1257,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 11.89,
+        "min": 11.74,
+        "mean": 11.878,
+        "stdev": 0.1195,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 21.59,
+        "min": 21.23,
+        "mean": 21.63,
+        "stdev": 0.3931,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.21,
+        "min": 0.2,
+        "mean": 0.206,
+        "stdev": 0.0055,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "compileInner",
+      "specializeModule",
+      "legalizeExistentialTypeLayout",
+      "simplifyIR"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\existential_aggregate_n100 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\existential_aggregate_n100\\existential_aggregate.slang -target spirv -emit-spirv-directly -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\existential_aggregate_n100\\out.spv",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "autodiff",
+    "bucket": "autodiff",
+    "size": 200,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 1024.8703,
+      "min": 1020.6101,
+      "mean": 1026.317,
+      "stdev": 5.1605,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 97.48,
+        "min": 97.12,
+        "mean": 98.404,
+        "stdev": 2.0887,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 97.48,
+        "min": 97.12,
+        "mean": 98.404,
+        "stdev": 2.0887,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 870.73,
+        "min": 868.58,
+        "mean": 872.076,
+        "stdev": 3.3811,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 870.73,
+        "min": 868.58,
+        "mean": 872.076,
+        "stdev": 3.3811,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 148.47,
+        "min": 147.7,
+        "mean": 149.802,
+        "stdev": 3.2972,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 49.51,
+        "min": 48.76,
+        "mean": 49.818,
+        "stdev": 1.2952,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 49.51,
+        "min": 48.76,
+        "mean": 49.816,
+        "stdev": 1.2909,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 721.7,
+        "min": 719.75,
+        "mean": 722.172,
+        "stdev": 2.2497,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 9.65,
+        "min": 9.48,
+        "mean": 9.592,
+        "stdev": 0.0983,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 8.03,
+        "min": 8.0,
+        "mean": 8.03,
+        "stdev": 0.0274,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 431.2,
+        "min": 428.53,
+        "mean": 430.78,
+        "stdev": 1.2684,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 5.36,
+        "min": 5.16,
+        "mean": 5.408,
+        "stdev": 0.2366,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 118.59,
+        "min": 116.81,
+        "mean": 118.706,
+        "stdev": 1.7186,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 1.07,
+        "min": 1.05,
+        "mean": 1.118,
+        "stdev": 0.1043,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 2.58,
+        "min": 2.55,
+        "mean": 2.598,
+        "stdev": 0.0507,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 4.7,
+        "min": 4.66,
+        "mean": 4.698,
+        "stdev": 0.0249,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 34.69,
+        "min": 32.51,
+        "mean": 34.438,
+        "stdev": 1.1392,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.47,
+        "min": 64.7,
+        "mean": 65.762,
+        "stdev": 0.9435,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 74.9,
+        "min": 74.24,
+        "mean": 74.778,
+        "stdev": 0.496,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 260.95,
+        "min": 258.95,
+        "mean": 260.466,
+        "stdev": 0.9172,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 1.01,
+        "min": 1.0,
+        "mean": 1.016,
+        "stdev": 0.0152,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "compileInner",
+      "linkAndOptimizeIR",
+      "frontEndExecute"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\autodiff_n200 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\autodiff_n200\\autodiff.slang -target spirv -emit-spirv-directly -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\autodiff_n200\\out.spv",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "inlining",
+    "bucket": "inlining",
+    "size": 400,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 252.2404,
+      "min": 247.5931,
+      "mean": 250.821,
+      "stdev": 2.5156,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 39.45,
+        "min": 39.21,
+        "mean": 39.582,
+        "stdev": 0.3289,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 39.45,
+        "min": 39.21,
+        "mean": 39.582,
+        "stdev": 0.3289,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 105.52,
+        "min": 104.97,
+        "mean": 105.734,
+        "stdev": 0.5982,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 105.52,
+        "min": 104.97,
+        "mean": 105.734,
+        "stdev": 0.5982,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 55.05,
+        "min": 55.04,
+        "mean": 55.228,
+        "stdev": 0.3324,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 13.51,
+        "min": 13.25,
+        "mean": 13.482,
+        "stdev": 0.1388,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 13.51,
+        "min": 13.25,
+        "mean": 13.48,
+        "stdev": 0.1364,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 50.34,
+        "min": 49.58,
+        "mean": 50.378,
+        "stdev": 0.6976,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 0.42,
+        "min": 0.42,
+        "mean": 0.426,
+        "stdev": 0.0089,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 0.39,
+        "min": 0.39,
+        "mean": 0.396,
+        "stdev": 0.0089,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 47.96,
+        "min": 47.44,
+        "mean": 48.14,
+        "stdev": 0.6412,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 1.73,
+        "min": 1.72,
+        "mean": 1.748,
+        "stdev": 0.0356,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 117.77,
+        "min": 114.55,
+        "mean": 116.802,
+        "stdev": 1.9658,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 1.78,
+        "min": 1.72,
+        "mean": 1.82,
+        "stdev": 0.1378,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 2.16,
+        "min": 2.06,
+        "mean": 2.14,
+        "stdev": 0.0469,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.86,
+        "min": 0.84,
+        "mean": 0.854,
+        "stdev": 0.0134,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 33.94,
+        "min": 31.58,
+        "mean": 33.434,
+        "stdev": 1.7071,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.28,
+        "min": 64.71,
+        "mean": 65.178,
+        "stdev": 0.2758,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 17.15,
+        "min": 17.05,
+        "mean": 17.144,
+        "stdev": 0.0832,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 18.64,
+        "min": 18.45,
+        "mean": 18.996,
+        "stdev": 0.6555,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.17,
+        "min": 0.17,
+        "mean": 0.172,
+        "stdev": 0.0045,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "simplifyIR",
+      "linkAndOptimizeIR",
+      "compileInner"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\inlining_n400 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\inlining_n400\\inlining.slang -target spirv -emit-spirv-directly -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\inlining_n400\\out.spv",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "loop_unroll",
+    "bucket": "loop_unroll",
+    "size": 300,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 445.4742,
+      "min": 435.2981,
+      "mean": 442.6444,
+      "stdev": 5.0907,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 10.34,
+        "min": 10.08,
+        "mean": 10.556,
+        "stdev": 0.7182,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 10.34,
+        "min": 10.08,
+        "mean": 10.556,
+        "stdev": 0.7182,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 297.21,
+        "min": 289.85,
+        "mean": 295.482,
+        "stdev": 4.2433,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 297.21,
+        "min": 289.85,
+        "mean": 295.482,
+        "stdev": 4.2433,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 14.29,
+        "min": 14.13,
+        "mean": 14.572,
+        "stdev": 0.7325,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 3.59,
+        "min": 3.5,
+        "mean": 3.568,
+        "stdev": 0.0409,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 3.58,
+        "min": 3.5,
+        "mean": 3.566,
+        "stdev": 0.0397,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 282.94,
+        "min": 273.83,
+        "mean": 280.766,
+        "stdev": 4.8502,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 21.96,
+        "min": 21.27,
+        "mean": 21.892,
+        "stdev": 0.4935,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 21.66,
+        "min": 21.07,
+        "mean": 21.704,
+        "stdev": 0.4931,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 271.91,
+        "min": 262.19,
+        "mean": 269.236,
+        "stdev": 5.2301,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 0.44,
+        "min": 0.43,
+        "mean": 0.44,
+        "stdev": 0.01,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 117.89,
+        "min": 115.86,
+        "mean": 117.978,
+        "stdev": 1.4555,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 0.14,
+        "min": 0.13,
+        "mean": 0.138,
+        "stdev": 0.0084,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.26,
+        "min": 0.25,
+        "mean": 0.258,
+        "stdev": 0.0045,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.17,
+        "min": 0.17,
+        "mean": 0.176,
+        "stdev": 0.0089,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 34.69,
+        "min": 31.86,
+        "mean": 34.122,
+        "stdev": 1.7632,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.09,
+        "min": 64.83,
+        "mean": 65.29,
+        "stdev": 0.4622,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 42.43,
+        "min": 40.78,
+        "mean": 42.28,
+        "stdev": 1.0578,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 158.39,
+        "min": 152.63,
+        "mean": 156.946,
+        "stdev": 3.3679,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 138.36,
+        "min": 132.38,
+        "mean": 136.776,
+        "stdev": 3.424,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "unrollLoopsInModule",
+      "simplifyIR",
+      "compileInner"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\loop_unroll_n300 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\loop_unroll_n300\\loop_unroll.slang -target spirv -emit-spirv-directly -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\loop_unroll_n300\\out.spv",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "control_flow_ssa",
+    "bucket": "control_flow",
+    "size": 120,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 353.2592,
+      "min": 350.0271,
+      "mean": 353.2213,
+      "stdev": 3.0097,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 30.51,
+        "min": 30.29,
+        "mean": 30.598,
+        "stdev": 0.3333,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 30.51,
+        "min": 30.29,
+        "mean": 30.598,
+        "stdev": 0.3333,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 202.77,
+        "min": 201.97,
+        "mean": 202.954,
+        "stdev": 0.992,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 202.77,
+        "min": 201.97,
+        "mean": 202.954,
+        "stdev": 0.992,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 53.74,
+        "min": 52.8,
+        "mean": 53.602,
+        "stdev": 0.592,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 21.43,
+        "min": 21.09,
+        "mean": 21.564,
+        "stdev": 0.4469,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 21.43,
+        "min": 21.09,
+        "mean": 21.564,
+        "stdev": 0.4469,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 149.11,
+        "min": 148.44,
+        "mean": 149.254,
+        "stdev": 0.638,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 1.77,
+        "min": 1.69,
+        "mean": 1.75,
+        "stdev": 0.0469,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 1.6,
+        "min": 1.52,
+        "mean": 1.588,
+        "stdev": 0.0497,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 77.96,
+        "min": 76.36,
+        "mean": 77.67,
+        "stdev": 0.8125,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 1.65,
+        "min": 1.63,
+        "mean": 2.088,
+        "stdev": 0.8891,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 119.6,
+        "min": 116.96,
+        "mean": 120.174,
+        "stdev": 2.9632,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 1.1,
+        "min": 1.08,
+        "mean": 1.116,
+        "stdev": 0.0434,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.46,
+        "min": 0.46,
+        "mean": 0.468,
+        "stdev": 0.011,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 3.5,
+        "min": 3.48,
+        "mean": 3.526,
+        "stdev": 0.0456,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 35.63,
+        "min": 33.05,
+        "mean": 35.164,
+        "stdev": 1.2453,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.69,
+        "min": 65.42,
+        "mean": 66.428,
+        "stdev": 1.8078,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 25.88,
+        "min": 25.35,
+        "mean": 25.862,
+        "stdev": 0.3346,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 5.08,
+        "min": 5.01,
+        "mean": 5.074,
+        "stdev": 0.0586,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.13,
+        "min": 0.12,
+        "mean": 0.128,
+        "stdev": 0.0084,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "simplifyIR",
+      "frontEndExecute",
+      "compileInner"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\control_flow_ssa_n120 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\control_flow_ssa_n120\\control_flow_ssa.slang -target spirv -emit-spirv-directly -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\control_flow_ssa_n120\\out.spv",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "resource_aggregate",
+    "bucket": "resource_legalize",
+    "size": 80,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 197.6109,
+      "min": 192.8287,
+      "mean": 197.9863,
+      "stdev": 3.7328,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 15.28,
+        "min": 15.05,
+        "mean": 15.46,
+        "stdev": 0.4147,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 15.28,
+        "min": 15.05,
+        "mean": 15.46,
+        "stdev": 0.4147,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 50.73,
+        "min": 50.42,
+        "mean": 50.974,
+        "stdev": 0.6339,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 50.73,
+        "min": 50.42,
+        "mean": 50.974,
+        "stdev": 0.6339,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 23.28,
+        "min": 22.97,
+        "mean": 23.462,
+        "stdev": 0.4107,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 5.77,
+        "min": 5.66,
+        "mean": 5.752,
+        "stdev": 0.0823,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 5.76,
+        "min": 5.66,
+        "mean": 5.748,
+        "stdev": 0.0841,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 25.79,
+        "min": 25.54,
+        "mean": 25.87,
+        "stdev": 0.3579,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 0.8,
+        "min": 0.76,
+        "mean": 0.804,
+        "stdev": 0.0416,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 1.47,
+        "min": 1.45,
+        "mean": 1.478,
+        "stdev": 0.0303,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 16.33,
+        "min": 16.27,
+        "mean": 16.428,
+        "stdev": 0.2606,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 0.9,
+        "min": 0.85,
+        "mean": 0.896,
+        "stdev": 0.0336,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 119.56,
+        "min": 114.77,
+        "mean": 119.666,
+        "stdev": 3.6867,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 0.53,
+        "min": 0.5,
+        "mean": 0.526,
+        "stdev": 0.0167,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.36,
+        "min": 0.35,
+        "mean": 0.368,
+        "stdev": 0.0164,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.31,
+        "min": 0.31,
+        "mean": 0.318,
+        "stdev": 0.013,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 35.36,
+        "min": 31.93,
+        "mean": 34.504,
+        "stdev": 1.7585,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.1,
+        "min": 64.55,
+        "mean": 65.208,
+        "stdev": 0.6029,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 3.16,
+        "min": 3.11,
+        "mean": 3.166,
+        "stdev": 0.0371,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 5.24,
+        "min": 5.11,
+        "mean": 5.234,
+        "stdev": 0.082,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.01,
+        "min": 0.01,
+        "mean": 0.01,
+        "stdev": 0.0,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "legalizeResourceTypes",
+      "linkAndOptimizeIR",
+      "compileInner"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\resource_aggregate_n80 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\resource_aggregate_n80\\resource_aggregate.slang -target spirv -emit-spirv-directly -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\resource_aggregate_n80\\out.spv",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "reflection_layout",
+    "bucket": "reflection_layout",
+    "size": 120,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 361.5435,
+      "min": 358.6659,
+      "mean": 362.1814,
+      "stdev": 3.473,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 84.17,
+        "min": 83.77,
+        "mean": 84.582,
+        "stdev": 1.1871,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 84.17,
+        "min": 83.76,
+        "mean": 84.58,
+        "stdev": 1.1888,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 203.88,
+        "min": 203.11,
+        "mean": 204.022,
+        "stdev": 0.894,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 203.88,
+        "min": 203.11,
+        "mean": 204.022,
+        "stdev": 0.894,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 108.16,
+        "min": 107.83,
+        "mean": 108.758,
+        "stdev": 1.391,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 12.52,
+        "min": 12.43,
+        "mean": 12.6,
+        "stdev": 0.1592,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 12.52,
+        "min": 12.43,
+        "mean": 12.6,
+        "stdev": 0.1592,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 88.22,
+        "min": 87.19,
+        "mean": 88.162,
+        "stdev": 0.6049,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 8.94,
+        "min": 8.79,
+        "mean": 8.908,
+        "stdev": 0.0776,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 2.19,
+        "min": 2.13,
+        "mean": 2.178,
+        "stdev": 0.0327,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 65.91,
+        "min": 65.21,
+        "mean": 65.928,
+        "stdev": 0.4569,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 3.2,
+        "min": 3.16,
+        "mean": 3.258,
+        "stdev": 0.1337,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 118.39,
+        "min": 116.21,
+        "mean": 119.2,
+        "stdev": 2.9035,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 4.52,
+        "min": 4.51,
+        "mean": 4.522,
+        "stdev": 0.013,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 4.23,
+        "min": 4.12,
+        "mean": 4.258,
+        "stdev": 0.1283,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.72,
+        "min": 0.71,
+        "mean": 0.718,
+        "stdev": 0.0045,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 33.42,
+        "min": 31.88,
+        "mean": 33.672,
+        "stdev": 1.6891,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.87,
+        "min": 64.9,
+        "mean": 66.864,
+        "stdev": 2.7025,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 16.67,
+        "min": 16.42,
+        "mean": 16.718,
+        "stdev": 0.2566,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 4.77,
+        "min": 4.7,
+        "mean": 4.766,
+        "stdev": 0.0684,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.03,
+        "min": 0.03,
+        "mean": 0.032,
+        "stdev": 0.0045,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "compileInner",
+      "frontEndExecute",
+      "generateOutput"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\reflection_layout_n120 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\reflection_layout_n120\\reflection_layout.slang -target spirv -emit-spirv-directly -reflection-json C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\reflection_layout_n120\\reflect.json -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\reflection_layout_n120\\out.spv",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "codegen_spirv",
+    "bucket": "codegen",
+    "size": 400,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 509.5466,
+      "min": 505.0211,
+      "mean": 509.6022,
+      "stdev": 4.514,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 37.85,
+        "min": 37.57,
+        "mean": 38.242,
+        "stdev": 0.7715,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 37.85,
+        "min": 37.57,
+        "mean": 38.242,
+        "stdev": 0.7715,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 361.74,
+        "min": 360.2,
+        "mean": 362.668,
+        "stdev": 2.8026,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 361.74,
+        "min": 360.2,
+        "mean": 362.668,
+        "stdev": 2.8026,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 48.51,
+        "min": 48.21,
+        "mean": 48.948,
+        "stdev": 0.8753,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 9.5,
+        "min": 9.45,
+        "mean": 9.526,
+        "stdev": 0.0971,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 9.49,
+        "min": 9.44,
+        "mean": 9.52,
+        "stdev": 0.0957,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 313.15,
+        "min": 310.91,
+        "mean": 313.604,
+        "stdev": 2.7151,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 68.97,
+        "min": 68.57,
+        "mean": 69.398,
+        "stdev": 1.1527,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 68.74,
+        "min": 67.7,
+        "mean": 68.836,
+        "stdev": 0.9092,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 288.79,
+        "min": 287.97,
+        "mean": 289.988,
+        "stdev": 2.8752,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 1.43,
+        "min": 1.42,
+        "mean": 1.434,
+        "stdev": 0.0152,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 116.37,
+        "min": 113.86,
+        "mean": 117.226,
+        "stdev": 3.6194,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 0.88,
+        "min": 0.84,
+        "mean": 0.88,
+        "stdev": 0.0274,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.58,
+        "min": 0.57,
+        "mean": 0.58,
+        "stdev": 0.0071,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.58,
+        "min": 0.56,
+        "mean": 0.582,
+        "stdev": 0.0179,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 32.07,
+        "min": 31.46,
+        "mean": 32.904,
+        "stdev": 1.8773,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.97,
+        "min": 64.49,
+        "mean": 65.992,
+        "stdev": 1.7142,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 14.47,
+        "min": 14.29,
+        "mean": 14.55,
+        "stdev": 0.3408,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 14.05,
+        "min": 13.97,
+        "mean": 14.108,
+        "stdev": 0.1335,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.01,
+        "min": 0.01,
+        "mean": 0.01,
+        "stdev": 0.0,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "generateOutput",
+      "compileInner"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\codegen_spirv_n400 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\codegen_spirv_n400\\codegen.slang -target spirv -emit-spirv-directly -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\codegen_spirv_n400\\out.spv",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "emit_metal",
+    "bucket": "codegen_source",
+    "size": 400,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 476.8467,
+      "min": 470.0222,
+      "mean": 480.1588,
+      "stdev": 9.1836,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 38.7,
+        "min": 37.73,
+        "mean": 38.822,
+        "stdev": 1.0229,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 38.7,
+        "min": 37.73,
+        "mean": 38.822,
+        "stdev": 1.0229,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 330.68,
+        "min": 327.53,
+        "mean": 331.738,
+        "stdev": 5.4649,
+        "n": 5
+      },
+      "emitEntryPointsSourceFromIR": {
+        "median": 281.16,
+        "min": 275.65,
+        "mean": 281.434,
+        "stdev": 5.4828,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 330.68,
+        "min": 327.53,
+        "mean": 331.738,
+        "stdev": 5.4649,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 49.56,
+        "min": 48.71,
+        "mean": 49.716,
+        "stdev": 1.0507,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 9.68,
+        "min": 9.55,
+        "mean": 9.678,
+        "stdev": 0.1184,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 9.68,
+        "min": 9.55,
+        "mean": 9.678,
+        "stdev": 0.1184,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 281.65,
+        "min": 276.13,
+        "mean": 281.91,
+        "stdev": 5.4769,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 69.56,
+        "min": 67.97,
+        "mean": 69.364,
+        "stdev": 0.8411,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 69.08,
+        "min": 67.52,
+        "mean": 70.468,
+        "stdev": 3.8245,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 255.49,
+        "min": 250.38,
+        "mean": 255.758,
+        "stdev": 5.199,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 1.42,
+        "min": 1.39,
+        "mean": 1.42,
+        "stdev": 0.0255,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 119.91,
+        "min": 114.24,
+        "mean": 119.434,
+        "stdev": 3.626,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 0.89,
+        "min": 0.83,
+        "mean": 0.888,
+        "stdev": 0.037,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.4,
+        "min": 0.38,
+        "mean": 0.392,
+        "stdev": 0.011,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.47,
+        "min": 0.46,
+        "mean": 0.474,
+        "stdev": 0.0114,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 36.2,
+        "min": 31.59,
+        "mean": 35.796,
+        "stdev": 3.3576,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.76,
+        "min": 64.17,
+        "mean": 65.5,
+        "stdev": 1.1462,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 14.62,
+        "min": 14.52,
+        "mean": 14.668,
+        "stdev": 0.184,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 13.82,
+        "min": 13.63,
+        "mean": 13.766,
+        "stdev": 0.0862,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.01,
+        "min": 0.01,
+        "mean": 0.01,
+        "stdev": 0.0,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "emitEntryPointsSourceFromIR",
+      "generateOutput",
+      "compileInner"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\emit_metal_n400 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\emit_metal_n400\\codegen.slang -target metal -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\emit_metal_n400\\out.metal",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "emit_wgsl",
+    "bucket": "codegen_source",
+    "size": 400,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 468.9344,
+      "min": 466.2374,
+      "mean": 470.3712,
+      "stdev": 4.3785,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 37.78,
+        "min": 37.59,
+        "mean": 37.96,
+        "stdev": 0.4532,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 37.78,
+        "min": 37.59,
+        "mean": 37.96,
+        "stdev": 0.4532,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 322.26,
+        "min": 319.45,
+        "mean": 322.928,
+        "stdev": 3.1075,
+        "n": 5
+      },
+      "emitEntryPointsSourceFromIR": {
+        "median": 273.2,
+        "min": 270.12,
+        "mean": 273.398,
+        "stdev": 3.0073,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 322.26,
+        "min": 319.45,
+        "mean": 322.926,
+        "stdev": 3.107,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 48.82,
+        "min": 48.45,
+        "mean": 48.88,
+        "stdev": 0.3418,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 9.63,
+        "min": 9.42,
+        "mean": 9.712,
+        "stdev": 0.349,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 9.63,
+        "min": 9.42,
+        "mean": 9.712,
+        "stdev": 0.349,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 273.69,
+        "min": 270.61,
+        "mean": 273.892,
+        "stdev": 3.0114,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 68.93,
+        "min": 67.84,
+        "mean": 68.91,
+        "stdev": 0.9916,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 68.35,
+        "min": 67.03,
+        "mean": 68.202,
+        "stdev": 0.9995,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 248.06,
+        "min": 244.7,
+        "mean": 247.858,
+        "stdev": 3.1109,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 1.52,
+        "min": 1.41,
+        "mean": 1.986,
+        "stdev": 1.1006,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 119.11,
+        "min": 117.41,
+        "mean": 119.298,
+        "stdev": 1.777,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 0.9,
+        "min": 0.86,
+        "mean": 0.89,
+        "stdev": 0.0245,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.25,
+        "min": 0.25,
+        "mean": 0.252,
+        "stdev": 0.0045,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.46,
+        "min": 0.45,
+        "mean": 0.462,
+        "stdev": 0.013,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 35.38,
+        "min": 34.57,
+        "mean": 35.306,
+        "stdev": 0.455,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.44,
+        "min": 64.63,
+        "mean": 65.542,
+        "stdev": 0.9081,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 14.46,
+        "min": 14.33,
+        "mean": 14.518,
+        "stdev": 0.1961,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 13.6,
+        "min": 13.5,
+        "mean": 13.652,
+        "stdev": 0.1392,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.01,
+        "min": 0.01,
+        "mean": 0.012,
+        "stdev": 0.0045,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "emitEntryPointsSourceFromIR",
+      "generateOutput",
+      "compileInner"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\emit_wgsl_n400 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\emit_wgsl_n400\\codegen.slang -target wgsl -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\emit_wgsl_n400\\out.wgsl",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "emit_hlsl",
+    "bucket": "codegen_source",
+    "size": 400,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 465.5288,
+      "min": 463.42,
+      "mean": 464.996,
+      "stdev": 1.0453,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 38.18,
+        "min": 37.68,
+        "mean": 38.088,
+        "stdev": 0.2326,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 38.18,
+        "min": 37.68,
+        "mean": 38.088,
+        "stdev": 0.2326,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 318.39,
+        "min": 316.88,
+        "mean": 318.974,
+        "stdev": 2.1379,
+        "n": 5
+      },
+      "emitEntryPointsSourceFromIR": {
+        "median": 269.01,
+        "min": 267.67,
+        "mean": 269.636,
+        "stdev": 2.1108,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 318.39,
+        "min": 316.88,
+        "mean": 318.972,
+        "stdev": 2.1337,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 48.74,
+        "min": 48.64,
+        "mean": 48.736,
+        "stdev": 0.068,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 9.39,
+        "min": 9.36,
+        "mean": 9.426,
+        "stdev": 0.0699,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 9.39,
+        "min": 9.36,
+        "mean": 9.424,
+        "stdev": 0.0716,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 269.51,
+        "min": 268.13,
+        "mean": 270.122,
+        "stdev": 2.1218,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 68.82,
+        "min": 67.78,
+        "mean": 68.924,
+        "stdev": 0.8593,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 67.82,
+        "min": 67.52,
+        "mean": 67.962,
+        "stdev": 0.5792,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 243.4,
+        "min": 242.15,
+        "mean": 243.94,
+        "stdev": 2.0121,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 1.42,
+        "min": 1.37,
+        "mean": 1.41,
+        "stdev": 0.0235,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 118.74,
+        "min": 114.91,
+        "mean": 118.374,
+        "stdev": 2.0463,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 0.87,
+        "min": 0.84,
+        "mean": 0.926,
+        "stdev": 0.1278,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.25,
+        "min": 0.24,
+        "mean": 0.252,
+        "stdev": 0.0084,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.46,
+        "min": 0.45,
+        "mean": 0.472,
+        "stdev": 0.0217,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 35.82,
+        "min": 31.75,
+        "mean": 34.962,
+        "stdev": 1.8817,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.34,
+        "min": 64.89,
+        "mean": 65.426,
+        "stdev": 0.4128,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 12.27,
+        "min": 12.23,
+        "mean": 12.356,
+        "stdev": 0.1519,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 13.7,
+        "min": 13.53,
+        "mean": 13.762,
+        "stdev": 0.2259,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.01,
+        "min": 0.01,
+        "mean": 0.01,
+        "stdev": 0.0,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "emitEntryPointsSourceFromIR",
+      "generateOutput",
+      "compileInner"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\emit_hlsl_n400 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\emit_hlsl_n400\\codegen.slang -target hlsl -entry computeMain -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\emit_hlsl_n400\\out.hlsl",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "emit_glsl",
+    "bucket": "codegen_source",
+    "size": 400,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 473.3799,
+      "min": 467.5706,
+      "mean": 474.1073,
+      "stdev": 5.9109,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 38.31,
+        "min": 37.93,
+        "mean": 38.24,
+        "stdev": 0.2405,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 38.31,
+        "min": 37.93,
+        "mean": 38.24,
+        "stdev": 0.2405,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 325.69,
+        "min": 322.85,
+        "mean": 326.026,
+        "stdev": 3.318,
+        "n": 5
+      },
+      "emitEntryPointsSourceFromIR": {
+        "median": 276.35,
+        "min": 273.6,
+        "mean": 276.406,
+        "stdev": 3.1995,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 325.69,
+        "min": 322.85,
+        "mean": 326.026,
+        "stdev": 3.318,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 49.18,
+        "min": 48.67,
+        "mean": 49.034,
+        "stdev": 0.3054,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 9.52,
+        "min": 9.51,
+        "mean": 9.622,
+        "stdev": 0.1499,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 9.52,
+        "min": 9.51,
+        "mean": 9.622,
+        "stdev": 0.1499,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 276.81,
+        "min": 274.06,
+        "mean": 276.872,
+        "stdev": 3.2054,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 68.63,
+        "min": 68.09,
+        "mean": 69.014,
+        "stdev": 1.1123,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 68.8,
+        "min": 67.62,
+        "mean": 68.888,
+        "stdev": 1.2048,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 250.36,
+        "min": 247.49,
+        "mean": 250.43,
+        "stdev": 3.3102,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 1.45,
+        "min": 1.34,
+        "mean": 1.46,
+        "stdev": 0.0977,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 120.45,
+        "min": 114.92,
+        "mean": 119.852,
+        "stdev": 3.3386,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 0.87,
+        "min": 0.86,
+        "mean": 0.882,
+        "stdev": 0.0335,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.25,
+        "min": 0.24,
+        "mean": 0.248,
+        "stdev": 0.0045,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.47,
+        "min": 0.46,
+        "mean": 0.466,
+        "stdev": 0.0055,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 35.21,
+        "min": 31.5,
+        "mean": 34.396,
+        "stdev": 1.911,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 66.34,
+        "min": 64.88,
+        "mean": 66.198,
+        "stdev": 1.0554,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 13.91,
+        "min": 13.73,
+        "mean": 13.86,
+        "stdev": 0.0872,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 13.64,
+        "min": 13.46,
+        "mean": 13.68,
+        "stdev": 0.1979,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.01,
+        "min": 0.01,
+        "mean": 0.01,
+        "stdev": 0.0,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "emitEntryPointsSourceFromIR",
+      "generateOutput",
+      "compileInner"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\emit_glsl_n400 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\emit_glsl_n400\\codegen.slang -target glsl -entry computeMain -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\emit_glsl_n400\\out.glsl",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "emit_cuda",
+    "bucket": "codegen_source",
+    "size": 400,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 412.9989,
+      "min": 411.8338,
+      "mean": 415.2609,
+      "stdev": 5.6066,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 38.31,
+        "min": 37.62,
+        "mean": 38.528,
+        "stdev": 0.7868,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 38.31,
+        "min": 37.62,
+        "mean": 38.528,
+        "stdev": 0.7868,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 268.48,
+        "min": 264.75,
+        "mean": 269.432,
+        "stdev": 5.0156,
+        "n": 5
+      },
+      "emitEntryPointsSourceFromIR": {
+        "median": 218.82,
+        "min": 215.91,
+        "mean": 219.46,
+        "stdev": 4.1681,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 268.48,
+        "min": 264.74,
+        "mean": 269.43,
+        "stdev": 5.018,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 48.97,
+        "min": 48.11,
+        "mean": 49.268,
+        "stdev": 0.9747,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 9.49,
+        "min": 9.27,
+        "mean": 9.52,
+        "stdev": 0.2131,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 9.49,
+        "min": 9.27,
+        "mean": 9.52,
+        "stdev": 0.2131,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 219.38,
+        "min": 216.51,
+        "mean": 220.032,
+        "stdev": 4.1695,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 191.6,
+        "min": 188.76,
+        "mean": 192.152,
+        "stdev": 3.7843,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 1.44,
+        "min": 1.4,
+        "mean": 1.738,
+        "stdev": 0.6945,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 118.12,
+        "min": 115.3,
+        "mean": 118.072,
+        "stdev": 2.6055,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 0.89,
+        "min": 0.87,
+        "mean": 0.896,
+        "stdev": 0.0279,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.26,
+        "min": 0.26,
+        "mean": 0.262,
+        "stdev": 0.0045,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.47,
+        "min": 0.46,
+        "mean": 0.466,
+        "stdev": 0.0055,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 34.82,
+        "min": 31.76,
+        "mean": 34.208,
+        "stdev": 2.0753,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.43,
+        "min": 65.24,
+        "mean": 65.734,
+        "stdev": 0.5486,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 14.67,
+        "min": 14.6,
+        "mean": 14.764,
+        "stdev": 0.211,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 13.1,
+        "min": 13.07,
+        "mean": 13.146,
+        "stdev": 0.1074,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.01,
+        "min": 0.01,
+        "mean": 0.012,
+        "stdev": 0.0045,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "emitEntryPointsSourceFromIR",
+      "generateOutput",
+      "compileInner"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\emit_cuda_n400 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\emit_cuda_n400\\codegen.slang -target cuda -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\emit_cuda_n400\\out.cu",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "codegen_dxil",
+    "bucket": "codegen_downstream",
+    "size": 400,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 539.2935,
+      "min": 533.4974,
+      "mean": 540.24,
+      "stdev": 5.0049,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 37.97,
+        "min": 37.3,
+        "mean": 37.816,
+        "stdev": 0.2962,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 37.97,
+        "min": 37.3,
+        "mean": 37.816,
+        "stdev": 0.2962,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 392.66,
+        "min": 386.81,
+        "mean": 392.504,
+        "stdev": 3.9164,
+        "n": 5
+      },
+      "emitEntryPointsSourceFromIR": {
+        "median": 272.84,
+        "min": 267.11,
+        "mean": 272.848,
+        "stdev": 3.8771,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 392.66,
+        "min": 386.81,
+        "mean": 392.504,
+        "stdev": 3.9164,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 48.63,
+        "min": 48.2,
+        "mean": 48.642,
+        "stdev": 0.2838,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 9.62,
+        "min": 9.49,
+        "mean": 9.638,
+        "stdev": 0.1076,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 9.62,
+        "min": 9.49,
+        "mean": 9.636,
+        "stdev": 0.1085,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 343.76,
+        "min": 337.75,
+        "mean": 343.744,
+        "stdev": 4.172,
+        "n": 5
+      },
+      "legalizeExistentialTypeLayout": {
+        "median": 69.64,
+        "min": 68.14,
+        "mean": 69.36,
+        "stdev": 0.935,
+        "n": 5
+      },
+      "legalizeResourceTypes": {
+        "median": 68.39,
+        "min": 66.67,
+        "mean": 68.134,
+        "stdev": 0.86,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 246.12,
+        "min": 240.52,
+        "mean": 245.886,
+        "stdev": 3.4514,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 1.57,
+        "min": 1.46,
+        "mean": 1.566,
+        "stdev": 0.094,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 118.24,
+        "min": 116.59,
+        "mean": 118.716,
+        "stdev": 1.9321,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 0.89,
+        "min": 0.86,
+        "mean": 0.89,
+        "stdev": 0.0274,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.26,
+        "min": 0.25,
+        "mean": 0.28,
+        "stdev": 0.0464,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.46,
+        "min": 0.45,
+        "mean": 0.46,
+        "stdev": 0.0071,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 34.5,
+        "min": 33.13,
+        "mean": 34.348,
+        "stdev": 0.7683,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.36,
+        "min": 65.0,
+        "mean": 66.212,
+        "stdev": 1.4098,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 12.74,
+        "min": 12.37,
+        "mean": 12.744,
+        "stdev": 0.3276,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 13.71,
+        "min": 13.43,
+        "mean": 13.69,
+        "stdev": 0.1864,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.01,
+        "min": 0.01,
+        "mean": 0.01,
+        "stdev": 0.0,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "generateOutput",
+      "compileInner"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\codegen_dxil_n400 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\codegen_dxil_n400\\codegen.slang -target dxil -profile sm_6_6 -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\codegen_dxil_n400\\out.dxil",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  },
+  {
+    "workload": "codegen_ptx",
+    "bucket": "codegen_downstream",
+    "size": 400,
+    "mode": "target",
+    "ok": true,
+    "setup_ok": true,
+    "got_timers": true,
+    "samples": 5,
+    "warmup": 1,
+    "wall_ms": {
+      "median": 579.3439,
+      "min": 566.4121,
+      "mean": 596.8196,
+      "stdev": 42.7639,
+      "n": 5
+    },
+    "rss_kb": null,
+    "timers": {
+      "SemanticChecking": {
+        "median": 38.93,
+        "min": 37.91,
+        "mean": 38.848,
+        "stdev": 1.0369,
+        "n": 5
+      },
+      "checkAllTranslationUnits": {
+        "median": 38.93,
+        "min": 37.91,
+        "mean": 38.848,
+        "stdev": 1.0369,
+        "n": 5
+      },
+      "compileInner": {
+        "median": 430.31,
+        "min": 416.99,
+        "mean": 442.428,
+        "stdev": 39.2833,
+        "n": 5
+      },
+      "emitEntryPointsSourceFromIR": {
+        "median": 224.38,
+        "min": 214.36,
+        "mean": 222.158,
+        "stdev": 5.4381,
+        "n": 5
+      },
+      "endToEndActions": {
+        "median": 430.31,
+        "min": 416.99,
+        "mean": 442.428,
+        "stdev": 39.2833,
+        "n": 5
+      },
+      "frontEndExecute": {
+        "median": 49.99,
+        "min": 48.6,
+        "mean": 49.96,
+        "stdev": 1.2603,
+        "n": 5
+      },
+      "generateIR": {
+        "median": 9.83,
+        "min": 9.41,
+        "mean": 9.898,
+        "stdev": 0.4149,
+        "n": 5
+      },
+      "generateIRForTranslationUnit": {
+        "median": 9.83,
+        "min": 9.41,
+        "mean": 9.898,
+        "stdev": 0.4149,
+        "n": 5
+      },
+      "generateOutput": {
+        "median": 378.53,
+        "min": 368.27,
+        "mean": 392.338,
+        "stdev": 38.7349,
+        "n": 5
+      },
+      "linkAndOptimizeIR": {
+        "median": 196.52,
+        "min": 187.74,
+        "mean": 194.548,
+        "stdev": 4.6739,
+        "n": 5
+      },
+      "linkIR": {
+        "median": 1.53,
+        "min": 1.43,
+        "mean": 1.5,
+        "stdev": 0.0604,
+        "n": 5
+      },
+      "loadBuiltinModule": {
+        "median": 120.06,
+        "min": 114.78,
+        "mean": 119.486,
+        "stdev": 4.4036,
+        "n": 5
+      },
+      "parseTranslationUnit": {
+        "median": 0.9,
+        "min": 0.87,
+        "mean": 0.898,
+        "stdev": 0.0164,
+        "n": 5
+      },
+      "performForceInlining": {
+        "median": 0.26,
+        "min": 0.25,
+        "mean": 0.272,
+        "stdev": 0.0277,
+        "n": 5
+      },
+      "performMandatoryEarlyInlining": {
+        "median": 0.47,
+        "min": 0.46,
+        "mean": 0.474,
+        "stdev": 0.0114,
+        "n": 5
+      },
+      "readSerializedModuleAST": {
+        "median": 33.88,
+        "min": 31.74,
+        "mean": 33.654,
+        "stdev": 1.8425,
+        "n": 5
+      },
+      "readSerializedModuleIR": {
+        "median": 65.95,
+        "min": 64.56,
+        "mean": 67.302,
+        "stdev": 3.3718,
+        "n": 5
+      },
+      "simplifyIR": {
+        "median": 15.03,
+        "min": 14.84,
+        "mean": 15.298,
+        "stdev": 0.6418,
+        "n": 5
+      },
+      "specializeModule": {
+        "median": 13.23,
+        "min": 13.02,
+        "mean": 13.274,
+        "stdev": 0.2147,
+        "n": 5
+      },
+      "unrollLoopsInModule": {
+        "median": 0.01,
+        "min": 0.01,
+        "mean": 0.01,
+        "stdev": 0.0,
+        "n": 5
+      }
+    },
+    "primary_timers": [
+      "generateOutput",
+      "compileInner"
+    ],
+    "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-perf-benchmark -I C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\codegen_ptx_n400 C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\codegen_ptx_n400\\codegen.slang -target ptx -o C:\\Users\\ci\\AppData\\Local\\Temp\\perfsuite_gen_h30jvl6r\\codegen_ptx_n400\\out.ptx",
+    "error": null,
+    "crash_codes": null,
+    "label": "2026-07-17-5c30d437f",
+    "slangc": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe"
+  }
+]
