@@ -2,7 +2,7 @@
 and destroys sessions (`--iters n` is passed by bench.py).</p><p style='color:#666;font-size:13px'><b>bucket:</b> api_overhead &nbsp;·&nbsp; <b>compile mode:</b> api &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 10</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Across releases</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="662" viewBox="0 0 1132 662" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="662" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">api_session_create — Across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">api_session_create<tspan fill="#888" font-weight="400" text-decoration="none">  0.41×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">api_session_create<tspan fill="#888" font-weight="400" text-decoration="none">  0.25×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -13,59 +13,61 @@ and destroys sessions (`--iters n` is passed by bench.py).</p><p style='color:#6
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
 <text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">25.12</text>
-<line x1="109.6" y1="516.0" x2="109.6" y2="519.0" stroke="#999"/>
-<text x="109.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 109.6 531.0)">25.13</text>
-<line x1="151.2" y1="516.0" x2="151.2" y2="519.0" stroke="#999"/>
-<text x="151.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 151.2 531.0)">25.14</text>
-<line x1="192.8" y1="516.0" x2="192.8" y2="519.0" stroke="#999"/>
-<text x="192.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 192.8 531.0)">25.15</text>
-<line x1="234.4" y1="516.0" x2="234.4" y2="519.0" stroke="#999"/>
-<text x="234.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 234.4 531.0)">25.16</text>
-<line x1="276.0" y1="516.0" x2="276.0" y2="519.0" stroke="#999"/>
-<text x="276.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 276.0 531.0)">25.17</text>
-<line x1="317.6" y1="516.0" x2="317.6" y2="519.0" stroke="#999"/>
-<text x="317.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 317.6 531.0)">25.18</text>
-<line x1="359.2" y1="516.0" x2="359.2" y2="519.0" stroke="#999"/>
-<text x="359.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 359.2 531.0)">25.19</text>
-<line x1="400.8" y1="516.0" x2="400.8" y2="519.0" stroke="#999"/>
-<text x="400.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 400.8 531.0)">25.20</text>
-<line x1="442.4" y1="516.0" x2="442.4" y2="519.0" stroke="#999"/>
-<text x="442.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 442.4 531.0)">25.21</text>
-<line x1="484.0" y1="516.0" x2="484.0" y2="519.0" stroke="#999"/>
-<text x="484.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 484.0 531.0)">25.22</text>
-<line x1="525.6" y1="516.0" x2="525.6" y2="519.0" stroke="#999"/>
-<text x="525.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 525.6 531.0)">25.23</text>
-<line x1="567.2" y1="516.0" x2="567.2" y2="519.0" stroke="#999"/>
-<text x="567.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 567.2 531.0)">25.24</text>
-<line x1="608.8" y1="516.0" x2="608.8" y2="519.0" stroke="#999"/>
-<text x="608.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 608.8 531.0)">26.1</text>
-<line x1="650.4" y1="516.0" x2="650.4" y2="519.0" stroke="#999"/>
-<text x="650.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 650.4 531.0)">26.2</text>
-<line x1="692.0" y1="516.0" x2="692.0" y2="519.0" stroke="#999"/>
-<text x="692.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 692.0 531.0)">26.3</text>
-<line x1="733.6" y1="516.0" x2="733.6" y2="519.0" stroke="#999"/>
-<text x="733.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 733.6 531.0)">26.4</text>
-<line x1="775.2" y1="516.0" x2="775.2" y2="519.0" stroke="#999"/>
-<text x="775.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 775.2 531.0)">26.5</text>
-<line x1="816.8" y1="516.0" x2="816.8" y2="519.0" stroke="#999"/>
-<text x="816.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 816.8 531.0)">26.7</text>
-<line x1="858.4" y1="516.0" x2="858.4" y2="519.0" stroke="#999"/>
-<text x="858.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 858.4 531.0)">26.8</text>
-<line x1="900.0" y1="516.0" x2="900.0" y2="519.0" stroke="#999"/>
-<text x="900.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 900.0 531.0)">26.9</text>
-<line x1="941.6" y1="516.0" x2="941.6" y2="519.0" stroke="#999"/>
-<text x="941.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 941.6 531.0)">26.10</text>
-<line x1="983.2" y1="516.0" x2="983.2" y2="519.0" stroke="#999"/>
-<text x="983.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 983.2 531.0)">26.11</text>
-<line x1="1024.8" y1="516.0" x2="1024.8" y2="519.0" stroke="#999"/>
-<text x="1024.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1024.8 531.0)">26.12</text>
-<line x1="1066.4" y1="516.0" x2="1066.4" y2="519.0" stroke="#999"/>
-<text x="1066.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1066.4 531.0)">26.13</text>
+<line x1="108.0" y1="516.0" x2="108.0" y2="519.0" stroke="#999"/>
+<text x="108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 108.0 531.0)">25.13</text>
+<line x1="148.0" y1="516.0" x2="148.0" y2="519.0" stroke="#999"/>
+<text x="148.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 148.0 531.0)">25.14</text>
+<line x1="188.0" y1="516.0" x2="188.0" y2="519.0" stroke="#999"/>
+<text x="188.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 188.0 531.0)">25.15</text>
+<line x1="228.0" y1="516.0" x2="228.0" y2="519.0" stroke="#999"/>
+<text x="228.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 228.0 531.0)">25.16</text>
+<line x1="268.0" y1="516.0" x2="268.0" y2="519.0" stroke="#999"/>
+<text x="268.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 268.0 531.0)">25.17</text>
+<line x1="308.0" y1="516.0" x2="308.0" y2="519.0" stroke="#999"/>
+<text x="308.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 308.0 531.0)">25.18</text>
+<line x1="348.0" y1="516.0" x2="348.0" y2="519.0" stroke="#999"/>
+<text x="348.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 348.0 531.0)">25.19</text>
+<line x1="388.0" y1="516.0" x2="388.0" y2="519.0" stroke="#999"/>
+<text x="388.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 388.0 531.0)">25.20</text>
+<line x1="428.0" y1="516.0" x2="428.0" y2="519.0" stroke="#999"/>
+<text x="428.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 428.0 531.0)">25.21</text>
+<line x1="468.0" y1="516.0" x2="468.0" y2="519.0" stroke="#999"/>
+<text x="468.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 468.0 531.0)">25.22</text>
+<line x1="508.0" y1="516.0" x2="508.0" y2="519.0" stroke="#999"/>
+<text x="508.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 508.0 531.0)">25.23</text>
+<line x1="548.0" y1="516.0" x2="548.0" y2="519.0" stroke="#999"/>
+<text x="548.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 548.0 531.0)">25.24</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.1</text>
+<line x1="628.0" y1="516.0" x2="628.0" y2="519.0" stroke="#999"/>
+<text x="628.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 628.0 531.0)">26.2</text>
+<line x1="668.0" y1="516.0" x2="668.0" y2="519.0" stroke="#999"/>
+<text x="668.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 668.0 531.0)">26.3</text>
+<line x1="708.0" y1="516.0" x2="708.0" y2="519.0" stroke="#999"/>
+<text x="708.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 708.0 531.0)">26.4</text>
+<line x1="748.0" y1="516.0" x2="748.0" y2="519.0" stroke="#999"/>
+<text x="748.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 748.0 531.0)">26.5</text>
+<line x1="788.0" y1="516.0" x2="788.0" y2="519.0" stroke="#999"/>
+<text x="788.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 788.0 531.0)">26.7</text>
+<line x1="828.0" y1="516.0" x2="828.0" y2="519.0" stroke="#999"/>
+<text x="828.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 828.0 531.0)">26.8</text>
+<line x1="868.0" y1="516.0" x2="868.0" y2="519.0" stroke="#999"/>
+<text x="868.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 868.0 531.0)">26.9</text>
+<line x1="908.0" y1="516.0" x2="908.0" y2="519.0" stroke="#999"/>
+<text x="908.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 908.0 531.0)">26.10</text>
+<line x1="948.0" y1="516.0" x2="948.0" y2="519.0" stroke="#999"/>
+<text x="948.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 948.0 531.0)">26.11</text>
+<line x1="988.0" y1="516.0" x2="988.0" y2="519.0" stroke="#999"/>
+<text x="988.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 988.0 531.0)">26.12</text>
+<line x1="1028.0" y1="516.0" x2="1028.0" y2="519.0" stroke="#999"/>
+<text x="1028.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1028.0 531.0)">26.13</text>
+<line x1="1068.0" y1="516.0" x2="1068.0" y2="519.0" stroke="#999"/>
+<text x="1068.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1068.0 531.0)">26.13.1</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.13.1</text>
-<polygon points="68.0,174.7 109.6,199.1 151.2,161.7 192.8,421.0 234.4,423.8 276.0,429.3 317.6,428.5 359.2,428.5 400.8,429.5 442.4,428.0 484.0,460.8 525.6,462.3 567.2,462.4 608.8,460.2 650.4,459.0 692.0,458.2 733.6,456.2 775.2,459.9 816.8,358.5 858.4,374.4 900.0,374.8 941.6,352.9 983.2,355.9 1024.8,371.7 1066.4,372.8 1108.0,372.2 1108.0,516.0 1066.4,516.0 1024.8,516.0 983.2,516.0 941.6,516.0 900.0,516.0 858.4,516.0 816.8,516.0 775.2,516.0 733.6,516.0 692.0,516.0 650.4,516.0 608.8,516.0 567.2,516.0 525.6,516.0 484.0,516.0 442.4,516.0 400.8,516.0 359.2,516.0 317.6,516.0 276.0,516.0 234.4,516.0 192.8,516.0 151.2,516.0 109.6,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_session_create — apiCreateGlobalSession</title></polygon>
-<polygon points="68.0,174.2 109.6,198.8 151.2,161.6 192.8,421.0 234.4,423.7 276.0,429.3 317.6,428.4 359.2,428.4 400.8,429.4 442.4,428.0 484.0,460.8 525.6,462.3 567.2,462.4 608.8,460.1 650.4,458.9 692.0,458.2 733.6,456.2 775.2,459.9 816.8,358.5 858.4,374.3 900.0,374.8 941.6,352.9 983.2,355.9 1024.8,371.7 1066.4,372.8 1108.0,372.2 1108.0,372.2 1066.4,372.8 1024.8,371.7 983.2,355.9 941.6,352.9 900.0,374.8 858.4,374.4 816.8,358.5 775.2,459.9 733.6,456.2 692.0,458.2 650.4,459.0 608.8,460.2 567.2,462.4 525.6,462.3 484.0,460.8 442.4,428.0 400.8,429.5 359.2,428.5 317.6,428.5 276.0,429.3 234.4,423.8 192.8,421.0 151.2,161.7 109.6,199.1 68.0,174.7" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_session_create — apiCreateSession</title></polygon>
-<polygon points="68.0,120.0 109.6,154.1 151.2,108.6 192.8,409.3 234.4,412.9 276.0,420.2 317.6,419.3 359.2,419.3 400.8,420.2 442.4,418.7 484.0,456.9 525.6,458.5 567.2,458.3 608.8,456.4 650.4,455.0 692.0,454.1 733.6,451.5 775.2,455.8 816.8,336.6 858.4,356.3 900.0,356.1 941.6,331.9 983.2,332.3 1024.8,352.1 1066.4,353.2 1108.0,352.3 1108.0,372.2 1066.4,372.8 1024.8,371.7 983.2,355.9 941.6,352.9 900.0,374.8 858.4,374.3 816.8,358.5 775.2,459.9 733.6,456.2 692.0,458.2 650.4,458.9 608.8,460.1 567.2,462.4 525.6,462.3 484.0,460.8 442.4,428.0 400.8,429.4 359.2,428.4 317.6,428.4 276.0,429.3 234.4,423.7 192.8,421.0 151.2,161.6 109.6,198.8 68.0,174.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_session_create — apiTotal (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.14</text>
+<polygon points="68.0,174.7 108.0,199.1 148.0,161.7 188.0,421.0 228.0,423.8 268.0,429.3 308.0,428.5 348.0,428.5 388.0,429.5 428.0,428.0 468.0,460.8 508.0,462.3 548.0,462.4 588.0,460.2 628.0,459.0 668.0,458.2 708.0,456.2 748.0,459.9 788.0,358.5 828.0,374.4 868.0,374.8 908.0,352.9 948.0,355.9 988.0,371.7 1028.0,372.8 1068.0,372.2 1108.0,419.8 1108.0,516.0 1068.0,516.0 1028.0,516.0 988.0,516.0 948.0,516.0 908.0,516.0 868.0,516.0 828.0,516.0 788.0,516.0 748.0,516.0 708.0,516.0 668.0,516.0 628.0,516.0 588.0,516.0 548.0,516.0 508.0,516.0 468.0,516.0 428.0,516.0 388.0,516.0 348.0,516.0 308.0,516.0 268.0,516.0 228.0,516.0 188.0,516.0 148.0,516.0 108.0,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_session_create — apiCreateGlobalSession</title></polygon>
+<polygon points="68.0,174.2 108.0,198.8 148.0,161.6 188.0,421.0 228.0,423.7 268.0,429.3 308.0,428.4 348.0,428.4 388.0,429.4 428.0,428.0 468.0,460.8 508.0,462.3 548.0,462.4 588.0,460.1 628.0,458.9 668.0,458.2 708.0,456.2 748.0,459.9 788.0,358.5 828.0,374.3 868.0,374.8 908.0,352.9 948.0,355.9 988.0,371.7 1028.0,372.8 1068.0,372.2 1108.0,419.8 1108.0,419.8 1068.0,372.2 1028.0,372.8 988.0,371.7 948.0,355.9 908.0,352.9 868.0,374.8 828.0,374.4 788.0,358.5 748.0,459.9 708.0,456.2 668.0,458.2 628.0,459.0 588.0,460.2 548.0,462.4 508.0,462.3 468.0,460.8 428.0,428.0 388.0,429.5 348.0,428.5 308.0,428.5 268.0,429.3 228.0,423.8 188.0,421.0 148.0,161.7 108.0,199.1 68.0,174.7" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_session_create — apiCreateSession</title></polygon>
+<polygon points="68.0,120.0 108.0,154.1 148.0,108.6 188.0,409.3 228.0,412.9 268.0,420.2 308.0,419.3 348.0,419.3 388.0,420.2 428.0,418.7 468.0,456.9 508.0,458.5 548.0,458.3 588.0,456.4 628.0,455.0 668.0,454.1 708.0,451.5 748.0,455.8 788.0,336.6 828.0,356.3 868.0,356.1 908.0,331.9 948.0,332.3 988.0,352.1 1028.0,353.2 1068.0,352.3 1108.0,416.4 1108.0,419.8 1068.0,372.2 1028.0,372.8 988.0,371.7 948.0,355.9 908.0,352.9 868.0,374.8 828.0,374.3 788.0,358.5 748.0,459.9 708.0,456.2 668.0,458.2 628.0,458.9 588.0,460.1 548.0,462.4 508.0,462.3 468.0,460.8 428.0,428.0 388.0,429.4 348.0,428.4 308.0,428.4 268.0,429.3 228.0,423.7 188.0,421.0 148.0,161.6 108.0,198.8 68.0,174.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_session_create — apiTotal (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">apiCreateGlobalSession</text>
@@ -90,7 +92,7 @@ and destroys sessions (`--iters n` is passed by bench.py).</p><p style='color:#6
 </svg><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="662" viewBox="0 0 1132 662" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="662" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">api_session_create — Daily tip-of-tree (last 30 days) (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">api_session_create<tspan fill="#888" font-weight="400" text-decoration="none">  0.66×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">api_session_create<tspan fill="#888" font-weight="400" text-decoration="none">  0.65×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -101,53 +103,55 @@ and destroys sessions (`--iters n` is passed by bench.py).</p><p style='color:#6
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
 <text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">06-25</text>
-<line x1="115.3" y1="516.0" x2="115.3" y2="519.0" stroke="#999"/>
-<text x="115.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 115.3 531.0)">06-26</text>
-<line x1="162.5" y1="516.0" x2="162.5" y2="519.0" stroke="#999"/>
-<text x="162.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 162.5 531.0)">06-28</text>
-<line x1="209.8" y1="516.0" x2="209.8" y2="519.0" stroke="#999"/>
-<text x="209.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 209.8 531.0)">07-01</text>
-<line x1="257.1" y1="516.0" x2="257.1" y2="519.0" stroke="#999"/>
-<text x="257.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 257.1 531.0)">07-02</text>
-<line x1="304.4" y1="516.0" x2="304.4" y2="519.0" stroke="#999"/>
-<text x="304.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 304.4 531.0)">07-03</text>
-<line x1="351.6" y1="516.0" x2="351.6" y2="519.0" stroke="#999"/>
-<text x="351.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 351.6 531.0)">07-06</text>
-<line x1="398.9" y1="516.0" x2="398.9" y2="519.0" stroke="#999"/>
-<text x="398.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 398.9 531.0)">07-07</text>
-<line x1="446.2" y1="516.0" x2="446.2" y2="519.0" stroke="#999"/>
-<text x="446.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 446.2 531.0)">07-08</text>
-<line x1="493.5" y1="516.0" x2="493.5" y2="519.0" stroke="#999"/>
-<text x="493.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 493.5 531.0)">07-09</text>
-<line x1="540.7" y1="516.0" x2="540.7" y2="519.0" stroke="#999"/>
-<text x="540.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 540.7 531.0)">07-10</text>
-<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
-<text x="588.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 588.0 531.0)">07-11</text>
-<line x1="635.3" y1="516.0" x2="635.3" y2="519.0" stroke="#999"/>
-<text x="635.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 635.3 531.0)">07-14</text>
-<line x1="682.5" y1="516.0" x2="682.5" y2="519.0" stroke="#999"/>
-<text x="682.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 682.5 531.0)">07-15</text>
-<line x1="729.8" y1="516.0" x2="729.8" y2="519.0" stroke="#999"/>
-<text x="729.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 729.8 531.0)">07-15</text>
-<line x1="777.1" y1="516.0" x2="777.1" y2="519.0" stroke="#999"/>
-<text x="777.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 777.1 531.0)">07-16</text>
-<line x1="824.4" y1="516.0" x2="824.4" y2="519.0" stroke="#999"/>
-<text x="824.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 824.4 531.0)">07-17</text>
-<line x1="871.6" y1="516.0" x2="871.6" y2="519.0" stroke="#999"/>
-<text x="871.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 871.6 531.0)">07-18</text>
-<line x1="918.9" y1="516.0" x2="918.9" y2="519.0" stroke="#999"/>
-<text x="918.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 918.9 531.0)">07-19</text>
-<line x1="966.2" y1="516.0" x2="966.2" y2="519.0" stroke="#999"/>
-<text x="966.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 966.2 531.0)">07-20</text>
-<line x1="1013.5" y1="516.0" x2="1013.5" y2="519.0" stroke="#999"/>
-<text x="1013.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1013.5 531.0)">07-21</text>
-<line x1="1060.7" y1="516.0" x2="1060.7" y2="519.0" stroke="#999"/>
-<text x="1060.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1060.7 531.0)">07-22</text>
+<line x1="113.2" y1="516.0" x2="113.2" y2="519.0" stroke="#999"/>
+<text x="113.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 113.2 531.0)">06-26</text>
+<line x1="158.4" y1="516.0" x2="158.4" y2="519.0" stroke="#999"/>
+<text x="158.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 158.4 531.0)">06-28</text>
+<line x1="203.7" y1="516.0" x2="203.7" y2="519.0" stroke="#999"/>
+<text x="203.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 203.7 531.0)">07-01</text>
+<line x1="248.9" y1="516.0" x2="248.9" y2="519.0" stroke="#999"/>
+<text x="248.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 248.9 531.0)">07-02</text>
+<line x1="294.1" y1="516.0" x2="294.1" y2="519.0" stroke="#999"/>
+<text x="294.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 294.1 531.0)">07-03</text>
+<line x1="339.3" y1="516.0" x2="339.3" y2="519.0" stroke="#999"/>
+<text x="339.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 339.3 531.0)">07-06</text>
+<line x1="384.5" y1="516.0" x2="384.5" y2="519.0" stroke="#999"/>
+<text x="384.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 384.5 531.0)">07-07</text>
+<line x1="429.7" y1="516.0" x2="429.7" y2="519.0" stroke="#999"/>
+<text x="429.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 429.7 531.0)">07-08</text>
+<line x1="475.0" y1="516.0" x2="475.0" y2="519.0" stroke="#999"/>
+<text x="475.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 475.0 531.0)">07-09</text>
+<line x1="520.2" y1="516.0" x2="520.2" y2="519.0" stroke="#999"/>
+<text x="520.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 520.2 531.0)">07-10</text>
+<line x1="565.4" y1="516.0" x2="565.4" y2="519.0" stroke="#999"/>
+<text x="565.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 565.4 531.0)">07-11</text>
+<line x1="610.6" y1="516.0" x2="610.6" y2="519.0" stroke="#999"/>
+<text x="610.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 610.6 531.0)">07-14</text>
+<line x1="655.8" y1="516.0" x2="655.8" y2="519.0" stroke="#999"/>
+<text x="655.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 655.8 531.0)">07-15</text>
+<line x1="701.0" y1="516.0" x2="701.0" y2="519.0" stroke="#999"/>
+<text x="701.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 701.0 531.0)">07-15</text>
+<line x1="746.3" y1="516.0" x2="746.3" y2="519.0" stroke="#999"/>
+<text x="746.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 746.3 531.0)">07-16</text>
+<line x1="791.5" y1="516.0" x2="791.5" y2="519.0" stroke="#999"/>
+<text x="791.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 791.5 531.0)">07-17</text>
+<line x1="836.7" y1="516.0" x2="836.7" y2="519.0" stroke="#999"/>
+<text x="836.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 836.7 531.0)">07-18</text>
+<line x1="881.9" y1="516.0" x2="881.9" y2="519.0" stroke="#999"/>
+<text x="881.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 881.9 531.0)">07-19</text>
+<line x1="927.1" y1="516.0" x2="927.1" y2="519.0" stroke="#999"/>
+<text x="927.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 927.1 531.0)">07-20</text>
+<line x1="972.3" y1="516.0" x2="972.3" y2="519.0" stroke="#999"/>
+<text x="972.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 972.3 531.0)">07-21</text>
+<line x1="1017.6" y1="516.0" x2="1017.6" y2="519.0" stroke="#999"/>
+<text x="1017.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1017.6 531.0)">07-22</text>
+<line x1="1062.8" y1="516.0" x2="1062.8" y2="519.0" stroke="#999"/>
+<text x="1062.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1062.8 531.0)">07-23</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">07-23</text>
-<polygon points="68.0,167.3 115.3,165.0 162.5,157.0 209.8,164.9 257.1,161.2 304.4,163.1 351.6,159.6 398.9,166.2 446.2,160.6 493.5,161.2 540.7,161.2 588.0,164.7 635.3,167.4 682.5,194.0 729.8,194.0 777.1,194.1 824.4,194.2 871.6,262.1 918.9,260.6 966.2,259.5 1013.5,260.4 1060.7,257.5 1108.0,261.7 1108.0,516.0 1060.7,516.0 1013.5,516.0 966.2,516.0 918.9,516.0 871.6,516.0 824.4,516.0 777.1,516.0 729.8,516.0 682.5,516.0 635.3,516.0 588.0,516.0 540.7,516.0 493.5,516.0 446.2,516.0 398.9,516.0 351.6,516.0 304.4,516.0 257.1,516.0 209.8,516.0 162.5,516.0 115.3,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_session_create — apiCreateGlobalSession</title></polygon>
-<polygon points="68.0,167.2 115.3,164.9 162.5,157.0 209.8,164.9 257.1,161.1 304.4,163.0 351.6,159.6 398.9,166.2 446.2,160.5 493.5,161.1 540.7,161.1 588.0,164.6 635.3,167.4 682.5,194.0 729.8,193.9 777.1,194.0 824.4,194.1 871.6,262.1 918.9,260.5 966.2,259.4 1013.5,260.4 1060.7,257.5 1108.0,261.7 1108.0,261.7 1060.7,257.5 1013.5,260.4 966.2,259.5 918.9,260.6 871.6,262.1 824.4,194.2 777.1,194.1 729.8,194.0 682.5,194.0 635.3,167.4 588.0,164.7 540.7,161.2 493.5,161.2 446.2,160.6 398.9,166.2 351.6,159.6 304.4,163.1 257.1,161.2 209.8,164.9 162.5,157.0 115.3,165.0 68.0,167.3" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_session_create — apiCreateSession</title></polygon>
-<polygon points="68.0,118.2 115.3,116.2 162.5,108.9 209.8,115.7 257.1,111.5 304.4,114.8 351.6,111.3 398.9,117.4 446.2,109.5 493.5,108.6 540.7,112.4 588.0,116.7 635.3,119.1 682.5,161.5 729.8,162.4 777.1,160.8 824.4,163.8 871.6,253.7 918.9,251.9 966.2,251.4 1013.5,252.5 1060.7,249.5 1108.0,253.4 1108.0,261.7 1060.7,257.5 1013.5,260.4 966.2,259.4 918.9,260.5 871.6,262.1 824.4,194.1 777.1,194.0 729.8,193.9 682.5,194.0 635.3,167.4 588.0,164.6 540.7,161.1 493.5,161.1 446.2,160.5 398.9,166.2 351.6,159.6 304.4,163.0 257.1,161.1 209.8,164.9 162.5,157.0 115.3,164.9 68.0,167.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_session_create — apiTotal (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">07-24</text>
+<polygon points="68.0,167.3 113.2,165.0 158.4,157.0 203.7,164.9 248.9,161.2 294.1,163.1 339.3,159.6 384.5,166.2 429.7,160.6 475.0,161.2 520.2,161.2 565.4,164.7 610.6,167.4 655.8,194.0 701.0,194.0 746.3,194.1 791.5,194.2 836.7,262.1 881.9,260.6 927.1,259.5 972.3,260.4 1017.6,257.5 1062.8,261.7 1108.0,264.4 1108.0,516.0 1062.8,516.0 1017.6,516.0 972.3,516.0 927.1,516.0 881.9,516.0 836.7,516.0 791.5,516.0 746.3,516.0 701.0,516.0 655.8,516.0 610.6,516.0 565.4,516.0 520.2,516.0 475.0,516.0 429.7,516.0 384.5,516.0 339.3,516.0 294.1,516.0 248.9,516.0 203.7,516.0 158.4,516.0 113.2,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_session_create — apiCreateGlobalSession</title></polygon>
+<polygon points="68.0,167.2 113.2,164.9 158.4,157.0 203.7,164.9 248.9,161.1 294.1,163.0 339.3,159.6 384.5,166.2 429.7,160.5 475.0,161.1 520.2,161.1 565.4,164.6 610.6,167.4 655.8,194.0 701.0,193.9 746.3,194.0 791.5,194.1 836.7,262.1 881.9,260.5 927.1,259.4 972.3,260.4 1017.6,257.5 1062.8,261.7 1108.0,264.4 1108.0,264.4 1062.8,261.7 1017.6,257.5 972.3,260.4 927.1,259.5 881.9,260.6 836.7,262.1 791.5,194.2 746.3,194.1 701.0,194.0 655.8,194.0 610.6,167.4 565.4,164.7 520.2,161.2 475.0,161.2 429.7,160.6 384.5,166.2 339.3,159.6 294.1,163.1 248.9,161.2 203.7,164.9 158.4,157.0 113.2,165.0 68.0,167.3" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_session_create — apiCreateSession</title></polygon>
+<polygon points="68.0,118.2 113.2,116.2 158.4,108.9 203.7,115.7 248.9,111.5 294.1,114.8 339.3,111.3 384.5,117.4 429.7,109.5 475.0,108.6 520.2,112.4 565.4,116.7 610.6,119.1 655.8,161.5 701.0,162.4 746.3,160.8 791.5,163.8 836.7,253.7 881.9,251.9 927.1,251.4 972.3,252.5 1017.6,249.5 1062.8,253.4 1108.0,256.3 1108.0,264.4 1062.8,261.7 1017.6,257.5 972.3,260.4 927.1,259.4 881.9,260.5 836.7,262.1 791.5,194.1 746.3,194.0 701.0,193.9 655.8,194.0 610.6,167.4 565.4,164.6 520.2,161.1 475.0,161.1 429.7,160.5 384.5,166.2 339.3,159.6 294.1,163.0 248.9,161.1 203.7,164.9 158.4,157.0 113.2,164.9 68.0,167.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>api_session_create — apiTotal (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">apiCreateGlobalSession</text>
@@ -169,4 +173,4 @@ and destroys sessions (`--iters n` is passed by bench.py).</p><p style='color:#6
 <text x="28" y="632" fill="#222">apiReflection</text>
 <rect x="289" y="622" width="12" height="12" fill="#969696"/>
 <text x="305" y="632" fill="#222">apiTotal (self)</text>
-</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Daily window progress</h2><p style='font-size:15px'>Overall <code>apiTotal</code>: 1287.5 &rarr; 849.9 ms &nbsp;<b style='color:#1e8449'>-34.0%</b><span style='color:#666;font-size:13px'> &nbsp;(2026-06-25 ed15ffc94 &rarr; 2026-07-23 56eb1aa08)</span></p><p style='color:#666;font-size:13px;margin:10px 0 4px'>Contributors — the mutually-exclusive phase buckets (named leaves + <code>(self)</code> residuals) that tile apiTotal; the pp column sums to the overall %. Buckets moving the total by &ge;0.2% are listed, the rest fold into the remainder row. Below them, every other reported counter (nested/overlapping, e.g. serialized-module reads — own change only):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>counter</th><th>&Delta; ms</th><th>own %</th><th>of total</th></tr><tr><td>apiCreateGlobalSession</td><td align=right>-305.7</td><td align=right>-27.1%</td><td align=right>-23.7pp</td></tr><tr><td>apiTotal (self)</td><td align=right>-131.8</td><td align=right>-83.1%</td><td align=right>-10.2pp</td></tr><tr><td>(remaining 1 buckets)</td><td align=right>-0.1</td><td align=right>&ndash;</td><td align=right>-0.0pp</td></tr></table><p style='color:#666;font-size:13px;margin:14px 0 4px'>Largest day steps (&ge;5% of the previous day, both directions; bisect with <code>git log &lt;c0&gt;..&lt;c1&gt; -- source/</code>):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>boundary</th><th>% vs prev day</th><th style='text-align:left'>commits</th><th style='text-align:left'>top buckets (own %)</th></tr><tr><td>2026-07-17 &rarr; 2026-07-18</td><td align=right style='color:#1e8449;font-weight:600'>-25.5%</td><td><code>5c30d437f..aaa07fe29</code></td><td>apiCreateGlobalSession -21%, apiTotal (self) -72%</td></tr><tr><td>2026-07-14 &rarr; 2026-07-15</td><td align=right style='color:#1e8449;font-weight:600'>-10.9%</td><td><code>a9c6ff78e..336dd0f49</code></td><td>apiCreateGlobalSession -8%, apiTotal (self) -35%</td></tr></table><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 10); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p></body>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Daily window progress</h2><p style='font-size:15px'>Overall <code>apiTotal</code>: 1287.5 &rarr; 840.6 ms &nbsp;<b style='color:#1e8449'>-34.7%</b><span style='color:#666;font-size:13px'> &nbsp;(2026-06-25 ed15ffc94 &rarr; 2026-07-24 72985f871)</span></p><p style='color:#666;font-size:13px;margin:10px 0 4px'>Contributors — the mutually-exclusive phase buckets (named leaves + <code>(self)</code> residuals) that tile apiTotal; the pp column sums to the overall %. Buckets moving the total by &ge;0.2% are listed, the rest fold into the remainder row. Below them, every other reported counter (nested/overlapping, e.g. serialized-module reads — own change only):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>counter</th><th>&Delta; ms</th><th>own %</th><th>of total</th></tr><tr><td>apiCreateGlobalSession</td><td align=right>-314.5</td><td align=right>-27.9%</td><td align=right>-24.4pp</td></tr><tr><td>apiTotal (self)</td><td align=right>-132.4</td><td align=right>-83.5%</td><td align=right>-10.3pp</td></tr><tr><td>(remaining 1 buckets)</td><td align=right>-0.1</td><td align=right>&ndash;</td><td align=right>-0.0pp</td></tr></table><p style='color:#666;font-size:13px;margin:14px 0 4px'>Largest day steps (&ge;5% of the previous day, both directions; bisect with <code>git log &lt;c0&gt;..&lt;c1&gt; -- source/</code>):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>boundary</th><th>% vs prev day</th><th style='text-align:left'>commits</th><th style='text-align:left'>top buckets (own %)</th></tr><tr><td>2026-07-17 &rarr; 2026-07-18</td><td align=right style='color:#1e8449;font-weight:600'>-25.5%</td><td><code>5c30d437f..aaa07fe29</code></td><td>apiCreateGlobalSession -21%, apiTotal (self) -72%</td></tr><tr><td>2026-07-14 &rarr; 2026-07-15</td><td align=right style='color:#1e8449;font-weight:600'>-10.9%</td><td><code>a9c6ff78e..336dd0f49</code></td><td>apiCreateGlobalSession -8%, apiTotal (self) -35%</td></tr></table><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 10); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p></body>
