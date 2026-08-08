@@ -1,4 +1,12 @@
-<!doctype html><meta charset=utf-8><title>rt_renderer_specialize — phase breakdown</title><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; back</a></p><h1 style='font-size:21px;margin:0 0 6px'>rt_renderer_specialize</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>A renderer-shaped generated corpus: utility + scene + material layers
+<!doctype html><meta charset=utf-8><title>rt_renderer_specialize — phase breakdown</title><style>
+.cbox{position:relative}
+.cbox>button.copy{position:absolute;top:8px;right:8px;z-index:1;
+  font:11px/1 -apple-system,Segoe UI,Roboto,sans-serif;padding:5px 9px;
+  color:#24292f;background:#fff;border:1px solid #d0d7de;border-radius:5px;
+  cursor:pointer;opacity:.75}
+.cbox>button.copy:hover{opacity:1;background:#f3f4f6}
+.cbox>button.copy[data-done]{color:#1a7f37;border-color:#1a7f37}
+</style><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; back</a></p><h1 style='font-size:21px;margin:0 0 6px'>rt_renderer_specialize</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>A renderer-shaped generated corpus: utility + scene + material layers
 behind IMaterial/IBSDF interfaces (n = material count), a raygen/
 closesthit/miss entry-point root importing the whole library, and a
 generic compute root for per-material specialization. Programs here are
@@ -113,73 +121,73 @@ api_many_kernels' many×tiny per-compile-overhead probes.</p><p style='color:#66
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">07-08</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">07-09</text>
 <line x1="103.9" y1="516.0" x2="103.9" y2="519.0" stroke="#999"/>
-<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">07-09</text>
+<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">07-10</text>
 <line x1="139.7" y1="516.0" x2="139.7" y2="519.0" stroke="#999"/>
-<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">07-10</text>
+<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">07-11</text>
 <line x1="175.6" y1="516.0" x2="175.6" y2="519.0" stroke="#999"/>
-<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">07-11</text>
+<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">07-14</text>
 <line x1="211.4" y1="516.0" x2="211.4" y2="519.0" stroke="#999"/>
-<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">07-14</text>
+<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">07-15</text>
 <line x1="247.3" y1="516.0" x2="247.3" y2="519.0" stroke="#999"/>
 <text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">07-15</text>
 <line x1="283.2" y1="516.0" x2="283.2" y2="519.0" stroke="#999"/>
-<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">07-15</text>
+<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">07-16</text>
 <line x1="319.0" y1="516.0" x2="319.0" y2="519.0" stroke="#999"/>
-<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">07-16</text>
+<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">07-17</text>
 <line x1="354.9" y1="516.0" x2="354.9" y2="519.0" stroke="#999"/>
-<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">07-17</text>
+<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">07-18</text>
 <line x1="390.8" y1="516.0" x2="390.8" y2="519.0" stroke="#999"/>
-<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">07-18</text>
+<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">07-19</text>
 <line x1="426.6" y1="516.0" x2="426.6" y2="519.0" stroke="#999"/>
-<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">07-19</text>
+<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">07-20</text>
 <line x1="462.5" y1="516.0" x2="462.5" y2="519.0" stroke="#999"/>
-<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">07-20</text>
+<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">07-21</text>
 <line x1="498.3" y1="516.0" x2="498.3" y2="519.0" stroke="#999"/>
-<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">07-21</text>
+<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">07-22</text>
 <line x1="534.2" y1="516.0" x2="534.2" y2="519.0" stroke="#999"/>
-<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">07-22</text>
+<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">07-23</text>
 <line x1="570.1" y1="516.0" x2="570.1" y2="519.0" stroke="#999"/>
-<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">07-23</text>
+<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">07-24</text>
 <line x1="605.9" y1="516.0" x2="605.9" y2="519.0" stroke="#999"/>
-<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">07-24</text>
+<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">07-25</text>
 <line x1="641.8" y1="516.0" x2="641.8" y2="519.0" stroke="#999"/>
-<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">07-25</text>
+<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">07-26</text>
 <line x1="677.7" y1="516.0" x2="677.7" y2="519.0" stroke="#999"/>
-<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">07-26</text>
+<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">07-27</text>
 <line x1="713.5" y1="516.0" x2="713.5" y2="519.0" stroke="#999"/>
-<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">07-27</text>
+<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">07-28</text>
 <line x1="749.4" y1="516.0" x2="749.4" y2="519.0" stroke="#999"/>
-<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">07-28</text>
+<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">07-29</text>
 <line x1="785.2" y1="516.0" x2="785.2" y2="519.0" stroke="#999"/>
-<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">07-29</text>
+<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">07-30</text>
 <line x1="821.1" y1="516.0" x2="821.1" y2="519.0" stroke="#999"/>
-<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">07-30</text>
+<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">07-31</text>
 <line x1="857.0" y1="516.0" x2="857.0" y2="519.0" stroke="#999"/>
-<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">07-31</text>
+<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">08-01</text>
 <line x1="892.8" y1="516.0" x2="892.8" y2="519.0" stroke="#999"/>
-<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">08-01</text>
+<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">08-02</text>
 <line x1="928.7" y1="516.0" x2="928.7" y2="519.0" stroke="#999"/>
-<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">08-02</text>
+<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">08-03</text>
 <line x1="964.6" y1="516.0" x2="964.6" y2="519.0" stroke="#999"/>
-<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">08-03</text>
+<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">08-04</text>
 <line x1="1000.4" y1="516.0" x2="1000.4" y2="519.0" stroke="#999"/>
-<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">08-04</text>
+<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">08-05</text>
 <line x1="1036.3" y1="516.0" x2="1036.3" y2="519.0" stroke="#999"/>
-<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">08-05</text>
+<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">08-06</text>
 <line x1="1072.1" y1="516.0" x2="1072.1" y2="519.0" stroke="#999"/>
-<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">08-06</text>
+<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">08-07</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">08-07</text>
-<polygon points="68.0,487.5 103.9,486.8 139.7,487.6 175.6,487.8 211.4,488.0 247.3,488.2 283.2,488.4 319.0,488.0 354.9,488.2 390.8,491.6 426.6,491.2 462.5,491.6 498.3,491.3 534.2,491.1 570.1,491.6 605.9,491.2 641.8,492.4 677.7,491.8 713.5,492.3 749.4,491.2 785.2,492.5 821.1,491.4 857.0,490.9 892.8,491.4 928.7,491.6 964.6,491.5 1000.4,491.6 1036.3,491.7 1072.1,491.8 1108.0,491.9 1108.0,516.0 1072.1,516.0 1036.3,516.0 1000.4,516.0 964.6,516.0 928.7,516.0 892.8,516.0 857.0,516.0 821.1,516.0 785.2,516.0 749.4,516.0 713.5,516.0 677.7,516.0 641.8,516.0 605.9,516.0 570.1,516.0 534.2,516.0 498.3,516.0 462.5,516.0 426.6,516.0 390.8,516.0 354.9,516.0 319.0,516.0 283.2,516.0 247.3,516.0 211.4,516.0 175.6,516.0 139.7,516.0 103.9,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>rt_renderer_specialize — apiCreateGlobalSession</title></polygon>
-<polygon points="68.0,487.5 103.9,486.8 139.7,487.6 175.6,487.8 211.4,488.0 247.3,488.2 283.2,488.4 319.0,487.9 354.9,488.2 390.8,491.6 426.6,491.2 462.5,491.5 498.3,491.2 534.2,491.1 570.1,491.6 605.9,491.2 641.8,492.4 677.7,491.8 713.5,492.3 749.4,491.2 785.2,492.5 821.1,491.3 857.0,490.9 892.8,491.4 928.7,491.6 964.6,491.5 1000.4,491.5 1036.3,491.7 1072.1,491.8 1108.0,491.9 1108.0,491.9 1072.1,491.8 1036.3,491.7 1000.4,491.6 964.6,491.5 928.7,491.6 892.8,491.4 857.0,490.9 821.1,491.4 785.2,492.5 749.4,491.2 713.5,492.3 677.7,491.8 641.8,492.4 605.9,491.2 570.1,491.6 534.2,491.1 498.3,491.3 462.5,491.6 426.6,491.2 390.8,491.6 354.9,488.2 319.0,488.0 283.2,488.4 247.3,488.2 211.4,488.0 175.6,487.8 139.7,487.6 103.9,486.8 68.0,487.5" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>rt_renderer_specialize — apiCreateSession</title></polygon>
-<polygon points="68.0,345.1 103.9,342.7 139.7,342.2 175.6,340.4 211.4,343.2 247.3,350.0 283.2,349.6 319.0,325.8 354.9,327.0 390.8,351.9 426.6,350.6 462.5,351.1 498.3,348.9 534.2,349.8 570.1,350.9 605.9,351.8 641.8,350.3 677.7,351.0 713.5,353.0 749.4,349.6 785.2,352.9 821.1,351.2 857.0,350.7 892.8,351.4 928.7,351.6 964.6,350.3 1000.4,352.7 1036.3,350.6 1072.1,351.1 1108.0,351.6 1108.0,491.9 1072.1,491.8 1036.3,491.7 1000.4,491.5 964.6,491.5 928.7,491.6 892.8,491.4 857.0,490.9 821.1,491.3 785.2,492.5 749.4,491.2 713.5,492.3 677.7,491.8 641.8,492.4 605.9,491.2 570.1,491.6 534.2,491.1 498.3,491.2 462.5,491.5 426.6,491.2 390.8,491.6 354.9,488.2 319.0,487.9 283.2,488.4 247.3,488.2 211.4,488.0 175.6,487.8 139.7,487.6 103.9,486.8 68.0,487.5" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>rt_renderer_specialize — apiLoadModule</title></polygon>
-<polygon points="68.0,344.9 103.9,342.5 139.7,342.0 175.6,340.1 211.4,343.0 247.3,349.7 283.2,349.3 319.0,325.6 354.9,326.7 390.8,351.7 426.6,350.3 462.5,350.9 498.3,348.6 534.2,349.6 570.1,350.6 605.9,351.5 641.8,350.0 677.7,350.7 713.5,352.7 749.4,349.3 785.2,352.6 821.1,350.9 857.0,350.4 892.8,351.1 928.7,351.4 964.6,350.1 1000.4,352.5 1036.3,350.3 1072.1,350.9 1108.0,351.3 1108.0,351.6 1072.1,351.1 1036.3,350.6 1000.4,352.7 964.6,350.3 928.7,351.6 892.8,351.4 857.0,350.7 821.1,351.2 785.2,352.9 749.4,349.6 713.5,353.0 677.7,351.0 641.8,350.3 605.9,351.8 570.1,350.9 534.2,349.8 498.3,348.9 462.5,351.1 426.6,350.6 390.8,351.9 354.9,327.0 319.0,325.8 283.2,349.6 247.3,350.0 211.4,343.2 175.6,340.4 139.7,342.2 103.9,342.7 68.0,345.1" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>rt_renderer_specialize — apiComposite</title></polygon>
-<polygon points="68.0,339.8 103.9,337.3 139.7,336.9 175.6,334.9 211.4,337.9 247.3,345.0 283.2,344.5 319.0,320.6 354.9,321.8 390.8,348.0 426.6,346.7 462.5,347.2 498.3,344.9 534.2,345.9 570.1,347.0 605.9,347.9 641.8,346.5 677.7,347.0 713.5,349.1 749.4,345.8 785.2,349.0 821.1,347.3 857.0,346.8 892.8,347.5 928.7,347.7 964.6,346.5 1000.4,348.9 1036.3,346.7 1072.1,347.3 1108.0,347.7 1108.0,351.3 1072.1,350.9 1036.3,350.3 1000.4,352.5 964.6,350.1 928.7,351.4 892.8,351.1 857.0,350.4 821.1,350.9 785.2,352.6 749.4,349.3 713.5,352.7 677.7,350.7 641.8,350.0 605.9,351.5 570.1,350.6 534.2,349.6 498.3,348.6 462.5,350.9 426.6,350.3 390.8,351.7 354.9,326.7 319.0,325.6 283.2,349.3 247.3,349.7 211.4,343.0 175.6,340.1 139.7,342.0 103.9,342.5 68.0,344.9" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>rt_renderer_specialize — apiSpecialize</title></polygon>
-<polygon points="68.0,338.8 103.9,336.2 139.7,336.0 175.6,333.8 211.4,336.9 247.3,343.8 283.2,343.3 319.0,319.4 354.9,320.5 390.8,346.8 426.6,345.5 462.5,346.0 498.3,343.7 534.2,344.6 570.1,345.8 605.9,346.6 641.8,345.1 677.7,345.7 713.5,347.8 749.4,344.5 785.2,347.7 821.1,346.0 857.0,345.4 892.8,346.3 928.7,346.6 964.6,345.2 1000.4,347.7 1036.3,345.4 1072.1,346.0 1108.0,346.5 1108.0,347.7 1072.1,347.3 1036.3,346.7 1000.4,348.9 964.6,346.5 928.7,347.7 892.8,347.5 857.0,346.8 821.1,347.3 785.2,349.0 749.4,345.8 713.5,349.1 677.7,347.0 641.8,346.5 605.9,347.9 570.1,347.0 534.2,345.9 498.3,344.9 462.5,347.2 426.6,346.7 390.8,348.0 354.9,321.8 319.0,320.6 283.2,344.5 247.3,345.0 211.4,337.9 175.6,334.9 139.7,336.9 103.9,337.3 68.0,339.8" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>rt_renderer_specialize — apiLink</title></polygon>
-<polygon points="68.0,111.9 103.9,108.8 139.7,114.3 175.6,119.1 211.4,120.4 247.3,152.1 283.2,150.7 319.0,128.1 354.9,128.3 390.8,181.8 426.6,182.0 462.5,181.0 498.3,176.6 534.2,177.3 570.1,182.1 605.9,183.5 641.8,180.7 677.7,181.6 713.5,184.8 749.4,180.2 785.2,184.5 821.1,182.5 857.0,181.1 892.8,180.1 928.7,183.4 964.6,179.8 1000.4,184.4 1036.3,187.9 1072.1,188.0 1108.0,188.5 1108.0,346.5 1072.1,346.0 1036.3,345.4 1000.4,347.7 964.6,345.2 928.7,346.6 892.8,346.3 857.0,345.4 821.1,346.0 785.2,347.7 749.4,344.5 713.5,347.8 677.7,345.7 641.8,345.1 605.9,346.6 570.1,345.8 534.2,344.6 498.3,343.7 462.5,346.0 426.6,345.5 390.8,346.8 354.9,320.5 319.0,319.4 283.2,343.3 247.3,343.8 211.4,336.9 175.6,333.8 139.7,336.0 103.9,336.2 68.0,338.8" fill="#fd8d3c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>rt_renderer_specialize — apiGetCode</title></polygon>
-<polygon points="68.0,111.3 103.9,108.6 139.7,113.6 175.6,117.7 211.4,119.9 247.3,151.9 283.2,150.3 319.0,127.8 354.9,128.0 390.8,180.8 426.6,181.6 462.5,180.3 498.3,176.2 534.2,176.9 570.1,182.1 605.9,182.7 641.8,180.7 677.7,181.6 713.5,184.8 749.4,178.7 785.2,183.4 821.1,182.5 857.0,180.9 892.8,179.4 928.7,182.8 964.6,178.9 1000.4,183.6 1036.3,187.9 1072.1,187.0 1108.0,188.5 1108.0,188.5 1072.1,188.0 1036.3,187.9 1000.4,184.4 964.6,179.8 928.7,183.4 892.8,180.1 857.0,181.1 821.1,182.5 785.2,184.5 749.4,180.2 713.5,184.8 677.7,181.6 641.8,180.7 605.9,183.5 570.1,182.1 534.2,177.3 498.3,176.6 462.5,181.0 426.6,182.0 390.8,181.8 354.9,128.3 319.0,128.1 283.2,150.7 247.3,152.1 211.4,120.4 175.6,119.1 139.7,114.3 103.9,108.8 68.0,111.9" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>rt_renderer_specialize — apiTotal (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">08-08</text>
+<polygon points="68.0,486.8 103.9,487.6 139.7,487.8 175.6,488.0 211.4,488.2 247.3,488.4 283.2,488.0 319.0,488.2 354.9,491.6 390.8,491.2 426.6,491.6 462.5,491.3 498.3,491.1 534.2,491.6 570.1,491.2 605.9,492.4 641.8,491.8 677.7,492.3 713.5,491.2 749.4,492.5 785.2,491.4 821.1,490.9 857.0,491.4 892.8,491.6 928.7,491.5 964.6,491.6 1000.4,491.7 1036.3,491.8 1072.1,491.9 1108.0,491.6 1108.0,516.0 1072.1,516.0 1036.3,516.0 1000.4,516.0 964.6,516.0 928.7,516.0 892.8,516.0 857.0,516.0 821.1,516.0 785.2,516.0 749.4,516.0 713.5,516.0 677.7,516.0 641.8,516.0 605.9,516.0 570.1,516.0 534.2,516.0 498.3,516.0 462.5,516.0 426.6,516.0 390.8,516.0 354.9,516.0 319.0,516.0 283.2,516.0 247.3,516.0 211.4,516.0 175.6,516.0 139.7,516.0 103.9,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>rt_renderer_specialize — apiCreateGlobalSession</title></polygon>
+<polygon points="68.0,486.8 103.9,487.6 139.7,487.8 175.6,488.0 211.4,488.2 247.3,488.4 283.2,487.9 319.0,488.2 354.9,491.6 390.8,491.2 426.6,491.5 462.5,491.2 498.3,491.1 534.2,491.6 570.1,491.2 605.9,492.4 641.8,491.8 677.7,492.3 713.5,491.2 749.4,492.5 785.2,491.3 821.1,490.9 857.0,491.4 892.8,491.6 928.7,491.5 964.6,491.5 1000.4,491.7 1036.3,491.8 1072.1,491.9 1108.0,491.6 1108.0,491.6 1072.1,491.9 1036.3,491.8 1000.4,491.7 964.6,491.6 928.7,491.5 892.8,491.6 857.0,491.4 821.1,490.9 785.2,491.4 749.4,492.5 713.5,491.2 677.7,492.3 641.8,491.8 605.9,492.4 570.1,491.2 534.2,491.6 498.3,491.1 462.5,491.3 426.6,491.6 390.8,491.2 354.9,491.6 319.0,488.2 283.2,488.0 247.3,488.4 211.4,488.2 175.6,488.0 139.7,487.8 103.9,487.6 68.0,486.8" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>rt_renderer_specialize — apiCreateSession</title></polygon>
+<polygon points="68.0,342.7 103.9,342.2 139.7,340.4 175.6,343.2 211.4,350.0 247.3,349.6 283.2,325.8 319.0,327.0 354.9,351.9 390.8,350.6 426.6,351.1 462.5,348.9 498.3,349.8 534.2,350.9 570.1,351.8 605.9,350.3 641.8,351.0 677.7,353.0 713.5,349.6 749.4,352.9 785.2,351.2 821.1,350.7 857.0,351.4 892.8,351.6 928.7,350.3 964.6,352.7 1000.4,350.6 1036.3,351.1 1072.1,351.6 1108.0,351.5 1108.0,491.6 1072.1,491.9 1036.3,491.8 1000.4,491.7 964.6,491.5 928.7,491.5 892.8,491.6 857.0,491.4 821.1,490.9 785.2,491.3 749.4,492.5 713.5,491.2 677.7,492.3 641.8,491.8 605.9,492.4 570.1,491.2 534.2,491.6 498.3,491.1 462.5,491.2 426.6,491.5 390.8,491.2 354.9,491.6 319.0,488.2 283.2,487.9 247.3,488.4 211.4,488.2 175.6,488.0 139.7,487.8 103.9,487.6 68.0,486.8" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>rt_renderer_specialize — apiLoadModule</title></polygon>
+<polygon points="68.0,342.5 103.9,342.0 139.7,340.1 175.6,343.0 211.4,349.7 247.3,349.3 283.2,325.6 319.0,326.7 354.9,351.7 390.8,350.3 426.6,350.9 462.5,348.6 498.3,349.6 534.2,350.6 570.1,351.5 605.9,350.0 641.8,350.7 677.7,352.7 713.5,349.3 749.4,352.6 785.2,350.9 821.1,350.4 857.0,351.1 892.8,351.4 928.7,350.1 964.6,352.5 1000.4,350.3 1036.3,350.9 1072.1,351.3 1108.0,351.2 1108.0,351.5 1072.1,351.6 1036.3,351.1 1000.4,350.6 964.6,352.7 928.7,350.3 892.8,351.6 857.0,351.4 821.1,350.7 785.2,351.2 749.4,352.9 713.5,349.6 677.7,353.0 641.8,351.0 605.9,350.3 570.1,351.8 534.2,350.9 498.3,349.8 462.5,348.9 426.6,351.1 390.8,350.6 354.9,351.9 319.0,327.0 283.2,325.8 247.3,349.6 211.4,350.0 175.6,343.2 139.7,340.4 103.9,342.2 68.0,342.7" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>rt_renderer_specialize — apiComposite</title></polygon>
+<polygon points="68.0,337.3 103.9,336.9 139.7,334.9 175.6,337.9 211.4,345.0 247.3,344.5 283.2,320.6 319.0,321.8 354.9,348.0 390.8,346.7 426.6,347.2 462.5,344.9 498.3,345.9 534.2,347.0 570.1,347.9 605.9,346.5 641.8,347.0 677.7,349.1 713.5,345.8 749.4,349.0 785.2,347.3 821.1,346.8 857.0,347.5 892.8,347.7 928.7,346.5 964.6,348.9 1000.4,346.7 1036.3,347.3 1072.1,347.7 1108.0,347.5 1108.0,351.2 1072.1,351.3 1036.3,350.9 1000.4,350.3 964.6,352.5 928.7,350.1 892.8,351.4 857.0,351.1 821.1,350.4 785.2,350.9 749.4,352.6 713.5,349.3 677.7,352.7 641.8,350.7 605.9,350.0 570.1,351.5 534.2,350.6 498.3,349.6 462.5,348.6 426.6,350.9 390.8,350.3 354.9,351.7 319.0,326.7 283.2,325.6 247.3,349.3 211.4,349.7 175.6,343.0 139.7,340.1 103.9,342.0 68.0,342.5" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>rt_renderer_specialize — apiSpecialize</title></polygon>
+<polygon points="68.0,336.2 103.9,336.0 139.7,333.8 175.6,336.9 211.4,343.8 247.3,343.3 283.2,319.4 319.0,320.5 354.9,346.8 390.8,345.5 426.6,346.0 462.5,343.7 498.3,344.6 534.2,345.8 570.1,346.6 605.9,345.1 641.8,345.7 677.7,347.8 713.5,344.5 749.4,347.7 785.2,346.0 821.1,345.4 857.0,346.3 892.8,346.6 928.7,345.2 964.6,347.7 1000.4,345.4 1036.3,346.0 1072.1,346.5 1108.0,346.2 1108.0,347.5 1072.1,347.7 1036.3,347.3 1000.4,346.7 964.6,348.9 928.7,346.5 892.8,347.7 857.0,347.5 821.1,346.8 785.2,347.3 749.4,349.0 713.5,345.8 677.7,349.1 641.8,347.0 605.9,346.5 570.1,347.9 534.2,347.0 498.3,345.9 462.5,344.9 426.6,347.2 390.8,346.7 354.9,348.0 319.0,321.8 283.2,320.6 247.3,344.5 211.4,345.0 175.6,337.9 139.7,334.9 103.9,336.9 68.0,337.3" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>rt_renderer_specialize — apiLink</title></polygon>
+<polygon points="68.0,108.8 103.9,114.3 139.7,119.1 175.6,120.4 211.4,152.1 247.3,150.7 283.2,128.1 319.0,128.3 354.9,181.8 390.8,182.0 426.6,181.0 462.5,176.6 498.3,177.3 534.2,182.1 570.1,183.5 605.9,180.7 641.8,181.6 677.7,184.8 713.5,180.2 749.4,184.5 785.2,182.5 821.1,181.1 857.0,180.1 892.8,183.4 928.7,179.8 964.6,184.4 1000.4,187.9 1036.3,188.0 1072.1,188.5 1108.0,187.9 1108.0,346.2 1072.1,346.5 1036.3,346.0 1000.4,345.4 964.6,347.7 928.7,345.2 892.8,346.6 857.0,346.3 821.1,345.4 785.2,346.0 749.4,347.7 713.5,344.5 677.7,347.8 641.8,345.7 605.9,345.1 570.1,346.6 534.2,345.8 498.3,344.6 462.5,343.7 426.6,346.0 390.8,345.5 354.9,346.8 319.0,320.5 283.2,319.4 247.3,343.3 211.4,343.8 175.6,336.9 139.7,333.8 103.9,336.0 68.0,336.2" fill="#fd8d3c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>rt_renderer_specialize — apiGetCode</title></polygon>
+<polygon points="68.0,108.6 103.9,113.6 139.7,117.7 175.6,119.9 211.4,151.9 247.3,150.3 283.2,127.8 319.0,128.0 354.9,180.8 390.8,181.6 426.6,180.3 462.5,176.2 498.3,176.9 534.2,182.1 570.1,182.7 605.9,180.7 641.8,181.6 677.7,184.8 713.5,178.7 749.4,183.4 785.2,182.5 821.1,180.9 857.0,179.4 892.8,182.8 928.7,178.9 964.6,183.6 1000.4,187.9 1036.3,187.0 1072.1,188.5 1108.0,187.2 1108.0,187.9 1072.1,188.5 1036.3,188.0 1000.4,187.9 964.6,184.4 928.7,179.8 892.8,183.4 857.0,180.1 821.1,181.1 785.2,182.5 749.4,184.5 713.5,180.2 677.7,184.8 641.8,181.6 605.9,180.7 570.1,183.5 534.2,182.1 498.3,177.3 462.5,176.6 426.6,181.0 390.8,182.0 354.9,181.8 319.0,128.3 283.2,128.1 247.3,150.7 211.4,152.1 175.6,120.4 139.7,119.1 103.9,114.3 68.0,108.8" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>rt_renderer_specialize — apiTotal (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">apiCreateGlobalSession</text>
@@ -201,11 +209,12 @@ api_many_kernels' many×tiny per-compile-overhead probes.</p><p style='color:#66
 <text x="28" y="632" fill="#222">apiReflection</text>
 <rect x="289" y="622" width="12" height="12" fill="#969696"/>
 <text x="305" y="632" fill="#222">apiTotal (self)</text>
-</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Daily window progress</h2><p style='font-size:15px'>Overall <code>apiTotal</code>: 1601.0 &rarr; 1295.8 ms &nbsp;<b style='color:#1e8449'>-19.1%</b><span style='color:#666;font-size:13px'> &nbsp;(2026-07-08 d8e8e1a9e &rarr; 2026-08-07 88fa1206d)</span></p><p style='color:#666;font-size:13px;margin:10px 0 4px'>Contributors — the mutually-exclusive phase buckets (named leaves + <code>(self)</code> residuals) that tile apiTotal; the pp column sums to the overall %. Buckets moving the total by &ge;0.2% are listed, the rest fold into the remainder row. Below them, every other reported counter (nested/overlapping, e.g. serialized-module reads — own change only):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>counter</th><th>&Delta; ms</th><th>own %</th><th>of total</th></tr><tr><td>apiGetCode</td><td align=right>-272.5</td><td align=right>-30.4%</td><td align=right>-17.0pp</td></tr><tr><td>apiCreateGlobalSession</td><td align=right>-17.2</td><td align=right>-15.2%</td><td align=right>-1.1pp</td></tr><tr><td>apiLoadModule</td><td align=right>-8.4</td><td align=right>-1.5%</td><td align=right>-0.5pp</td></tr><tr><td>apiSpecialize</td><td align=right>-6.0</td><td align=right>-29.6%</td><td align=right>-0.4pp</td></tr><tr><td>(remaining 4 buckets)</td><td align=right>-1.1</td><td align=right>&ndash;</td><td align=right>-0.1pp</td></tr></table><p style='color:#666;font-size:13px;margin:14px 0 4px'>Largest day steps (&ge;5% of the previous day, both directions; bisect with <code>git log &lt;c0&gt;..&lt;c1&gt; -- source/</code>):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>boundary</th><th>% vs prev day</th><th style='text-align:left'>commits</th><th style='text-align:left'>top buckets (own %)</th></tr><tr><td>2026-07-17 &rarr; 2026-07-18</td><td align=right style='color:#1e8449;font-weight:600'>-13.6%</td><td><code>5c30d437f..aaa07fe29</code></td><td>apiGetCode -14%, apiLoadModule -13%, apiCreateGlobalSession -12%</td></tr><tr><td>2026-07-14 &rarr; 2026-07-15</td><td align=right style='color:#1e8449;font-weight:600'>-7.7%</td><td><code>a9c6ff78e..336dd0f49</code></td><td>apiGetCode -11%, apiLoadModule -4%, apiCreateGlobalSession -1%</td></tr><tr><td>2026-07-15 &rarr; 2026-07-16</td><td align=right style='color:#c0392b;font-weight:600'>+6.6%</td><td><code>c5d4d76e6..6c837d317</code></td><td>apiLoadModule +17%, apiGetCode -0%</td></tr></table><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>exact compiled source (N = 24); long files show the first 40 lines, the area around computeMain (±40), and the last 40 lines (gaps elided)</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_base.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Daily window progress</h2><p style='font-size:15px'>Overall <code>apiTotal</code>: 1611.8 &rarr; 1300.9 ms &nbsp;<b style='color:#1e8449'>-19.3%</b><span style='color:#666;font-size:13px'> &nbsp;(2026-07-09 b64d495d9 &rarr; 2026-08-08 716ec597f)</span></p><p style='color:#666;font-size:13px;margin:10px 0 4px'>Contributors — the mutually-exclusive phase buckets (named leaves + <code>(self)</code> residuals) that tile apiTotal; the pp column sums to the overall %. Buckets moving the total by &ge;0.2% are listed, the rest fold into the remainder row. Below them, every other reported counter (nested/overlapping, e.g. serialized-module reads — own change only):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>counter</th><th>&Delta; ms</th><th>own %</th><th>of total</th></tr><tr><td>apiGetCode</td><td align=right>-273.6</td><td align=right>-30.4%</td><td align=right>-17.0pp</td></tr><tr><td>apiCreateGlobalSession</td><td align=right>-19.2</td><td align=right>-16.6%</td><td align=right>-1.2pp</td></tr><tr><td>apiLoadModule</td><td align=right>-15.3</td><td align=right>-2.7%</td><td align=right>-0.9pp</td></tr><tr><td>apiSpecialize</td><td align=right>-6.0</td><td align=right>-29.5%</td><td align=right>-0.4pp</td></tr><tr><td>(remaining 4 buckets)</td><td align=right>+3.2</td><td align=right>&ndash;</td><td align=right>+0.2pp</td></tr></table><p style='color:#666;font-size:13px;margin:14px 0 4px'>Largest day steps (&ge;5% of the previous day, both directions; bisect with <code>git log &lt;c0&gt;..&lt;c1&gt; -- source/</code>):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>boundary</th><th>% vs prev day</th><th style='text-align:left'>commits</th><th style='text-align:left'>top buckets (own %)</th></tr><tr><td>2026-07-17 &rarr; 2026-07-18</td><td align=right style='color:#1e8449;font-weight:600'>-13.6%</td><td><code>5c30d437f..aaa07fe29</code></td><td>apiGetCode -14%, apiLoadModule -13%, apiCreateGlobalSession -12%</td></tr><tr><td>2026-07-14 &rarr; 2026-07-15</td><td align=right style='color:#1e8449;font-weight:600'>-7.7%</td><td><code>a9c6ff78e..336dd0f49</code></td><td>apiGetCode -11%, apiLoadModule -4%, apiCreateGlobalSession -1%</td></tr><tr><td>2026-07-15 &rarr; 2026-07-16</td><td align=right style='color:#c0392b;font-weight:600'>+6.6%</td><td><code>c5d4d76e6..6c837d317</code></td><td>apiLoadModule +17%, apiGetCode -0%</td></tr></table><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only rt_renderer_specialize --label repro --gen-dir repro-rt_renderer_specialize</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 24), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_base.slang <span style='font-weight:400;color:#888'>(5 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_base;
 
 public float3 frac3(float3 v) { return frac(v); }
-public static const float kPi = 3.14159265358979;</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_base.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+public static const float kPi = 3.14159265358979;
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_base.slang <span style='font-weight:400;color:#888'>(14 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src1'>Copy</button><pre id='src1' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_base;
 
 public interface IBSDF
@@ -218,7 +227,8 @@ public interface IBSDF
 public interface IMaterial
 {
     static float3 evalStatic(float3 p, float3 n, float2 uv);
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_0.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_0.slang <span style='font-weight:400;color:#888'>(23 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src2'>Copy</button><pre id='src2' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_0;
 import rutil_base;
 
@@ -240,7 +250,8 @@ public float3 util_warp_0(float3 s)
 public float util_lum_0(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.0;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_1.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_1.slang <span style='font-weight:400;color:#888'>(25 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src3'>Copy</button><pre id='src3' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_1;
 import rutil_base;
 import rutil_0;
@@ -264,7 +275,8 @@ public float3 util_warp_1(float3 s)
 public float util_lum_1(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.125;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_2.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_2.slang <span style='font-weight:400;color:#888'>(25 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src4'>Copy</button><pre id='src4' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_2;
 import rutil_base;
 import rutil_1;
@@ -288,7 +300,8 @@ public float3 util_warp_2(float3 s)
 public float util_lum_2(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.25;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_3.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_3.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src5'>Copy</button><pre id='src5' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_3;
 import rutil_base;
 import rutil_1;
@@ -314,7 +327,8 @@ public float3 util_warp_3(float3 s)
 public float util_lum_3(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.375;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_4.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_4.slang <span style='font-weight:400;color:#888'>(25 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src6'>Copy</button><pre id='src6' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_4;
 import rutil_base;
 import rutil_1;
@@ -338,7 +352,8 @@ public float3 util_warp_4(float3 s)
 public float util_lum_4(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.5;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_5.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_5.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src7'>Copy</button><pre id='src7' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_5;
 import rutil_base;
 import rutil_1;
@@ -364,7 +379,8 @@ public float3 util_warp_5(float3 s)
 public float util_lum_5(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.625;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_6.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_6.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src8'>Copy</button><pre id='src8' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_6;
 import rutil_base;
 import rutil_1;
@@ -390,7 +406,8 @@ public float3 util_warp_6(float3 s)
 public float util_lum_6(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.75;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_7.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_7.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src9'>Copy</button><pre id='src9' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_7;
 import rutil_base;
 import rutil_1;
@@ -416,7 +433,8 @@ public float3 util_warp_7(float3 s)
 public float util_lum_7(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.0;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_8.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_8.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src10'>Copy</button><pre id='src10' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_8;
 import rutil_base;
 import rutil_1;
@@ -442,7 +460,8 @@ public float3 util_warp_8(float3 s)
 public float util_lum_8(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.125;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_9.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_9.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src11'>Copy</button><pre id='src11' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_9;
 import rutil_base;
 import rutil_1;
@@ -468,7 +487,8 @@ public float3 util_warp_9(float3 s)
 public float util_lum_9(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.25;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_10.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_10.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src12'>Copy</button><pre id='src12' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_10;
 import rutil_base;
 import rutil_1;
@@ -494,7 +514,8 @@ public float3 util_warp_10(float3 s)
 public float util_lum_10(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.375;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_11.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_11.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src13'>Copy</button><pre id='src13' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_11;
 import rutil_base;
 import rutil_1;
@@ -520,7 +541,8 @@ public float3 util_warp_11(float3 s)
 public float util_lum_11(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.5;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_12.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_12.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src14'>Copy</button><pre id='src14' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_12;
 import rutil_base;
 import rutil_1;
@@ -546,7 +568,8 @@ public float3 util_warp_12(float3 s)
 public float util_lum_12(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.625;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_13.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_13.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src15'>Copy</button><pre id='src15' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_13;
 import rutil_base;
 import rutil_1;
@@ -572,7 +595,8 @@ public float3 util_warp_13(float3 s)
 public float util_lum_13(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.75;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_14.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_14.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src16'>Copy</button><pre id='src16' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_14;
 import rutil_base;
 import rutil_1;
@@ -598,7 +622,8 @@ public float3 util_warp_14(float3 s)
 public float util_lum_14(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.0;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_15.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_15.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src17'>Copy</button><pre id='src17' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_15;
 import rutil_base;
 import rutil_1;
@@ -624,7 +649,8 @@ public float3 util_warp_15(float3 s)
 public float util_lum_15(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.125;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_16.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_16.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src18'>Copy</button><pre id='src18' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_16;
 import rutil_base;
 import rutil_1;
@@ -650,7 +676,8 @@ public float3 util_warp_16(float3 s)
 public float util_lum_16(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.25;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_17.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_17.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src19'>Copy</button><pre id='src19' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_17;
 import rutil_base;
 import rutil_1;
@@ -676,7 +703,8 @@ public float3 util_warp_17(float3 s)
 public float util_lum_17(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.375;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_18.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_18.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src20'>Copy</button><pre id='src20' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_18;
 import rutil_base;
 import rutil_1;
@@ -702,7 +730,8 @@ public float3 util_warp_18(float3 s)
 public float util_lum_18(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.5;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_19.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_19.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src21'>Copy</button><pre id='src21' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_19;
 import rutil_base;
 import rutil_1;
@@ -728,7 +757,8 @@ public float3 util_warp_19(float3 s)
 public float util_lum_19(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.625;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_20.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_20.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src22'>Copy</button><pre id='src22' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_20;
 import rutil_base;
 import rutil_1;
@@ -754,7 +784,8 @@ public float3 util_warp_20(float3 s)
 public float util_lum_20(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.75;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_21.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_21.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src23'>Copy</button><pre id='src23' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_21;
 import rutil_base;
 import rutil_1;
@@ -780,7 +811,8 @@ public float3 util_warp_21(float3 s)
 public float util_lum_21(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.0;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_22.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_22.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src24'>Copy</button><pre id='src24' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_22;
 import rutil_base;
 import rutil_1;
@@ -806,7 +838,8 @@ public float3 util_warp_22(float3 s)
 public float util_lum_22(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.125;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_23.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_23.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src25'>Copy</button><pre id='src25' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_23;
 import rutil_base;
 import rutil_1;
@@ -832,7 +865,8 @@ public float3 util_warp_23(float3 s)
 public float util_lum_23(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.25;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_24.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_24.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src26'>Copy</button><pre id='src26' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_24;
 import rutil_base;
 import rutil_1;
@@ -858,7 +892,8 @@ public float3 util_warp_24(float3 s)
 public float util_lum_24(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.375;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_25.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_25.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src27'>Copy</button><pre id='src27' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_25;
 import rutil_base;
 import rutil_1;
@@ -884,7 +919,8 @@ public float3 util_warp_25(float3 s)
 public float util_lum_25(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.5;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_26.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_26.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src28'>Copy</button><pre id='src28' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_26;
 import rutil_base;
 import rutil_1;
@@ -910,7 +946,8 @@ public float3 util_warp_26(float3 s)
 public float util_lum_26(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.625;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_27.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_27.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src29'>Copy</button><pre id='src29' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_27;
 import rutil_base;
 import rutil_1;
@@ -936,7 +973,8 @@ public float3 util_warp_27(float3 s)
 public float util_lum_27(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.75;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_28.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_28.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src30'>Copy</button><pre id='src30' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_28;
 import rutil_base;
 import rutil_1;
@@ -962,7 +1000,8 @@ public float3 util_warp_28(float3 s)
 public float util_lum_28(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.0;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_29.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_29.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src31'>Copy</button><pre id='src31' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_29;
 import rutil_base;
 import rutil_1;
@@ -988,7 +1027,8 @@ public float3 util_warp_29(float3 s)
 public float util_lum_29(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.125;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_30.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_30.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src32'>Copy</button><pre id='src32' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_30;
 import rutil_base;
 import rutil_1;
@@ -1014,7 +1054,8 @@ public float3 util_warp_30(float3 s)
 public float util_lum_30(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.25;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_31.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_31.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src33'>Copy</button><pre id='src33' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_31;
 import rutil_base;
 import rutil_1;
@@ -1040,7 +1081,8 @@ public float3 util_warp_31(float3 s)
 public float util_lum_31(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.375;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_32.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_32.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src34'>Copy</button><pre id='src34' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_32;
 import rutil_base;
 import rutil_1;
@@ -1066,7 +1108,8 @@ public float3 util_warp_32(float3 s)
 public float util_lum_32(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.5;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_33.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_33.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src35'>Copy</button><pre id='src35' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_33;
 import rutil_base;
 import rutil_1;
@@ -1092,7 +1135,8 @@ public float3 util_warp_33(float3 s)
 public float util_lum_33(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.625;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_34.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_34.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src36'>Copy</button><pre id='src36' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_34;
 import rutil_base;
 import rutil_1;
@@ -1118,7 +1162,8 @@ public float3 util_warp_34(float3 s)
 public float util_lum_34(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.75;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_35.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_35.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src37'>Copy</button><pre id='src37' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_35;
 import rutil_base;
 import rutil_1;
@@ -1144,7 +1189,8 @@ public float3 util_warp_35(float3 s)
 public float util_lum_35(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.0;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_36.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_36.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src38'>Copy</button><pre id='src38' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_36;
 import rutil_base;
 import rutil_1;
@@ -1170,7 +1216,8 @@ public float3 util_warp_36(float3 s)
 public float util_lum_36(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.125;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_37.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_37.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src39'>Copy</button><pre id='src39' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_37;
 import rutil_base;
 import rutil_1;
@@ -1196,7 +1243,8 @@ public float3 util_warp_37(float3 s)
 public float util_lum_37(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.25;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_38.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_38.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src40'>Copy</button><pre id='src40' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_38;
 import rutil_base;
 import rutil_1;
@@ -1222,7 +1270,8 @@ public float3 util_warp_38(float3 s)
 public float util_lum_38(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.375;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_39.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_39.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src41'>Copy</button><pre id='src41' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_39;
 import rutil_base;
 import rutil_1;
@@ -1248,7 +1297,8 @@ public float3 util_warp_39(float3 s)
 public float util_lum_39(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.5;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_40.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_40.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src42'>Copy</button><pre id='src42' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_40;
 import rutil_base;
 import rutil_1;
@@ -1274,7 +1324,8 @@ public float3 util_warp_40(float3 s)
 public float util_lum_40(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.625;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_41.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_41.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src43'>Copy</button><pre id='src43' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_41;
 import rutil_base;
 import rutil_1;
@@ -1300,7 +1351,8 @@ public float3 util_warp_41(float3 s)
 public float util_lum_41(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.75;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_42.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_42.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src44'>Copy</button><pre id='src44' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_42;
 import rutil_base;
 import rutil_1;
@@ -1326,7 +1378,8 @@ public float3 util_warp_42(float3 s)
 public float util_lum_42(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.0;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_43.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_43.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src45'>Copy</button><pre id='src45' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_43;
 import rutil_base;
 import rutil_1;
@@ -1352,7 +1405,8 @@ public float3 util_warp_43(float3 s)
 public float util_lum_43(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.125;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_44.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_44.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src46'>Copy</button><pre id='src46' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_44;
 import rutil_base;
 import rutil_1;
@@ -1378,7 +1432,8 @@ public float3 util_warp_44(float3 s)
 public float util_lum_44(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.25;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_45.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_45.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src47'>Copy</button><pre id='src47' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_45;
 import rutil_base;
 import rutil_1;
@@ -1404,7 +1459,8 @@ public float3 util_warp_45(float3 s)
 public float util_lum_45(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.375;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_46.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_46.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src48'>Copy</button><pre id='src48' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_46;
 import rutil_base;
 import rutil_1;
@@ -1430,7 +1486,8 @@ public float3 util_warp_46(float3 s)
 public float util_lum_46(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.5;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_47.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rutil_47.slang <span style='font-weight:400;color:#888'>(27 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src49'>Copy</button><pre id='src49' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rutil_47;
 import rutil_base;
 import rutil_1;
@@ -1456,7 +1513,8 @@ public float3 util_warp_47(float3 s)
 public float util_lum_47(float3 c)
 {
     return dot(c, float3(0.2126, 0.7152, 0.0722)) * 1.625;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_0.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_0.slang <span style='font-weight:400;color:#888'>(30 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src50'>Copy</button><pre id='src50' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_0;
 import rutil_base;
 import rutil_0;
@@ -1485,7 +1543,8 @@ public float3 scene_light_0(float3 p, float3 n)
 public float scene_shadow_0(float3 p)
 {
     return saturate(util_lum_11(util_warp_22(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_1.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_1.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src51'>Copy</button><pre id='src51' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_1;
 import rutil_base;
 import rutil_5;
@@ -1516,7 +1575,8 @@ public float3 scene_light_1(float3 p, float3 n)
 public float scene_shadow_1(float3 p)
 {
     return saturate(util_lum_16(util_warp_27(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_2.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_2.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src52'>Copy</button><pre id='src52' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_2;
 import rutil_base;
 import rutil_10;
@@ -1547,7 +1607,8 @@ public float3 scene_light_2(float3 p, float3 n)
 public float scene_shadow_2(float3 p)
 {
     return saturate(util_lum_21(util_warp_32(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_3.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_3.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src53'>Copy</button><pre id='src53' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_3;
 import rutil_base;
 import rutil_15;
@@ -1578,7 +1639,8 @@ public float3 scene_light_3(float3 p, float3 n)
 public float scene_shadow_3(float3 p)
 {
     return saturate(util_lum_26(util_warp_37(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_4.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_4.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src54'>Copy</button><pre id='src54' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_4;
 import rutil_base;
 import rutil_20;
@@ -1609,7 +1671,8 @@ public float3 scene_light_4(float3 p, float3 n)
 public float scene_shadow_4(float3 p)
 {
     return saturate(util_lum_31(util_warp_42(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_5.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_5.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src55'>Copy</button><pre id='src55' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_5;
 import rutil_base;
 import rutil_25;
@@ -1640,7 +1703,8 @@ public float3 scene_light_5(float3 p, float3 n)
 public float scene_shadow_5(float3 p)
 {
     return saturate(util_lum_36(util_warp_47(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_6.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_6.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src56'>Copy</button><pre id='src56' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_6;
 import rutil_base;
 import rutil_30;
@@ -1671,7 +1735,8 @@ public float3 scene_light_6(float3 p, float3 n)
 public float scene_shadow_6(float3 p)
 {
     return saturate(util_lum_41(util_warp_4(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_7.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_7.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src57'>Copy</button><pre id='src57' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_7;
 import rutil_base;
 import rutil_35;
@@ -1702,7 +1767,8 @@ public float3 scene_light_7(float3 p, float3 n)
 public float scene_shadow_7(float3 p)
 {
     return saturate(util_lum_46(util_warp_9(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_8.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_8.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src58'>Copy</button><pre id='src58' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_8;
 import rutil_base;
 import rutil_40;
@@ -1733,7 +1799,8 @@ public float3 scene_light_8(float3 p, float3 n)
 public float scene_shadow_8(float3 p)
 {
     return saturate(util_lum_3(util_warp_14(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_9.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_9.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src59'>Copy</button><pre id='src59' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_9;
 import rutil_base;
 import rutil_45;
@@ -1764,7 +1831,8 @@ public float3 scene_light_9(float3 p, float3 n)
 public float scene_shadow_9(float3 p)
 {
     return saturate(util_lum_8(util_warp_19(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_10.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_10.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src60'>Copy</button><pre id='src60' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_10;
 import rutil_base;
 import rutil_2;
@@ -1795,7 +1863,8 @@ public float3 scene_light_10(float3 p, float3 n)
 public float scene_shadow_10(float3 p)
 {
     return saturate(util_lum_13(util_warp_24(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_11.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_11.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src61'>Copy</button><pre id='src61' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_11;
 import rutil_base;
 import rutil_7;
@@ -1826,7 +1895,8 @@ public float3 scene_light_11(float3 p, float3 n)
 public float scene_shadow_11(float3 p)
 {
     return saturate(util_lum_18(util_warp_29(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_12.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_12.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src62'>Copy</button><pre id='src62' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_12;
 import rutil_base;
 import rutil_12;
@@ -1857,7 +1927,8 @@ public float3 scene_light_12(float3 p, float3 n)
 public float scene_shadow_12(float3 p)
 {
     return saturate(util_lum_23(util_warp_34(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_13.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_13.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src63'>Copy</button><pre id='src63' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_13;
 import rutil_base;
 import rutil_17;
@@ -1888,7 +1959,8 @@ public float3 scene_light_13(float3 p, float3 n)
 public float scene_shadow_13(float3 p)
 {
     return saturate(util_lum_28(util_warp_39(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_14.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_14.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src64'>Copy</button><pre id='src64' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_14;
 import rutil_base;
 import rutil_22;
@@ -1919,7 +1991,8 @@ public float3 scene_light_14(float3 p, float3 n)
 public float scene_shadow_14(float3 p)
 {
     return saturate(util_lum_33(util_warp_44(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_15.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_15.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src65'>Copy</button><pre id='src65' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_15;
 import rutil_base;
 import rutil_27;
@@ -1950,7 +2023,8 @@ public float3 scene_light_15(float3 p, float3 n)
 public float scene_shadow_15(float3 p)
 {
     return saturate(util_lum_38(util_warp_1(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_16.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_16.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src66'>Copy</button><pre id='src66' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_16;
 import rutil_base;
 import rutil_32;
@@ -1981,7 +2055,8 @@ public float3 scene_light_16(float3 p, float3 n)
 public float scene_shadow_16(float3 p)
 {
     return saturate(util_lum_43(util_warp_6(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_17.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_17.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src67'>Copy</button><pre id='src67' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_17;
 import rutil_base;
 import rutil_37;
@@ -2012,7 +2087,8 @@ public float3 scene_light_17(float3 p, float3 n)
 public float scene_shadow_17(float3 p)
 {
     return saturate(util_lum_0(util_warp_11(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_18.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_18.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src68'>Copy</button><pre id='src68' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_18;
 import rutil_base;
 import rutil_42;
@@ -2043,7 +2119,8 @@ public float3 scene_light_18(float3 p, float3 n)
 public float scene_shadow_18(float3 p)
 {
     return saturate(util_lum_5(util_warp_16(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_19.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_19.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src69'>Copy</button><pre id='src69' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_19;
 import rutil_base;
 import rutil_47;
@@ -2074,7 +2151,8 @@ public float3 scene_light_19(float3 p, float3 n)
 public float scene_shadow_19(float3 p)
 {
     return saturate(util_lum_10(util_warp_21(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_20.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_20.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src70'>Copy</button><pre id='src70' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_20;
 import rutil_base;
 import rutil_4;
@@ -2105,7 +2183,8 @@ public float3 scene_light_20(float3 p, float3 n)
 public float scene_shadow_20(float3 p)
 {
     return saturate(util_lum_15(util_warp_26(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_21.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_21.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src71'>Copy</button><pre id='src71' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_21;
 import rutil_base;
 import rutil_9;
@@ -2136,7 +2215,8 @@ public float3 scene_light_21(float3 p, float3 n)
 public float scene_shadow_21(float3 p)
 {
     return saturate(util_lum_20(util_warp_31(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_22.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_22.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src72'>Copy</button><pre id='src72' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_22;
 import rutil_base;
 import rutil_14;
@@ -2167,7 +2247,8 @@ public float3 scene_light_22(float3 p, float3 n)
 public float scene_shadow_22(float3 p)
 {
     return saturate(util_lum_25(util_warp_36(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_23.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rscene_23.slang <span style='font-weight:400;color:#888'>(32 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src73'>Copy</button><pre id='src73' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rscene_23;
 import rutil_base;
 import rutil_19;
@@ -2198,7 +2279,8 @@ public float3 scene_light_23(float3 p, float3 n)
 public float scene_shadow_23(float3 p)
 {
     return saturate(util_lum_30(util_warp_41(p)));
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_0.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_0.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src74'>Copy</button><pre id='src74' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_0;
 import rutil_base;
 import rmat_base;
@@ -2255,7 +2337,8 @@ public struct Material_0 : IMaterial
         float3 wi = util_warp_21(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_0(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_1.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_1.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src75'>Copy</button><pre id='src75' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_1;
 import rutil_base;
 import rmat_base;
@@ -2312,7 +2395,8 @@ public struct Material_1 : IMaterial
         float3 wi = util_warp_38(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_3(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_2.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_2.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src76'>Copy</button><pre id='src76' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_2;
 import rutil_base;
 import rmat_base;
@@ -2369,7 +2453,8 @@ public struct Material_2 : IMaterial
         float3 wi = util_warp_7(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_6(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_3.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_3.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src77'>Copy</button><pre id='src77' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_3;
 import rutil_base;
 import rmat_base;
@@ -2426,7 +2511,8 @@ public struct Material_3 : IMaterial
         float3 wi = util_warp_24(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_9(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_4.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_4.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src78'>Copy</button><pre id='src78' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_4;
 import rutil_base;
 import rmat_base;
@@ -2483,7 +2569,8 @@ public struct Material_4 : IMaterial
         float3 wi = util_warp_41(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_12(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_5.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_5.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src79'>Copy</button><pre id='src79' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_5;
 import rutil_base;
 import rmat_base;
@@ -2540,7 +2627,8 @@ public struct Material_5 : IMaterial
         float3 wi = util_warp_10(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_15(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_6.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_6.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src80'>Copy</button><pre id='src80' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_6;
 import rutil_base;
 import rmat_base;
@@ -2597,7 +2685,8 @@ public struct Material_6 : IMaterial
         float3 wi = util_warp_27(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_18(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_7.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_7.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src81'>Copy</button><pre id='src81' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_7;
 import rutil_base;
 import rmat_base;
@@ -2654,7 +2743,8 @@ public struct Material_7 : IMaterial
         float3 wi = util_warp_44(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_21(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_8.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_8.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src82'>Copy</button><pre id='src82' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_8;
 import rutil_base;
 import rmat_base;
@@ -2711,7 +2801,8 @@ public struct Material_8 : IMaterial
         float3 wi = util_warp_13(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_0(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_9.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_9.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src83'>Copy</button><pre id='src83' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_9;
 import rutil_base;
 import rmat_base;
@@ -2768,7 +2859,8 @@ public struct Material_9 : IMaterial
         float3 wi = util_warp_30(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_3(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_10.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_10.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src84'>Copy</button><pre id='src84' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_10;
 import rutil_base;
 import rmat_base;
@@ -2825,7 +2917,8 @@ public struct Material_10 : IMaterial
         float3 wi = util_warp_47(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_6(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_11.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_11.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src85'>Copy</button><pre id='src85' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_11;
 import rutil_base;
 import rmat_base;
@@ -2882,7 +2975,8 @@ public struct Material_11 : IMaterial
         float3 wi = util_warp_16(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_9(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_12.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_12.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src86'>Copy</button><pre id='src86' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_12;
 import rutil_base;
 import rmat_base;
@@ -2939,7 +3033,8 @@ public struct Material_12 : IMaterial
         float3 wi = util_warp_33(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_12(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_13.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_13.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src87'>Copy</button><pre id='src87' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_13;
 import rutil_base;
 import rmat_base;
@@ -2996,7 +3091,8 @@ public struct Material_13 : IMaterial
         float3 wi = util_warp_2(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_15(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_14.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_14.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src88'>Copy</button><pre id='src88' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_14;
 import rutil_base;
 import rmat_base;
@@ -3053,7 +3149,8 @@ public struct Material_14 : IMaterial
         float3 wi = util_warp_19(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_18(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_15.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_15.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src89'>Copy</button><pre id='src89' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_15;
 import rutil_base;
 import rmat_base;
@@ -3110,7 +3207,8 @@ public struct Material_15 : IMaterial
         float3 wi = util_warp_36(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_21(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_16.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_16.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src90'>Copy</button><pre id='src90' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_16;
 import rutil_base;
 import rmat_base;
@@ -3167,7 +3265,8 @@ public struct Material_16 : IMaterial
         float3 wi = util_warp_5(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_0(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_17.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_17.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src91'>Copy</button><pre id='src91' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_17;
 import rutil_base;
 import rmat_base;
@@ -3224,7 +3323,8 @@ public struct Material_17 : IMaterial
         float3 wi = util_warp_22(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_3(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_18.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_18.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src92'>Copy</button><pre id='src92' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_18;
 import rutil_base;
 import rmat_base;
@@ -3281,7 +3381,8 @@ public struct Material_18 : IMaterial
         float3 wi = util_warp_39(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_6(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_19.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_19.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src93'>Copy</button><pre id='src93' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_19;
 import rutil_base;
 import rmat_base;
@@ -3338,7 +3439,8 @@ public struct Material_19 : IMaterial
         float3 wi = util_warp_8(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_9(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_20.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_20.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src94'>Copy</button><pre id='src94' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_20;
 import rutil_base;
 import rmat_base;
@@ -3395,7 +3497,8 @@ public struct Material_20 : IMaterial
         float3 wi = util_warp_25(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_12(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_21.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_21.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src95'>Copy</button><pre id='src95' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_21;
 import rutil_base;
 import rmat_base;
@@ -3452,7 +3555,8 @@ public struct Material_21 : IMaterial
         float3 wi = util_warp_42(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_15(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_22.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_22.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src96'>Copy</button><pre id='src96' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_22;
 import rutil_base;
 import rmat_base;
@@ -3509,7 +3613,8 @@ public struct Material_22 : IMaterial
         float3 wi = util_warp_11(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_18(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_23.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rmat_23.slang <span style='font-weight:400;color:#888'>(58 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src97'>Copy</button><pre id='src97' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rmat_23;
 import rutil_base;
 import rmat_base;
@@ -3566,7 +3671,8 @@ public struct Material_23 : IMaterial
         float3 wi = util_warp_28(float3(uv, 0.5));
         return bsdf.eval(wi, n, n) + scene_light_21(p, n);
     }
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rlib.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rlib.slang <span style='font-weight:400;color:#888'>(99 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src98'>Copy</button><pre id='src98' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rlib;
 __exported import rutil_0;
 __exported import rutil_1;
@@ -3606,9 +3712,25 @@ __exported import rutil_34;
 __exported import rutil_35;
 __exported import rutil_36;
 __exported import rutil_37;
-
-// … 19 lines omitted …
-
+__exported import rutil_38;
+__exported import rutil_39;
+__exported import rutil_40;
+__exported import rutil_41;
+__exported import rutil_42;
+__exported import rutil_43;
+__exported import rutil_44;
+__exported import rutil_45;
+__exported import rutil_46;
+__exported import rutil_47;
+__exported import rscene_0;
+__exported import rscene_1;
+__exported import rscene_2;
+__exported import rscene_3;
+__exported import rscene_4;
+__exported import rscene_5;
+__exported import rscene_6;
+__exported import rscene_7;
+__exported import rscene_8;
 __exported import rscene_9;
 __exported import rscene_10;
 __exported import rscene_11;
@@ -3648,7 +3770,8 @@ __exported import rmat_19;
 __exported import rmat_20;
 __exported import rmat_21;
 __exported import rmat_22;
-__exported import rmat_23;</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rt_kernels.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+__exported import rmat_23;
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rt_kernels.slang <span style='font-weight:400;color:#888'>(69 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src99'>Copy</button><pre id='src99' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rt_kernels;
 import rlib;
 
@@ -3716,7 +3839,8 @@ void closestHitMain(
     c += Material_23.evalStatic(p, n, uv) * 0.0417;
     payload.color = c;
     payload.depth += 1;
-}</pre><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rt_compute.slang</h3><pre style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+}
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>rt_compute.slang <span style='font-weight:400;color:#888'>(14 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src100'>Copy</button><pre id='src100' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 module rt_compute;
 import rlib;
 
@@ -3729,4 +3853,34 @@ void computeMain&lt;T : IMaterial&gt;(uint3 tid : SV_DispatchThreadID)
     float2 uv = float2(tid.xy) * 0.001;
     float3 c = T.evalStatic(float3(uv, 0.0), float3(0, 1, 0), uv);
     outBuf[tid.x] = c.x + c.y + c.z;
-}</pre></body>
+}
+</pre></div><script>
+document.addEventListener('click', function (ev) {
+  var btn = ev.target.closest && ev.target.closest('button.copy');
+  if (!btn) return;
+  var el = document.getElementById(btn.getAttribute('data-copy'));
+  if (!el) return;
+  var text = el.textContent;
+  function flash(ok) {
+    btn.textContent = ok ? 'Copied' : 'Press Ctrl+C';
+    if (ok) btn.setAttribute('data-done', '1');
+    setTimeout(function () {
+      btn.textContent = 'Copy'; btn.removeAttribute('data-done');
+    }, 1400);
+  }
+  function fallback() {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta); flash(ok);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () { flash(true); }, fallback);
+  } else {
+    fallback();
+  }
+});
+</script></body>
