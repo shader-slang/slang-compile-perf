@@ -1,0 +1,29 @@
+<!doctype html><meta charset="utf-8">
+<title>Memory — across releases</title><style>
+body{font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#1a1a1a;background:#fafafa}
+.wrap{max-width:1240px;margin:0 auto;padding:28px}
+h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 10px;border-bottom:2px solid #eee;padding-bottom:4px}
+.sub{color:#666;margin:0 0 18px}
+.chart{background:#fff;border:1px solid #eee;border-radius:6px;padding:8px;margin:10px 0;overflow:auto}
+.chart svg{display:block;max-width:100%;height:auto}
+.small{color:#777;font-size:12px}
+
+.secrow{background:#fff;border:1px solid #e3e6ea;border-radius:8px;
+        padding:16px 20px;box-shadow:0 1px 2px rgba(0,0,0,.06);margin:14px 0}
+.secrow b{font-size:17px}
+.secrow .links{margin:8px 0 0}
+.secrow a{font-weight:600;text-decoration:none;color:#1a5fb4}
+.secrow p{color:#666;font-size:13px;margin:6px 0 0}
+.status{color:#444;font-size:13px;margin:2px 0 16px}
+.worse{color:#c0392b;font-weight:600} .better{color:#1e8449;font-weight:600}
+td.num,th.num{text-align:right}
+</style>
+<div class="wrap">
+<p class="small"><a href="index.html">&larr; overview</a></p>
+<h1>Memory — across releases</h1>
+<p class="sub">peak resident memory per workload and api-driver session-create deltas</p>
+<p class="small">Official release binaries — minor releases, plus patch releases from v2026.13 on — re-measured on the current perf runner. Click a workload name for its full sub-counter breakdown.</p>
+<p class='small'><b>Session floor</b> — peak resident memory of doing nothing but starting the compiler (createGlobalSession + core module), paid by every compile. There are two, because a process peak is only comparable against a baseline from the same executable: <i>slangc</i>'s floor is compiling an <i>empty</i> shader (the <code>minimal</code> workload), and the <i>api-driver</i>'s is creating and destroying a session and nothing else (<code>api_session_create</code>). <b>Workload panels</b> — each tracked workload's OWN memory: its process peak minus the same point's floor <i>for the binary it ran</i>, i.e. what the workload's work added beyond compiler startup. Raw peak RSS is recorded for every workload in results.json; only the curated set (the realistic rt/mdl workloads and the microbenchmarks with meaningful own memory) is charted and alerted on. <b>createGlobalSession RSS delta</b> — measured inside the api driver: process memory immediately before vs after that one call. Panels are line charts, not stacked areas, because these are separate memory <i>peaks</i> — maxima do not add up to a total the way the time pages' phase buckets sum to compileInner.</p>
+<p class="small">no data yet</p>
+<div class="note"><b>Methodology:</b> release points are the OFFICIAL prebuilt binaries, re-measured on the perf runner; daily tip-of-tree points are built on the runner with release-matched flags but a different MSVC toolset. Each page's points share one build provenance; absolute times are NOT comparable between the release and ToT pages (a uniform few-% offset, and more on individual hot loops).</div>
+</div>
