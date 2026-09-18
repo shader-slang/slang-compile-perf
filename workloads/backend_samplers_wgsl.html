@@ -1,0 +1,690 @@
+<!doctype html><meta charset=utf-8><title>backend_samplers_wgsl — phase breakdown</title><style>
+.cbox{position:relative}
+.cbox>button.copy{position:absolute;top:8px;right:8px;z-index:1;
+  font:11px/1 -apple-system,Segoe UI,Roboto,sans-serif;padding:5px 9px;
+  color:#24292f;background:#fff;border:1px solid #d0d7de;border-radius:5px;
+  cursor:pointer;opacity:.75}
+.cbox>button.copy:hover{opacity:1;background:#f3f4f6}
+.cbox>button.copy[data-done]{color:#1a7f37;border-color:#1a7f37}
+</style><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; back</a></p><h1 style='font-size:21px;margin:0 0 6px'>backend_samplers_wgsl</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>n `Sampler2D` (combined texture-sampler) reads in one entry point.
+
+HLSL, Metal and WGSL cannot express a combined texture-sampler, so
+`lowerCombinedTextureSamplers` splits each one into a texture and a sampler
+and rewrites every use; Khronos targets keep them and the pass is skipped
+entirely (`calcRequiredLoweringPassSet` gates on a non-Khronos target
+seeing an `IRTextureType` with `isCombined`). No other workload declares a
+combined sampler at all. Measured at N=256: 2.70x spread across six
+targets, Metal scaling at exponent 1.18 against SPIR-V's 0.59.
+
+Paired with `resource_load_chain`, which is the same shape with the
+combination removed, so the two A/B the splitting cost directly.
+
+Scaling null: n scales combined samplers, each split independently; ideal
+cost is O(n).</p><p style='color:#666;font-size:13px'><b>bucket:</b> backend_legalize &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target wgsl</code> &nbsp;·&nbsp; <b>default N:</b> 256</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="716" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">backend_samplers_wgsl — Daily tip-of-tree (last 30 days) (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">backend_samplers_wgsl<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">27</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">54</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">08-20</text>
+<line x1="103.9" y1="516.0" x2="103.9" y2="519.0" stroke="#999"/>
+<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">08-21</text>
+<line x1="139.7" y1="516.0" x2="139.7" y2="519.0" stroke="#999"/>
+<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">08-22</text>
+<line x1="175.6" y1="516.0" x2="175.6" y2="519.0" stroke="#999"/>
+<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">08-23</text>
+<line x1="211.4" y1="516.0" x2="211.4" y2="519.0" stroke="#999"/>
+<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">08-24</text>
+<line x1="247.3" y1="516.0" x2="247.3" y2="519.0" stroke="#999"/>
+<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">08-25</text>
+<line x1="283.2" y1="516.0" x2="283.2" y2="519.0" stroke="#999"/>
+<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">08-26</text>
+<line x1="319.0" y1="516.0" x2="319.0" y2="519.0" stroke="#999"/>
+<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">08-27</text>
+<line x1="354.9" y1="516.0" x2="354.9" y2="519.0" stroke="#999"/>
+<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">08-28</text>
+<line x1="390.8" y1="516.0" x2="390.8" y2="519.0" stroke="#999"/>
+<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">08-29</text>
+<line x1="426.6" y1="516.0" x2="426.6" y2="519.0" stroke="#999"/>
+<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">08-30</text>
+<line x1="462.5" y1="516.0" x2="462.5" y2="519.0" stroke="#999"/>
+<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">08-31</text>
+<line x1="498.3" y1="516.0" x2="498.3" y2="519.0" stroke="#999"/>
+<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-01</text>
+<line x1="534.2" y1="516.0" x2="534.2" y2="519.0" stroke="#999"/>
+<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-02</text>
+<line x1="570.1" y1="516.0" x2="570.1" y2="519.0" stroke="#999"/>
+<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-03</text>
+<line x1="605.9" y1="516.0" x2="605.9" y2="519.0" stroke="#999"/>
+<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-04</text>
+<line x1="641.8" y1="516.0" x2="641.8" y2="519.0" stroke="#999"/>
+<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-05</text>
+<line x1="677.7" y1="516.0" x2="677.7" y2="519.0" stroke="#999"/>
+<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-06</text>
+<line x1="713.5" y1="516.0" x2="713.5" y2="519.0" stroke="#999"/>
+<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-07</text>
+<line x1="749.4" y1="516.0" x2="749.4" y2="519.0" stroke="#999"/>
+<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-08</text>
+<line x1="785.2" y1="516.0" x2="785.2" y2="519.0" stroke="#999"/>
+<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-09</text>
+<line x1="821.1" y1="516.0" x2="821.1" y2="519.0" stroke="#999"/>
+<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-10</text>
+<line x1="857.0" y1="516.0" x2="857.0" y2="519.0" stroke="#999"/>
+<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-11</text>
+<line x1="892.8" y1="516.0" x2="892.8" y2="519.0" stroke="#999"/>
+<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-12</text>
+<line x1="928.7" y1="516.0" x2="928.7" y2="519.0" stroke="#999"/>
+<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-13</text>
+<line x1="964.6" y1="516.0" x2="964.6" y2="519.0" stroke="#999"/>
+<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-14</text>
+<line x1="1000.4" y1="516.0" x2="1000.4" y2="519.0" stroke="#999"/>
+<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-15</text>
+<line x1="1036.3" y1="516.0" x2="1036.3" y2="519.0" stroke="#999"/>
+<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-16</text>
+<line x1="1072.1" y1="516.0" x2="1072.1" y2="519.0" stroke="#999"/>
+<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-17</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-18</text>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#3f007d"/>
+<text x="28" y="650" fill="#222">deferBufferLoad</text>
+<rect x="289" y="640" width="12" height="12" fill="#54278f"/>
+<text x="305" y="650" fill="#222">simplifyNonSSAIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#9970ab"/>
+<text x="582" y="650" fill="#222">lowerCombinedTextureSamplers</text>
+<rect x="843" y="640" width="12" height="12" fill="#c2a5cf"/>
+<text x="859" y="650" fill="#222">legalizeMatrixTypes</text>
+<rect x="12" y="658" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="668" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="658" width="12" height="12" fill="#fdd0a2"/>
+<text x="305" y="668" fill="#222">emitEntryPointsSourceFromIR (self)</text>
+<rect x="566" y="658" width="12" height="12" fill="#fd8d3c"/>
+<text x="582" y="668" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="843" y="658" width="12" height="12" fill="#e6550d"/>
+<text x="859" y="668" fill="#222">generateOutput (self)</text>
+<rect x="12" y="676" width="12" height="12" fill="#969696"/>
+<text x="28" y="686" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only backend_samplers_wgsl --label repro --gen-dir repro-backend_samplers_wgsl</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 256), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>combined_samplers.slang <span style='font-weight:400;color:#888'>(523 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+Sampler2D tex_0;
+Sampler2D tex_1;
+Sampler2D tex_2;
+Sampler2D tex_3;
+Sampler2D tex_4;
+Sampler2D tex_5;
+Sampler2D tex_6;
+Sampler2D tex_7;
+Sampler2D tex_8;
+Sampler2D tex_9;
+Sampler2D tex_10;
+Sampler2D tex_11;
+Sampler2D tex_12;
+Sampler2D tex_13;
+Sampler2D tex_14;
+Sampler2D tex_15;
+Sampler2D tex_16;
+Sampler2D tex_17;
+Sampler2D tex_18;
+Sampler2D tex_19;
+Sampler2D tex_20;
+Sampler2D tex_21;
+Sampler2D tex_22;
+Sampler2D tex_23;
+Sampler2D tex_24;
+Sampler2D tex_25;
+Sampler2D tex_26;
+Sampler2D tex_27;
+Sampler2D tex_28;
+Sampler2D tex_29;
+Sampler2D tex_30;
+Sampler2D tex_31;
+Sampler2D tex_32;
+Sampler2D tex_33;
+Sampler2D tex_34;
+Sampler2D tex_35;
+Sampler2D tex_36;
+Sampler2D tex_37;
+Sampler2D tex_38;
+Sampler2D tex_39;
+Sampler2D tex_40;
+Sampler2D tex_41;
+Sampler2D tex_42;
+Sampler2D tex_43;
+Sampler2D tex_44;
+Sampler2D tex_45;
+Sampler2D tex_46;
+Sampler2D tex_47;
+Sampler2D tex_48;
+Sampler2D tex_49;
+Sampler2D tex_50;
+Sampler2D tex_51;
+Sampler2D tex_52;
+Sampler2D tex_53;
+Sampler2D tex_54;
+Sampler2D tex_55;
+Sampler2D tex_56;
+Sampler2D tex_57;
+Sampler2D tex_58;
+Sampler2D tex_59;
+Sampler2D tex_60;
+Sampler2D tex_61;
+Sampler2D tex_62;
+Sampler2D tex_63;
+Sampler2D tex_64;
+Sampler2D tex_65;
+Sampler2D tex_66;
+Sampler2D tex_67;
+Sampler2D tex_68;
+Sampler2D tex_69;
+Sampler2D tex_70;
+Sampler2D tex_71;
+Sampler2D tex_72;
+Sampler2D tex_73;
+Sampler2D tex_74;
+Sampler2D tex_75;
+Sampler2D tex_76;
+Sampler2D tex_77;
+Sampler2D tex_78;
+Sampler2D tex_79;
+Sampler2D tex_80;
+Sampler2D tex_81;
+Sampler2D tex_82;
+Sampler2D tex_83;
+Sampler2D tex_84;
+Sampler2D tex_85;
+Sampler2D tex_86;
+Sampler2D tex_87;
+Sampler2D tex_88;
+Sampler2D tex_89;
+Sampler2D tex_90;
+Sampler2D tex_91;
+Sampler2D tex_92;
+Sampler2D tex_93;
+Sampler2D tex_94;
+Sampler2D tex_95;
+Sampler2D tex_96;
+Sampler2D tex_97;
+Sampler2D tex_98;
+Sampler2D tex_99;
+Sampler2D tex_100;
+Sampler2D tex_101;
+Sampler2D tex_102;
+Sampler2D tex_103;
+Sampler2D tex_104;
+Sampler2D tex_105;
+Sampler2D tex_106;
+Sampler2D tex_107;
+Sampler2D tex_108;
+Sampler2D tex_109;
+Sampler2D tex_110;
+Sampler2D tex_111;
+Sampler2D tex_112;
+Sampler2D tex_113;
+Sampler2D tex_114;
+Sampler2D tex_115;
+Sampler2D tex_116;
+Sampler2D tex_117;
+Sampler2D tex_118;
+Sampler2D tex_119;
+Sampler2D tex_120;
+Sampler2D tex_121;
+Sampler2D tex_122;
+Sampler2D tex_123;
+Sampler2D tex_124;
+Sampler2D tex_125;
+Sampler2D tex_126;
+Sampler2D tex_127;
+Sampler2D tex_128;
+Sampler2D tex_129;
+Sampler2D tex_130;
+Sampler2D tex_131;
+Sampler2D tex_132;
+Sampler2D tex_133;
+Sampler2D tex_134;
+Sampler2D tex_135;
+Sampler2D tex_136;
+Sampler2D tex_137;
+Sampler2D tex_138;
+Sampler2D tex_139;
+Sampler2D tex_140;
+Sampler2D tex_141;
+Sampler2D tex_142;
+Sampler2D tex_143;
+Sampler2D tex_144;
+Sampler2D tex_145;
+Sampler2D tex_146;
+Sampler2D tex_147;
+Sampler2D tex_148;
+Sampler2D tex_149;
+Sampler2D tex_150;
+Sampler2D tex_151;
+Sampler2D tex_152;
+Sampler2D tex_153;
+Sampler2D tex_154;
+Sampler2D tex_155;
+Sampler2D tex_156;
+Sampler2D tex_157;
+Sampler2D tex_158;
+Sampler2D tex_159;
+Sampler2D tex_160;
+Sampler2D tex_161;
+Sampler2D tex_162;
+Sampler2D tex_163;
+Sampler2D tex_164;
+Sampler2D tex_165;
+Sampler2D tex_166;
+Sampler2D tex_167;
+Sampler2D tex_168;
+Sampler2D tex_169;
+Sampler2D tex_170;
+Sampler2D tex_171;
+Sampler2D tex_172;
+Sampler2D tex_173;
+Sampler2D tex_174;
+Sampler2D tex_175;
+Sampler2D tex_176;
+Sampler2D tex_177;
+Sampler2D tex_178;
+Sampler2D tex_179;
+Sampler2D tex_180;
+Sampler2D tex_181;
+Sampler2D tex_182;
+Sampler2D tex_183;
+Sampler2D tex_184;
+Sampler2D tex_185;
+Sampler2D tex_186;
+Sampler2D tex_187;
+Sampler2D tex_188;
+Sampler2D tex_189;
+Sampler2D tex_190;
+Sampler2D tex_191;
+Sampler2D tex_192;
+Sampler2D tex_193;
+Sampler2D tex_194;
+Sampler2D tex_195;
+Sampler2D tex_196;
+Sampler2D tex_197;
+Sampler2D tex_198;
+Sampler2D tex_199;
+Sampler2D tex_200;
+Sampler2D tex_201;
+Sampler2D tex_202;
+Sampler2D tex_203;
+Sampler2D tex_204;
+Sampler2D tex_205;
+Sampler2D tex_206;
+Sampler2D tex_207;
+Sampler2D tex_208;
+Sampler2D tex_209;
+Sampler2D tex_210;
+Sampler2D tex_211;
+Sampler2D tex_212;
+Sampler2D tex_213;
+Sampler2D tex_214;
+Sampler2D tex_215;
+Sampler2D tex_216;
+Sampler2D tex_217;
+Sampler2D tex_218;
+Sampler2D tex_219;
+Sampler2D tex_220;
+Sampler2D tex_221;
+Sampler2D tex_222;
+Sampler2D tex_223;
+Sampler2D tex_224;
+Sampler2D tex_225;
+Sampler2D tex_226;
+Sampler2D tex_227;
+Sampler2D tex_228;
+Sampler2D tex_229;
+Sampler2D tex_230;
+Sampler2D tex_231;
+Sampler2D tex_232;
+Sampler2D tex_233;
+Sampler2D tex_234;
+Sampler2D tex_235;
+Sampler2D tex_236;
+Sampler2D tex_237;
+Sampler2D tex_238;
+Sampler2D tex_239;
+Sampler2D tex_240;
+Sampler2D tex_241;
+Sampler2D tex_242;
+Sampler2D tex_243;
+Sampler2D tex_244;
+Sampler2D tex_245;
+Sampler2D tex_246;
+Sampler2D tex_247;
+Sampler2D tex_248;
+Sampler2D tex_249;
+Sampler2D tex_250;
+Sampler2D tex_251;
+Sampler2D tex_252;
+Sampler2D tex_253;
+Sampler2D tex_254;
+Sampler2D tex_255;
+RWStructuredBuffer&lt;float4&gt; outBuf;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float2 uv = float2(tid.xy) * 0.01;
+    float4 acc = 0.0;
+    acc += tex_0.SampleLevel(uv + 0.0 * 0.001, 0);
+    acc += tex_1.SampleLevel(uv + 1.0 * 0.001, 0);
+    acc += tex_2.SampleLevel(uv + 2.0 * 0.001, 0);
+    acc += tex_3.SampleLevel(uv + 3.0 * 0.001, 0);
+    acc += tex_4.SampleLevel(uv + 4.0 * 0.001, 0);
+    acc += tex_5.SampleLevel(uv + 5.0 * 0.001, 0);
+    acc += tex_6.SampleLevel(uv + 6.0 * 0.001, 0);
+    acc += tex_7.SampleLevel(uv + 7.0 * 0.001, 0);
+    acc += tex_8.SampleLevel(uv + 8.0 * 0.001, 0);
+    acc += tex_9.SampleLevel(uv + 9.0 * 0.001, 0);
+    acc += tex_10.SampleLevel(uv + 10.0 * 0.001, 0);
+    acc += tex_11.SampleLevel(uv + 11.0 * 0.001, 0);
+    acc += tex_12.SampleLevel(uv + 12.0 * 0.001, 0);
+    acc += tex_13.SampleLevel(uv + 13.0 * 0.001, 0);
+    acc += tex_14.SampleLevel(uv + 14.0 * 0.001, 0);
+    acc += tex_15.SampleLevel(uv + 15.0 * 0.001, 0);
+    acc += tex_16.SampleLevel(uv + 16.0 * 0.001, 0);
+    acc += tex_17.SampleLevel(uv + 17.0 * 0.001, 0);
+    acc += tex_18.SampleLevel(uv + 18.0 * 0.001, 0);
+    acc += tex_19.SampleLevel(uv + 19.0 * 0.001, 0);
+    acc += tex_20.SampleLevel(uv + 20.0 * 0.001, 0);
+    acc += tex_21.SampleLevel(uv + 21.0 * 0.001, 0);
+    acc += tex_22.SampleLevel(uv + 22.0 * 0.001, 0);
+    acc += tex_23.SampleLevel(uv + 23.0 * 0.001, 0);
+    acc += tex_24.SampleLevel(uv + 24.0 * 0.001, 0);
+    acc += tex_25.SampleLevel(uv + 25.0 * 0.001, 0);
+    acc += tex_26.SampleLevel(uv + 26.0 * 0.001, 0);
+    acc += tex_27.SampleLevel(uv + 27.0 * 0.001, 0);
+    acc += tex_28.SampleLevel(uv + 28.0 * 0.001, 0);
+    acc += tex_29.SampleLevel(uv + 29.0 * 0.001, 0);
+    acc += tex_30.SampleLevel(uv + 30.0 * 0.001, 0);
+    acc += tex_31.SampleLevel(uv + 31.0 * 0.001, 0);
+    acc += tex_32.SampleLevel(uv + 32.0 * 0.001, 0);
+    acc += tex_33.SampleLevel(uv + 33.0 * 0.001, 0);
+    acc += tex_34.SampleLevel(uv + 34.0 * 0.001, 0);
+    acc += tex_35.SampleLevel(uv + 35.0 * 0.001, 0);
+    acc += tex_36.SampleLevel(uv + 36.0 * 0.001, 0);
+    acc += tex_37.SampleLevel(uv + 37.0 * 0.001, 0);
+    acc += tex_38.SampleLevel(uv + 38.0 * 0.001, 0);
+    acc += tex_39.SampleLevel(uv + 39.0 * 0.001, 0);
+    acc += tex_40.SampleLevel(uv + 40.0 * 0.001, 0);
+    acc += tex_41.SampleLevel(uv + 41.0 * 0.001, 0);
+    acc += tex_42.SampleLevel(uv + 42.0 * 0.001, 0);
+    acc += tex_43.SampleLevel(uv + 43.0 * 0.001, 0);
+    acc += tex_44.SampleLevel(uv + 44.0 * 0.001, 0);
+    acc += tex_45.SampleLevel(uv + 45.0 * 0.001, 0);
+    acc += tex_46.SampleLevel(uv + 46.0 * 0.001, 0);
+    acc += tex_47.SampleLevel(uv + 47.0 * 0.001, 0);
+    acc += tex_48.SampleLevel(uv + 48.0 * 0.001, 0);
+    acc += tex_49.SampleLevel(uv + 49.0 * 0.001, 0);
+    acc += tex_50.SampleLevel(uv + 50.0 * 0.001, 0);
+    acc += tex_51.SampleLevel(uv + 51.0 * 0.001, 0);
+    acc += tex_52.SampleLevel(uv + 52.0 * 0.001, 0);
+    acc += tex_53.SampleLevel(uv + 53.0 * 0.001, 0);
+    acc += tex_54.SampleLevel(uv + 54.0 * 0.001, 0);
+    acc += tex_55.SampleLevel(uv + 55.0 * 0.001, 0);
+    acc += tex_56.SampleLevel(uv + 56.0 * 0.001, 0);
+    acc += tex_57.SampleLevel(uv + 57.0 * 0.001, 0);
+    acc += tex_58.SampleLevel(uv + 58.0 * 0.001, 0);
+    acc += tex_59.SampleLevel(uv + 59.0 * 0.001, 0);
+    acc += tex_60.SampleLevel(uv + 60.0 * 0.001, 0);
+    acc += tex_61.SampleLevel(uv + 61.0 * 0.001, 0);
+    acc += tex_62.SampleLevel(uv + 62.0 * 0.001, 0);
+    acc += tex_63.SampleLevel(uv + 63.0 * 0.001, 0);
+    acc += tex_64.SampleLevel(uv + 64.0 * 0.001, 0);
+    acc += tex_65.SampleLevel(uv + 65.0 * 0.001, 0);
+    acc += tex_66.SampleLevel(uv + 66.0 * 0.001, 0);
+    acc += tex_67.SampleLevel(uv + 67.0 * 0.001, 0);
+    acc += tex_68.SampleLevel(uv + 68.0 * 0.001, 0);
+    acc += tex_69.SampleLevel(uv + 69.0 * 0.001, 0);
+    acc += tex_70.SampleLevel(uv + 70.0 * 0.001, 0);
+    acc += tex_71.SampleLevel(uv + 71.0 * 0.001, 0);
+    acc += tex_72.SampleLevel(uv + 72.0 * 0.001, 0);
+    acc += tex_73.SampleLevel(uv + 73.0 * 0.001, 0);
+    acc += tex_74.SampleLevel(uv + 74.0 * 0.001, 0);
+    acc += tex_75.SampleLevel(uv + 75.0 * 0.001, 0);
+    acc += tex_76.SampleLevel(uv + 76.0 * 0.001, 0);
+    acc += tex_77.SampleLevel(uv + 77.0 * 0.001, 0);
+    acc += tex_78.SampleLevel(uv + 78.0 * 0.001, 0);
+    acc += tex_79.SampleLevel(uv + 79.0 * 0.001, 0);
+    acc += tex_80.SampleLevel(uv + 80.0 * 0.001, 0);
+    acc += tex_81.SampleLevel(uv + 81.0 * 0.001, 0);
+    acc += tex_82.SampleLevel(uv + 82.0 * 0.001, 0);
+    acc += tex_83.SampleLevel(uv + 83.0 * 0.001, 0);
+    acc += tex_84.SampleLevel(uv + 84.0 * 0.001, 0);
+    acc += tex_85.SampleLevel(uv + 85.0 * 0.001, 0);
+    acc += tex_86.SampleLevel(uv + 86.0 * 0.001, 0);
+    acc += tex_87.SampleLevel(uv + 87.0 * 0.001, 0);
+    acc += tex_88.SampleLevel(uv + 88.0 * 0.001, 0);
+    acc += tex_89.SampleLevel(uv + 89.0 * 0.001, 0);
+    acc += tex_90.SampleLevel(uv + 90.0 * 0.001, 0);
+    acc += tex_91.SampleLevel(uv + 91.0 * 0.001, 0);
+    acc += tex_92.SampleLevel(uv + 92.0 * 0.001, 0);
+    acc += tex_93.SampleLevel(uv + 93.0 * 0.001, 0);
+    acc += tex_94.SampleLevel(uv + 94.0 * 0.001, 0);
+    acc += tex_95.SampleLevel(uv + 95.0 * 0.001, 0);
+    acc += tex_96.SampleLevel(uv + 96.0 * 0.001, 0);
+    acc += tex_97.SampleLevel(uv + 97.0 * 0.001, 0);
+    acc += tex_98.SampleLevel(uv + 98.0 * 0.001, 0);
+    acc += tex_99.SampleLevel(uv + 99.0 * 0.001, 0);
+    acc += tex_100.SampleLevel(uv + 100.0 * 0.001, 0);
+    acc += tex_101.SampleLevel(uv + 101.0 * 0.001, 0);
+    acc += tex_102.SampleLevel(uv + 102.0 * 0.001, 0);
+    acc += tex_103.SampleLevel(uv + 103.0 * 0.001, 0);
+    acc += tex_104.SampleLevel(uv + 104.0 * 0.001, 0);
+    acc += tex_105.SampleLevel(uv + 105.0 * 0.001, 0);
+    acc += tex_106.SampleLevel(uv + 106.0 * 0.001, 0);
+    acc += tex_107.SampleLevel(uv + 107.0 * 0.001, 0);
+    acc += tex_108.SampleLevel(uv + 108.0 * 0.001, 0);
+    acc += tex_109.SampleLevel(uv + 109.0 * 0.001, 0);
+    acc += tex_110.SampleLevel(uv + 110.0 * 0.001, 0);
+    acc += tex_111.SampleLevel(uv + 111.0 * 0.001, 0);
+    acc += tex_112.SampleLevel(uv + 112.0 * 0.001, 0);
+    acc += tex_113.SampleLevel(uv + 113.0 * 0.001, 0);
+    acc += tex_114.SampleLevel(uv + 114.0 * 0.001, 0);
+    acc += tex_115.SampleLevel(uv + 115.0 * 0.001, 0);
+    acc += tex_116.SampleLevel(uv + 116.0 * 0.001, 0);
+    acc += tex_117.SampleLevel(uv + 117.0 * 0.001, 0);
+    acc += tex_118.SampleLevel(uv + 118.0 * 0.001, 0);
+    acc += tex_119.SampleLevel(uv + 119.0 * 0.001, 0);
+    acc += tex_120.SampleLevel(uv + 120.0 * 0.001, 0);
+    acc += tex_121.SampleLevel(uv + 121.0 * 0.001, 0);
+    acc += tex_122.SampleLevel(uv + 122.0 * 0.001, 0);
+    acc += tex_123.SampleLevel(uv + 123.0 * 0.001, 0);
+    acc += tex_124.SampleLevel(uv + 124.0 * 0.001, 0);
+    acc += tex_125.SampleLevel(uv + 125.0 * 0.001, 0);
+    acc += tex_126.SampleLevel(uv + 126.0 * 0.001, 0);
+    acc += tex_127.SampleLevel(uv + 127.0 * 0.001, 0);
+    acc += tex_128.SampleLevel(uv + 128.0 * 0.001, 0);
+    acc += tex_129.SampleLevel(uv + 129.0 * 0.001, 0);
+    acc += tex_130.SampleLevel(uv + 130.0 * 0.001, 0);
+    acc += tex_131.SampleLevel(uv + 131.0 * 0.001, 0);
+    acc += tex_132.SampleLevel(uv + 132.0 * 0.001, 0);
+    acc += tex_133.SampleLevel(uv + 133.0 * 0.001, 0);
+    acc += tex_134.SampleLevel(uv + 134.0 * 0.001, 0);
+    acc += tex_135.SampleLevel(uv + 135.0 * 0.001, 0);
+    acc += tex_136.SampleLevel(uv + 136.0 * 0.001, 0);
+    acc += tex_137.SampleLevel(uv + 137.0 * 0.001, 0);
+    acc += tex_138.SampleLevel(uv + 138.0 * 0.001, 0);
+    acc += tex_139.SampleLevel(uv + 139.0 * 0.001, 0);
+    acc += tex_140.SampleLevel(uv + 140.0 * 0.001, 0);
+    acc += tex_141.SampleLevel(uv + 141.0 * 0.001, 0);
+    acc += tex_142.SampleLevel(uv + 142.0 * 0.001, 0);
+    acc += tex_143.SampleLevel(uv + 143.0 * 0.001, 0);
+    acc += tex_144.SampleLevel(uv + 144.0 * 0.001, 0);
+    acc += tex_145.SampleLevel(uv + 145.0 * 0.001, 0);
+    acc += tex_146.SampleLevel(uv + 146.0 * 0.001, 0);
+    acc += tex_147.SampleLevel(uv + 147.0 * 0.001, 0);
+    acc += tex_148.SampleLevel(uv + 148.0 * 0.001, 0);
+    acc += tex_149.SampleLevel(uv + 149.0 * 0.001, 0);
+    acc += tex_150.SampleLevel(uv + 150.0 * 0.001, 0);
+    acc += tex_151.SampleLevel(uv + 151.0 * 0.001, 0);
+    acc += tex_152.SampleLevel(uv + 152.0 * 0.001, 0);
+    acc += tex_153.SampleLevel(uv + 153.0 * 0.001, 0);
+    acc += tex_154.SampleLevel(uv + 154.0 * 0.001, 0);
+    acc += tex_155.SampleLevel(uv + 155.0 * 0.001, 0);
+    acc += tex_156.SampleLevel(uv + 156.0 * 0.001, 0);
+    acc += tex_157.SampleLevel(uv + 157.0 * 0.001, 0);
+    acc += tex_158.SampleLevel(uv + 158.0 * 0.001, 0);
+    acc += tex_159.SampleLevel(uv + 159.0 * 0.001, 0);
+    acc += tex_160.SampleLevel(uv + 160.0 * 0.001, 0);
+    acc += tex_161.SampleLevel(uv + 161.0 * 0.001, 0);
+    acc += tex_162.SampleLevel(uv + 162.0 * 0.001, 0);
+    acc += tex_163.SampleLevel(uv + 163.0 * 0.001, 0);
+    acc += tex_164.SampleLevel(uv + 164.0 * 0.001, 0);
+    acc += tex_165.SampleLevel(uv + 165.0 * 0.001, 0);
+    acc += tex_166.SampleLevel(uv + 166.0 * 0.001, 0);
+    acc += tex_167.SampleLevel(uv + 167.0 * 0.001, 0);
+    acc += tex_168.SampleLevel(uv + 168.0 * 0.001, 0);
+    acc += tex_169.SampleLevel(uv + 169.0 * 0.001, 0);
+    acc += tex_170.SampleLevel(uv + 170.0 * 0.001, 0);
+    acc += tex_171.SampleLevel(uv + 171.0 * 0.001, 0);
+    acc += tex_172.SampleLevel(uv + 172.0 * 0.001, 0);
+    acc += tex_173.SampleLevel(uv + 173.0 * 0.001, 0);
+    acc += tex_174.SampleLevel(uv + 174.0 * 0.001, 0);
+    acc += tex_175.SampleLevel(uv + 175.0 * 0.001, 0);
+    acc += tex_176.SampleLevel(uv + 176.0 * 0.001, 0);
+    acc += tex_177.SampleLevel(uv + 177.0 * 0.001, 0);
+    acc += tex_178.SampleLevel(uv + 178.0 * 0.001, 0);
+    acc += tex_179.SampleLevel(uv + 179.0 * 0.001, 0);
+    acc += tex_180.SampleLevel(uv + 180.0 * 0.001, 0);
+    acc += tex_181.SampleLevel(uv + 181.0 * 0.001, 0);
+    acc += tex_182.SampleLevel(uv + 182.0 * 0.001, 0);
+    acc += tex_183.SampleLevel(uv + 183.0 * 0.001, 0);
+    acc += tex_184.SampleLevel(uv + 184.0 * 0.001, 0);
+    acc += tex_185.SampleLevel(uv + 185.0 * 0.001, 0);
+    acc += tex_186.SampleLevel(uv + 186.0 * 0.001, 0);
+    acc += tex_187.SampleLevel(uv + 187.0 * 0.001, 0);
+    acc += tex_188.SampleLevel(uv + 188.0 * 0.001, 0);
+    acc += tex_189.SampleLevel(uv + 189.0 * 0.001, 0);
+    acc += tex_190.SampleLevel(uv + 190.0 * 0.001, 0);
+    acc += tex_191.SampleLevel(uv + 191.0 * 0.001, 0);
+    acc += tex_192.SampleLevel(uv + 192.0 * 0.001, 0);
+    acc += tex_193.SampleLevel(uv + 193.0 * 0.001, 0);
+    acc += tex_194.SampleLevel(uv + 194.0 * 0.001, 0);
+    acc += tex_195.SampleLevel(uv + 195.0 * 0.001, 0);
+    acc += tex_196.SampleLevel(uv + 196.0 * 0.001, 0);
+    acc += tex_197.SampleLevel(uv + 197.0 * 0.001, 0);
+    acc += tex_198.SampleLevel(uv + 198.0 * 0.001, 0);
+    acc += tex_199.SampleLevel(uv + 199.0 * 0.001, 0);
+    acc += tex_200.SampleLevel(uv + 200.0 * 0.001, 0);
+    acc += tex_201.SampleLevel(uv + 201.0 * 0.001, 0);
+    acc += tex_202.SampleLevel(uv + 202.0 * 0.001, 0);
+    acc += tex_203.SampleLevel(uv + 203.0 * 0.001, 0);
+    acc += tex_204.SampleLevel(uv + 204.0 * 0.001, 0);
+    acc += tex_205.SampleLevel(uv + 205.0 * 0.001, 0);
+    acc += tex_206.SampleLevel(uv + 206.0 * 0.001, 0);
+    acc += tex_207.SampleLevel(uv + 207.0 * 0.001, 0);
+    acc += tex_208.SampleLevel(uv + 208.0 * 0.001, 0);
+    acc += tex_209.SampleLevel(uv + 209.0 * 0.001, 0);
+    acc += tex_210.SampleLevel(uv + 210.0 * 0.001, 0);
+    acc += tex_211.SampleLevel(uv + 211.0 * 0.001, 0);
+    acc += tex_212.SampleLevel(uv + 212.0 * 0.001, 0);
+    acc += tex_213.SampleLevel(uv + 213.0 * 0.001, 0);
+    acc += tex_214.SampleLevel(uv + 214.0 * 0.001, 0);
+    acc += tex_215.SampleLevel(uv + 215.0 * 0.001, 0);
+    acc += tex_216.SampleLevel(uv + 216.0 * 0.001, 0);
+    acc += tex_217.SampleLevel(uv + 217.0 * 0.001, 0);
+    acc += tex_218.SampleLevel(uv + 218.0 * 0.001, 0);
+    acc += tex_219.SampleLevel(uv + 219.0 * 0.001, 0);
+    acc += tex_220.SampleLevel(uv + 220.0 * 0.001, 0);
+    acc += tex_221.SampleLevel(uv + 221.0 * 0.001, 0);
+    acc += tex_222.SampleLevel(uv + 222.0 * 0.001, 0);
+    acc += tex_223.SampleLevel(uv + 223.0 * 0.001, 0);
+    acc += tex_224.SampleLevel(uv + 224.0 * 0.001, 0);
+    acc += tex_225.SampleLevel(uv + 225.0 * 0.001, 0);
+    acc += tex_226.SampleLevel(uv + 226.0 * 0.001, 0);
+    acc += tex_227.SampleLevel(uv + 227.0 * 0.001, 0);
+    acc += tex_228.SampleLevel(uv + 228.0 * 0.001, 0);
+    acc += tex_229.SampleLevel(uv + 229.0 * 0.001, 0);
+    acc += tex_230.SampleLevel(uv + 230.0 * 0.001, 0);
+    acc += tex_231.SampleLevel(uv + 231.0 * 0.001, 0);
+    acc += tex_232.SampleLevel(uv + 232.0 * 0.001, 0);
+    acc += tex_233.SampleLevel(uv + 233.0 * 0.001, 0);
+    acc += tex_234.SampleLevel(uv + 234.0 * 0.001, 0);
+    acc += tex_235.SampleLevel(uv + 235.0 * 0.001, 0);
+    acc += tex_236.SampleLevel(uv + 236.0 * 0.001, 0);
+    acc += tex_237.SampleLevel(uv + 237.0 * 0.001, 0);
+    acc += tex_238.SampleLevel(uv + 238.0 * 0.001, 0);
+    acc += tex_239.SampleLevel(uv + 239.0 * 0.001, 0);
+    acc += tex_240.SampleLevel(uv + 240.0 * 0.001, 0);
+    acc += tex_241.SampleLevel(uv + 241.0 * 0.001, 0);
+    acc += tex_242.SampleLevel(uv + 242.0 * 0.001, 0);
+    acc += tex_243.SampleLevel(uv + 243.0 * 0.001, 0);
+    acc += tex_244.SampleLevel(uv + 244.0 * 0.001, 0);
+    acc += tex_245.SampleLevel(uv + 245.0 * 0.001, 0);
+    acc += tex_246.SampleLevel(uv + 246.0 * 0.001, 0);
+    acc += tex_247.SampleLevel(uv + 247.0 * 0.001, 0);
+    acc += tex_248.SampleLevel(uv + 248.0 * 0.001, 0);
+    acc += tex_249.SampleLevel(uv + 249.0 * 0.001, 0);
+    acc += tex_250.SampleLevel(uv + 250.0 * 0.001, 0);
+    acc += tex_251.SampleLevel(uv + 251.0 * 0.001, 0);
+    acc += tex_252.SampleLevel(uv + 252.0 * 0.001, 0);
+    acc += tex_253.SampleLevel(uv + 253.0 * 0.001, 0);
+    acc += tex_254.SampleLevel(uv + 254.0 * 0.001, 0);
+    acc += tex_255.SampleLevel(uv + 255.0 * 0.001, 0);
+    outBuf[tid.x] = acc;
+}
+</pre></div><script>
+document.addEventListener('click', function (ev) {
+  var btn = ev.target.closest && ev.target.closest('button.copy');
+  if (!btn) return;
+  var el = document.getElementById(btn.getAttribute('data-copy'));
+  if (!el) return;
+  var text = el.textContent;
+  function flash(ok) {
+    btn.textContent = ok ? 'Copied' : 'Press Ctrl+C';
+    if (ok) btn.setAttribute('data-done', '1');
+    setTimeout(function () {
+      btn.textContent = 'Copy'; btn.removeAttribute('data-done');
+    }, 1400);
+  }
+  function fallback() {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta); flash(ok);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () { flash(true); }, fallback);
+  } else {
+    fallback();
+  }
+});
+</script></body>

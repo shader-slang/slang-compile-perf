@@ -17,8 +17,8 @@ code{background:#f0f1f3;padding:1px 5px;border-radius:3px;font-size:13px}
 conformance checking / witness synthesis in the front end (compiled to a
 .slang-module so the signal is sema, not codegen).
 
-Scaling null: n scales conforming structs against ONE interface; ideal checking cost is O(n).</p><p class='small'><b>bucket:</b> sema &nbsp;·&nbsp; <b>mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code></p><h2>Phase composition vs N (stacked sub-counters)</h2><p class='small'>compileInner split into phase buckets (named leaves + <code>(self)</code> residuals) stacked across the sweep sizes — the top edge is compileInner, so you can see <i>which</i> phase drives the scaling.</p><div class='chart'><svg xmlns="http://www.w3.org/2000/svg" width="1092" height="648" viewBox="0 0 1092 648" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
-<rect width="1092" height="648" fill="white"/>
+Scaling null: n scales conforming structs against ONE interface; ideal checking cost is O(n).</p><p class='small'><b>bucket:</b> sema &nbsp;·&nbsp; <b>mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code></p><h2>Phase composition vs N (stacked sub-counters)</h2><p class='small'>compileInner split into phase buckets (named leaves + <code>(self)</code> residuals) stacked across the sweep sizes — the top edge is compileInner, so you can see <i>which</i> phase drives the scaling.</p><div class='chart'><svg xmlns="http://www.w3.org/2000/svg" width="1092" height="684" viewBox="0 0 1092 684" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1092" height="684" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">conformance — phase composition vs N (v2026.16, median ms)</text>
 <text x="68" y="60" font-size="15" font-weight="600">conformance<tspan fill="#888" font-weight="400">  9.6× over N 600→4800</tspan></text>
 <line x1="68.0" y1="496.0" x2="1068.0" y2="496.0" stroke="#eee"/>
@@ -69,12 +69,22 @@ Scaling null: n scales conforming structs against ONE interface; ideal checking 
 <text x="562" y="600" fill="#222">performMandatoryEarlyInlining</text>
 <rect x="813" y="590" width="12" height="12" fill="#dadaeb"/>
 <text x="829" y="600" fill="#222">performForceInlining</text>
-<rect x="12" y="608" width="12" height="12" fill="#4a1486"/>
-<text x="28" y="618" fill="#222">linkAndOptimizeIR (self)</text>
-<rect x="279" y="608" width="12" height="12" fill="#fd8d3c"/>
-<text x="295" y="618" fill="#222">emitEntryPointsSourceFromIR</text>
-<rect x="546" y="608" width="12" height="12" fill="#e6550d"/>
-<text x="562" y="618" fill="#222">generateOutput (self)</text>
-<rect x="813" y="608" width="12" height="12" fill="#969696"/>
-<text x="829" y="618" fill="#222">compileInner (self)</text>
+<rect x="12" y="608" width="12" height="12" fill="#3f007d"/>
+<text x="28" y="618" fill="#222">deferBufferLoad</text>
+<rect x="279" y="608" width="12" height="12" fill="#54278f"/>
+<text x="295" y="618" fill="#222">simplifyNonSSAIR</text>
+<rect x="546" y="608" width="12" height="12" fill="#9970ab"/>
+<text x="562" y="618" fill="#222">lowerCombinedTextureSamplers</text>
+<rect x="813" y="608" width="12" height="12" fill="#c2a5cf"/>
+<text x="829" y="618" fill="#222">legalizeMatrixTypes</text>
+<rect x="12" y="626" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="636" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="279" y="626" width="12" height="12" fill="#fdd0a2"/>
+<text x="295" y="636" fill="#222">emitEntryPointsSourceFromIR (self)</text>
+<rect x="546" y="626" width="12" height="12" fill="#fd8d3c"/>
+<text x="562" y="636" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="813" y="626" width="12" height="12" fill="#e6550d"/>
+<text x="829" y="636" fill="#222">generateOutput (self)</text>
+<rect x="12" y="644" width="12" height="12" fill="#969696"/>
+<text x="28" y="654" fill="#222">compileInner (self)</text>
 </svg></div><h2>Scaling analysis</h2><p class='small'>floor-subtracted power-law fit <code>(t − floor) = a·N<sup>k</sup></code>; <b>floor</b> = the <code>minimal</code> workload (fixed per-compile cost), <b>k</b> the global exponent, <b>top-2×</b> the local high-end doubling ratio.</p><table><tr><th class=num>N range</th><th class=num>floor (ms)</th><th class=num>k (work)</th><th class=num>fit R²</th><th class=num>t(N<sub>min</sub>)</th><th class=num>t(N<sub>max</sub>)</th><th class=num>top-2×</th></tr><tr><td class=num>600–4800</td><td class=num>11</td><td class='num reg'>1.17</td><td class=num>0.994</td><td class=num>50</td><td class=num>481</td><td class='num reg'>2.41×</td></tr></table><h2>Growth attribution (N=600 &rarr; N=4800)</h2><p class='small'>compileInner grows by <b>431 ms</b> across the sweep; the mutually-exclusive phase buckets below partition that growth exactly (no nested-timer double counting). <b>&times; lin</b> is the same metric as the top-level panels, per bucket: the end point vs a linear expectation anchored to the bucket's share of the <code>minimal</code> floor and fitted on the low-N half — 1.0 = grew exactly linearly, &gt;1 bends up. The super-linearity lives where &times; lin (and k) are red.</p><table><tr><th>bucket</th><th class=num>t@N=600</th><th class=num>t@N=4800</th><th class=num>&Delta; ms</th><th class=num>share</th><th class=num>&times; lin</th><th class=num>&prop;N<sup>k</sup></th></tr><tr><td>generateIR</td><td class=num>20</td><td class=num>187</td><td class=num>+166</td><td class=num>39%</td><td class='num reg'>1.25&times;</td><td class='num flat'>1.10</td></tr><tr><td>generateOutput (self)</td><td class=num>14</td><td class=num>163</td><td class=num>+149</td><td class=num>34%</td><td class='num reg'>1.23&times;</td><td class='num reg'>1.19</td></tr><tr><td>SemanticChecking</td><td class=num>11</td><td class=num>98</td><td class=num>+87</td><td class=num>20%</td><td class='num reg'>1.50&times;</td><td class='num reg'>1.41</td></tr><tr><td>parseTranslationUnit</td><td class=num>4</td><td class=num>30</td><td class=num>+26</td><td class=num>6%</td><td class='num flat'>0.97&times;</td><td class='num flat'>1.00</td></tr></table><p class='small'><b>Near-constant</b> (&le;2% of growth each): frontEndExecute (self) (1&rarr;4 ms), compileInner (self) (0&rarr;0 ms).</p><h2>Sweep numbers (median ms)</h2><table><tr><th class=num>N</th><th class=num>compileInner</th><th class=num>SemanticChecking</th><th class=num>frontEndExecute</th></tr><tr><td class=num>600</td><td class=num>50</td><td class=num>11</td><td class=num>36</td></tr><tr><td class=num>1200</td><td class=num>112</td><td class=num>22</td><td class=num>69</td></tr><tr><td class=num>2400</td><td class=num>200</td><td class=num>41</td><td class=num>136</td></tr><tr><td class=num>4800</td><td class=num>481</td><td class=num>98</td><td class=num>320</td></tr></table></div>

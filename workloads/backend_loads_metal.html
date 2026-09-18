@@ -1,0 +1,821 @@
+<!doctype html><meta charset=utf-8><title>backend_loads_metal — phase breakdown</title><style>
+.cbox{position:relative}
+.cbox>button.copy{position:absolute;top:8px;right:8px;z-index:1;
+  font:11px/1 -apple-system,Segoe UI,Roboto,sans-serif;padding:5px 9px;
+  color:#24292f;background:#fff;border:1px solid #d0d7de;border-radius:5px;
+  cursor:pointer;opacity:.75}
+.cbox>button.copy:hover{opacity:1;background:#f3f4f6}
+.cbox>button.copy[data-done]{color:#1a7f37;border-color:#1a7f37}
+</style><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; back</a></p><h1 style='font-size:21px;margin:0 0 6px'>backend_loads_metal</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>n textures, each sampled once, in a single entry point.
+
+The axis is the number of LOADS in one function, not the number of
+resources -- 64 textures sampled 8 times reproduces the same cost. This is
+the shape any material system produces after inlining, and it is what
+drives the load/store redundancy machinery: `removeRedundancyInFunc` -&gt;
+`eliminateRedundantLoadStore` -&gt; `tryRemoveRedundantLoad`, whose alias and
+side-effect queries are per-load.
+
+Which targets pay depends on where shader parameters live. On targets that
+move globals into an explicit global context (CUDA, CPU) every parameter
+access becomes a `Load` and `deferBufferLoad` runs the redundancy pass over
+all of them; on SPIR-V they stay globals and there is nearly nothing to do.
+`simplifyNonSSAIR` runs the same machinery once more after phi elimination
+on every target. Measured at N=512 on ToT: cuda 17x spirv.
+
+Scaling null: n scales loads, each O(1); ideal cost is O(n).</p><p style='color:#666;font-size:13px'><b>bucket:</b> backend_legalize &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target metal</code> &nbsp;·&nbsp; <b>default N:</b> 320</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="716" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">backend_loads_metal — Daily tip-of-tree (last 30 days) (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">backend_loads_metal<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">50</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">100</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">08-20</text>
+<line x1="103.9" y1="516.0" x2="103.9" y2="519.0" stroke="#999"/>
+<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">08-21</text>
+<line x1="139.7" y1="516.0" x2="139.7" y2="519.0" stroke="#999"/>
+<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">08-22</text>
+<line x1="175.6" y1="516.0" x2="175.6" y2="519.0" stroke="#999"/>
+<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">08-23</text>
+<line x1="211.4" y1="516.0" x2="211.4" y2="519.0" stroke="#999"/>
+<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">08-24</text>
+<line x1="247.3" y1="516.0" x2="247.3" y2="519.0" stroke="#999"/>
+<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">08-25</text>
+<line x1="283.2" y1="516.0" x2="283.2" y2="519.0" stroke="#999"/>
+<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">08-26</text>
+<line x1="319.0" y1="516.0" x2="319.0" y2="519.0" stroke="#999"/>
+<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">08-27</text>
+<line x1="354.9" y1="516.0" x2="354.9" y2="519.0" stroke="#999"/>
+<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">08-28</text>
+<line x1="390.8" y1="516.0" x2="390.8" y2="519.0" stroke="#999"/>
+<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">08-29</text>
+<line x1="426.6" y1="516.0" x2="426.6" y2="519.0" stroke="#999"/>
+<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">08-30</text>
+<line x1="462.5" y1="516.0" x2="462.5" y2="519.0" stroke="#999"/>
+<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">08-31</text>
+<line x1="498.3" y1="516.0" x2="498.3" y2="519.0" stroke="#999"/>
+<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-01</text>
+<line x1="534.2" y1="516.0" x2="534.2" y2="519.0" stroke="#999"/>
+<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-02</text>
+<line x1="570.1" y1="516.0" x2="570.1" y2="519.0" stroke="#999"/>
+<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-03</text>
+<line x1="605.9" y1="516.0" x2="605.9" y2="519.0" stroke="#999"/>
+<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-04</text>
+<line x1="641.8" y1="516.0" x2="641.8" y2="519.0" stroke="#999"/>
+<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-05</text>
+<line x1="677.7" y1="516.0" x2="677.7" y2="519.0" stroke="#999"/>
+<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-06</text>
+<line x1="713.5" y1="516.0" x2="713.5" y2="519.0" stroke="#999"/>
+<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-07</text>
+<line x1="749.4" y1="516.0" x2="749.4" y2="519.0" stroke="#999"/>
+<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-08</text>
+<line x1="785.2" y1="516.0" x2="785.2" y2="519.0" stroke="#999"/>
+<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-09</text>
+<line x1="821.1" y1="516.0" x2="821.1" y2="519.0" stroke="#999"/>
+<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-10</text>
+<line x1="857.0" y1="516.0" x2="857.0" y2="519.0" stroke="#999"/>
+<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-11</text>
+<line x1="892.8" y1="516.0" x2="892.8" y2="519.0" stroke="#999"/>
+<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-12</text>
+<line x1="928.7" y1="516.0" x2="928.7" y2="519.0" stroke="#999"/>
+<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-13</text>
+<line x1="964.6" y1="516.0" x2="964.6" y2="519.0" stroke="#999"/>
+<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-14</text>
+<line x1="1000.4" y1="516.0" x2="1000.4" y2="519.0" stroke="#999"/>
+<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-15</text>
+<line x1="1036.3" y1="516.0" x2="1036.3" y2="519.0" stroke="#999"/>
+<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-16</text>
+<line x1="1072.1" y1="516.0" x2="1072.1" y2="519.0" stroke="#999"/>
+<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-17</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-18</text>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#3f007d"/>
+<text x="28" y="650" fill="#222">deferBufferLoad</text>
+<rect x="289" y="640" width="12" height="12" fill="#54278f"/>
+<text x="305" y="650" fill="#222">simplifyNonSSAIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#9970ab"/>
+<text x="582" y="650" fill="#222">lowerCombinedTextureSamplers</text>
+<rect x="843" y="640" width="12" height="12" fill="#c2a5cf"/>
+<text x="859" y="650" fill="#222">legalizeMatrixTypes</text>
+<rect x="12" y="658" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="668" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="658" width="12" height="12" fill="#fdd0a2"/>
+<text x="305" y="668" fill="#222">emitEntryPointsSourceFromIR (self)</text>
+<rect x="566" y="658" width="12" height="12" fill="#fd8d3c"/>
+<text x="582" y="668" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="843" y="658" width="12" height="12" fill="#e6550d"/>
+<text x="859" y="668" fill="#222">generateOutput (self)</text>
+<rect x="12" y="676" width="12" height="12" fill="#969696"/>
+<text x="28" y="686" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only backend_loads_metal --label repro --gen-dir repro-backend_loads_metal</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 320), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>resource_load_chain.slang <span style='font-weight:400;color:#888'>(652 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+Texture2D&lt;float4&gt; tex_0;
+Texture2D&lt;float4&gt; tex_1;
+Texture2D&lt;float4&gt; tex_2;
+Texture2D&lt;float4&gt; tex_3;
+Texture2D&lt;float4&gt; tex_4;
+Texture2D&lt;float4&gt; tex_5;
+Texture2D&lt;float4&gt; tex_6;
+Texture2D&lt;float4&gt; tex_7;
+Texture2D&lt;float4&gt; tex_8;
+Texture2D&lt;float4&gt; tex_9;
+Texture2D&lt;float4&gt; tex_10;
+Texture2D&lt;float4&gt; tex_11;
+Texture2D&lt;float4&gt; tex_12;
+Texture2D&lt;float4&gt; tex_13;
+Texture2D&lt;float4&gt; tex_14;
+Texture2D&lt;float4&gt; tex_15;
+Texture2D&lt;float4&gt; tex_16;
+Texture2D&lt;float4&gt; tex_17;
+Texture2D&lt;float4&gt; tex_18;
+Texture2D&lt;float4&gt; tex_19;
+Texture2D&lt;float4&gt; tex_20;
+Texture2D&lt;float4&gt; tex_21;
+Texture2D&lt;float4&gt; tex_22;
+Texture2D&lt;float4&gt; tex_23;
+Texture2D&lt;float4&gt; tex_24;
+Texture2D&lt;float4&gt; tex_25;
+Texture2D&lt;float4&gt; tex_26;
+Texture2D&lt;float4&gt; tex_27;
+Texture2D&lt;float4&gt; tex_28;
+Texture2D&lt;float4&gt; tex_29;
+Texture2D&lt;float4&gt; tex_30;
+Texture2D&lt;float4&gt; tex_31;
+Texture2D&lt;float4&gt; tex_32;
+Texture2D&lt;float4&gt; tex_33;
+Texture2D&lt;float4&gt; tex_34;
+Texture2D&lt;float4&gt; tex_35;
+Texture2D&lt;float4&gt; tex_36;
+Texture2D&lt;float4&gt; tex_37;
+Texture2D&lt;float4&gt; tex_38;
+Texture2D&lt;float4&gt; tex_39;
+Texture2D&lt;float4&gt; tex_40;
+Texture2D&lt;float4&gt; tex_41;
+Texture2D&lt;float4&gt; tex_42;
+Texture2D&lt;float4&gt; tex_43;
+Texture2D&lt;float4&gt; tex_44;
+Texture2D&lt;float4&gt; tex_45;
+Texture2D&lt;float4&gt; tex_46;
+Texture2D&lt;float4&gt; tex_47;
+Texture2D&lt;float4&gt; tex_48;
+Texture2D&lt;float4&gt; tex_49;
+Texture2D&lt;float4&gt; tex_50;
+Texture2D&lt;float4&gt; tex_51;
+Texture2D&lt;float4&gt; tex_52;
+Texture2D&lt;float4&gt; tex_53;
+Texture2D&lt;float4&gt; tex_54;
+Texture2D&lt;float4&gt; tex_55;
+Texture2D&lt;float4&gt; tex_56;
+Texture2D&lt;float4&gt; tex_57;
+Texture2D&lt;float4&gt; tex_58;
+Texture2D&lt;float4&gt; tex_59;
+Texture2D&lt;float4&gt; tex_60;
+Texture2D&lt;float4&gt; tex_61;
+Texture2D&lt;float4&gt; tex_62;
+Texture2D&lt;float4&gt; tex_63;
+Texture2D&lt;float4&gt; tex_64;
+Texture2D&lt;float4&gt; tex_65;
+Texture2D&lt;float4&gt; tex_66;
+Texture2D&lt;float4&gt; tex_67;
+Texture2D&lt;float4&gt; tex_68;
+Texture2D&lt;float4&gt; tex_69;
+Texture2D&lt;float4&gt; tex_70;
+Texture2D&lt;float4&gt; tex_71;
+Texture2D&lt;float4&gt; tex_72;
+Texture2D&lt;float4&gt; tex_73;
+Texture2D&lt;float4&gt; tex_74;
+Texture2D&lt;float4&gt; tex_75;
+Texture2D&lt;float4&gt; tex_76;
+Texture2D&lt;float4&gt; tex_77;
+Texture2D&lt;float4&gt; tex_78;
+Texture2D&lt;float4&gt; tex_79;
+Texture2D&lt;float4&gt; tex_80;
+Texture2D&lt;float4&gt; tex_81;
+Texture2D&lt;float4&gt; tex_82;
+Texture2D&lt;float4&gt; tex_83;
+Texture2D&lt;float4&gt; tex_84;
+Texture2D&lt;float4&gt; tex_85;
+Texture2D&lt;float4&gt; tex_86;
+Texture2D&lt;float4&gt; tex_87;
+Texture2D&lt;float4&gt; tex_88;
+Texture2D&lt;float4&gt; tex_89;
+Texture2D&lt;float4&gt; tex_90;
+Texture2D&lt;float4&gt; tex_91;
+Texture2D&lt;float4&gt; tex_92;
+Texture2D&lt;float4&gt; tex_93;
+Texture2D&lt;float4&gt; tex_94;
+Texture2D&lt;float4&gt; tex_95;
+Texture2D&lt;float4&gt; tex_96;
+Texture2D&lt;float4&gt; tex_97;
+Texture2D&lt;float4&gt; tex_98;
+Texture2D&lt;float4&gt; tex_99;
+Texture2D&lt;float4&gt; tex_100;
+Texture2D&lt;float4&gt; tex_101;
+Texture2D&lt;float4&gt; tex_102;
+Texture2D&lt;float4&gt; tex_103;
+Texture2D&lt;float4&gt; tex_104;
+Texture2D&lt;float4&gt; tex_105;
+Texture2D&lt;float4&gt; tex_106;
+Texture2D&lt;float4&gt; tex_107;
+Texture2D&lt;float4&gt; tex_108;
+Texture2D&lt;float4&gt; tex_109;
+Texture2D&lt;float4&gt; tex_110;
+Texture2D&lt;float4&gt; tex_111;
+Texture2D&lt;float4&gt; tex_112;
+Texture2D&lt;float4&gt; tex_113;
+Texture2D&lt;float4&gt; tex_114;
+Texture2D&lt;float4&gt; tex_115;
+Texture2D&lt;float4&gt; tex_116;
+Texture2D&lt;float4&gt; tex_117;
+Texture2D&lt;float4&gt; tex_118;
+Texture2D&lt;float4&gt; tex_119;
+Texture2D&lt;float4&gt; tex_120;
+Texture2D&lt;float4&gt; tex_121;
+Texture2D&lt;float4&gt; tex_122;
+Texture2D&lt;float4&gt; tex_123;
+Texture2D&lt;float4&gt; tex_124;
+Texture2D&lt;float4&gt; tex_125;
+Texture2D&lt;float4&gt; tex_126;
+Texture2D&lt;float4&gt; tex_127;
+Texture2D&lt;float4&gt; tex_128;
+Texture2D&lt;float4&gt; tex_129;
+Texture2D&lt;float4&gt; tex_130;
+Texture2D&lt;float4&gt; tex_131;
+Texture2D&lt;float4&gt; tex_132;
+Texture2D&lt;float4&gt; tex_133;
+Texture2D&lt;float4&gt; tex_134;
+Texture2D&lt;float4&gt; tex_135;
+Texture2D&lt;float4&gt; tex_136;
+Texture2D&lt;float4&gt; tex_137;
+Texture2D&lt;float4&gt; tex_138;
+Texture2D&lt;float4&gt; tex_139;
+Texture2D&lt;float4&gt; tex_140;
+Texture2D&lt;float4&gt; tex_141;
+Texture2D&lt;float4&gt; tex_142;
+Texture2D&lt;float4&gt; tex_143;
+Texture2D&lt;float4&gt; tex_144;
+Texture2D&lt;float4&gt; tex_145;
+Texture2D&lt;float4&gt; tex_146;
+Texture2D&lt;float4&gt; tex_147;
+Texture2D&lt;float4&gt; tex_148;
+Texture2D&lt;float4&gt; tex_149;
+Texture2D&lt;float4&gt; tex_150;
+Texture2D&lt;float4&gt; tex_151;
+Texture2D&lt;float4&gt; tex_152;
+Texture2D&lt;float4&gt; tex_153;
+Texture2D&lt;float4&gt; tex_154;
+Texture2D&lt;float4&gt; tex_155;
+Texture2D&lt;float4&gt; tex_156;
+Texture2D&lt;float4&gt; tex_157;
+Texture2D&lt;float4&gt; tex_158;
+Texture2D&lt;float4&gt; tex_159;
+Texture2D&lt;float4&gt; tex_160;
+Texture2D&lt;float4&gt; tex_161;
+Texture2D&lt;float4&gt; tex_162;
+Texture2D&lt;float4&gt; tex_163;
+Texture2D&lt;float4&gt; tex_164;
+Texture2D&lt;float4&gt; tex_165;
+Texture2D&lt;float4&gt; tex_166;
+Texture2D&lt;float4&gt; tex_167;
+Texture2D&lt;float4&gt; tex_168;
+Texture2D&lt;float4&gt; tex_169;
+Texture2D&lt;float4&gt; tex_170;
+Texture2D&lt;float4&gt; tex_171;
+Texture2D&lt;float4&gt; tex_172;
+Texture2D&lt;float4&gt; tex_173;
+Texture2D&lt;float4&gt; tex_174;
+Texture2D&lt;float4&gt; tex_175;
+Texture2D&lt;float4&gt; tex_176;
+Texture2D&lt;float4&gt; tex_177;
+Texture2D&lt;float4&gt; tex_178;
+Texture2D&lt;float4&gt; tex_179;
+Texture2D&lt;float4&gt; tex_180;
+Texture2D&lt;float4&gt; tex_181;
+Texture2D&lt;float4&gt; tex_182;
+Texture2D&lt;float4&gt; tex_183;
+Texture2D&lt;float4&gt; tex_184;
+Texture2D&lt;float4&gt; tex_185;
+Texture2D&lt;float4&gt; tex_186;
+Texture2D&lt;float4&gt; tex_187;
+Texture2D&lt;float4&gt; tex_188;
+Texture2D&lt;float4&gt; tex_189;
+Texture2D&lt;float4&gt; tex_190;
+Texture2D&lt;float4&gt; tex_191;
+Texture2D&lt;float4&gt; tex_192;
+Texture2D&lt;float4&gt; tex_193;
+Texture2D&lt;float4&gt; tex_194;
+Texture2D&lt;float4&gt; tex_195;
+Texture2D&lt;float4&gt; tex_196;
+Texture2D&lt;float4&gt; tex_197;
+Texture2D&lt;float4&gt; tex_198;
+Texture2D&lt;float4&gt; tex_199;
+Texture2D&lt;float4&gt; tex_200;
+Texture2D&lt;float4&gt; tex_201;
+Texture2D&lt;float4&gt; tex_202;
+Texture2D&lt;float4&gt; tex_203;
+Texture2D&lt;float4&gt; tex_204;
+Texture2D&lt;float4&gt; tex_205;
+Texture2D&lt;float4&gt; tex_206;
+Texture2D&lt;float4&gt; tex_207;
+Texture2D&lt;float4&gt; tex_208;
+Texture2D&lt;float4&gt; tex_209;
+Texture2D&lt;float4&gt; tex_210;
+Texture2D&lt;float4&gt; tex_211;
+Texture2D&lt;float4&gt; tex_212;
+Texture2D&lt;float4&gt; tex_213;
+Texture2D&lt;float4&gt; tex_214;
+Texture2D&lt;float4&gt; tex_215;
+Texture2D&lt;float4&gt; tex_216;
+Texture2D&lt;float4&gt; tex_217;
+Texture2D&lt;float4&gt; tex_218;
+Texture2D&lt;float4&gt; tex_219;
+Texture2D&lt;float4&gt; tex_220;
+Texture2D&lt;float4&gt; tex_221;
+Texture2D&lt;float4&gt; tex_222;
+Texture2D&lt;float4&gt; tex_223;
+Texture2D&lt;float4&gt; tex_224;
+Texture2D&lt;float4&gt; tex_225;
+Texture2D&lt;float4&gt; tex_226;
+Texture2D&lt;float4&gt; tex_227;
+Texture2D&lt;float4&gt; tex_228;
+Texture2D&lt;float4&gt; tex_229;
+Texture2D&lt;float4&gt; tex_230;
+Texture2D&lt;float4&gt; tex_231;
+Texture2D&lt;float4&gt; tex_232;
+Texture2D&lt;float4&gt; tex_233;
+Texture2D&lt;float4&gt; tex_234;
+Texture2D&lt;float4&gt; tex_235;
+Texture2D&lt;float4&gt; tex_236;
+Texture2D&lt;float4&gt; tex_237;
+Texture2D&lt;float4&gt; tex_238;
+Texture2D&lt;float4&gt; tex_239;
+Texture2D&lt;float4&gt; tex_240;
+Texture2D&lt;float4&gt; tex_241;
+Texture2D&lt;float4&gt; tex_242;
+Texture2D&lt;float4&gt; tex_243;
+Texture2D&lt;float4&gt; tex_244;
+Texture2D&lt;float4&gt; tex_245;
+Texture2D&lt;float4&gt; tex_246;
+Texture2D&lt;float4&gt; tex_247;
+Texture2D&lt;float4&gt; tex_248;
+Texture2D&lt;float4&gt; tex_249;
+Texture2D&lt;float4&gt; tex_250;
+Texture2D&lt;float4&gt; tex_251;
+Texture2D&lt;float4&gt; tex_252;
+Texture2D&lt;float4&gt; tex_253;
+Texture2D&lt;float4&gt; tex_254;
+Texture2D&lt;float4&gt; tex_255;
+Texture2D&lt;float4&gt; tex_256;
+Texture2D&lt;float4&gt; tex_257;
+Texture2D&lt;float4&gt; tex_258;
+Texture2D&lt;float4&gt; tex_259;
+Texture2D&lt;float4&gt; tex_260;
+Texture2D&lt;float4&gt; tex_261;
+Texture2D&lt;float4&gt; tex_262;
+Texture2D&lt;float4&gt; tex_263;
+Texture2D&lt;float4&gt; tex_264;
+Texture2D&lt;float4&gt; tex_265;
+Texture2D&lt;float4&gt; tex_266;
+Texture2D&lt;float4&gt; tex_267;
+Texture2D&lt;float4&gt; tex_268;
+Texture2D&lt;float4&gt; tex_269;
+Texture2D&lt;float4&gt; tex_270;
+Texture2D&lt;float4&gt; tex_271;
+Texture2D&lt;float4&gt; tex_272;
+Texture2D&lt;float4&gt; tex_273;
+Texture2D&lt;float4&gt; tex_274;
+Texture2D&lt;float4&gt; tex_275;
+Texture2D&lt;float4&gt; tex_276;
+Texture2D&lt;float4&gt; tex_277;
+Texture2D&lt;float4&gt; tex_278;
+Texture2D&lt;float4&gt; tex_279;
+Texture2D&lt;float4&gt; tex_280;
+Texture2D&lt;float4&gt; tex_281;
+Texture2D&lt;float4&gt; tex_282;
+Texture2D&lt;float4&gt; tex_283;
+Texture2D&lt;float4&gt; tex_284;
+Texture2D&lt;float4&gt; tex_285;
+Texture2D&lt;float4&gt; tex_286;
+Texture2D&lt;float4&gt; tex_287;
+Texture2D&lt;float4&gt; tex_288;
+Texture2D&lt;float4&gt; tex_289;
+Texture2D&lt;float4&gt; tex_290;
+Texture2D&lt;float4&gt; tex_291;
+Texture2D&lt;float4&gt; tex_292;
+Texture2D&lt;float4&gt; tex_293;
+Texture2D&lt;float4&gt; tex_294;
+Texture2D&lt;float4&gt; tex_295;
+Texture2D&lt;float4&gt; tex_296;
+Texture2D&lt;float4&gt; tex_297;
+Texture2D&lt;float4&gt; tex_298;
+Texture2D&lt;float4&gt; tex_299;
+Texture2D&lt;float4&gt; tex_300;
+Texture2D&lt;float4&gt; tex_301;
+Texture2D&lt;float4&gt; tex_302;
+Texture2D&lt;float4&gt; tex_303;
+Texture2D&lt;float4&gt; tex_304;
+Texture2D&lt;float4&gt; tex_305;
+Texture2D&lt;float4&gt; tex_306;
+Texture2D&lt;float4&gt; tex_307;
+Texture2D&lt;float4&gt; tex_308;
+Texture2D&lt;float4&gt; tex_309;
+Texture2D&lt;float4&gt; tex_310;
+Texture2D&lt;float4&gt; tex_311;
+Texture2D&lt;float4&gt; tex_312;
+Texture2D&lt;float4&gt; tex_313;
+Texture2D&lt;float4&gt; tex_314;
+Texture2D&lt;float4&gt; tex_315;
+Texture2D&lt;float4&gt; tex_316;
+Texture2D&lt;float4&gt; tex_317;
+Texture2D&lt;float4&gt; tex_318;
+Texture2D&lt;float4&gt; tex_319;
+SamplerState samp;
+RWStructuredBuffer&lt;float4&gt; outBuf;
+
+[shader("compute")]
+[numthreads(8,8,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float2 uv = float2(tid.xy) * 0.01;
+    float4 acc = 0.0;
+    acc += tex_0.SampleLevel(samp, uv + 0.0 * 0.001, 0);
+    acc += tex_1.SampleLevel(samp, uv + 1.0 * 0.001, 0);
+    acc += tex_2.SampleLevel(samp, uv + 2.0 * 0.001, 0);
+    acc += tex_3.SampleLevel(samp, uv + 3.0 * 0.001, 0);
+    acc += tex_4.SampleLevel(samp, uv + 4.0 * 0.001, 0);
+    acc += tex_5.SampleLevel(samp, uv + 5.0 * 0.001, 0);
+    acc += tex_6.SampleLevel(samp, uv + 6.0 * 0.001, 0);
+    acc += tex_7.SampleLevel(samp, uv + 7.0 * 0.001, 0);
+    acc += tex_8.SampleLevel(samp, uv + 8.0 * 0.001, 0);
+    acc += tex_9.SampleLevel(samp, uv + 9.0 * 0.001, 0);
+    acc += tex_10.SampleLevel(samp, uv + 10.0 * 0.001, 0);
+    acc += tex_11.SampleLevel(samp, uv + 11.0 * 0.001, 0);
+    acc += tex_12.SampleLevel(samp, uv + 12.0 * 0.001, 0);
+    acc += tex_13.SampleLevel(samp, uv + 13.0 * 0.001, 0);
+    acc += tex_14.SampleLevel(samp, uv + 14.0 * 0.001, 0);
+    acc += tex_15.SampleLevel(samp, uv + 15.0 * 0.001, 0);
+    acc += tex_16.SampleLevel(samp, uv + 16.0 * 0.001, 0);
+    acc += tex_17.SampleLevel(samp, uv + 17.0 * 0.001, 0);
+    acc += tex_18.SampleLevel(samp, uv + 18.0 * 0.001, 0);
+    acc += tex_19.SampleLevel(samp, uv + 19.0 * 0.001, 0);
+    acc += tex_20.SampleLevel(samp, uv + 20.0 * 0.001, 0);
+    acc += tex_21.SampleLevel(samp, uv + 21.0 * 0.001, 0);
+    acc += tex_22.SampleLevel(samp, uv + 22.0 * 0.001, 0);
+    acc += tex_23.SampleLevel(samp, uv + 23.0 * 0.001, 0);
+    acc += tex_24.SampleLevel(samp, uv + 24.0 * 0.001, 0);
+    acc += tex_25.SampleLevel(samp, uv + 25.0 * 0.001, 0);
+    acc += tex_26.SampleLevel(samp, uv + 26.0 * 0.001, 0);
+    acc += tex_27.SampleLevel(samp, uv + 27.0 * 0.001, 0);
+    acc += tex_28.SampleLevel(samp, uv + 28.0 * 0.001, 0);
+    acc += tex_29.SampleLevel(samp, uv + 29.0 * 0.001, 0);
+    acc += tex_30.SampleLevel(samp, uv + 30.0 * 0.001, 0);
+    acc += tex_31.SampleLevel(samp, uv + 31.0 * 0.001, 0);
+    acc += tex_32.SampleLevel(samp, uv + 32.0 * 0.001, 0);
+    acc += tex_33.SampleLevel(samp, uv + 33.0 * 0.001, 0);
+    acc += tex_34.SampleLevel(samp, uv + 34.0 * 0.001, 0);
+    acc += tex_35.SampleLevel(samp, uv + 35.0 * 0.001, 0);
+    acc += tex_36.SampleLevel(samp, uv + 36.0 * 0.001, 0);
+    acc += tex_37.SampleLevel(samp, uv + 37.0 * 0.001, 0);
+    acc += tex_38.SampleLevel(samp, uv + 38.0 * 0.001, 0);
+    acc += tex_39.SampleLevel(samp, uv + 39.0 * 0.001, 0);
+    acc += tex_40.SampleLevel(samp, uv + 40.0 * 0.001, 0);
+    acc += tex_41.SampleLevel(samp, uv + 41.0 * 0.001, 0);
+    acc += tex_42.SampleLevel(samp, uv + 42.0 * 0.001, 0);
+    acc += tex_43.SampleLevel(samp, uv + 43.0 * 0.001, 0);
+    acc += tex_44.SampleLevel(samp, uv + 44.0 * 0.001, 0);
+    acc += tex_45.SampleLevel(samp, uv + 45.0 * 0.001, 0);
+    acc += tex_46.SampleLevel(samp, uv + 46.0 * 0.001, 0);
+    acc += tex_47.SampleLevel(samp, uv + 47.0 * 0.001, 0);
+    acc += tex_48.SampleLevel(samp, uv + 48.0 * 0.001, 0);
+    acc += tex_49.SampleLevel(samp, uv + 49.0 * 0.001, 0);
+    acc += tex_50.SampleLevel(samp, uv + 50.0 * 0.001, 0);
+    acc += tex_51.SampleLevel(samp, uv + 51.0 * 0.001, 0);
+    acc += tex_52.SampleLevel(samp, uv + 52.0 * 0.001, 0);
+    acc += tex_53.SampleLevel(samp, uv + 53.0 * 0.001, 0);
+    acc += tex_54.SampleLevel(samp, uv + 54.0 * 0.001, 0);
+    acc += tex_55.SampleLevel(samp, uv + 55.0 * 0.001, 0);
+    acc += tex_56.SampleLevel(samp, uv + 56.0 * 0.001, 0);
+    acc += tex_57.SampleLevel(samp, uv + 57.0 * 0.001, 0);
+    acc += tex_58.SampleLevel(samp, uv + 58.0 * 0.001, 0);
+    acc += tex_59.SampleLevel(samp, uv + 59.0 * 0.001, 0);
+    acc += tex_60.SampleLevel(samp, uv + 60.0 * 0.001, 0);
+    acc += tex_61.SampleLevel(samp, uv + 61.0 * 0.001, 0);
+    acc += tex_62.SampleLevel(samp, uv + 62.0 * 0.001, 0);
+    acc += tex_63.SampleLevel(samp, uv + 63.0 * 0.001, 0);
+    acc += tex_64.SampleLevel(samp, uv + 64.0 * 0.001, 0);
+    acc += tex_65.SampleLevel(samp, uv + 65.0 * 0.001, 0);
+    acc += tex_66.SampleLevel(samp, uv + 66.0 * 0.001, 0);
+    acc += tex_67.SampleLevel(samp, uv + 67.0 * 0.001, 0);
+    acc += tex_68.SampleLevel(samp, uv + 68.0 * 0.001, 0);
+    acc += tex_69.SampleLevel(samp, uv + 69.0 * 0.001, 0);
+    acc += tex_70.SampleLevel(samp, uv + 70.0 * 0.001, 0);
+    acc += tex_71.SampleLevel(samp, uv + 71.0 * 0.001, 0);
+    acc += tex_72.SampleLevel(samp, uv + 72.0 * 0.001, 0);
+    acc += tex_73.SampleLevel(samp, uv + 73.0 * 0.001, 0);
+    acc += tex_74.SampleLevel(samp, uv + 74.0 * 0.001, 0);
+    acc += tex_75.SampleLevel(samp, uv + 75.0 * 0.001, 0);
+    acc += tex_76.SampleLevel(samp, uv + 76.0 * 0.001, 0);
+    acc += tex_77.SampleLevel(samp, uv + 77.0 * 0.001, 0);
+    acc += tex_78.SampleLevel(samp, uv + 78.0 * 0.001, 0);
+    acc += tex_79.SampleLevel(samp, uv + 79.0 * 0.001, 0);
+    acc += tex_80.SampleLevel(samp, uv + 80.0 * 0.001, 0);
+    acc += tex_81.SampleLevel(samp, uv + 81.0 * 0.001, 0);
+    acc += tex_82.SampleLevel(samp, uv + 82.0 * 0.001, 0);
+    acc += tex_83.SampleLevel(samp, uv + 83.0 * 0.001, 0);
+    acc += tex_84.SampleLevel(samp, uv + 84.0 * 0.001, 0);
+    acc += tex_85.SampleLevel(samp, uv + 85.0 * 0.001, 0);
+    acc += tex_86.SampleLevel(samp, uv + 86.0 * 0.001, 0);
+    acc += tex_87.SampleLevel(samp, uv + 87.0 * 0.001, 0);
+    acc += tex_88.SampleLevel(samp, uv + 88.0 * 0.001, 0);
+    acc += tex_89.SampleLevel(samp, uv + 89.0 * 0.001, 0);
+    acc += tex_90.SampleLevel(samp, uv + 90.0 * 0.001, 0);
+    acc += tex_91.SampleLevel(samp, uv + 91.0 * 0.001, 0);
+    acc += tex_92.SampleLevel(samp, uv + 92.0 * 0.001, 0);
+    acc += tex_93.SampleLevel(samp, uv + 93.0 * 0.001, 0);
+    acc += tex_94.SampleLevel(samp, uv + 94.0 * 0.001, 0);
+    acc += tex_95.SampleLevel(samp, uv + 95.0 * 0.001, 0);
+    acc += tex_96.SampleLevel(samp, uv + 96.0 * 0.001, 0);
+    acc += tex_97.SampleLevel(samp, uv + 97.0 * 0.001, 0);
+    acc += tex_98.SampleLevel(samp, uv + 98.0 * 0.001, 0);
+    acc += tex_99.SampleLevel(samp, uv + 99.0 * 0.001, 0);
+    acc += tex_100.SampleLevel(samp, uv + 100.0 * 0.001, 0);
+    acc += tex_101.SampleLevel(samp, uv + 101.0 * 0.001, 0);
+    acc += tex_102.SampleLevel(samp, uv + 102.0 * 0.001, 0);
+    acc += tex_103.SampleLevel(samp, uv + 103.0 * 0.001, 0);
+    acc += tex_104.SampleLevel(samp, uv + 104.0 * 0.001, 0);
+    acc += tex_105.SampleLevel(samp, uv + 105.0 * 0.001, 0);
+    acc += tex_106.SampleLevel(samp, uv + 106.0 * 0.001, 0);
+    acc += tex_107.SampleLevel(samp, uv + 107.0 * 0.001, 0);
+    acc += tex_108.SampleLevel(samp, uv + 108.0 * 0.001, 0);
+    acc += tex_109.SampleLevel(samp, uv + 109.0 * 0.001, 0);
+    acc += tex_110.SampleLevel(samp, uv + 110.0 * 0.001, 0);
+    acc += tex_111.SampleLevel(samp, uv + 111.0 * 0.001, 0);
+    acc += tex_112.SampleLevel(samp, uv + 112.0 * 0.001, 0);
+    acc += tex_113.SampleLevel(samp, uv + 113.0 * 0.001, 0);
+    acc += tex_114.SampleLevel(samp, uv + 114.0 * 0.001, 0);
+    acc += tex_115.SampleLevel(samp, uv + 115.0 * 0.001, 0);
+    acc += tex_116.SampleLevel(samp, uv + 116.0 * 0.001, 0);
+    acc += tex_117.SampleLevel(samp, uv + 117.0 * 0.001, 0);
+    acc += tex_118.SampleLevel(samp, uv + 118.0 * 0.001, 0);
+    acc += tex_119.SampleLevel(samp, uv + 119.0 * 0.001, 0);
+    acc += tex_120.SampleLevel(samp, uv + 120.0 * 0.001, 0);
+    acc += tex_121.SampleLevel(samp, uv + 121.0 * 0.001, 0);
+    acc += tex_122.SampleLevel(samp, uv + 122.0 * 0.001, 0);
+    acc += tex_123.SampleLevel(samp, uv + 123.0 * 0.001, 0);
+    acc += tex_124.SampleLevel(samp, uv + 124.0 * 0.001, 0);
+    acc += tex_125.SampleLevel(samp, uv + 125.0 * 0.001, 0);
+    acc += tex_126.SampleLevel(samp, uv + 126.0 * 0.001, 0);
+    acc += tex_127.SampleLevel(samp, uv + 127.0 * 0.001, 0);
+    acc += tex_128.SampleLevel(samp, uv + 128.0 * 0.001, 0);
+    acc += tex_129.SampleLevel(samp, uv + 129.0 * 0.001, 0);
+    acc += tex_130.SampleLevel(samp, uv + 130.0 * 0.001, 0);
+    acc += tex_131.SampleLevel(samp, uv + 131.0 * 0.001, 0);
+    acc += tex_132.SampleLevel(samp, uv + 132.0 * 0.001, 0);
+    acc += tex_133.SampleLevel(samp, uv + 133.0 * 0.001, 0);
+    acc += tex_134.SampleLevel(samp, uv + 134.0 * 0.001, 0);
+    acc += tex_135.SampleLevel(samp, uv + 135.0 * 0.001, 0);
+    acc += tex_136.SampleLevel(samp, uv + 136.0 * 0.001, 0);
+    acc += tex_137.SampleLevel(samp, uv + 137.0 * 0.001, 0);
+    acc += tex_138.SampleLevel(samp, uv + 138.0 * 0.001, 0);
+    acc += tex_139.SampleLevel(samp, uv + 139.0 * 0.001, 0);
+    acc += tex_140.SampleLevel(samp, uv + 140.0 * 0.001, 0);
+    acc += tex_141.SampleLevel(samp, uv + 141.0 * 0.001, 0);
+    acc += tex_142.SampleLevel(samp, uv + 142.0 * 0.001, 0);
+    acc += tex_143.SampleLevel(samp, uv + 143.0 * 0.001, 0);
+    acc += tex_144.SampleLevel(samp, uv + 144.0 * 0.001, 0);
+    acc += tex_145.SampleLevel(samp, uv + 145.0 * 0.001, 0);
+    acc += tex_146.SampleLevel(samp, uv + 146.0 * 0.001, 0);
+    acc += tex_147.SampleLevel(samp, uv + 147.0 * 0.001, 0);
+    acc += tex_148.SampleLevel(samp, uv + 148.0 * 0.001, 0);
+    acc += tex_149.SampleLevel(samp, uv + 149.0 * 0.001, 0);
+    acc += tex_150.SampleLevel(samp, uv + 150.0 * 0.001, 0);
+    acc += tex_151.SampleLevel(samp, uv + 151.0 * 0.001, 0);
+    acc += tex_152.SampleLevel(samp, uv + 152.0 * 0.001, 0);
+    acc += tex_153.SampleLevel(samp, uv + 153.0 * 0.001, 0);
+    acc += tex_154.SampleLevel(samp, uv + 154.0 * 0.001, 0);
+    acc += tex_155.SampleLevel(samp, uv + 155.0 * 0.001, 0);
+    acc += tex_156.SampleLevel(samp, uv + 156.0 * 0.001, 0);
+    acc += tex_157.SampleLevel(samp, uv + 157.0 * 0.001, 0);
+    acc += tex_158.SampleLevel(samp, uv + 158.0 * 0.001, 0);
+    acc += tex_159.SampleLevel(samp, uv + 159.0 * 0.001, 0);
+    acc += tex_160.SampleLevel(samp, uv + 160.0 * 0.001, 0);
+    acc += tex_161.SampleLevel(samp, uv + 161.0 * 0.001, 0);
+    acc += tex_162.SampleLevel(samp, uv + 162.0 * 0.001, 0);
+    acc += tex_163.SampleLevel(samp, uv + 163.0 * 0.001, 0);
+    acc += tex_164.SampleLevel(samp, uv + 164.0 * 0.001, 0);
+    acc += tex_165.SampleLevel(samp, uv + 165.0 * 0.001, 0);
+    acc += tex_166.SampleLevel(samp, uv + 166.0 * 0.001, 0);
+    acc += tex_167.SampleLevel(samp, uv + 167.0 * 0.001, 0);
+    acc += tex_168.SampleLevel(samp, uv + 168.0 * 0.001, 0);
+    acc += tex_169.SampleLevel(samp, uv + 169.0 * 0.001, 0);
+    acc += tex_170.SampleLevel(samp, uv + 170.0 * 0.001, 0);
+    acc += tex_171.SampleLevel(samp, uv + 171.0 * 0.001, 0);
+    acc += tex_172.SampleLevel(samp, uv + 172.0 * 0.001, 0);
+    acc += tex_173.SampleLevel(samp, uv + 173.0 * 0.001, 0);
+    acc += tex_174.SampleLevel(samp, uv + 174.0 * 0.001, 0);
+    acc += tex_175.SampleLevel(samp, uv + 175.0 * 0.001, 0);
+    acc += tex_176.SampleLevel(samp, uv + 176.0 * 0.001, 0);
+    acc += tex_177.SampleLevel(samp, uv + 177.0 * 0.001, 0);
+    acc += tex_178.SampleLevel(samp, uv + 178.0 * 0.001, 0);
+    acc += tex_179.SampleLevel(samp, uv + 179.0 * 0.001, 0);
+    acc += tex_180.SampleLevel(samp, uv + 180.0 * 0.001, 0);
+    acc += tex_181.SampleLevel(samp, uv + 181.0 * 0.001, 0);
+    acc += tex_182.SampleLevel(samp, uv + 182.0 * 0.001, 0);
+    acc += tex_183.SampleLevel(samp, uv + 183.0 * 0.001, 0);
+    acc += tex_184.SampleLevel(samp, uv + 184.0 * 0.001, 0);
+    acc += tex_185.SampleLevel(samp, uv + 185.0 * 0.001, 0);
+    acc += tex_186.SampleLevel(samp, uv + 186.0 * 0.001, 0);
+    acc += tex_187.SampleLevel(samp, uv + 187.0 * 0.001, 0);
+    acc += tex_188.SampleLevel(samp, uv + 188.0 * 0.001, 0);
+    acc += tex_189.SampleLevel(samp, uv + 189.0 * 0.001, 0);
+    acc += tex_190.SampleLevel(samp, uv + 190.0 * 0.001, 0);
+    acc += tex_191.SampleLevel(samp, uv + 191.0 * 0.001, 0);
+    acc += tex_192.SampleLevel(samp, uv + 192.0 * 0.001, 0);
+    acc += tex_193.SampleLevel(samp, uv + 193.0 * 0.001, 0);
+    acc += tex_194.SampleLevel(samp, uv + 194.0 * 0.001, 0);
+    acc += tex_195.SampleLevel(samp, uv + 195.0 * 0.001, 0);
+    acc += tex_196.SampleLevel(samp, uv + 196.0 * 0.001, 0);
+    acc += tex_197.SampleLevel(samp, uv + 197.0 * 0.001, 0);
+    acc += tex_198.SampleLevel(samp, uv + 198.0 * 0.001, 0);
+    acc += tex_199.SampleLevel(samp, uv + 199.0 * 0.001, 0);
+    acc += tex_200.SampleLevel(samp, uv + 200.0 * 0.001, 0);
+    acc += tex_201.SampleLevel(samp, uv + 201.0 * 0.001, 0);
+    acc += tex_202.SampleLevel(samp, uv + 202.0 * 0.001, 0);
+    acc += tex_203.SampleLevel(samp, uv + 203.0 * 0.001, 0);
+    acc += tex_204.SampleLevel(samp, uv + 204.0 * 0.001, 0);
+    acc += tex_205.SampleLevel(samp, uv + 205.0 * 0.001, 0);
+    acc += tex_206.SampleLevel(samp, uv + 206.0 * 0.001, 0);
+    acc += tex_207.SampleLevel(samp, uv + 207.0 * 0.001, 0);
+    acc += tex_208.SampleLevel(samp, uv + 208.0 * 0.001, 0);
+    acc += tex_209.SampleLevel(samp, uv + 209.0 * 0.001, 0);
+    acc += tex_210.SampleLevel(samp, uv + 210.0 * 0.001, 0);
+    acc += tex_211.SampleLevel(samp, uv + 211.0 * 0.001, 0);
+    acc += tex_212.SampleLevel(samp, uv + 212.0 * 0.001, 0);
+    acc += tex_213.SampleLevel(samp, uv + 213.0 * 0.001, 0);
+    acc += tex_214.SampleLevel(samp, uv + 214.0 * 0.001, 0);
+    acc += tex_215.SampleLevel(samp, uv + 215.0 * 0.001, 0);
+    acc += tex_216.SampleLevel(samp, uv + 216.0 * 0.001, 0);
+    acc += tex_217.SampleLevel(samp, uv + 217.0 * 0.001, 0);
+    acc += tex_218.SampleLevel(samp, uv + 218.0 * 0.001, 0);
+    acc += tex_219.SampleLevel(samp, uv + 219.0 * 0.001, 0);
+    acc += tex_220.SampleLevel(samp, uv + 220.0 * 0.001, 0);
+    acc += tex_221.SampleLevel(samp, uv + 221.0 * 0.001, 0);
+    acc += tex_222.SampleLevel(samp, uv + 222.0 * 0.001, 0);
+    acc += tex_223.SampleLevel(samp, uv + 223.0 * 0.001, 0);
+    acc += tex_224.SampleLevel(samp, uv + 224.0 * 0.001, 0);
+    acc += tex_225.SampleLevel(samp, uv + 225.0 * 0.001, 0);
+    acc += tex_226.SampleLevel(samp, uv + 226.0 * 0.001, 0);
+    acc += tex_227.SampleLevel(samp, uv + 227.0 * 0.001, 0);
+    acc += tex_228.SampleLevel(samp, uv + 228.0 * 0.001, 0);
+    acc += tex_229.SampleLevel(samp, uv + 229.0 * 0.001, 0);
+    acc += tex_230.SampleLevel(samp, uv + 230.0 * 0.001, 0);
+    acc += tex_231.SampleLevel(samp, uv + 231.0 * 0.001, 0);
+    acc += tex_232.SampleLevel(samp, uv + 232.0 * 0.001, 0);
+    acc += tex_233.SampleLevel(samp, uv + 233.0 * 0.001, 0);
+    acc += tex_234.SampleLevel(samp, uv + 234.0 * 0.001, 0);
+    acc += tex_235.SampleLevel(samp, uv + 235.0 * 0.001, 0);
+    acc += tex_236.SampleLevel(samp, uv + 236.0 * 0.001, 0);
+    acc += tex_237.SampleLevel(samp, uv + 237.0 * 0.001, 0);
+    acc += tex_238.SampleLevel(samp, uv + 238.0 * 0.001, 0);
+    acc += tex_239.SampleLevel(samp, uv + 239.0 * 0.001, 0);
+    acc += tex_240.SampleLevel(samp, uv + 240.0 * 0.001, 0);
+    acc += tex_241.SampleLevel(samp, uv + 241.0 * 0.001, 0);
+    acc += tex_242.SampleLevel(samp, uv + 242.0 * 0.001, 0);
+    acc += tex_243.SampleLevel(samp, uv + 243.0 * 0.001, 0);
+    acc += tex_244.SampleLevel(samp, uv + 244.0 * 0.001, 0);
+    acc += tex_245.SampleLevel(samp, uv + 245.0 * 0.001, 0);
+    acc += tex_246.SampleLevel(samp, uv + 246.0 * 0.001, 0);
+    acc += tex_247.SampleLevel(samp, uv + 247.0 * 0.001, 0);
+    acc += tex_248.SampleLevel(samp, uv + 248.0 * 0.001, 0);
+    acc += tex_249.SampleLevel(samp, uv + 249.0 * 0.001, 0);
+    acc += tex_250.SampleLevel(samp, uv + 250.0 * 0.001, 0);
+    acc += tex_251.SampleLevel(samp, uv + 251.0 * 0.001, 0);
+    acc += tex_252.SampleLevel(samp, uv + 252.0 * 0.001, 0);
+    acc += tex_253.SampleLevel(samp, uv + 253.0 * 0.001, 0);
+    acc += tex_254.SampleLevel(samp, uv + 254.0 * 0.001, 0);
+    acc += tex_255.SampleLevel(samp, uv + 255.0 * 0.001, 0);
+    acc += tex_256.SampleLevel(samp, uv + 256.0 * 0.001, 0);
+    acc += tex_257.SampleLevel(samp, uv + 257.0 * 0.001, 0);
+    acc += tex_258.SampleLevel(samp, uv + 258.0 * 0.001, 0);
+    acc += tex_259.SampleLevel(samp, uv + 259.0 * 0.001, 0);
+    acc += tex_260.SampleLevel(samp, uv + 260.0 * 0.001, 0);
+    acc += tex_261.SampleLevel(samp, uv + 261.0 * 0.001, 0);
+    acc += tex_262.SampleLevel(samp, uv + 262.0 * 0.001, 0);
+    acc += tex_263.SampleLevel(samp, uv + 263.0 * 0.001, 0);
+    acc += tex_264.SampleLevel(samp, uv + 264.0 * 0.001, 0);
+    acc += tex_265.SampleLevel(samp, uv + 265.0 * 0.001, 0);
+    acc += tex_266.SampleLevel(samp, uv + 266.0 * 0.001, 0);
+    acc += tex_267.SampleLevel(samp, uv + 267.0 * 0.001, 0);
+    acc += tex_268.SampleLevel(samp, uv + 268.0 * 0.001, 0);
+    acc += tex_269.SampleLevel(samp, uv + 269.0 * 0.001, 0);
+    acc += tex_270.SampleLevel(samp, uv + 270.0 * 0.001, 0);
+    acc += tex_271.SampleLevel(samp, uv + 271.0 * 0.001, 0);
+    acc += tex_272.SampleLevel(samp, uv + 272.0 * 0.001, 0);
+    acc += tex_273.SampleLevel(samp, uv + 273.0 * 0.001, 0);
+    acc += tex_274.SampleLevel(samp, uv + 274.0 * 0.001, 0);
+    acc += tex_275.SampleLevel(samp, uv + 275.0 * 0.001, 0);
+    acc += tex_276.SampleLevel(samp, uv + 276.0 * 0.001, 0);
+    acc += tex_277.SampleLevel(samp, uv + 277.0 * 0.001, 0);
+    acc += tex_278.SampleLevel(samp, uv + 278.0 * 0.001, 0);
+    acc += tex_279.SampleLevel(samp, uv + 279.0 * 0.001, 0);
+    acc += tex_280.SampleLevel(samp, uv + 280.0 * 0.001, 0);
+    acc += tex_281.SampleLevel(samp, uv + 281.0 * 0.001, 0);
+    acc += tex_282.SampleLevel(samp, uv + 282.0 * 0.001, 0);
+    acc += tex_283.SampleLevel(samp, uv + 283.0 * 0.001, 0);
+    acc += tex_284.SampleLevel(samp, uv + 284.0 * 0.001, 0);
+    acc += tex_285.SampleLevel(samp, uv + 285.0 * 0.001, 0);
+    acc += tex_286.SampleLevel(samp, uv + 286.0 * 0.001, 0);
+    acc += tex_287.SampleLevel(samp, uv + 287.0 * 0.001, 0);
+    acc += tex_288.SampleLevel(samp, uv + 288.0 * 0.001, 0);
+    acc += tex_289.SampleLevel(samp, uv + 289.0 * 0.001, 0);
+    acc += tex_290.SampleLevel(samp, uv + 290.0 * 0.001, 0);
+    acc += tex_291.SampleLevel(samp, uv + 291.0 * 0.001, 0);
+    acc += tex_292.SampleLevel(samp, uv + 292.0 * 0.001, 0);
+    acc += tex_293.SampleLevel(samp, uv + 293.0 * 0.001, 0);
+    acc += tex_294.SampleLevel(samp, uv + 294.0 * 0.001, 0);
+    acc += tex_295.SampleLevel(samp, uv + 295.0 * 0.001, 0);
+    acc += tex_296.SampleLevel(samp, uv + 296.0 * 0.001, 0);
+    acc += tex_297.SampleLevel(samp, uv + 297.0 * 0.001, 0);
+    acc += tex_298.SampleLevel(samp, uv + 298.0 * 0.001, 0);
+    acc += tex_299.SampleLevel(samp, uv + 299.0 * 0.001, 0);
+    acc += tex_300.SampleLevel(samp, uv + 300.0 * 0.001, 0);
+    acc += tex_301.SampleLevel(samp, uv + 301.0 * 0.001, 0);
+    acc += tex_302.SampleLevel(samp, uv + 302.0 * 0.001, 0);
+    acc += tex_303.SampleLevel(samp, uv + 303.0 * 0.001, 0);
+    acc += tex_304.SampleLevel(samp, uv + 304.0 * 0.001, 0);
+    acc += tex_305.SampleLevel(samp, uv + 305.0 * 0.001, 0);
+    acc += tex_306.SampleLevel(samp, uv + 306.0 * 0.001, 0);
+    acc += tex_307.SampleLevel(samp, uv + 307.0 * 0.001, 0);
+    acc += tex_308.SampleLevel(samp, uv + 308.0 * 0.001, 0);
+    acc += tex_309.SampleLevel(samp, uv + 309.0 * 0.001, 0);
+    acc += tex_310.SampleLevel(samp, uv + 310.0 * 0.001, 0);
+    acc += tex_311.SampleLevel(samp, uv + 311.0 * 0.001, 0);
+    acc += tex_312.SampleLevel(samp, uv + 312.0 * 0.001, 0);
+    acc += tex_313.SampleLevel(samp, uv + 313.0 * 0.001, 0);
+    acc += tex_314.SampleLevel(samp, uv + 314.0 * 0.001, 0);
+    acc += tex_315.SampleLevel(samp, uv + 315.0 * 0.001, 0);
+    acc += tex_316.SampleLevel(samp, uv + 316.0 * 0.001, 0);
+    acc += tex_317.SampleLevel(samp, uv + 317.0 * 0.001, 0);
+    acc += tex_318.SampleLevel(samp, uv + 318.0 * 0.001, 0);
+    acc += tex_319.SampleLevel(samp, uv + 319.0 * 0.001, 0);
+    outBuf[tid.x] = acc;
+}
+</pre></div><script>
+document.addEventListener('click', function (ev) {
+  var btn = ev.target.closest && ev.target.closest('button.copy');
+  if (!btn) return;
+  var el = document.getElementById(btn.getAttribute('data-copy'));
+  if (!el) return;
+  var text = el.textContent;
+  function flash(ok) {
+    btn.textContent = ok ? 'Copied' : 'Press Ctrl+C';
+    if (ok) btn.setAttribute('data-done', '1');
+    setTimeout(function () {
+      btn.textContent = 'Copy'; btn.removeAttribute('data-done');
+    }, 1400);
+  }
+  function fallback() {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta); flash(ok);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () { flash(true); }, fallback);
+  } else {
+    fallback();
+  }
+});
+</script></body>

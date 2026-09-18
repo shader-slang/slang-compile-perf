@@ -1,0 +1,1191 @@
+<!doctype html><meta charset=utf-8><title>generic_builtin_operator — phase breakdown</title><style>
+.cbox{position:relative}
+.cbox>button.copy{position:absolute;top:8px;right:8px;z-index:1;
+  font:11px/1 -apple-system,Segoe UI,Roboto,sans-serif;padding:5px 9px;
+  color:#24292f;background:#fff;border:1px solid #d0d7de;border-radius:5px;
+  cursor:pointer;opacity:.75}
+.cbox>button.copy:hover{opacity:1;background:#f3f4f6}
+.cbox>button.copy[data-done]{color:#1a7f37;border-color:#1a7f37}
+</style><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; back</a></p><h1 style='font-size:21px;margin:0 0 6px'>generic_builtin_operator</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>One generic function constrained to a sealed builtin marker interface (`T
+: __BuiltinFloatingPointType`), with `n` repeated arithmetic/unary
+expressions over `T`-typed locals -- the shape reported in #12458
+(thousands of `T(literal)` sites inside one generic function, ~11x slower
+than the same code with `T` replaced by a concrete `float`). Every
+operator here has same-type `T` operands (`T(c) * T`, `T + T`, unary `-T`):
+the widened fast path only fires when both operands share a type, so a
+MIXED shape like `vector&lt;T,C&gt; * T` is a different, still-unaccelerated
+case (see the regression test's own note,
+tests/bugs/gh-12458-generic-builtin-operator-fast-path.slang) and is not
+what this workload measures. Isolates
+`SemanticsExprVisitor::convertToBuiltinArithmeticOp`'s builtin-operator
+fast path specifically for an ABSTRACT generic element type, distinct from
+sema_generics (breadth of separate generic declarations against the
+non-sealed `IArithmetic`, each instantiated a few times) and
+operator_typecheck (concrete mixed-type operators, no generics at all).
+
+Scaling null: n scales repeated operator expressions against ONE generic
+function; ideal checking cost is O(n). #12458 measured ~1.36 ms per
+expression pre-fix (falling through to full generic overload resolution,
+~49 candidates tried per site, because the fast path only recognized a
+concrete `BasicExpressionType`) vs. a few microseconds post-fix (the same
+fast path a concrete `float` already took, now also recognizing `T`'s
+sealed constraint).</p><p style='color:#666;font-size:13px'><b>bucket:</b> typecheck &nbsp;·&nbsp; <b>compile mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 1000</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="716" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">generic_builtin_operator — Daily tip-of-tree (last 30 days) (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">generic_builtin_operator<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">28</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">56</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">08-20</text>
+<line x1="103.9" y1="516.0" x2="103.9" y2="519.0" stroke="#999"/>
+<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">08-21</text>
+<line x1="139.7" y1="516.0" x2="139.7" y2="519.0" stroke="#999"/>
+<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">08-22</text>
+<line x1="175.6" y1="516.0" x2="175.6" y2="519.0" stroke="#999"/>
+<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">08-23</text>
+<line x1="211.4" y1="516.0" x2="211.4" y2="519.0" stroke="#999"/>
+<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">08-24</text>
+<line x1="247.3" y1="516.0" x2="247.3" y2="519.0" stroke="#999"/>
+<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">08-25</text>
+<line x1="283.2" y1="516.0" x2="283.2" y2="519.0" stroke="#999"/>
+<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">08-26</text>
+<line x1="319.0" y1="516.0" x2="319.0" y2="519.0" stroke="#999"/>
+<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">08-27</text>
+<line x1="354.9" y1="516.0" x2="354.9" y2="519.0" stroke="#999"/>
+<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">08-28</text>
+<line x1="390.8" y1="516.0" x2="390.8" y2="519.0" stroke="#999"/>
+<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">08-29</text>
+<line x1="426.6" y1="516.0" x2="426.6" y2="519.0" stroke="#999"/>
+<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">08-30</text>
+<line x1="462.5" y1="516.0" x2="462.5" y2="519.0" stroke="#999"/>
+<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">08-31</text>
+<line x1="498.3" y1="516.0" x2="498.3" y2="519.0" stroke="#999"/>
+<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-01</text>
+<line x1="534.2" y1="516.0" x2="534.2" y2="519.0" stroke="#999"/>
+<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-02</text>
+<line x1="570.1" y1="516.0" x2="570.1" y2="519.0" stroke="#999"/>
+<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-03</text>
+<line x1="605.9" y1="516.0" x2="605.9" y2="519.0" stroke="#999"/>
+<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-04</text>
+<line x1="641.8" y1="516.0" x2="641.8" y2="519.0" stroke="#999"/>
+<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-05</text>
+<line x1="677.7" y1="516.0" x2="677.7" y2="519.0" stroke="#999"/>
+<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-06</text>
+<line x1="713.5" y1="516.0" x2="713.5" y2="519.0" stroke="#999"/>
+<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-07</text>
+<line x1="749.4" y1="516.0" x2="749.4" y2="519.0" stroke="#999"/>
+<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-08</text>
+<line x1="785.2" y1="516.0" x2="785.2" y2="519.0" stroke="#999"/>
+<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-09</text>
+<line x1="821.1" y1="516.0" x2="821.1" y2="519.0" stroke="#999"/>
+<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-10</text>
+<line x1="857.0" y1="516.0" x2="857.0" y2="519.0" stroke="#999"/>
+<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-11</text>
+<line x1="892.8" y1="516.0" x2="892.8" y2="519.0" stroke="#999"/>
+<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-12</text>
+<line x1="928.7" y1="516.0" x2="928.7" y2="519.0" stroke="#999"/>
+<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-13</text>
+<line x1="964.6" y1="516.0" x2="964.6" y2="519.0" stroke="#999"/>
+<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-14</text>
+<line x1="1000.4" y1="516.0" x2="1000.4" y2="519.0" stroke="#999"/>
+<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-15</text>
+<line x1="1036.3" y1="516.0" x2="1036.3" y2="519.0" stroke="#999"/>
+<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-16</text>
+<line x1="1072.1" y1="516.0" x2="1072.1" y2="519.0" stroke="#999"/>
+<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-17</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-18</text>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#3f007d"/>
+<text x="28" y="650" fill="#222">deferBufferLoad</text>
+<rect x="289" y="640" width="12" height="12" fill="#54278f"/>
+<text x="305" y="650" fill="#222">simplifyNonSSAIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#9970ab"/>
+<text x="582" y="650" fill="#222">lowerCombinedTextureSamplers</text>
+<rect x="843" y="640" width="12" height="12" fill="#c2a5cf"/>
+<text x="859" y="650" fill="#222">legalizeMatrixTypes</text>
+<rect x="12" y="658" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="668" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="658" width="12" height="12" fill="#fdd0a2"/>
+<text x="305" y="668" fill="#222">emitEntryPointsSourceFromIR (self)</text>
+<rect x="566" y="658" width="12" height="12" fill="#fd8d3c"/>
+<text x="582" y="668" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="843" y="658" width="12" height="12" fill="#e6550d"/>
+<text x="859" y="668" fill="#222">generateOutput (self)</text>
+<rect x="12" y="676" width="12" height="12" fill="#969696"/>
+<text x="28" y="686" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only generic_builtin_operator --label repro --gen-dir repro-generic_builtin_operator</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 1000), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>generic_builtin_operator.slang <span style='font-weight:400;color:#888'>(1015 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+T compute&lt;T : __BuiltinFloatingPointType&gt;(T a, T b)
+{
+    T r = a;
+    r = r * T(1.0) + b;
+    r = r + T(2.0) * a;
+    r = -r + T(3.0);
+    r = r * T(4.0) + b;
+    r = r + T(5.0) * a;
+    r = -r + T(6.0);
+    r = r * T(7.0) + b;
+    r = r + T(8.0) * a;
+    r = -r + T(9.0);
+    r = r * T(10.0) + b;
+    r = r + T(11.0) * a;
+    r = -r + T(12.0);
+    r = r * T(13.0) + b;
+    r = r + T(14.0) * a;
+    r = -r + T(15.0);
+    r = r * T(16.0) + b;
+    r = r + T(17.0) * a;
+    r = -r + T(18.0);
+    r = r * T(19.0) + b;
+    r = r + T(20.0) * a;
+    r = -r + T(21.0);
+    r = r * T(22.0) + b;
+    r = r + T(23.0) * a;
+    r = -r + T(24.0);
+    r = r * T(25.0) + b;
+    r = r + T(26.0) * a;
+    r = -r + T(27.0);
+    r = r * T(28.0) + b;
+    r = r + T(29.0) * a;
+    r = -r + T(30.0);
+    r = r * T(31.0) + b;
+    r = r + T(32.0) * a;
+    r = -r + T(33.0);
+    r = r * T(34.0) + b;
+    r = r + T(35.0) * a;
+    r = -r + T(36.0);
+    r = r * T(37.0) + b;
+    r = r + T(38.0) * a;
+    r = -r + T(39.0);
+    r = r * T(40.0) + b;
+    r = r + T(41.0) * a;
+    r = -r + T(42.0);
+    r = r * T(43.0) + b;
+    r = r + T(44.0) * a;
+    r = -r + T(45.0);
+    r = r * T(46.0) + b;
+    r = r + T(47.0) * a;
+    r = -r + T(48.0);
+    r = r * T(49.0) + b;
+    r = r + T(50.0) * a;
+    r = -r + T(51.0);
+    r = r * T(52.0) + b;
+    r = r + T(53.0) * a;
+    r = -r + T(54.0);
+    r = r * T(55.0) + b;
+    r = r + T(56.0) * a;
+    r = -r + T(57.0);
+    r = r * T(58.0) + b;
+    r = r + T(59.0) * a;
+    r = -r + T(60.0);
+    r = r * T(61.0) + b;
+    r = r + T(62.0) * a;
+    r = -r + T(63.0);
+    r = r * T(64.0) + b;
+    r = r + T(65.0) * a;
+    r = -r + T(66.0);
+    r = r * T(67.0) + b;
+    r = r + T(68.0) * a;
+    r = -r + T(69.0);
+    r = r * T(70.0) + b;
+    r = r + T(71.0) * a;
+    r = -r + T(72.0);
+    r = r * T(73.0) + b;
+    r = r + T(74.0) * a;
+    r = -r + T(75.0);
+    r = r * T(76.0) + b;
+    r = r + T(77.0) * a;
+    r = -r + T(78.0);
+    r = r * T(79.0) + b;
+    r = r + T(80.0) * a;
+    r = -r + T(81.0);
+    r = r * T(82.0) + b;
+    r = r + T(83.0) * a;
+    r = -r + T(84.0);
+    r = r * T(85.0) + b;
+    r = r + T(86.0) * a;
+    r = -r + T(87.0);
+    r = r * T(88.0) + b;
+    r = r + T(89.0) * a;
+    r = -r + T(90.0);
+    r = r * T(91.0) + b;
+    r = r + T(92.0) * a;
+    r = -r + T(93.0);
+    r = r * T(94.0) + b;
+    r = r + T(95.0) * a;
+    r = -r + T(96.0);
+    r = r * T(97.0) + b;
+    r = r + T(1.0) * a;
+    r = -r + T(2.0);
+    r = r * T(3.0) + b;
+    r = r + T(4.0) * a;
+    r = -r + T(5.0);
+    r = r * T(6.0) + b;
+    r = r + T(7.0) * a;
+    r = -r + T(8.0);
+    r = r * T(9.0) + b;
+    r = r + T(10.0) * a;
+    r = -r + T(11.0);
+    r = r * T(12.0) + b;
+    r = r + T(13.0) * a;
+    r = -r + T(14.0);
+    r = r * T(15.0) + b;
+    r = r + T(16.0) * a;
+    r = -r + T(17.0);
+    r = r * T(18.0) + b;
+    r = r + T(19.0) * a;
+    r = -r + T(20.0);
+    r = r * T(21.0) + b;
+    r = r + T(22.0) * a;
+    r = -r + T(23.0);
+    r = r * T(24.0) + b;
+    r = r + T(25.0) * a;
+    r = -r + T(26.0);
+    r = r * T(27.0) + b;
+    r = r + T(28.0) * a;
+    r = -r + T(29.0);
+    r = r * T(30.0) + b;
+    r = r + T(31.0) * a;
+    r = -r + T(32.0);
+    r = r * T(33.0) + b;
+    r = r + T(34.0) * a;
+    r = -r + T(35.0);
+    r = r * T(36.0) + b;
+    r = r + T(37.0) * a;
+    r = -r + T(38.0);
+    r = r * T(39.0) + b;
+    r = r + T(40.0) * a;
+    r = -r + T(41.0);
+    r = r * T(42.0) + b;
+    r = r + T(43.0) * a;
+    r = -r + T(44.0);
+    r = r * T(45.0) + b;
+    r = r + T(46.0) * a;
+    r = -r + T(47.0);
+    r = r * T(48.0) + b;
+    r = r + T(49.0) * a;
+    r = -r + T(50.0);
+    r = r * T(51.0) + b;
+    r = r + T(52.0) * a;
+    r = -r + T(53.0);
+    r = r * T(54.0) + b;
+    r = r + T(55.0) * a;
+    r = -r + T(56.0);
+    r = r * T(57.0) + b;
+    r = r + T(58.0) * a;
+    r = -r + T(59.0);
+    r = r * T(60.0) + b;
+    r = r + T(61.0) * a;
+    r = -r + T(62.0);
+    r = r * T(63.0) + b;
+    r = r + T(64.0) * a;
+    r = -r + T(65.0);
+    r = r * T(66.0) + b;
+    r = r + T(67.0) * a;
+    r = -r + T(68.0);
+    r = r * T(69.0) + b;
+    r = r + T(70.0) * a;
+    r = -r + T(71.0);
+    r = r * T(72.0) + b;
+    r = r + T(73.0) * a;
+    r = -r + T(74.0);
+    r = r * T(75.0) + b;
+    r = r + T(76.0) * a;
+    r = -r + T(77.0);
+    r = r * T(78.0) + b;
+    r = r + T(79.0) * a;
+    r = -r + T(80.0);
+    r = r * T(81.0) + b;
+    r = r + T(82.0) * a;
+    r = -r + T(83.0);
+    r = r * T(84.0) + b;
+    r = r + T(85.0) * a;
+    r = -r + T(86.0);
+    r = r * T(87.0) + b;
+    r = r + T(88.0) * a;
+    r = -r + T(89.0);
+    r = r * T(90.0) + b;
+    r = r + T(91.0) * a;
+    r = -r + T(92.0);
+    r = r * T(93.0) + b;
+    r = r + T(94.0) * a;
+    r = -r + T(95.0);
+    r = r * T(96.0) + b;
+    r = r + T(97.0) * a;
+    r = -r + T(1.0);
+    r = r * T(2.0) + b;
+    r = r + T(3.0) * a;
+    r = -r + T(4.0);
+    r = r * T(5.0) + b;
+    r = r + T(6.0) * a;
+    r = -r + T(7.0);
+    r = r * T(8.0) + b;
+    r = r + T(9.0) * a;
+    r = -r + T(10.0);
+    r = r * T(11.0) + b;
+    r = r + T(12.0) * a;
+    r = -r + T(13.0);
+    r = r * T(14.0) + b;
+    r = r + T(15.0) * a;
+    r = -r + T(16.0);
+    r = r * T(17.0) + b;
+    r = r + T(18.0) * a;
+    r = -r + T(19.0);
+    r = r * T(20.0) + b;
+    r = r + T(21.0) * a;
+    r = -r + T(22.0);
+    r = r * T(23.0) + b;
+    r = r + T(24.0) * a;
+    r = -r + T(25.0);
+    r = r * T(26.0) + b;
+    r = r + T(27.0) * a;
+    r = -r + T(28.0);
+    r = r * T(29.0) + b;
+    r = r + T(30.0) * a;
+    r = -r + T(31.0);
+    r = r * T(32.0) + b;
+    r = r + T(33.0) * a;
+    r = -r + T(34.0);
+    r = r * T(35.0) + b;
+    r = r + T(36.0) * a;
+    r = -r + T(37.0);
+    r = r * T(38.0) + b;
+    r = r + T(39.0) * a;
+    r = -r + T(40.0);
+    r = r * T(41.0) + b;
+    r = r + T(42.0) * a;
+    r = -r + T(43.0);
+    r = r * T(44.0) + b;
+    r = r + T(45.0) * a;
+    r = -r + T(46.0);
+    r = r * T(47.0) + b;
+    r = r + T(48.0) * a;
+    r = -r + T(49.0);
+    r = r * T(50.0) + b;
+    r = r + T(51.0) * a;
+    r = -r + T(52.0);
+    r = r * T(53.0) + b;
+    r = r + T(54.0) * a;
+    r = -r + T(55.0);
+    r = r * T(56.0) + b;
+    r = r + T(57.0) * a;
+    r = -r + T(58.0);
+    r = r * T(59.0) + b;
+    r = r + T(60.0) * a;
+    r = -r + T(61.0);
+    r = r * T(62.0) + b;
+    r = r + T(63.0) * a;
+    r = -r + T(64.0);
+    r = r * T(65.0) + b;
+    r = r + T(66.0) * a;
+    r = -r + T(67.0);
+    r = r * T(68.0) + b;
+    r = r + T(69.0) * a;
+    r = -r + T(70.0);
+    r = r * T(71.0) + b;
+    r = r + T(72.0) * a;
+    r = -r + T(73.0);
+    r = r * T(74.0) + b;
+    r = r + T(75.0) * a;
+    r = -r + T(76.0);
+    r = r * T(77.0) + b;
+    r = r + T(78.0) * a;
+    r = -r + T(79.0);
+    r = r * T(80.0) + b;
+    r = r + T(81.0) * a;
+    r = -r + T(82.0);
+    r = r * T(83.0) + b;
+    r = r + T(84.0) * a;
+    r = -r + T(85.0);
+    r = r * T(86.0) + b;
+    r = r + T(87.0) * a;
+    r = -r + T(88.0);
+    r = r * T(89.0) + b;
+    r = r + T(90.0) * a;
+    r = -r + T(91.0);
+    r = r * T(92.0) + b;
+    r = r + T(93.0) * a;
+    r = -r + T(94.0);
+    r = r * T(95.0) + b;
+    r = r + T(96.0) * a;
+    r = -r + T(97.0);
+    r = r * T(1.0) + b;
+    r = r + T(2.0) * a;
+    r = -r + T(3.0);
+    r = r * T(4.0) + b;
+    r = r + T(5.0) * a;
+    r = -r + T(6.0);
+    r = r * T(7.0) + b;
+    r = r + T(8.0) * a;
+    r = -r + T(9.0);
+    r = r * T(10.0) + b;
+    r = r + T(11.0) * a;
+    r = -r + T(12.0);
+    r = r * T(13.0) + b;
+    r = r + T(14.0) * a;
+    r = -r + T(15.0);
+    r = r * T(16.0) + b;
+    r = r + T(17.0) * a;
+    r = -r + T(18.0);
+    r = r * T(19.0) + b;
+    r = r + T(20.0) * a;
+    r = -r + T(21.0);
+    r = r * T(22.0) + b;
+    r = r + T(23.0) * a;
+    r = -r + T(24.0);
+    r = r * T(25.0) + b;
+    r = r + T(26.0) * a;
+    r = -r + T(27.0);
+    r = r * T(28.0) + b;
+    r = r + T(29.0) * a;
+    r = -r + T(30.0);
+    r = r * T(31.0) + b;
+    r = r + T(32.0) * a;
+    r = -r + T(33.0);
+    r = r * T(34.0) + b;
+    r = r + T(35.0) * a;
+    r = -r + T(36.0);
+    r = r * T(37.0) + b;
+    r = r + T(38.0) * a;
+    r = -r + T(39.0);
+    r = r * T(40.0) + b;
+    r = r + T(41.0) * a;
+    r = -r + T(42.0);
+    r = r * T(43.0) + b;
+    r = r + T(44.0) * a;
+    r = -r + T(45.0);
+    r = r * T(46.0) + b;
+    r = r + T(47.0) * a;
+    r = -r + T(48.0);
+    r = r * T(49.0) + b;
+    r = r + T(50.0) * a;
+    r = -r + T(51.0);
+    r = r * T(52.0) + b;
+    r = r + T(53.0) * a;
+    r = -r + T(54.0);
+    r = r * T(55.0) + b;
+    r = r + T(56.0) * a;
+    r = -r + T(57.0);
+    r = r * T(58.0) + b;
+    r = r + T(59.0) * a;
+    r = -r + T(60.0);
+    r = r * T(61.0) + b;
+    r = r + T(62.0) * a;
+    r = -r + T(63.0);
+    r = r * T(64.0) + b;
+    r = r + T(65.0) * a;
+    r = -r + T(66.0);
+    r = r * T(67.0) + b;
+    r = r + T(68.0) * a;
+    r = -r + T(69.0);
+    r = r * T(70.0) + b;
+    r = r + T(71.0) * a;
+    r = -r + T(72.0);
+    r = r * T(73.0) + b;
+    r = r + T(74.0) * a;
+    r = -r + T(75.0);
+    r = r * T(76.0) + b;
+    r = r + T(77.0) * a;
+    r = -r + T(78.0);
+    r = r * T(79.0) + b;
+    r = r + T(80.0) * a;
+    r = -r + T(81.0);
+    r = r * T(82.0) + b;
+    r = r + T(83.0) * a;
+    r = -r + T(84.0);
+    r = r * T(85.0) + b;
+    r = r + T(86.0) * a;
+    r = -r + T(87.0);
+    r = r * T(88.0) + b;
+    r = r + T(89.0) * a;
+    r = -r + T(90.0);
+    r = r * T(91.0) + b;
+    r = r + T(92.0) * a;
+    r = -r + T(93.0);
+    r = r * T(94.0) + b;
+    r = r + T(95.0) * a;
+    r = -r + T(96.0);
+    r = r * T(97.0) + b;
+    r = r + T(1.0) * a;
+    r = -r + T(2.0);
+    r = r * T(3.0) + b;
+    r = r + T(4.0) * a;
+    r = -r + T(5.0);
+    r = r * T(6.0) + b;
+    r = r + T(7.0) * a;
+    r = -r + T(8.0);
+    r = r * T(9.0) + b;
+    r = r + T(10.0) * a;
+    r = -r + T(11.0);
+    r = r * T(12.0) + b;
+    r = r + T(13.0) * a;
+    r = -r + T(14.0);
+    r = r * T(15.0) + b;
+    r = r + T(16.0) * a;
+    r = -r + T(17.0);
+    r = r * T(18.0) + b;
+    r = r + T(19.0) * a;
+    r = -r + T(20.0);
+    r = r * T(21.0) + b;
+    r = r + T(22.0) * a;
+    r = -r + T(23.0);
+    r = r * T(24.0) + b;
+    r = r + T(25.0) * a;
+    r = -r + T(26.0);
+    r = r * T(27.0) + b;
+    r = r + T(28.0) * a;
+    r = -r + T(29.0);
+    r = r * T(30.0) + b;
+    r = r + T(31.0) * a;
+    r = -r + T(32.0);
+    r = r * T(33.0) + b;
+    r = r + T(34.0) * a;
+    r = -r + T(35.0);
+    r = r * T(36.0) + b;
+    r = r + T(37.0) * a;
+    r = -r + T(38.0);
+    r = r * T(39.0) + b;
+    r = r + T(40.0) * a;
+    r = -r + T(41.0);
+    r = r * T(42.0) + b;
+    r = r + T(43.0) * a;
+    r = -r + T(44.0);
+    r = r * T(45.0) + b;
+    r = r + T(46.0) * a;
+    r = -r + T(47.0);
+    r = r * T(48.0) + b;
+    r = r + T(49.0) * a;
+    r = -r + T(50.0);
+    r = r * T(51.0) + b;
+    r = r + T(52.0) * a;
+    r = -r + T(53.0);
+    r = r * T(54.0) + b;
+    r = r + T(55.0) * a;
+    r = -r + T(56.0);
+    r = r * T(57.0) + b;
+    r = r + T(58.0) * a;
+    r = -r + T(59.0);
+    r = r * T(60.0) + b;
+    r = r + T(61.0) * a;
+    r = -r + T(62.0);
+    r = r * T(63.0) + b;
+    r = r + T(64.0) * a;
+    r = -r + T(65.0);
+    r = r * T(66.0) + b;
+    r = r + T(67.0) * a;
+    r = -r + T(68.0);
+    r = r * T(69.0) + b;
+    r = r + T(70.0) * a;
+    r = -r + T(71.0);
+    r = r * T(72.0) + b;
+    r = r + T(73.0) * a;
+    r = -r + T(74.0);
+    r = r * T(75.0) + b;
+    r = r + T(76.0) * a;
+    r = -r + T(77.0);
+    r = r * T(78.0) + b;
+    r = r + T(79.0) * a;
+    r = -r + T(80.0);
+    r = r * T(81.0) + b;
+    r = r + T(82.0) * a;
+    r = -r + T(83.0);
+    r = r * T(84.0) + b;
+    r = r + T(85.0) * a;
+    r = -r + T(86.0);
+    r = r * T(87.0) + b;
+    r = r + T(88.0) * a;
+    r = -r + T(89.0);
+    r = r * T(90.0) + b;
+    r = r + T(91.0) * a;
+    r = -r + T(92.0);
+    r = r * T(93.0) + b;
+    r = r + T(94.0) * a;
+    r = -r + T(95.0);
+    r = r * T(96.0) + b;
+    r = r + T(97.0) * a;
+    r = -r + T(1.0);
+    r = r * T(2.0) + b;
+    r = r + T(3.0) * a;
+    r = -r + T(4.0);
+    r = r * T(5.0) + b;
+    r = r + T(6.0) * a;
+    r = -r + T(7.0);
+    r = r * T(8.0) + b;
+    r = r + T(9.0) * a;
+    r = -r + T(10.0);
+    r = r * T(11.0) + b;
+    r = r + T(12.0) * a;
+    r = -r + T(13.0);
+    r = r * T(14.0) + b;
+    r = r + T(15.0) * a;
+    r = -r + T(16.0);
+    r = r * T(17.0) + b;
+    r = r + T(18.0) * a;
+    r = -r + T(19.0);
+    r = r * T(20.0) + b;
+    r = r + T(21.0) * a;
+    r = -r + T(22.0);
+    r = r * T(23.0) + b;
+    r = r + T(24.0) * a;
+    r = -r + T(25.0);
+    r = r * T(26.0) + b;
+    r = r + T(27.0) * a;
+    r = -r + T(28.0);
+    r = r * T(29.0) + b;
+    r = r + T(30.0) * a;
+    r = -r + T(31.0);
+    r = r * T(32.0) + b;
+    r = r + T(33.0) * a;
+    r = -r + T(34.0);
+    r = r * T(35.0) + b;
+    r = r + T(36.0) * a;
+    r = -r + T(37.0);
+    r = r * T(38.0) + b;
+    r = r + T(39.0) * a;
+    r = -r + T(40.0);
+    r = r * T(41.0) + b;
+    r = r + T(42.0) * a;
+    r = -r + T(43.0);
+    r = r * T(44.0) + b;
+    r = r + T(45.0) * a;
+    r = -r + T(46.0);
+    r = r * T(47.0) + b;
+    r = r + T(48.0) * a;
+    r = -r + T(49.0);
+    r = r * T(50.0) + b;
+    r = r + T(51.0) * a;
+    r = -r + T(52.0);
+    r = r * T(53.0) + b;
+    r = r + T(54.0) * a;
+    r = -r + T(55.0);
+    r = r * T(56.0) + b;
+    r = r + T(57.0) * a;
+    r = -r + T(58.0);
+    r = r * T(59.0) + b;
+    r = r + T(60.0) * a;
+    r = -r + T(61.0);
+    r = r * T(62.0) + b;
+    r = r + T(63.0) * a;
+    r = -r + T(64.0);
+    r = r * T(65.0) + b;
+    r = r + T(66.0) * a;
+    r = -r + T(67.0);
+    r = r * T(68.0) + b;
+    r = r + T(69.0) * a;
+    r = -r + T(70.0);
+    r = r * T(71.0) + b;
+    r = r + T(72.0) * a;
+    r = -r + T(73.0);
+    r = r * T(74.0) + b;
+    r = r + T(75.0) * a;
+    r = -r + T(76.0);
+    r = r * T(77.0) + b;
+    r = r + T(78.0) * a;
+    r = -r + T(79.0);
+    r = r * T(80.0) + b;
+    r = r + T(81.0) * a;
+    r = -r + T(82.0);
+    r = r * T(83.0) + b;
+    r = r + T(84.0) * a;
+    r = -r + T(85.0);
+    r = r * T(86.0) + b;
+    r = r + T(87.0) * a;
+    r = -r + T(88.0);
+    r = r * T(89.0) + b;
+    r = r + T(90.0) * a;
+    r = -r + T(91.0);
+    r = r * T(92.0) + b;
+    r = r + T(93.0) * a;
+    r = -r + T(94.0);
+    r = r * T(95.0) + b;
+    r = r + T(96.0) * a;
+    r = -r + T(97.0);
+    r = r * T(1.0) + b;
+    r = r + T(2.0) * a;
+    r = -r + T(3.0);
+    r = r * T(4.0) + b;
+    r = r + T(5.0) * a;
+    r = -r + T(6.0);
+    r = r * T(7.0) + b;
+    r = r + T(8.0) * a;
+    r = -r + T(9.0);
+    r = r * T(10.0) + b;
+    r = r + T(11.0) * a;
+    r = -r + T(12.0);
+    r = r * T(13.0) + b;
+    r = r + T(14.0) * a;
+    r = -r + T(15.0);
+    r = r * T(16.0) + b;
+    r = r + T(17.0) * a;
+    r = -r + T(18.0);
+    r = r * T(19.0) + b;
+    r = r + T(20.0) * a;
+    r = -r + T(21.0);
+    r = r * T(22.0) + b;
+    r = r + T(23.0) * a;
+    r = -r + T(24.0);
+    r = r * T(25.0) + b;
+    r = r + T(26.0) * a;
+    r = -r + T(27.0);
+    r = r * T(28.0) + b;
+    r = r + T(29.0) * a;
+    r = -r + T(30.0);
+    r = r * T(31.0) + b;
+    r = r + T(32.0) * a;
+    r = -r + T(33.0);
+    r = r * T(34.0) + b;
+    r = r + T(35.0) * a;
+    r = -r + T(36.0);
+    r = r * T(37.0) + b;
+    r = r + T(38.0) * a;
+    r = -r + T(39.0);
+    r = r * T(40.0) + b;
+    r = r + T(41.0) * a;
+    r = -r + T(42.0);
+    r = r * T(43.0) + b;
+    r = r + T(44.0) * a;
+    r = -r + T(45.0);
+    r = r * T(46.0) + b;
+    r = r + T(47.0) * a;
+    r = -r + T(48.0);
+    r = r * T(49.0) + b;
+    r = r + T(50.0) * a;
+    r = -r + T(51.0);
+    r = r * T(52.0) + b;
+    r = r + T(53.0) * a;
+    r = -r + T(54.0);
+    r = r * T(55.0) + b;
+    r = r + T(56.0) * a;
+    r = -r + T(57.0);
+    r = r * T(58.0) + b;
+    r = r + T(59.0) * a;
+    r = -r + T(60.0);
+    r = r * T(61.0) + b;
+    r = r + T(62.0) * a;
+    r = -r + T(63.0);
+    r = r * T(64.0) + b;
+    r = r + T(65.0) * a;
+    r = -r + T(66.0);
+    r = r * T(67.0) + b;
+    r = r + T(68.0) * a;
+    r = -r + T(69.0);
+    r = r * T(70.0) + b;
+    r = r + T(71.0) * a;
+    r = -r + T(72.0);
+    r = r * T(73.0) + b;
+    r = r + T(74.0) * a;
+    r = -r + T(75.0);
+    r = r * T(76.0) + b;
+    r = r + T(77.0) * a;
+    r = -r + T(78.0);
+    r = r * T(79.0) + b;
+    r = r + T(80.0) * a;
+    r = -r + T(81.0);
+    r = r * T(82.0) + b;
+    r = r + T(83.0) * a;
+    r = -r + T(84.0);
+    r = r * T(85.0) + b;
+    r = r + T(86.0) * a;
+    r = -r + T(87.0);
+    r = r * T(88.0) + b;
+    r = r + T(89.0) * a;
+    r = -r + T(90.0);
+    r = r * T(91.0) + b;
+    r = r + T(92.0) * a;
+    r = -r + T(93.0);
+    r = r * T(94.0) + b;
+    r = r + T(95.0) * a;
+    r = -r + T(96.0);
+    r = r * T(97.0) + b;
+    r = r + T(1.0) * a;
+    r = -r + T(2.0);
+    r = r * T(3.0) + b;
+    r = r + T(4.0) * a;
+    r = -r + T(5.0);
+    r = r * T(6.0) + b;
+    r = r + T(7.0) * a;
+    r = -r + T(8.0);
+    r = r * T(9.0) + b;
+    r = r + T(10.0) * a;
+    r = -r + T(11.0);
+    r = r * T(12.0) + b;
+    r = r + T(13.0) * a;
+    r = -r + T(14.0);
+    r = r * T(15.0) + b;
+    r = r + T(16.0) * a;
+    r = -r + T(17.0);
+    r = r * T(18.0) + b;
+    r = r + T(19.0) * a;
+    r = -r + T(20.0);
+    r = r * T(21.0) + b;
+    r = r + T(22.0) * a;
+    r = -r + T(23.0);
+    r = r * T(24.0) + b;
+    r = r + T(25.0) * a;
+    r = -r + T(26.0);
+    r = r * T(27.0) + b;
+    r = r + T(28.0) * a;
+    r = -r + T(29.0);
+    r = r * T(30.0) + b;
+    r = r + T(31.0) * a;
+    r = -r + T(32.0);
+    r = r * T(33.0) + b;
+    r = r + T(34.0) * a;
+    r = -r + T(35.0);
+    r = r * T(36.0) + b;
+    r = r + T(37.0) * a;
+    r = -r + T(38.0);
+    r = r * T(39.0) + b;
+    r = r + T(40.0) * a;
+    r = -r + T(41.0);
+    r = r * T(42.0) + b;
+    r = r + T(43.0) * a;
+    r = -r + T(44.0);
+    r = r * T(45.0) + b;
+    r = r + T(46.0) * a;
+    r = -r + T(47.0);
+    r = r * T(48.0) + b;
+    r = r + T(49.0) * a;
+    r = -r + T(50.0);
+    r = r * T(51.0) + b;
+    r = r + T(52.0) * a;
+    r = -r + T(53.0);
+    r = r * T(54.0) + b;
+    r = r + T(55.0) * a;
+    r = -r + T(56.0);
+    r = r * T(57.0) + b;
+    r = r + T(58.0) * a;
+    r = -r + T(59.0);
+    r = r * T(60.0) + b;
+    r = r + T(61.0) * a;
+    r = -r + T(62.0);
+    r = r * T(63.0) + b;
+    r = r + T(64.0) * a;
+    r = -r + T(65.0);
+    r = r * T(66.0) + b;
+    r = r + T(67.0) * a;
+    r = -r + T(68.0);
+    r = r * T(69.0) + b;
+    r = r + T(70.0) * a;
+    r = -r + T(71.0);
+    r = r * T(72.0) + b;
+    r = r + T(73.0) * a;
+    r = -r + T(74.0);
+    r = r * T(75.0) + b;
+    r = r + T(76.0) * a;
+    r = -r + T(77.0);
+    r = r * T(78.0) + b;
+    r = r + T(79.0) * a;
+    r = -r + T(80.0);
+    r = r * T(81.0) + b;
+    r = r + T(82.0) * a;
+    r = -r + T(83.0);
+    r = r * T(84.0) + b;
+    r = r + T(85.0) * a;
+    r = -r + T(86.0);
+    r = r * T(87.0) + b;
+    r = r + T(88.0) * a;
+    r = -r + T(89.0);
+    r = r * T(90.0) + b;
+    r = r + T(91.0) * a;
+    r = -r + T(92.0);
+    r = r * T(93.0) + b;
+    r = r + T(94.0) * a;
+    r = -r + T(95.0);
+    r = r * T(96.0) + b;
+    r = r + T(97.0) * a;
+    r = -r + T(1.0);
+    r = r * T(2.0) + b;
+    r = r + T(3.0) * a;
+    r = -r + T(4.0);
+    r = r * T(5.0) + b;
+    r = r + T(6.0) * a;
+    r = -r + T(7.0);
+    r = r * T(8.0) + b;
+    r = r + T(9.0) * a;
+    r = -r + T(10.0);
+    r = r * T(11.0) + b;
+    r = r + T(12.0) * a;
+    r = -r + T(13.0);
+    r = r * T(14.0) + b;
+    r = r + T(15.0) * a;
+    r = -r + T(16.0);
+    r = r * T(17.0) + b;
+    r = r + T(18.0) * a;
+    r = -r + T(19.0);
+    r = r * T(20.0) + b;
+    r = r + T(21.0) * a;
+    r = -r + T(22.0);
+    r = r * T(23.0) + b;
+    r = r + T(24.0) * a;
+    r = -r + T(25.0);
+    r = r * T(26.0) + b;
+    r = r + T(27.0) * a;
+    r = -r + T(28.0);
+    r = r * T(29.0) + b;
+    r = r + T(30.0) * a;
+    r = -r + T(31.0);
+    r = r * T(32.0) + b;
+    r = r + T(33.0) * a;
+    r = -r + T(34.0);
+    r = r * T(35.0) + b;
+    r = r + T(36.0) * a;
+    r = -r + T(37.0);
+    r = r * T(38.0) + b;
+    r = r + T(39.0) * a;
+    r = -r + T(40.0);
+    r = r * T(41.0) + b;
+    r = r + T(42.0) * a;
+    r = -r + T(43.0);
+    r = r * T(44.0) + b;
+    r = r + T(45.0) * a;
+    r = -r + T(46.0);
+    r = r * T(47.0) + b;
+    r = r + T(48.0) * a;
+    r = -r + T(49.0);
+    r = r * T(50.0) + b;
+    r = r + T(51.0) * a;
+    r = -r + T(52.0);
+    r = r * T(53.0) + b;
+    r = r + T(54.0) * a;
+    r = -r + T(55.0);
+    r = r * T(56.0) + b;
+    r = r + T(57.0) * a;
+    r = -r + T(58.0);
+    r = r * T(59.0) + b;
+    r = r + T(60.0) * a;
+    r = -r + T(61.0);
+    r = r * T(62.0) + b;
+    r = r + T(63.0) * a;
+    r = -r + T(64.0);
+    r = r * T(65.0) + b;
+    r = r + T(66.0) * a;
+    r = -r + T(67.0);
+    r = r * T(68.0) + b;
+    r = r + T(69.0) * a;
+    r = -r + T(70.0);
+    r = r * T(71.0) + b;
+    r = r + T(72.0) * a;
+    r = -r + T(73.0);
+    r = r * T(74.0) + b;
+    r = r + T(75.0) * a;
+    r = -r + T(76.0);
+    r = r * T(77.0) + b;
+    r = r + T(78.0) * a;
+    r = -r + T(79.0);
+    r = r * T(80.0) + b;
+    r = r + T(81.0) * a;
+    r = -r + T(82.0);
+    r = r * T(83.0) + b;
+    r = r + T(84.0) * a;
+    r = -r + T(85.0);
+    r = r * T(86.0) + b;
+    r = r + T(87.0) * a;
+    r = -r + T(88.0);
+    r = r * T(89.0) + b;
+    r = r + T(90.0) * a;
+    r = -r + T(91.0);
+    r = r * T(92.0) + b;
+    r = r + T(93.0) * a;
+    r = -r + T(94.0);
+    r = r * T(95.0) + b;
+    r = r + T(96.0) * a;
+    r = -r + T(97.0);
+    r = r * T(1.0) + b;
+    r = r + T(2.0) * a;
+    r = -r + T(3.0);
+    r = r * T(4.0) + b;
+    r = r + T(5.0) * a;
+    r = -r + T(6.0);
+    r = r * T(7.0) + b;
+    r = r + T(8.0) * a;
+    r = -r + T(9.0);
+    r = r * T(10.0) + b;
+    r = r + T(11.0) * a;
+    r = -r + T(12.0);
+    r = r * T(13.0) + b;
+    r = r + T(14.0) * a;
+    r = -r + T(15.0);
+    r = r * T(16.0) + b;
+    r = r + T(17.0) * a;
+    r = -r + T(18.0);
+    r = r * T(19.0) + b;
+    r = r + T(20.0) * a;
+    r = -r + T(21.0);
+    r = r * T(22.0) + b;
+    r = r + T(23.0) * a;
+    r = -r + T(24.0);
+    r = r * T(25.0) + b;
+    r = r + T(26.0) * a;
+    r = -r + T(27.0);
+    r = r * T(28.0) + b;
+    r = r + T(29.0) * a;
+    r = -r + T(30.0);
+    r = r * T(31.0) + b;
+    r = r + T(32.0) * a;
+    r = -r + T(33.0);
+    r = r * T(34.0) + b;
+    r = r + T(35.0) * a;
+    r = -r + T(36.0);
+    r = r * T(37.0) + b;
+    r = r + T(38.0) * a;
+    r = -r + T(39.0);
+    r = r * T(40.0) + b;
+    r = r + T(41.0) * a;
+    r = -r + T(42.0);
+    r = r * T(43.0) + b;
+    r = r + T(44.0) * a;
+    r = -r + T(45.0);
+    r = r * T(46.0) + b;
+    r = r + T(47.0) * a;
+    r = -r + T(48.0);
+    r = r * T(49.0) + b;
+    r = r + T(50.0) * a;
+    r = -r + T(51.0);
+    r = r * T(52.0) + b;
+    r = r + T(53.0) * a;
+    r = -r + T(54.0);
+    r = r * T(55.0) + b;
+    r = r + T(56.0) * a;
+    r = -r + T(57.0);
+    r = r * T(58.0) + b;
+    r = r + T(59.0) * a;
+    r = -r + T(60.0);
+    r = r * T(61.0) + b;
+    r = r + T(62.0) * a;
+    r = -r + T(63.0);
+    r = r * T(64.0) + b;
+    r = r + T(65.0) * a;
+    r = -r + T(66.0);
+    r = r * T(67.0) + b;
+    r = r + T(68.0) * a;
+    r = -r + T(69.0);
+    r = r * T(70.0) + b;
+    r = r + T(71.0) * a;
+    r = -r + T(72.0);
+    r = r * T(73.0) + b;
+    r = r + T(74.0) * a;
+    r = -r + T(75.0);
+    r = r * T(76.0) + b;
+    r = r + T(77.0) * a;
+    r = -r + T(78.0);
+    r = r * T(79.0) + b;
+    r = r + T(80.0) * a;
+    r = -r + T(81.0);
+    r = r * T(82.0) + b;
+    r = r + T(83.0) * a;
+    r = -r + T(84.0);
+    r = r * T(85.0) + b;
+    r = r + T(86.0) * a;
+    r = -r + T(87.0);
+    r = r * T(88.0) + b;
+    r = r + T(89.0) * a;
+    r = -r + T(90.0);
+    r = r * T(91.0) + b;
+    r = r + T(92.0) * a;
+    r = -r + T(93.0);
+    r = r * T(94.0) + b;
+    r = r + T(95.0) * a;
+    r = -r + T(96.0);
+    r = r * T(97.0) + b;
+    r = r + T(1.0) * a;
+    r = -r + T(2.0);
+    r = r * T(3.0) + b;
+    r = r + T(4.0) * a;
+    r = -r + T(5.0);
+    r = r * T(6.0) + b;
+    r = r + T(7.0) * a;
+    r = -r + T(8.0);
+    r = r * T(9.0) + b;
+    r = r + T(10.0) * a;
+    r = -r + T(11.0);
+    r = r * T(12.0) + b;
+    r = r + T(13.0) * a;
+    r = -r + T(14.0);
+    r = r * T(15.0) + b;
+    r = r + T(16.0) * a;
+    r = -r + T(17.0);
+    r = r * T(18.0) + b;
+    r = r + T(19.0) * a;
+    r = -r + T(20.0);
+    r = r * T(21.0) + b;
+    r = r + T(22.0) * a;
+    r = -r + T(23.0);
+    r = r * T(24.0) + b;
+    r = r + T(25.0) * a;
+    r = -r + T(26.0);
+    r = r * T(27.0) + b;
+    r = r + T(28.0) * a;
+    r = -r + T(29.0);
+    r = r * T(30.0) + b;
+    return r;
+}
+
+[shader("compute")]
+[numthreads(1,1,1)]
+void computeMain()
+{
+    outBuf[0] = compute&lt;float&gt;(outBuf[0], outBuf[0] + 1.0);
+}
+</pre></div><script>
+document.addEventListener('click', function (ev) {
+  var btn = ev.target.closest && ev.target.closest('button.copy');
+  if (!btn) return;
+  var el = document.getElementById(btn.getAttribute('data-copy'));
+  if (!el) return;
+  var text = el.textContent;
+  function flash(ok) {
+    btn.textContent = ok ? 'Copied' : 'Press Ctrl+C';
+    if (ok) btn.setAttribute('data-done', '1');
+    setTimeout(function () {
+      btn.textContent = 'Copy'; btn.removeAttribute('data-done');
+    }, 1400);
+  }
+  function fallback() {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta); flash(ok);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () { flash(true); }, fallback);
+  } else {
+    fallback();
+  }
+});
+</script></body>

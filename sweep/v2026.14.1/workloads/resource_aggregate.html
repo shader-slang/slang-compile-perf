@@ -24,8 +24,8 @@ drop them before legalization runs. Scales by breadth = number of bundles,
 i.e. the count of resource fields the pass must legalize; legalizeResourceTypes
 grows super-linearly in n.
 
-Scaling null: n scales resource-carrying structs, each O(1); ideal legalization cost is O(n) — the measured ~N^1.8 in legalizeResourceTypes is a genuine compiler finding, not a workload property.</p><p class='small'><b>bucket:</b> resource_legalize &nbsp;·&nbsp; <b>mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code></p><h2>Phase composition vs N (stacked sub-counters)</h2><p class='small'>compileInner split into phase buckets (named leaves + <code>(self)</code> residuals) stacked across the sweep sizes — the top edge is compileInner, so you can see <i>which</i> phase drives the scaling.</p><div class='chart'><svg xmlns="http://www.w3.org/2000/svg" width="1092" height="648" viewBox="0 0 1092 648" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
-<rect width="1092" height="648" fill="white"/>
+Scaling null: n scales resource-carrying structs, each O(1); ideal legalization cost is O(n) — the measured ~N^1.8 in legalizeResourceTypes is a genuine compiler finding, not a workload property.</p><p class='small'><b>bucket:</b> resource_legalize &nbsp;·&nbsp; <b>mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code></p><h2>Phase composition vs N (stacked sub-counters)</h2><p class='small'>compileInner split into phase buckets (named leaves + <code>(self)</code> residuals) stacked across the sweep sizes — the top edge is compileInner, so you can see <i>which</i> phase drives the scaling.</p><div class='chart'><svg xmlns="http://www.w3.org/2000/svg" width="1092" height="684" viewBox="0 0 1092 684" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1092" height="684" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">resource_aggregate — phase composition vs N (v2026.14.1, median ms)</text>
 <text x="68" y="60" font-size="15" font-weight="600">resource_aggregate<tspan fill="#888" font-weight="400">  5.9× over N 80→640</tspan></text>
 <line x1="68.0" y1="496.0" x2="1068.0" y2="496.0" stroke="#eee"/>
@@ -85,12 +85,22 @@ Scaling null: n scales resource-carrying structs, each O(1); ideal legalization 
 <text x="562" y="600" fill="#222">performMandatoryEarlyInlining</text>
 <rect x="813" y="590" width="12" height="12" fill="#dadaeb"/>
 <text x="829" y="600" fill="#222">performForceInlining</text>
-<rect x="12" y="608" width="12" height="12" fill="#4a1486"/>
-<text x="28" y="618" fill="#222">linkAndOptimizeIR (self)</text>
-<rect x="279" y="608" width="12" height="12" fill="#fd8d3c"/>
-<text x="295" y="618" fill="#222">emitEntryPointsSourceFromIR</text>
-<rect x="546" y="608" width="12" height="12" fill="#e6550d"/>
-<text x="562" y="618" fill="#222">generateOutput (self)</text>
-<rect x="813" y="608" width="12" height="12" fill="#969696"/>
-<text x="829" y="618" fill="#222">compileInner (self)</text>
+<rect x="12" y="608" width="12" height="12" fill="#3f007d"/>
+<text x="28" y="618" fill="#222">deferBufferLoad</text>
+<rect x="279" y="608" width="12" height="12" fill="#54278f"/>
+<text x="295" y="618" fill="#222">simplifyNonSSAIR</text>
+<rect x="546" y="608" width="12" height="12" fill="#9970ab"/>
+<text x="562" y="618" fill="#222">lowerCombinedTextureSamplers</text>
+<rect x="813" y="608" width="12" height="12" fill="#c2a5cf"/>
+<text x="829" y="618" fill="#222">legalizeMatrixTypes</text>
+<rect x="12" y="626" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="636" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="279" y="626" width="12" height="12" fill="#fdd0a2"/>
+<text x="295" y="636" fill="#222">emitEntryPointsSourceFromIR (self)</text>
+<rect x="546" y="626" width="12" height="12" fill="#fd8d3c"/>
+<text x="562" y="636" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="813" y="626" width="12" height="12" fill="#e6550d"/>
+<text x="829" y="636" fill="#222">generateOutput (self)</text>
+<rect x="12" y="644" width="12" height="12" fill="#969696"/>
+<text x="28" y="654" fill="#222">compileInner (self)</text>
 </svg></div><h2>Scaling analysis</h2><p class='small'>floor-subtracted power-law fit <code>(t − floor) = a·N<sup>k</sup></code>; <b>floor</b> = the <code>minimal</code> workload (fixed per-compile cost), <b>k</b> the global exponent, <b>top-2×</b> the local high-end doubling ratio.</p><table><tr><th class=num>N range</th><th class=num>floor (ms)</th><th class=num>k (work)</th><th class=num>fit R²</th><th class=num>t(N<sub>min</sub>)</th><th class=num>t(N<sub>max</sub>)</th><th class=num>top-2×</th></tr><tr><td class=num>80–640</td><td class=num>9</td><td class='num flat'>0.96</td><td class=num>0.994</td><td class=num>52</td><td class=num>309</td><td class='num flat'>1.78×</td></tr></table><h2>Growth attribution (N=80 &rarr; N=640)</h2><p class='small'>compileInner grows by <b>257 ms</b> across the sweep; the mutually-exclusive phase buckets below partition that growth exactly (no nested-timer double counting). <b>&times; lin</b> is the same metric as the top-level panels, per bucket: the end point vs a linear expectation anchored to the bucket's share of the <code>minimal</code> floor and fitted on the low-N half — 1.0 = grew exactly linearly, &gt;1 bends up. The super-linearity lives where &times; lin (and k) are red.</p><table><tr><th>bucket</th><th class=num>t@N=80</th><th class=num>t@N=640</th><th class=num>&Delta; ms</th><th class=num>share</th><th class=num>&times; lin</th><th class=num>&prop;N<sup>k</sup></th></tr><tr><td>generateOutput (self)</td><td class=num>12</td><td class=num>67</td><td class=num>+55</td><td class=num>21%</td><td class='num flat'>0.97&times;</td><td class='num flat'>0.96</td></tr><tr><td>SemanticChecking</td><td class=num>15</td><td class=num>59</td><td class=num>+44</td><td class=num>17%</td><td class='num flat'>0.87&times;</td><td class='num flat'>0.85</td></tr><tr><td>specializeModule</td><td class=num>5</td><td class=num>37</td><td class=num>+33</td><td class=num>13%</td><td class='num flat'>1.06&times;</td><td class='num flat'>1.01</td></tr><tr><td>generateIR</td><td class=num>6</td><td class=num>33</td><td class=num>+27</td><td class=num>10%</td><td class='num flat'>0.92&times;</td><td class='num flat'>0.87</td></tr><tr><td>simplifyIR</td><td class=num>3</td><td class=num>27</td><td class=num>+24</td><td class=num>10%</td><td class='num reg'>1.16&times;</td><td class='num flat'>1.07</td></tr></table><p class='small'><b>Also growing</b> (below top-5): linkAndOptimizeIR (self) (+24 ms, 9%), legalizeResourceTypes (+20 ms, 8%), frontEndExecute (self) (+6 ms, 2%), compileInner (self) (+6 ms, 2%), legalizeExistentialTypeLayout (+5 ms, 2%).</p><p class='small'><b>Near-constant</b> (&le;2% of growth each): performMandatoryEarlyInlining (0&rarr;5 ms), linkIR (1&rarr;4 ms), parseTranslationUnit (1&rarr;3 ms), performForceInlining (0&rarr;3 ms), unrollLoopsInModule (0&rarr;0 ms).</p><h2>Sweep numbers (median ms)</h2><table><tr><th class=num>N</th><th class=num>compileInner</th><th class=num>legalizeResourceTypes</th><th class=num>linkAndOptimizeIR</th></tr><tr><td class=num>80</td><td class=num>52</td><td class=num>1</td><td class=num>15</td></tr><tr><td class=num>160</td><td class=num>82</td><td class=num>3</td><td class=num>29</td></tr><tr><td class=num>320</td><td class=num>174</td><td class=num>8</td><td class=num>62</td></tr><tr><td class=num>640</td><td class=num>309</td><td class=num>22</td><td class=num>132</td></tr></table></div>
