@@ -13,17 +13,7 @@ td.num{text-align:right} tr:hover td{background:#fafbfc}
 code{background:#f0f1f3;padding:1px 5px;border-radius:3px;font-size:13px}
 .note{background:#fff8e1;border-left:4px solid #f0c000;padding:10px 14px;border-radius:4px;margin:10px 0}
 .small{color:#777;font-size:12px}
-</style><div class='wrap'><p><a href='../sweep_report.html'>&larr; all workloads</a></p><h1>generic_nesting_eval</h1><p style='color:#444;white-space:pre-wrap'>The generic_nesting chain with a method REQUIRED by the constraint
-interface and called recursively through the witnesses (`first.eval() +
-second.eval()`), so overload resolution and inheritance-witness lookup run
-at every nesting level instead of only type checking the aliases. Same
-depth axis as generic_nesting, much steeper constant: measured ~2.9x per
-level when added (2026-07), vs ~3-4x per level from substitution alone
-but starting an order of magnitude higher at equal depth.
-
-Scaling null: each level adds O(1) declarations and one call site, so
-ideal front-end cost is O(n). The ladder tops out below generic_nesting&#x27;s
-because the per-level multiplier bites sooner.</p><p class='small'><b>bucket:</b> sema &nbsp;·&nbsp; <b>mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code></p><h2>Phase composition vs N (stacked sub-counters)</h2><p class='small'>compileInner split into phase buckets (named leaves + <code>(self)</code> residuals) stacked across the sweep sizes — the top edge is compileInner, so you can see <i>which</i> phase drives the scaling.</p><div class='chart'><svg xmlns="http://www.w3.org/2000/svg" width="1092" height="684" viewBox="0 0 1092 684" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+</style><div class='wrap'><p><a href='../sweep_report.html'>&larr; all workloads</a></p><h1>generic_nesting_eval</h1><p style='color:#444;white-space:pre-wrap'>(no description)</p><p class='small'></p><h2>Phase composition vs N (stacked sub-counters)</h2><p class='small'>compileInner split into phase buckets (named leaves + <code>(self)</code> residuals) stacked across the sweep sizes — the top edge is compileInner, so you can see <i>which</i> phase drives the scaling.</p><div class='chart'><svg xmlns="http://www.w3.org/2000/svg" width="1092" height="684" viewBox="0 0 1092 684" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1092" height="684" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">generic_nesting_eval — phase composition vs N (v2026.12, median ms)</text>
 <text x="68" y="60" font-size="15" font-weight="600">generic_nesting_eval<tspan fill="#888" font-weight="400">  141.3× over N 8→14</tspan></text>

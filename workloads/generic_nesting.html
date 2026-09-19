@@ -6,21 +6,7 @@
   cursor:pointer;opacity:.75}
 .cbox>button.copy:hover{opacity:1;background:#f3f4f6}
 .cbox>button.copy[data-done]{color:#1a7f37;border-color:#1a7f37}
-</style><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; back</a></p><h1 style='font-size:21px;margin:0 0 6px'>generic_nesting</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>One generic struct instantiated with itself n levels deep: a chain of
-`typealias T_i = Pair&lt;Leaf, T_{i-1}&gt;` where `Pair` is constrained to an
-interface that extends another. Every other generic workload in the suite
-scales BREADTH (many shallow instantiations); this one scales DEPTH, the
-axis on which the front-end's substitution / inheritance-witness work is
-known to multiply per level. The shape arises in real code that composes
-generic "model"/"module" types recursively (e.g. chained ML evaluator
-stacks), where each wrapper layer adds one level of nesting.
-
-Scaling null: each level adds O(1) declarations, so ideal front-end cost
-is O(n). Measured behavior when this was added (2026-07): substitution
-work grows ~3-4x PER LEVEL (exponential), with the wall-clock knee near
-depth 18 — v2025.14 through tip-of-tree all take ~17-20 s at depth 24.
-The sweep ladder deliberately stays at or below the knee; the finding to
-watch is the top rung's multiple of the linear expectation moving.</p><p style='color:#666;font-size:13px'><b>bucket:</b> sema &nbsp;·&nbsp; <b>compile mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 16</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Across releases</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+</style><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; back</a></p><h1 style='font-size:21px;margin:0 0 6px'>generic_nesting</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>(no description)</p><p style='color:#666;font-size:13px'></p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Across releases</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="716" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">generic_nesting — Across releases (median ms)</text>
 <text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">generic_nesting<tspan fill="#888" font-weight="400" text-decoration="none">  0.03×</tspan></text>
@@ -118,7 +104,7 @@ watch is the top rung's multiple of the linear expectation moving.</p><p style='
 </svg><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="716" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">generic_nesting — Daily tip-of-tree (last 30 days) (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">generic_nesting<tspan fill="#888" font-weight="400" text-decoration="none">  0.96×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">generic_nesting<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -128,71 +114,71 @@ watch is the top rung's multiple of the linear expectation moving.</p><p style='
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">08-20</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">08-21</text>
 <line x1="103.9" y1="516.0" x2="103.9" y2="519.0" stroke="#999"/>
-<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">08-21</text>
+<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">08-22</text>
 <line x1="139.7" y1="516.0" x2="139.7" y2="519.0" stroke="#999"/>
-<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">08-22</text>
+<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">08-23</text>
 <line x1="175.6" y1="516.0" x2="175.6" y2="519.0" stroke="#999"/>
-<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">08-23</text>
+<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">08-24</text>
 <line x1="211.4" y1="516.0" x2="211.4" y2="519.0" stroke="#999"/>
-<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">08-24</text>
+<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">08-25</text>
 <line x1="247.3" y1="516.0" x2="247.3" y2="519.0" stroke="#999"/>
-<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">08-25</text>
+<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">08-26</text>
 <line x1="283.2" y1="516.0" x2="283.2" y2="519.0" stroke="#999"/>
-<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">08-26</text>
+<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">08-27</text>
 <line x1="319.0" y1="516.0" x2="319.0" y2="519.0" stroke="#999"/>
-<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">08-27</text>
+<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">08-28</text>
 <line x1="354.9" y1="516.0" x2="354.9" y2="519.0" stroke="#999"/>
-<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">08-28</text>
+<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">08-29</text>
 <line x1="390.8" y1="516.0" x2="390.8" y2="519.0" stroke="#999"/>
-<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">08-29</text>
+<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">08-30</text>
 <line x1="426.6" y1="516.0" x2="426.6" y2="519.0" stroke="#999"/>
-<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">08-30</text>
+<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">08-31</text>
 <line x1="462.5" y1="516.0" x2="462.5" y2="519.0" stroke="#999"/>
-<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">08-31</text>
+<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">09-01</text>
 <line x1="498.3" y1="516.0" x2="498.3" y2="519.0" stroke="#999"/>
-<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-01</text>
+<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-02</text>
 <line x1="534.2" y1="516.0" x2="534.2" y2="519.0" stroke="#999"/>
-<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-02</text>
+<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-03</text>
 <line x1="570.1" y1="516.0" x2="570.1" y2="519.0" stroke="#999"/>
-<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-03</text>
+<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-04</text>
 <line x1="605.9" y1="516.0" x2="605.9" y2="519.0" stroke="#999"/>
-<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-04</text>
+<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-05</text>
 <line x1="641.8" y1="516.0" x2="641.8" y2="519.0" stroke="#999"/>
-<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-05</text>
+<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-06</text>
 <line x1="677.7" y1="516.0" x2="677.7" y2="519.0" stroke="#999"/>
-<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-06</text>
+<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-07</text>
 <line x1="713.5" y1="516.0" x2="713.5" y2="519.0" stroke="#999"/>
-<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-07</text>
+<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-08</text>
 <line x1="749.4" y1="516.0" x2="749.4" y2="519.0" stroke="#999"/>
-<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-08</text>
+<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-09</text>
 <line x1="785.2" y1="516.0" x2="785.2" y2="519.0" stroke="#999"/>
-<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-09</text>
+<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-10</text>
 <line x1="821.1" y1="516.0" x2="821.1" y2="519.0" stroke="#999"/>
-<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-10</text>
+<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-11</text>
 <line x1="857.0" y1="516.0" x2="857.0" y2="519.0" stroke="#999"/>
-<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-11</text>
+<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-12</text>
 <line x1="892.8" y1="516.0" x2="892.8" y2="519.0" stroke="#999"/>
-<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-12</text>
+<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-13</text>
 <line x1="928.7" y1="516.0" x2="928.7" y2="519.0" stroke="#999"/>
-<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-13</text>
+<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-14</text>
 <line x1="964.6" y1="516.0" x2="964.6" y2="519.0" stroke="#999"/>
-<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-14</text>
+<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-15</text>
 <line x1="1000.4" y1="516.0" x2="1000.4" y2="519.0" stroke="#999"/>
-<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-15</text>
+<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-16</text>
 <line x1="1036.3" y1="516.0" x2="1036.3" y2="519.0" stroke="#999"/>
-<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-16</text>
+<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-17</text>
 <line x1="1072.1" y1="516.0" x2="1072.1" y2="519.0" stroke="#999"/>
-<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-17</text>
+<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-18</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-18</text>
-<polygon points="68.0,491.6 103.9,492.9 139.7,491.6 175.6,492.9 211.4,492.9 247.3,492.9 283.2,492.9 319.0,494.3 354.9,491.6 390.8,494.3 426.6,492.9 462.5,492.9 498.3,492.9 534.2,491.6 570.1,495.6 605.9,494.3 641.8,495.6 677.7,492.9 713.5,495.6 749.4,494.3 785.2,492.9 821.1,494.3 857.0,494.3 892.8,494.3 928.7,497.0 964.6,495.6 1000.4,495.6 1036.3,494.3 1072.1,494.3 1108.0,494.3 1108.0,516.0 1072.1,516.0 1036.3,516.0 1000.4,516.0 964.6,516.0 928.7,516.0 892.8,516.0 857.0,516.0 821.1,516.0 785.2,516.0 749.4,516.0 713.5,516.0 677.7,516.0 641.8,516.0 605.9,516.0 570.1,516.0 534.2,516.0 498.3,516.0 462.5,516.0 426.6,516.0 390.8,516.0 354.9,516.0 319.0,516.0 283.2,516.0 247.3,516.0 211.4,516.0 175.6,516.0 139.7,516.0 103.9,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_nesting — parseTranslationUnit</title></polygon>
-<polygon points="68.0,396.5 103.9,399.2 139.7,395.1 175.6,397.9 211.4,399.2 247.3,399.2 283.2,399.2 319.0,397.9 354.9,397.9 390.8,397.9 426.6,397.9 462.5,397.9 498.3,396.5 534.2,393.8 570.1,400.6 605.9,406.0 641.8,407.4 677.7,400.6 713.5,404.6 749.4,406.0 785.2,399.2 821.1,403.3 857.0,404.6 892.8,404.6 928.7,406.0 964.6,406.0 1000.4,404.6 1036.3,404.6 1072.1,400.6 1108.0,401.9 1108.0,494.3 1072.1,494.3 1036.3,494.3 1000.4,495.6 964.6,495.6 928.7,497.0 892.8,494.3 857.0,494.3 821.1,494.3 785.2,492.9 749.4,494.3 713.5,495.6 677.7,492.9 641.8,495.6 605.9,494.3 570.1,495.6 534.2,491.6 498.3,492.9 462.5,492.9 426.6,492.9 390.8,494.3 354.9,491.6 319.0,494.3 283.2,492.9 247.3,492.9 211.4,492.9 175.6,492.9 139.7,491.6 103.9,492.9 68.0,491.6" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_nesting — SemanticChecking</title></polygon>
-<polygon points="68.0,251.2 103.9,266.1 139.7,260.7 175.6,259.3 211.4,263.4 247.3,264.8 283.2,267.5 319.0,255.3 354.9,264.8 390.8,248.5 426.6,256.6 462.5,264.8 498.3,259.3 534.2,258.0 570.1,270.2 605.9,275.6 641.8,274.3 677.7,264.8 713.5,264.8 749.4,271.6 785.2,260.7 821.1,266.1 857.0,266.1 892.8,263.4 928.7,266.1 964.6,266.1 1000.4,270.2 1036.3,263.4 1072.1,263.4 1108.0,262.0 1108.0,401.9 1072.1,400.6 1036.3,404.6 1000.4,404.6 964.6,406.0 928.7,406.0 892.8,404.6 857.0,404.6 821.1,403.3 785.2,399.2 749.4,406.0 713.5,404.6 677.7,400.6 641.8,407.4 605.9,406.0 570.1,400.6 534.2,393.8 498.3,396.5 462.5,397.9 426.6,397.9 390.8,397.9 354.9,397.9 319.0,397.9 283.2,399.2 247.3,399.2 211.4,399.2 175.6,397.9 139.7,395.1 103.9,399.2 68.0,396.5" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_nesting — generateIR</title></polygon>
-<polygon points="68.0,233.5 103.9,243.0 139.7,243.0 175.6,232.2 211.4,245.8 247.3,245.3 283.2,249.8 319.0,236.2 354.9,248.5 390.8,235.6 426.6,236.2 462.5,244.4 498.3,239.0 534.2,243.0 570.1,251.2 605.9,256.6 641.8,256.6 677.7,248.5 713.5,247.1 749.4,256.2 785.2,244.4 821.1,249.8 857.0,250.8 892.8,245.8 928.7,247.1 964.6,250.3 1000.4,253.9 1036.3,250.8 1072.1,244.4 1108.0,247.1 1108.0,262.0 1072.1,263.4 1036.3,263.4 1000.4,270.2 964.6,266.1 928.7,266.1 892.8,263.4 857.0,266.1 821.1,266.1 785.2,260.7 749.4,271.6 713.5,264.8 677.7,264.8 641.8,274.3 605.9,275.6 570.1,270.2 534.2,258.0 498.3,259.3 462.5,264.8 426.6,256.6 390.8,248.5 354.9,264.8 319.0,255.3 283.2,267.5 247.3,264.8 211.4,263.4 175.6,259.3 139.7,260.7 103.9,266.1 68.0,251.2" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_nesting — frontEndExecute (self)</title></polygon>
-<polygon points="68.0,111.3 103.9,126.2 139.7,119.5 175.6,114.0 211.4,122.2 247.3,123.5 283.2,130.3 319.0,115.4 354.9,131.7 390.8,115.4 426.6,116.7 462.5,123.5 498.3,115.4 534.2,123.5 570.1,133.0 605.9,141.2 641.8,129.0 677.7,129.0 713.5,123.5 749.4,138.5 785.2,131.7 821.1,130.3 857.0,129.0 892.8,123.5 928.7,126.2 964.6,131.7 1000.4,129.0 1036.3,131.7 1072.1,124.9 1108.0,127.6 1108.0,247.1 1072.1,244.4 1036.3,250.8 1000.4,253.9 964.6,250.3 928.7,247.1 892.8,245.8 857.0,250.8 821.1,249.8 785.2,244.4 749.4,256.2 713.5,247.1 677.7,248.5 641.8,256.6 605.9,256.6 570.1,251.2 534.2,243.0 498.3,239.0 462.5,244.4 426.6,236.2 390.8,235.6 354.9,248.5 319.0,236.2 283.2,249.8 247.3,245.3 211.4,245.8 175.6,232.2 139.7,243.0 103.9,243.0 68.0,233.5" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_nesting — generateOutput (self)</title></polygon>
-<polygon points="68.0,110.0 103.9,124.9 139.7,116.7 175.6,112.7 211.4,114.0 247.3,123.5 283.2,129.0 319.0,111.3 354.9,130.3 390.8,115.4 426.6,108.6 462.5,122.2 498.3,108.6 534.2,122.2 570.1,130.3 605.9,133.0 641.8,129.0 677.7,127.6 713.5,120.8 749.4,138.5 785.2,122.2 821.1,130.3 857.0,129.0 892.8,116.7 928.7,126.2 964.6,131.7 1000.4,126.2 1036.3,131.7 1072.1,123.5 1108.0,124.9 1108.0,127.6 1072.1,124.9 1036.3,131.7 1000.4,129.0 964.6,131.7 928.7,126.2 892.8,123.5 857.0,129.0 821.1,130.3 785.2,131.7 749.4,138.5 713.5,123.5 677.7,129.0 641.8,129.0 605.9,141.2 570.1,133.0 534.2,123.5 498.3,115.4 462.5,123.5 426.6,116.7 390.8,115.4 354.9,131.7 319.0,115.4 283.2,130.3 247.3,123.5 211.4,122.2 175.6,114.0 139.7,119.5 103.9,126.2 68.0,111.3" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_nesting — compileInner (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-19</text>
+<polygon points="68.0,492.9 103.9,491.6 139.7,492.9 175.6,492.9 211.4,492.9 247.3,492.9 283.2,494.3 319.0,491.6 354.9,494.3 390.8,492.9 426.6,492.9 462.5,492.9 498.3,491.6 534.2,495.6 570.1,494.3 605.9,495.6 641.8,492.9 677.7,495.6 713.5,494.3 749.4,492.9 785.2,494.3 821.1,494.3 857.0,494.3 892.8,497.0 928.7,495.6 964.6,495.6 1000.4,494.3 1036.3,494.3 1072.1,494.3 1072.1,516.0 1036.3,516.0 1000.4,516.0 964.6,516.0 928.7,516.0 892.8,516.0 857.0,516.0 821.1,516.0 785.2,516.0 749.4,516.0 713.5,516.0 677.7,516.0 641.8,516.0 605.9,516.0 570.1,516.0 534.2,516.0 498.3,516.0 462.5,516.0 426.6,516.0 390.8,516.0 354.9,516.0 319.0,516.0 283.2,516.0 247.3,516.0 211.4,516.0 175.6,516.0 139.7,516.0 103.9,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_nesting — parseTranslationUnit</title></polygon>
+<polygon points="68.0,399.2 103.9,395.1 139.7,397.9 175.6,399.2 211.4,399.2 247.3,399.2 283.2,397.9 319.0,397.9 354.9,397.9 390.8,397.9 426.6,397.9 462.5,396.5 498.3,393.8 534.2,400.6 570.1,406.0 605.9,407.4 641.8,400.6 677.7,404.6 713.5,406.0 749.4,399.2 785.2,403.3 821.1,404.6 857.0,404.6 892.8,406.0 928.7,406.0 964.6,404.6 1000.4,404.6 1036.3,400.6 1072.1,401.9 1072.1,494.3 1036.3,494.3 1000.4,494.3 964.6,495.6 928.7,495.6 892.8,497.0 857.0,494.3 821.1,494.3 785.2,494.3 749.4,492.9 713.5,494.3 677.7,495.6 641.8,492.9 605.9,495.6 570.1,494.3 534.2,495.6 498.3,491.6 462.5,492.9 426.6,492.9 390.8,492.9 354.9,494.3 319.0,491.6 283.2,494.3 247.3,492.9 211.4,492.9 175.6,492.9 139.7,492.9 103.9,491.6 68.0,492.9" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_nesting — SemanticChecking</title></polygon>
+<polygon points="68.0,266.1 103.9,260.7 139.7,259.3 175.6,263.4 211.4,264.8 247.3,267.5 283.2,255.3 319.0,264.8 354.9,248.5 390.8,256.6 426.6,264.8 462.5,259.3 498.3,258.0 534.2,270.2 570.1,275.6 605.9,274.3 641.8,264.8 677.7,264.8 713.5,271.6 749.4,260.7 785.2,266.1 821.1,266.1 857.0,263.4 892.8,266.1 928.7,266.1 964.6,270.2 1000.4,263.4 1036.3,263.4 1072.1,262.0 1072.1,401.9 1036.3,400.6 1000.4,404.6 964.6,404.6 928.7,406.0 892.8,406.0 857.0,404.6 821.1,404.6 785.2,403.3 749.4,399.2 713.5,406.0 677.7,404.6 641.8,400.6 605.9,407.4 570.1,406.0 534.2,400.6 498.3,393.8 462.5,396.5 426.6,397.9 390.8,397.9 354.9,397.9 319.0,397.9 283.2,397.9 247.3,399.2 211.4,399.2 175.6,399.2 139.7,397.9 103.9,395.1 68.0,399.2" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_nesting — generateIR</title></polygon>
+<polygon points="68.0,243.0 103.9,243.0 139.7,232.2 175.6,245.8 211.4,245.3 247.3,249.8 283.2,236.2 319.0,248.5 354.9,235.6 390.8,236.2 426.6,244.4 462.5,239.0 498.3,243.0 534.2,251.2 570.1,256.6 605.9,256.6 641.8,248.5 677.7,247.1 713.5,256.2 749.4,244.4 785.2,249.8 821.1,250.8 857.0,245.8 892.8,247.1 928.7,250.3 964.6,253.9 1000.4,250.8 1036.3,244.4 1072.1,247.1 1072.1,262.0 1036.3,263.4 1000.4,263.4 964.6,270.2 928.7,266.1 892.8,266.1 857.0,263.4 821.1,266.1 785.2,266.1 749.4,260.7 713.5,271.6 677.7,264.8 641.8,264.8 605.9,274.3 570.1,275.6 534.2,270.2 498.3,258.0 462.5,259.3 426.6,264.8 390.8,256.6 354.9,248.5 319.0,264.8 283.2,255.3 247.3,267.5 211.4,264.8 175.6,263.4 139.7,259.3 103.9,260.7 68.0,266.1" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_nesting — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,126.2 103.9,119.5 139.7,114.0 175.6,122.2 211.4,123.5 247.3,130.3 283.2,115.4 319.0,131.7 354.9,115.4 390.8,116.7 426.6,123.5 462.5,115.4 498.3,123.5 534.2,133.0 570.1,141.2 605.9,129.0 641.8,129.0 677.7,123.5 713.5,138.5 749.4,131.7 785.2,130.3 821.1,129.0 857.0,123.5 892.8,126.2 928.7,131.7 964.6,129.0 1000.4,131.7 1036.3,124.9 1072.1,127.6 1072.1,247.1 1036.3,244.4 1000.4,250.8 964.6,253.9 928.7,250.3 892.8,247.1 857.0,245.8 821.1,250.8 785.2,249.8 749.4,244.4 713.5,256.2 677.7,247.1 641.8,248.5 605.9,256.6 570.1,256.6 534.2,251.2 498.3,243.0 462.5,239.0 426.6,244.4 390.8,236.2 354.9,235.6 319.0,248.5 283.2,236.2 247.3,249.8 211.4,245.3 175.6,245.8 139.7,232.2 103.9,243.0 68.0,243.0" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_nesting — generateOutput (self)</title></polygon>
+<polygon points="68.0,124.9 103.9,116.7 139.7,112.7 175.6,114.0 211.4,123.5 247.3,129.0 283.2,111.3 319.0,130.3 354.9,115.4 390.8,108.6 426.6,122.2 462.5,108.6 498.3,122.2 534.2,130.3 570.1,133.0 605.9,129.0 641.8,127.6 677.7,120.8 713.5,138.5 749.4,122.2 785.2,130.3 821.1,129.0 857.0,116.7 892.8,126.2 928.7,131.7 964.6,126.2 1000.4,131.7 1036.3,123.5 1072.1,124.9 1072.1,127.6 1036.3,124.9 1000.4,131.7 964.6,129.0 928.7,131.7 892.8,126.2 857.0,123.5 821.1,129.0 785.2,130.3 749.4,131.7 713.5,138.5 677.7,123.5 641.8,129.0 605.9,129.0 570.1,141.2 534.2,133.0 498.3,123.5 462.5,115.4 426.6,123.5 390.8,116.7 354.9,115.4 319.0,131.7 283.2,115.4 247.3,130.3 211.4,123.5 175.6,122.2 139.7,114.0 103.9,119.5 68.0,126.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_nesting — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
@@ -236,41 +222,7 @@ watch is the top rung's multiple of the linear expectation moving.</p><p style='
 <text x="859" y="668" fill="#222">generateOutput (self)</text>
 <rect x="12" y="676" width="12" height="12" fill="#969696"/>
 <text x="28" y="686" fill="#222">compileInner (self)</text>
-</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Daily window progress</h2><p style='font-size:15px'>Overall <code>compileInner</code>: 3.0 &rarr; 2.9 ms &nbsp;<b style='color:#1e8449'>-3.7%</b><span style='color:#666;font-size:13px'> &nbsp;(2026-08-20 8dcc35a46 &rarr; 2026-09-18 09d258224)</span></p><p style='color:#666;font-size:13px;margin:10px 0 4px'>Contributors — the mutually-exclusive phase buckets (named leaves + <code>(self)</code> residuals) that tile compileInner; the pp column sums to the overall %. Buckets moving the total by &ge;0.2% are listed, the rest fold into the remainder row. Below them, every other reported counter (nested/overlapping, e.g. serialized-module reads — own change only):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>counter</th><th>&Delta;</th><th>own %</th><th>of total</th></tr><tr><td>generateIR</td><td align=right>-0.0 ms</td><td align=right>-3.7%</td><td align=right>-1.3pp</td></tr><tr><td>frontEndExecute (self)</td><td align=right>-0.0 ms</td><td align=right>-15.4%</td><td align=right>-0.7pp</td></tr><tr><td>generateOutput (self)</td><td align=right>-0.0 ms</td><td align=right>-2.2%</td><td align=right>-0.7pp</td></tr><tr><td>parseTranslationUnit</td><td align=right>-0.0 ms</td><td align=right>-11.1%</td><td align=right>-0.7pp</td></tr><tr><td>SemanticChecking</td><td align=right>-0.0 ms</td><td align=right>-2.9%</td><td align=right>-0.7pp</td></tr><tr><td>compileInner (self)</td><td align=right>+0.0 ms</td><td align=right>&ndash;</td><td align=right>+0.3pp</td></tr><tr><td>readSerializedModuleIR</td><td align=right>-4.5 ms</td><td align=right>-8.6%</td><td align=right style='color:#aaa'>&ndash;</td></tr><tr><td>loadBuiltinModule</td><td align=right>-4.2 ms</td><td align=right>-4.0%</td><td align=right style='color:#aaa'>&ndash;</td></tr></table><p style='color:#666;font-size:13px;margin:14px 0 4px'>Largest day steps (&ge;5% of the previous day, both directions; bisect with <code>git log &lt;c0&gt;..&lt;c1&gt; -- source/</code>):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>boundary</th><th>% vs prev day</th><th style='text-align:left'>commits</th><th style='text-align:left'>top buckets (own %)</th></tr><tr><td colspan=4 style='color:#888'>none</td></tr></table><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only generic_nesting --label repro --gen-dir repro-generic_nesting</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 16), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>generic_nesting.slang <span style='font-weight:400;color:#888'>(34 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
-interface IBase {}
-interface IModel : IBase {}
-struct Leaf : IModel {}
-
-struct Pair&lt;First : IModel, Second : IModel&gt; : IModel
-{
-    First first;
-    Second second;
-}
-
-typealias T0 = Leaf;
-typealias T1 = Pair&lt;Leaf, T0&gt;;
-typealias T2 = Pair&lt;Leaf, T1&gt;;
-typealias T3 = Pair&lt;Leaf, T2&gt;;
-typealias T4 = Pair&lt;Leaf, T3&gt;;
-typealias T5 = Pair&lt;Leaf, T4&gt;;
-typealias T6 = Pair&lt;Leaf, T5&gt;;
-typealias T7 = Pair&lt;Leaf, T6&gt;;
-typealias T8 = Pair&lt;Leaf, T7&gt;;
-typealias T9 = Pair&lt;Leaf, T8&gt;;
-typealias T10 = Pair&lt;Leaf, T9&gt;;
-typealias T11 = Pair&lt;Leaf, T10&gt;;
-typealias T12 = Pair&lt;Leaf, T11&gt;;
-typealias T13 = Pair&lt;Leaf, T12&gt;;
-typealias T14 = Pair&lt;Leaf, T13&gt;;
-typealias T15 = Pair&lt;Leaf, T14&gt;;
-typealias T16 = Pair&lt;Leaf, T15&gt;;
-
-T16 value;
-
-[shader("compute")]
-[numthreads(1, 1, 1)]
-void computeMain() {}
-</pre></div><script>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Daily window progress</h2><p style='font-size:15px'>Overall <code>compileInner</code>: 2.9 &rarr; 2.9 ms &nbsp;<b style='color:#c0392b'>+0.0%</b><span style='color:#666;font-size:13px'> &nbsp;(2026-08-21 de679fdc3 &rarr; 2026-09-18 09d258224)</span></p><p style='color:#666;font-size:13px;margin:10px 0 4px'>Contributors — the mutually-exclusive phase buckets (named leaves + <code>(self)</code> residuals) that tile compileInner; the pp column sums to the overall %. Buckets moving the total by &ge;0.2% are listed, the rest fold into the remainder row. Below them, every other reported counter (nested/overlapping, e.g. serialized-module reads — own change only):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>counter</th><th>&Delta;</th><th>own %</th><th>of total</th></tr><tr><td>frontEndExecute (self)</td><td align=right>-0.1 ms</td><td align=right>-35.3%</td><td align=right>-2.1pp</td></tr><tr><td>generateIR</td><td align=right>+0.1 ms</td><td align=right>+5.1%</td><td align=right>+1.7pp</td></tr><tr><td>generateOutput (self)</td><td align=right>+0.0 ms</td><td align=right>+2.3%</td><td align=right>+0.7pp</td></tr><tr><td>parseTranslationUnit</td><td align=right>-0.0 ms</td><td align=right>-5.9%</td><td align=right>-0.3pp</td></tr><tr><td>SemanticChecking</td><td align=right>-0.0 ms</td><td align=right>-1.4%</td><td align=right>-0.3pp</td></tr><tr><td>compileInner (self)</td><td align=right>+0.0 ms</td><td align=right>&ndash;</td><td align=right>+0.3pp</td></tr><tr><td>readSerializedModuleAST</td><td align=right>+5.9 ms</td><td align=right>+19.7%</td><td align=right style='color:#aaa'>&ndash;</td></tr><tr><td>loadBuiltinModule</td><td align=right>+2.4 ms</td><td align=right>+2.5%</td><td align=right style='color:#aaa'>&ndash;</td></tr><tr><td>readSerializedModuleIR</td><td align=right>-2.1 ms</td><td align=right>-4.2%</td><td align=right style='color:#aaa'>&ndash;</td></tr></table><p style='color:#666;font-size:13px;margin:14px 0 4px'>Largest day steps (&ge;5% of the previous day, both directions; bisect with <code>git log &lt;c0&gt;..&lt;c1&gt; -- source/</code>):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>boundary</th><th>% vs prev day</th><th style='text-align:left'>commits</th><th style='text-align:left'>top buckets (own %)</th></tr><tr><td colspan=4 style='color:#888'>none</td></tr></table><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'></p><script>
 document.addEventListener('click', function (ev) {
   var btn = ev.target.closest && ev.target.closest('button.copy');
   if (!btn) return;

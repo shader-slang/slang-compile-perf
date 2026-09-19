@@ -1,0 +1,542 @@
+<!doctype html><meta charset=utf-8><title>material_module_graph — phase breakdown</title><style>
+.cbox{position:relative}
+.cbox>button.copy{position:absolute;top:8px;right:8px;z-index:1;
+  font:11px/1 -apple-system,Segoe UI,Roboto,sans-serif;padding:5px 9px;
+  color:#24292f;background:#fff;border:1px solid #d0d7de;border-radius:5px;
+  cursor:pointer;opacity:.75}
+.cbox>button.copy:hover{opacity:1;background:#f3f4f6}
+.cbox>button.copy[data-done]{color:#1a7f37;border-color:#1a7f37}
+</style><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; back</a></p><h1 style='font-size:21px;margin:0 0 6px'>material_module_graph</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>`n` importable modules, each a MODERATELY COMPLEX "material" (an
+implementation of one *shared* interface with a branchy helper, a generic
+call and a small bounded loop -- comparable per-module weight to one rung
+of `complexity_ladder`), plus a common module declaring that interface and
+a main file that imports every material and dispatches across them
+through it. `module_link` already scales module COUNT, but each of its
+modules is a single one-line function; real Falcor "first_frame_s"
+compiles and links potentially dozens of ~2000-line generated MaterialX
+modules TOGETHER in one session (the smallest real example:
+`capture_material_compilation.py`'s "test-materials" case bundles 10
+distinct materials compiled and dispatched together). This is
+module_link's missing axis: per-module CONTENT weight, not just module
+count, combined with cross-module dynamic dispatch.
+
+The dispatch is driven by `(base + i) % n`, not a compile-time constant --
+the same technique `dynamic_dispatch` uses -- so the concrete type reaching
+`dispatchMaterial`'s `IMaterial` parameter cannot be resolved statically
+and specialized away; every one of the n witness tables must actually be
+materialized and go through `specializeModule`, which is what "cross-module
+dynamic dispatch" means for this workload as opposed to `module_link`'s
+statically-resolved one-line calls.
+
+Scaling null: n scales module count, each a fixed-weight O(1) module;
+ideal load+link+specialize cost is O(n) (real Falcor first-frame cost is
+the thing to compare a super-linear finding here against).</p><p style='color:#666;font-size:13px'><b>bucket:</b> module_link &nbsp;·&nbsp; <b>compile mode:</b> link &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 16</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="716" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">material_module_graph — Daily tip-of-tree (last 30 days) (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">material_module_graph<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">22</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">43</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">08-21</text>
+<line x1="103.9" y1="516.0" x2="103.9" y2="519.0" stroke="#999"/>
+<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">08-22</text>
+<line x1="139.7" y1="516.0" x2="139.7" y2="519.0" stroke="#999"/>
+<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">08-23</text>
+<line x1="175.6" y1="516.0" x2="175.6" y2="519.0" stroke="#999"/>
+<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">08-24</text>
+<line x1="211.4" y1="516.0" x2="211.4" y2="519.0" stroke="#999"/>
+<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">08-25</text>
+<line x1="247.3" y1="516.0" x2="247.3" y2="519.0" stroke="#999"/>
+<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">08-26</text>
+<line x1="283.2" y1="516.0" x2="283.2" y2="519.0" stroke="#999"/>
+<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">08-27</text>
+<line x1="319.0" y1="516.0" x2="319.0" y2="519.0" stroke="#999"/>
+<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">08-28</text>
+<line x1="354.9" y1="516.0" x2="354.9" y2="519.0" stroke="#999"/>
+<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">08-29</text>
+<line x1="390.8" y1="516.0" x2="390.8" y2="519.0" stroke="#999"/>
+<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">08-30</text>
+<line x1="426.6" y1="516.0" x2="426.6" y2="519.0" stroke="#999"/>
+<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">08-31</text>
+<line x1="462.5" y1="516.0" x2="462.5" y2="519.0" stroke="#999"/>
+<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">09-01</text>
+<line x1="498.3" y1="516.0" x2="498.3" y2="519.0" stroke="#999"/>
+<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-02</text>
+<line x1="534.2" y1="516.0" x2="534.2" y2="519.0" stroke="#999"/>
+<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-03</text>
+<line x1="570.1" y1="516.0" x2="570.1" y2="519.0" stroke="#999"/>
+<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-04</text>
+<line x1="605.9" y1="516.0" x2="605.9" y2="519.0" stroke="#999"/>
+<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-05</text>
+<line x1="641.8" y1="516.0" x2="641.8" y2="519.0" stroke="#999"/>
+<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-06</text>
+<line x1="677.7" y1="516.0" x2="677.7" y2="519.0" stroke="#999"/>
+<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-07</text>
+<line x1="713.5" y1="516.0" x2="713.5" y2="519.0" stroke="#999"/>
+<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-08</text>
+<line x1="749.4" y1="516.0" x2="749.4" y2="519.0" stroke="#999"/>
+<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-09</text>
+<line x1="785.2" y1="516.0" x2="785.2" y2="519.0" stroke="#999"/>
+<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-10</text>
+<line x1="821.1" y1="516.0" x2="821.1" y2="519.0" stroke="#999"/>
+<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-11</text>
+<line x1="857.0" y1="516.0" x2="857.0" y2="519.0" stroke="#999"/>
+<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-12</text>
+<line x1="892.8" y1="516.0" x2="892.8" y2="519.0" stroke="#999"/>
+<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-13</text>
+<line x1="928.7" y1="516.0" x2="928.7" y2="519.0" stroke="#999"/>
+<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-14</text>
+<line x1="964.6" y1="516.0" x2="964.6" y2="519.0" stroke="#999"/>
+<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-15</text>
+<line x1="1000.4" y1="516.0" x2="1000.4" y2="519.0" stroke="#999"/>
+<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-16</text>
+<line x1="1036.3" y1="516.0" x2="1036.3" y2="519.0" stroke="#999"/>
+<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-17</text>
+<line x1="1072.1" y1="516.0" x2="1072.1" y2="519.0" stroke="#999"/>
+<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-18</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-19</text>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#3f007d"/>
+<text x="28" y="650" fill="#222">deferBufferLoad</text>
+<rect x="289" y="640" width="12" height="12" fill="#54278f"/>
+<text x="305" y="650" fill="#222">simplifyNonSSAIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#9970ab"/>
+<text x="582" y="650" fill="#222">lowerCombinedTextureSamplers</text>
+<rect x="843" y="640" width="12" height="12" fill="#c2a5cf"/>
+<text x="859" y="650" fill="#222">legalizeMatrixTypes</text>
+<rect x="12" y="658" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="668" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="658" width="12" height="12" fill="#fdd0a2"/>
+<text x="305" y="668" fill="#222">emitEntryPointsSourceFromIR (self)</text>
+<rect x="566" y="658" width="12" height="12" fill="#fd8d3c"/>
+<text x="582" y="668" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="843" y="658" width="12" height="12" fill="#e6550d"/>
+<text x="859" y="668" fill="#222">generateOutput (self)</text>
+<rect x="12" y="676" width="12" height="12" fill="#969696"/>
+<text x="28" y="686" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only material_module_graph --label repro --gen-dir repro-material_module_graph</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 16), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_common.slang <span style='font-weight:400;color:#888'>(7 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+module material_common;
+
+[anyValueSize(16)]
+public interface IMaterial { float shade(float x); }
+
+public float dispatchMaterial(IMaterial m, float x) { return m.shade(x); }
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_0.slang <span style='font-weight:400;color:#888'>(19 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src1'>Copy</button><pre id='src1' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+module material_0;
+
+import material_common;
+
+public struct Material0 : IMaterial
+{
+    public float shade(float x)
+    {
+        float t = x * 1.0009 + sin(x + 0.0);
+        if (t &gt; 0.0) t = t * 1.01 + cos(t * 0.5);
+        else t = t - sin(t * 0.5) * 0.25;
+        [MaxIters(4)] for (int k = 0; k &lt; (int(t) &amp; 3) + 1; ++k)
+            t = t * 0.999 + gpoly_0&lt;float&gt;(t, 0.0);
+        return t;
+    }
+}
+
+public T gpoly_0&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a; }
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_1.slang <span style='font-weight:400;color:#888'>(19 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src2'>Copy</button><pre id='src2' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+module material_1;
+
+import material_common;
+
+public struct Material1 : IMaterial
+{
+    public float shade(float x)
+    {
+        float t = x * 2.0009 + sin(x + 1.0);
+        if (t &gt; 1.0) t = t * 1.01 + cos(t * 0.5);
+        else t = t - sin(t * 0.5) * 0.25;
+        [MaxIters(4)] for (int k = 0; k &lt; (int(t) &amp; 3) + 1; ++k)
+            t = t * 0.999 + gpoly_1&lt;float&gt;(t, 1.0);
+        return t;
+    }
+}
+
+public T gpoly_1&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a; }
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_2.slang <span style='font-weight:400;color:#888'>(19 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src3'>Copy</button><pre id='src3' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+module material_2;
+
+import material_common;
+
+public struct Material2 : IMaterial
+{
+    public float shade(float x)
+    {
+        float t = x * 3.0009 + sin(x + 2.0);
+        if (t &gt; 2.0) t = t * 1.01 + cos(t * 0.5);
+        else t = t - sin(t * 0.5) * 0.25;
+        [MaxIters(4)] for (int k = 0; k &lt; (int(t) &amp; 3) + 1; ++k)
+            t = t * 0.999 + gpoly_2&lt;float&gt;(t, 2.0);
+        return t;
+    }
+}
+
+public T gpoly_2&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a; }
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_3.slang <span style='font-weight:400;color:#888'>(19 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src4'>Copy</button><pre id='src4' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+module material_3;
+
+import material_common;
+
+public struct Material3 : IMaterial
+{
+    public float shade(float x)
+    {
+        float t = x * 4.0009 + sin(x + 3.0);
+        if (t &gt; 3.0) t = t * 1.01 + cos(t * 0.5);
+        else t = t - sin(t * 0.5) * 0.25;
+        [MaxIters(4)] for (int k = 0; k &lt; (int(t) &amp; 3) + 1; ++k)
+            t = t * 0.999 + gpoly_3&lt;float&gt;(t, 3.0);
+        return t;
+    }
+}
+
+public T gpoly_3&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a; }
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_4.slang <span style='font-weight:400;color:#888'>(19 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src5'>Copy</button><pre id='src5' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+module material_4;
+
+import material_common;
+
+public struct Material4 : IMaterial
+{
+    public float shade(float x)
+    {
+        float t = x * 5.0009 + sin(x + 4.0);
+        if (t &gt; 4.0) t = t * 1.01 + cos(t * 0.5);
+        else t = t - sin(t * 0.5) * 0.25;
+        [MaxIters(4)] for (int k = 0; k &lt; (int(t) &amp; 3) + 1; ++k)
+            t = t * 0.999 + gpoly_4&lt;float&gt;(t, 4.0);
+        return t;
+    }
+}
+
+public T gpoly_4&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a; }
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_5.slang <span style='font-weight:400;color:#888'>(19 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src6'>Copy</button><pre id='src6' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+module material_5;
+
+import material_common;
+
+public struct Material5 : IMaterial
+{
+    public float shade(float x)
+    {
+        float t = x * 1.0009 + sin(x + 5.0);
+        if (t &gt; 5.0) t = t * 1.01 + cos(t * 0.5);
+        else t = t - sin(t * 0.5) * 0.25;
+        [MaxIters(4)] for (int k = 0; k &lt; (int(t) &amp; 3) + 1; ++k)
+            t = t * 0.999 + gpoly_5&lt;float&gt;(t, 0.0);
+        return t;
+    }
+}
+
+public T gpoly_5&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a; }
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_6.slang <span style='font-weight:400;color:#888'>(19 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src7'>Copy</button><pre id='src7' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+module material_6;
+
+import material_common;
+
+public struct Material6 : IMaterial
+{
+    public float shade(float x)
+    {
+        float t = x * 2.0009 + sin(x + 6.0);
+        if (t &gt; 6.0) t = t * 1.01 + cos(t * 0.5);
+        else t = t - sin(t * 0.5) * 0.25;
+        [MaxIters(4)] for (int k = 0; k &lt; (int(t) &amp; 3) + 1; ++k)
+            t = t * 0.999 + gpoly_6&lt;float&gt;(t, 1.0);
+        return t;
+    }
+}
+
+public T gpoly_6&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a; }
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_7.slang <span style='font-weight:400;color:#888'>(19 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src8'>Copy</button><pre id='src8' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+module material_7;
+
+import material_common;
+
+public struct Material7 : IMaterial
+{
+    public float shade(float x)
+    {
+        float t = x * 3.0009 + sin(x + 0.0);
+        if (t &gt; 7.0) t = t * 1.01 + cos(t * 0.5);
+        else t = t - sin(t * 0.5) * 0.25;
+        [MaxIters(4)] for (int k = 0; k &lt; (int(t) &amp; 3) + 1; ++k)
+            t = t * 0.999 + gpoly_7&lt;float&gt;(t, 2.0);
+        return t;
+    }
+}
+
+public T gpoly_7&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a; }
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_8.slang <span style='font-weight:400;color:#888'>(19 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src9'>Copy</button><pre id='src9' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+module material_8;
+
+import material_common;
+
+public struct Material8 : IMaterial
+{
+    public float shade(float x)
+    {
+        float t = x * 4.0009 + sin(x + 1.0);
+        if (t &gt; 8.0) t = t * 1.01 + cos(t * 0.5);
+        else t = t - sin(t * 0.5) * 0.25;
+        [MaxIters(4)] for (int k = 0; k &lt; (int(t) &amp; 3) + 1; ++k)
+            t = t * 0.999 + gpoly_8&lt;float&gt;(t, 3.0);
+        return t;
+    }
+}
+
+public T gpoly_8&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a; }
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_9.slang <span style='font-weight:400;color:#888'>(19 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src10'>Copy</button><pre id='src10' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+module material_9;
+
+import material_common;
+
+public struct Material9 : IMaterial
+{
+    public float shade(float x)
+    {
+        float t = x * 5.0009 + sin(x + 2.0);
+        if (t &gt; 9.0) t = t * 1.01 + cos(t * 0.5);
+        else t = t - sin(t * 0.5) * 0.25;
+        [MaxIters(4)] for (int k = 0; k &lt; (int(t) &amp; 3) + 1; ++k)
+            t = t * 0.999 + gpoly_9&lt;float&gt;(t, 4.0);
+        return t;
+    }
+}
+
+public T gpoly_9&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a; }
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_10.slang <span style='font-weight:400;color:#888'>(19 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src11'>Copy</button><pre id='src11' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+module material_10;
+
+import material_common;
+
+public struct Material10 : IMaterial
+{
+    public float shade(float x)
+    {
+        float t = x * 1.0009 + sin(x + 3.0);
+        if (t &gt; 10.0) t = t * 1.01 + cos(t * 0.5);
+        else t = t - sin(t * 0.5) * 0.25;
+        [MaxIters(4)] for (int k = 0; k &lt; (int(t) &amp; 3) + 1; ++k)
+            t = t * 0.999 + gpoly_10&lt;float&gt;(t, 0.0);
+        return t;
+    }
+}
+
+public T gpoly_10&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a; }
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_11.slang <span style='font-weight:400;color:#888'>(19 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src12'>Copy</button><pre id='src12' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+module material_11;
+
+import material_common;
+
+public struct Material11 : IMaterial
+{
+    public float shade(float x)
+    {
+        float t = x * 2.0009 + sin(x + 4.0);
+        if (t &gt; 0.0) t = t * 1.01 + cos(t * 0.5);
+        else t = t - sin(t * 0.5) * 0.25;
+        [MaxIters(4)] for (int k = 0; k &lt; (int(t) &amp; 3) + 1; ++k)
+            t = t * 0.999 + gpoly_11&lt;float&gt;(t, 1.0);
+        return t;
+    }
+}
+
+public T gpoly_11&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a; }
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_12.slang <span style='font-weight:400;color:#888'>(19 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src13'>Copy</button><pre id='src13' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+module material_12;
+
+import material_common;
+
+public struct Material12 : IMaterial
+{
+    public float shade(float x)
+    {
+        float t = x * 3.0009 + sin(x + 5.0);
+        if (t &gt; 1.0) t = t * 1.01 + cos(t * 0.5);
+        else t = t - sin(t * 0.5) * 0.25;
+        [MaxIters(4)] for (int k = 0; k &lt; (int(t) &amp; 3) + 1; ++k)
+            t = t * 0.999 + gpoly_12&lt;float&gt;(t, 2.0);
+        return t;
+    }
+}
+
+public T gpoly_12&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a; }
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_13.slang <span style='font-weight:400;color:#888'>(19 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src14'>Copy</button><pre id='src14' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+module material_13;
+
+import material_common;
+
+public struct Material13 : IMaterial
+{
+    public float shade(float x)
+    {
+        float t = x * 4.0009 + sin(x + 6.0);
+        if (t &gt; 2.0) t = t * 1.01 + cos(t * 0.5);
+        else t = t - sin(t * 0.5) * 0.25;
+        [MaxIters(4)] for (int k = 0; k &lt; (int(t) &amp; 3) + 1; ++k)
+            t = t * 0.999 + gpoly_13&lt;float&gt;(t, 3.0);
+        return t;
+    }
+}
+
+public T gpoly_13&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a; }
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_14.slang <span style='font-weight:400;color:#888'>(19 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src15'>Copy</button><pre id='src15' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+module material_14;
+
+import material_common;
+
+public struct Material14 : IMaterial
+{
+    public float shade(float x)
+    {
+        float t = x * 5.0009 + sin(x + 0.0);
+        if (t &gt; 3.0) t = t * 1.01 + cos(t * 0.5);
+        else t = t - sin(t * 0.5) * 0.25;
+        [MaxIters(4)] for (int k = 0; k &lt; (int(t) &amp; 3) + 1; ++k)
+            t = t * 0.999 + gpoly_14&lt;float&gt;(t, 4.0);
+        return t;
+    }
+}
+
+public T gpoly_14&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a; }
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_15.slang <span style='font-weight:400;color:#888'>(19 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src16'>Copy</button><pre id='src16' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+module material_15;
+
+import material_common;
+
+public struct Material15 : IMaterial
+{
+    public float shade(float x)
+    {
+        float t = x * 1.0009 + sin(x + 1.0);
+        if (t &gt; 4.0) t = t * 1.01 + cos(t * 0.5);
+        else t = t - sin(t * 0.5) * 0.25;
+        [MaxIters(4)] for (int k = 0; k &lt; (int(t) &amp; 3) + 1; ++k)
+            t = t * 0.999 + gpoly_15&lt;float&gt;(t, 0.0);
+        return t;
+    }
+}
+
+public T gpoly_15&lt;T : IArithmetic&gt;(T a, T b) { return a * a + b * a + a; }
+</pre></div><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>material_main.slang <span style='font-weight:400;color:#888'>(54 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src17'>Copy</button><pre id='src17' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+import material_common;
+import material_0;
+import material_1;
+import material_2;
+import material_3;
+import material_4;
+import material_5;
+import material_6;
+import material_7;
+import material_8;
+import material_9;
+import material_10;
+import material_11;
+import material_12;
+import material_13;
+import material_14;
+import material_15;
+
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+[shader("compute")]
+[numthreads(1,1,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float acc = outBuf[0];
+    int base = int(tid.x);
+    for (int i = 0; i &lt; 16; ++i)
+    {
+        IMaterial m;
+        switch ((base + i) % 16)
+        {
+        case 0: m = Material0(); break;
+        case 1: m = Material1(); break;
+        case 2: m = Material2(); break;
+        case 3: m = Material3(); break;
+        case 4: m = Material4(); break;
+        case 5: m = Material5(); break;
+        case 6: m = Material6(); break;
+        case 7: m = Material7(); break;
+        case 8: m = Material8(); break;
+        case 9: m = Material9(); break;
+        case 10: m = Material10(); break;
+        case 11: m = Material11(); break;
+        case 12: m = Material12(); break;
+        case 13: m = Material13(); break;
+        case 14: m = Material14(); break;
+        case 15: m = Material15(); break;
+        default: m = Material0(); break;
+        }
+        acc = dispatchMaterial(m, acc);
+    }
+    outBuf[0] = acc;
+}
+</pre></div><script>
+document.addEventListener('click', function (ev) {
+  var btn = ev.target.closest && ev.target.closest('button.copy');
+  if (!btn) return;
+  var el = document.getElementById(btn.getAttribute('data-copy'));
+  if (!el) return;
+  var text = el.textContent;
+  function flash(ok) {
+    btn.textContent = ok ? 'Copied' : 'Press Ctrl+C';
+    if (ok) btn.setAttribute('data-done', '1');
+    setTimeout(function () {
+      btn.textContent = 'Copy'; btn.removeAttribute('data-done');
+    }, 1400);
+  }
+  function fallback() {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta); flash(ok);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () { flash(true); }, fallback);
+  } else {
+    fallback();
+  }
+});
+</script></body>

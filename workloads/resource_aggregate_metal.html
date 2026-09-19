@@ -17,78 +17,97 @@ drop them before legalization runs. Scales by breadth = number of bundles,
 i.e. the count of resource fields the pass must legalize; legalizeResourceTypes
 grows super-linearly in n.
 
-Scaling null: n scales resource-carrying structs, each O(1); ideal legalization cost is O(n) — the measured ~N^1.8 in legalizeResourceTypes is a genuine compiler finding, not a workload property.</p><p style='color:#666;font-size:13px'><b>bucket:</b> resource_legalize &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target metal</code> &nbsp;·&nbsp; <b>default N:</b> 80</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+Scaling null: n scales resource-carrying structs, each O(1); ideal legalization cost is O(n) — the measured ~N^1.8 in legalizeResourceTypes is a genuine compiler finding, not a workload property.</p><p style='color:#666;font-size:13px'><b>bucket:</b> resource_legalize &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target metal</code> &nbsp;·&nbsp; <b>default N:</b> 320</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="716" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">resource_aggregate_metal — Daily tip-of-tree (last 30 days) (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">resource_aggregate_metal<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">resource_aggregate_metal<tspan fill="#888" font-weight="400" text-decoration="none">  7.39×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
-<text x="64.0" y="299.0" text-anchor="end" fill="#999">30</text>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">221</text>
 <line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
-<text x="64.0" y="79.0" text-anchor="end" fill="#999">60</text>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">442</text>
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">08-20</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">08-21</text>
 <line x1="103.9" y1="516.0" x2="103.9" y2="519.0" stroke="#999"/>
-<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">08-21</text>
+<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">08-22</text>
 <line x1="139.7" y1="516.0" x2="139.7" y2="519.0" stroke="#999"/>
-<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">08-22</text>
+<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">08-23</text>
 <line x1="175.6" y1="516.0" x2="175.6" y2="519.0" stroke="#999"/>
-<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">08-23</text>
+<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">08-24</text>
 <line x1="211.4" y1="516.0" x2="211.4" y2="519.0" stroke="#999"/>
-<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">08-24</text>
+<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">08-25</text>
 <line x1="247.3" y1="516.0" x2="247.3" y2="519.0" stroke="#999"/>
-<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">08-25</text>
+<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">08-26</text>
 <line x1="283.2" y1="516.0" x2="283.2" y2="519.0" stroke="#999"/>
-<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">08-26</text>
+<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">08-27</text>
 <line x1="319.0" y1="516.0" x2="319.0" y2="519.0" stroke="#999"/>
-<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">08-27</text>
+<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">08-28</text>
 <line x1="354.9" y1="516.0" x2="354.9" y2="519.0" stroke="#999"/>
-<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">08-28</text>
+<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">08-29</text>
 <line x1="390.8" y1="516.0" x2="390.8" y2="519.0" stroke="#999"/>
-<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">08-29</text>
+<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">08-30</text>
 <line x1="426.6" y1="516.0" x2="426.6" y2="519.0" stroke="#999"/>
-<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">08-30</text>
+<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">08-31</text>
 <line x1="462.5" y1="516.0" x2="462.5" y2="519.0" stroke="#999"/>
-<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">08-31</text>
+<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">09-01</text>
 <line x1="498.3" y1="516.0" x2="498.3" y2="519.0" stroke="#999"/>
-<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-01</text>
+<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-02</text>
 <line x1="534.2" y1="516.0" x2="534.2" y2="519.0" stroke="#999"/>
-<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-02</text>
+<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-03</text>
 <line x1="570.1" y1="516.0" x2="570.1" y2="519.0" stroke="#999"/>
-<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-03</text>
+<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-04</text>
 <line x1="605.9" y1="516.0" x2="605.9" y2="519.0" stroke="#999"/>
-<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-04</text>
+<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-05</text>
 <line x1="641.8" y1="516.0" x2="641.8" y2="519.0" stroke="#999"/>
-<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-05</text>
+<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-06</text>
 <line x1="677.7" y1="516.0" x2="677.7" y2="519.0" stroke="#999"/>
-<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-06</text>
+<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-07</text>
 <line x1="713.5" y1="516.0" x2="713.5" y2="519.0" stroke="#999"/>
-<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-07</text>
+<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-08</text>
 <line x1="749.4" y1="516.0" x2="749.4" y2="519.0" stroke="#999"/>
-<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-08</text>
+<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-09</text>
 <line x1="785.2" y1="516.0" x2="785.2" y2="519.0" stroke="#999"/>
-<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-09</text>
+<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-10</text>
 <line x1="821.1" y1="516.0" x2="821.1" y2="519.0" stroke="#999"/>
-<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-10</text>
+<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-11</text>
 <line x1="857.0" y1="516.0" x2="857.0" y2="519.0" stroke="#999"/>
-<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-11</text>
+<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-12</text>
 <line x1="892.8" y1="516.0" x2="892.8" y2="519.0" stroke="#999"/>
-<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-12</text>
+<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-13</text>
 <line x1="928.7" y1="516.0" x2="928.7" y2="519.0" stroke="#999"/>
-<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-13</text>
+<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-14</text>
 <line x1="964.6" y1="516.0" x2="964.6" y2="519.0" stroke="#999"/>
-<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-14</text>
+<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-15</text>
 <line x1="1000.4" y1="516.0" x2="1000.4" y2="519.0" stroke="#999"/>
-<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-15</text>
+<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-16</text>
 <line x1="1036.3" y1="516.0" x2="1036.3" y2="519.0" stroke="#999"/>
-<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-16</text>
+<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-17</text>
 <line x1="1072.1" y1="516.0" x2="1072.1" y2="519.0" stroke="#999"/>
-<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-17</text>
+<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-18</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-18</text>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-19</text>
+<polygon points="1072.1,515.5 1108.0,514.6 1108.0,516.0 1072.1,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — parseTranslationUnit</title></polygon>
+<polygon points="1072.1,502.9 1108.0,485.9 1108.0,514.6 1072.1,515.5" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — SemanticChecking</title></polygon>
+<polygon points="1072.1,498.4 1108.0,470.9 1108.0,485.9 1072.1,502.9" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — generateIR</title></polygon>
+<polygon points="1072.1,497.3 1108.0,466.9 1108.0,470.9 1072.1,498.4" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — frontEndExecute (self)</title></polygon>
+<polygon points="1072.1,488.5 1108.0,429.5 1108.0,466.9 1072.1,497.3" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — specializeModule</title></polygon>
+<polygon points="1072.1,481.4 1108.0,388.4 1108.0,429.5 1072.1,488.5" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — simplifyIR</title></polygon>
+<polygon points="1072.1,480.7 1108.0,386.8 1108.0,388.4 1072.1,481.4" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — linkIR</title></polygon>
+<polygon points="1072.1,480.7 1108.0,386.7 1108.0,386.8 1072.1,480.7" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — unrollLoopsInModule</title></polygon>
+<polygon points="1072.1,479.2 1108.0,377.3 1108.0,386.7 1072.1,480.7" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — legalizeResourceTypes</title></polygon>
+<polygon points="1072.1,478.5 1108.0,374.7 1108.0,377.3 1072.1,479.2" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="1072.1,478.3 1108.0,373.0 1108.0,374.7 1072.1,478.5" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — performMandatoryEarlyInlining</title></polygon>
+<polygon points="1072.1,478.1 1108.0,371.7 1108.0,373.0 1072.1,478.3" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — performForceInlining</title></polygon>
+<polygon points="1072.1,477.7 1108.0,365.4 1108.0,371.7 1072.1,478.1" fill="#3f007d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — deferBufferLoad</title></polygon>
+<polygon points="1072.1,464.5 1108.0,131.4 1108.0,365.4 1072.1,477.7" fill="#54278f" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — simplifyNonSSAIR</title></polygon>
+<polygon points="1072.1,464.5 1108.0,131.4 1108.0,131.4 1072.1,464.5" fill="#9970ab" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — lowerCombinedTextureSamplers</title></polygon>
+<polygon points="1072.1,464.5 1108.0,131.4 1108.0,131.4 1072.1,464.5" fill="#c2a5cf" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — legalizeMatrixTypes</title></polygon>
+<polygon points="1072.1,462.5 1108.0,114.6 1108.0,131.4 1072.1,464.5" fill="#fdd0a2" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — emitEntryPointsSourceFromIR (self)</title></polygon>
+<polygon points="1072.1,461.9 1108.0,112.3 1108.0,114.6 1072.1,462.5" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — generateOutput (self)</title></polygon>
+<polygon points="1072.1,460.9 1108.0,108.6 1108.0,112.3 1072.1,461.9" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>resource_aggregate_metal — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
@@ -132,7 +151,7 @@ Scaling null: n scales resource-carrying structs, each O(1); ideal legalization 
 <text x="859" y="668" fill="#222">generateOutput (self)</text>
 <rect x="12" y="676" width="12" height="12" fill="#969696"/>
 <text x="28" y="686" fill="#222">compileInner (self)</text>
-</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only resource_aggregate_metal --label repro --gen-dir repro-resource_aggregate_metal</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 80), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>resource_aggregate.slang <span style='font-weight:400;color:#888'>(334 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Daily window progress</h2><p style='font-size:15px'>Overall <code>compileInner</code>: 55.3 &rarr; 408.9 ms &nbsp;<b style='color:#c0392b'>+639.2%</b><span style='color:#666;font-size:13px'> &nbsp;(2026-09-18 09d258224 &rarr; 2026-09-19 282587ac1)</span></p><p style='color:#666;font-size:13px;margin:10px 0 4px'>Contributors — the mutually-exclusive phase buckets (named leaves + <code>(self)</code> residuals) that tile compileInner; the pp column sums to the overall %. Buckets moving the total by &ge;0.2% are listed, the rest fold into the remainder row. Below them, every other reported counter (nested/overlapping, e.g. serialized-module reads — own change only):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>counter</th><th>&Delta;</th><th>own %</th><th>of total</th></tr><tr><td>simplifyNonSSAIR</td><td align=right>+221.7 ms</td><td align=right>+1680.6%</td><td align=right>+400.8pp</td></tr><tr><td>simplifyIR</td><td align=right>+34.1 ms</td><td align=right>+479.5%</td><td align=right>+61.7pp</td></tr><tr><td>specializeModule</td><td align=right>+28.7 ms</td><td align=right>+326.2%</td><td align=right>+51.9pp</td></tr><tr><td>SemanticChecking</td><td align=right>+16.1 ms</td><td align=right>+127.1%</td><td align=right>+29.2pp</td></tr><tr><td>emitEntryPointsSourceFromIR (self)</td><td align=right>+14.8 ms</td><td align=right>+727.6%</td><td align=right>+26.7pp</td></tr><tr><td>generateIR</td><td align=right>+10.6 ms</td><td align=right>+234.1%</td><td align=right>+19.1pp</td></tr><tr><td>legalizeResourceTypes</td><td align=right>+7.9 ms</td><td align=right>+509.5%</td><td align=right>+14.2pp</td></tr><tr><td>deferBufferLoad</td><td align=right>+5.9 ms</td><td align=right>+1447.0%</td><td align=right>+10.7pp</td></tr><tr><td>frontEndExecute (self)</td><td align=right>+2.9 ms</td><td align=right>+252.6%</td><td align=right>+5.2pp</td></tr><tr><td>compileInner (self)</td><td align=right>+2.7 ms</td><td align=right>+279.6%</td><td align=right>+5.0pp</td></tr><tr><td>legalizeExistentialTypeLayout</td><td align=right>+2.0 ms</td><td align=right>+318.5%</td><td align=right>+3.6pp</td></tr><tr><td>generateOutput (self)</td><td align=right>+1.7 ms</td><td align=right>+258.5%</td><td align=right>+3.0pp</td></tr><tr><td>performMandatoryEarlyInlining</td><td align=right>+1.5 ms</td><td align=right>+652.7%</td><td align=right>+2.7pp</td></tr><tr><td>performForceInlining</td><td align=right>+1.0 ms</td><td align=right>+447.8%</td><td align=right>+1.9pp</td></tr><tr><td>linkIR</td><td align=right>+1.0 ms</td><td align=right>+147.6%</td><td align=right>+1.8pp</td></tr><tr><td>parseTranslationUnit</td><td align=right>+0.9 ms</td><td align=right>+191.7%</td><td align=right>+1.7pp</td></tr><tr><td>(remaining 3 buckets)</td><td align=right>+0.1 ms</td><td align=right>&ndash;</td><td align=right>+0.1pp</td></tr><tr><td>readSerializedModuleAST</td><td align=right>+3.5 ms</td><td align=right>+10.3%</td><td align=right style='color:#aaa'>&ndash;</td></tr><tr><td>lowerBufferElementTypeToStorageType</td><td align=right>+3.2 ms</td><td align=right>+301.9%</td><td align=right style='color:#aaa'>&ndash;</td></tr><tr><td>loadBuiltinModule</td><td align=right>+3.0 ms</td><td align=right>+3.0%</td><td align=right style='color:#aaa'>&ndash;</td></tr><tr><td>lowerExistentials</td><td align=right>+1.3 ms</td><td align=right>+317.5%</td><td align=right style='color:#aaa'>&ndash;</td></tr><tr><td>eliminateDeadCode</td><td align=right>+1.0 ms</td><td align=right>+315.2%</td><td align=right style='color:#aaa'>&ndash;</td></tr></table><p style='color:#666;font-size:13px;margin:14px 0 4px'>Largest day steps (&ge;5% of the previous day, both directions; bisect with <code>git log &lt;c0&gt;..&lt;c1&gt; -- source/</code>):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>boundary</th><th>% vs prev day</th><th style='text-align:left'>commits</th><th style='text-align:left'>top buckets (own %)</th></tr><tr><td>2026-09-18 &rarr; 2026-09-19</td><td align=right style='color:#c0392b;font-weight:600'>+639.2%</td><td><code>09d258224..282587ac1</code></td><td>simplifyNonSSAIR +1681%, simplifyIR +480%, specializeModule +326%</td></tr></table><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only resource_aggregate_metal --label repro --gen-dir repro-resource_aggregate_metal</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 320), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>resource_aggregate.slang <span style='font-weight:400;color:#888'>(1294 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 struct ResBundle { Texture2D&lt;float4&gt; albedo; Texture2D&lt;float4&gt; normal; SamplerState samp; StructuredBuffer&lt;float&gt; coeffs; }
 
 ResBundle bundle_0;
@@ -215,6 +234,246 @@ ResBundle bundle_76;
 ResBundle bundle_77;
 ResBundle bundle_78;
 ResBundle bundle_79;
+ResBundle bundle_80;
+ResBundle bundle_81;
+ResBundle bundle_82;
+ResBundle bundle_83;
+ResBundle bundle_84;
+ResBundle bundle_85;
+ResBundle bundle_86;
+ResBundle bundle_87;
+ResBundle bundle_88;
+ResBundle bundle_89;
+ResBundle bundle_90;
+ResBundle bundle_91;
+ResBundle bundle_92;
+ResBundle bundle_93;
+ResBundle bundle_94;
+ResBundle bundle_95;
+ResBundle bundle_96;
+ResBundle bundle_97;
+ResBundle bundle_98;
+ResBundle bundle_99;
+ResBundle bundle_100;
+ResBundle bundle_101;
+ResBundle bundle_102;
+ResBundle bundle_103;
+ResBundle bundle_104;
+ResBundle bundle_105;
+ResBundle bundle_106;
+ResBundle bundle_107;
+ResBundle bundle_108;
+ResBundle bundle_109;
+ResBundle bundle_110;
+ResBundle bundle_111;
+ResBundle bundle_112;
+ResBundle bundle_113;
+ResBundle bundle_114;
+ResBundle bundle_115;
+ResBundle bundle_116;
+ResBundle bundle_117;
+ResBundle bundle_118;
+ResBundle bundle_119;
+ResBundle bundle_120;
+ResBundle bundle_121;
+ResBundle bundle_122;
+ResBundle bundle_123;
+ResBundle bundle_124;
+ResBundle bundle_125;
+ResBundle bundle_126;
+ResBundle bundle_127;
+ResBundle bundle_128;
+ResBundle bundle_129;
+ResBundle bundle_130;
+ResBundle bundle_131;
+ResBundle bundle_132;
+ResBundle bundle_133;
+ResBundle bundle_134;
+ResBundle bundle_135;
+ResBundle bundle_136;
+ResBundle bundle_137;
+ResBundle bundle_138;
+ResBundle bundle_139;
+ResBundle bundle_140;
+ResBundle bundle_141;
+ResBundle bundle_142;
+ResBundle bundle_143;
+ResBundle bundle_144;
+ResBundle bundle_145;
+ResBundle bundle_146;
+ResBundle bundle_147;
+ResBundle bundle_148;
+ResBundle bundle_149;
+ResBundle bundle_150;
+ResBundle bundle_151;
+ResBundle bundle_152;
+ResBundle bundle_153;
+ResBundle bundle_154;
+ResBundle bundle_155;
+ResBundle bundle_156;
+ResBundle bundle_157;
+ResBundle bundle_158;
+ResBundle bundle_159;
+ResBundle bundle_160;
+ResBundle bundle_161;
+ResBundle bundle_162;
+ResBundle bundle_163;
+ResBundle bundle_164;
+ResBundle bundle_165;
+ResBundle bundle_166;
+ResBundle bundle_167;
+ResBundle bundle_168;
+ResBundle bundle_169;
+ResBundle bundle_170;
+ResBundle bundle_171;
+ResBundle bundle_172;
+ResBundle bundle_173;
+ResBundle bundle_174;
+ResBundle bundle_175;
+ResBundle bundle_176;
+ResBundle bundle_177;
+ResBundle bundle_178;
+ResBundle bundle_179;
+ResBundle bundle_180;
+ResBundle bundle_181;
+ResBundle bundle_182;
+ResBundle bundle_183;
+ResBundle bundle_184;
+ResBundle bundle_185;
+ResBundle bundle_186;
+ResBundle bundle_187;
+ResBundle bundle_188;
+ResBundle bundle_189;
+ResBundle bundle_190;
+ResBundle bundle_191;
+ResBundle bundle_192;
+ResBundle bundle_193;
+ResBundle bundle_194;
+ResBundle bundle_195;
+ResBundle bundle_196;
+ResBundle bundle_197;
+ResBundle bundle_198;
+ResBundle bundle_199;
+ResBundle bundle_200;
+ResBundle bundle_201;
+ResBundle bundle_202;
+ResBundle bundle_203;
+ResBundle bundle_204;
+ResBundle bundle_205;
+ResBundle bundle_206;
+ResBundle bundle_207;
+ResBundle bundle_208;
+ResBundle bundle_209;
+ResBundle bundle_210;
+ResBundle bundle_211;
+ResBundle bundle_212;
+ResBundle bundle_213;
+ResBundle bundle_214;
+ResBundle bundle_215;
+ResBundle bundle_216;
+ResBundle bundle_217;
+ResBundle bundle_218;
+ResBundle bundle_219;
+ResBundle bundle_220;
+ResBundle bundle_221;
+ResBundle bundle_222;
+ResBundle bundle_223;
+ResBundle bundle_224;
+ResBundle bundle_225;
+ResBundle bundle_226;
+ResBundle bundle_227;
+ResBundle bundle_228;
+ResBundle bundle_229;
+ResBundle bundle_230;
+ResBundle bundle_231;
+ResBundle bundle_232;
+ResBundle bundle_233;
+ResBundle bundle_234;
+ResBundle bundle_235;
+ResBundle bundle_236;
+ResBundle bundle_237;
+ResBundle bundle_238;
+ResBundle bundle_239;
+ResBundle bundle_240;
+ResBundle bundle_241;
+ResBundle bundle_242;
+ResBundle bundle_243;
+ResBundle bundle_244;
+ResBundle bundle_245;
+ResBundle bundle_246;
+ResBundle bundle_247;
+ResBundle bundle_248;
+ResBundle bundle_249;
+ResBundle bundle_250;
+ResBundle bundle_251;
+ResBundle bundle_252;
+ResBundle bundle_253;
+ResBundle bundle_254;
+ResBundle bundle_255;
+ResBundle bundle_256;
+ResBundle bundle_257;
+ResBundle bundle_258;
+ResBundle bundle_259;
+ResBundle bundle_260;
+ResBundle bundle_261;
+ResBundle bundle_262;
+ResBundle bundle_263;
+ResBundle bundle_264;
+ResBundle bundle_265;
+ResBundle bundle_266;
+ResBundle bundle_267;
+ResBundle bundle_268;
+ResBundle bundle_269;
+ResBundle bundle_270;
+ResBundle bundle_271;
+ResBundle bundle_272;
+ResBundle bundle_273;
+ResBundle bundle_274;
+ResBundle bundle_275;
+ResBundle bundle_276;
+ResBundle bundle_277;
+ResBundle bundle_278;
+ResBundle bundle_279;
+ResBundle bundle_280;
+ResBundle bundle_281;
+ResBundle bundle_282;
+ResBundle bundle_283;
+ResBundle bundle_284;
+ResBundle bundle_285;
+ResBundle bundle_286;
+ResBundle bundle_287;
+ResBundle bundle_288;
+ResBundle bundle_289;
+ResBundle bundle_290;
+ResBundle bundle_291;
+ResBundle bundle_292;
+ResBundle bundle_293;
+ResBundle bundle_294;
+ResBundle bundle_295;
+ResBundle bundle_296;
+ResBundle bundle_297;
+ResBundle bundle_298;
+ResBundle bundle_299;
+ResBundle bundle_300;
+ResBundle bundle_301;
+ResBundle bundle_302;
+ResBundle bundle_303;
+ResBundle bundle_304;
+ResBundle bundle_305;
+ResBundle bundle_306;
+ResBundle bundle_307;
+ResBundle bundle_308;
+ResBundle bundle_309;
+ResBundle bundle_310;
+ResBundle bundle_311;
+ResBundle bundle_312;
+ResBundle bundle_313;
+ResBundle bundle_314;
+ResBundle bundle_315;
+ResBundle bundle_316;
+ResBundle bundle_317;
+ResBundle bundle_318;
+ResBundle bundle_319;
 
 RWStructuredBuffer&lt;float&gt; outBuf;
 
@@ -464,6 +723,726 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     acc += bundle_79.albedo.SampleLevel(bundle_79.samp, uv, 0).x
           + bundle_79.normal.SampleLevel(bundle_79.samp, uv, 0).y
           + bundle_79.coeffs[tid.x % 16];
+    acc += bundle_80.albedo.SampleLevel(bundle_80.samp, uv, 0).x
+          + bundle_80.normal.SampleLevel(bundle_80.samp, uv, 0).y
+          + bundle_80.coeffs[tid.x % 16];
+    acc += bundle_81.albedo.SampleLevel(bundle_81.samp, uv, 0).x
+          + bundle_81.normal.SampleLevel(bundle_81.samp, uv, 0).y
+          + bundle_81.coeffs[tid.x % 16];
+    acc += bundle_82.albedo.SampleLevel(bundle_82.samp, uv, 0).x
+          + bundle_82.normal.SampleLevel(bundle_82.samp, uv, 0).y
+          + bundle_82.coeffs[tid.x % 16];
+    acc += bundle_83.albedo.SampleLevel(bundle_83.samp, uv, 0).x
+          + bundle_83.normal.SampleLevel(bundle_83.samp, uv, 0).y
+          + bundle_83.coeffs[tid.x % 16];
+    acc += bundle_84.albedo.SampleLevel(bundle_84.samp, uv, 0).x
+          + bundle_84.normal.SampleLevel(bundle_84.samp, uv, 0).y
+          + bundle_84.coeffs[tid.x % 16];
+    acc += bundle_85.albedo.SampleLevel(bundle_85.samp, uv, 0).x
+          + bundle_85.normal.SampleLevel(bundle_85.samp, uv, 0).y
+          + bundle_85.coeffs[tid.x % 16];
+    acc += bundle_86.albedo.SampleLevel(bundle_86.samp, uv, 0).x
+          + bundle_86.normal.SampleLevel(bundle_86.samp, uv, 0).y
+          + bundle_86.coeffs[tid.x % 16];
+    acc += bundle_87.albedo.SampleLevel(bundle_87.samp, uv, 0).x
+          + bundle_87.normal.SampleLevel(bundle_87.samp, uv, 0).y
+          + bundle_87.coeffs[tid.x % 16];
+    acc += bundle_88.albedo.SampleLevel(bundle_88.samp, uv, 0).x
+          + bundle_88.normal.SampleLevel(bundle_88.samp, uv, 0).y
+          + bundle_88.coeffs[tid.x % 16];
+    acc += bundle_89.albedo.SampleLevel(bundle_89.samp, uv, 0).x
+          + bundle_89.normal.SampleLevel(bundle_89.samp, uv, 0).y
+          + bundle_89.coeffs[tid.x % 16];
+    acc += bundle_90.albedo.SampleLevel(bundle_90.samp, uv, 0).x
+          + bundle_90.normal.SampleLevel(bundle_90.samp, uv, 0).y
+          + bundle_90.coeffs[tid.x % 16];
+    acc += bundle_91.albedo.SampleLevel(bundle_91.samp, uv, 0).x
+          + bundle_91.normal.SampleLevel(bundle_91.samp, uv, 0).y
+          + bundle_91.coeffs[tid.x % 16];
+    acc += bundle_92.albedo.SampleLevel(bundle_92.samp, uv, 0).x
+          + bundle_92.normal.SampleLevel(bundle_92.samp, uv, 0).y
+          + bundle_92.coeffs[tid.x % 16];
+    acc += bundle_93.albedo.SampleLevel(bundle_93.samp, uv, 0).x
+          + bundle_93.normal.SampleLevel(bundle_93.samp, uv, 0).y
+          + bundle_93.coeffs[tid.x % 16];
+    acc += bundle_94.albedo.SampleLevel(bundle_94.samp, uv, 0).x
+          + bundle_94.normal.SampleLevel(bundle_94.samp, uv, 0).y
+          + bundle_94.coeffs[tid.x % 16];
+    acc += bundle_95.albedo.SampleLevel(bundle_95.samp, uv, 0).x
+          + bundle_95.normal.SampleLevel(bundle_95.samp, uv, 0).y
+          + bundle_95.coeffs[tid.x % 16];
+    acc += bundle_96.albedo.SampleLevel(bundle_96.samp, uv, 0).x
+          + bundle_96.normal.SampleLevel(bundle_96.samp, uv, 0).y
+          + bundle_96.coeffs[tid.x % 16];
+    acc += bundle_97.albedo.SampleLevel(bundle_97.samp, uv, 0).x
+          + bundle_97.normal.SampleLevel(bundle_97.samp, uv, 0).y
+          + bundle_97.coeffs[tid.x % 16];
+    acc += bundle_98.albedo.SampleLevel(bundle_98.samp, uv, 0).x
+          + bundle_98.normal.SampleLevel(bundle_98.samp, uv, 0).y
+          + bundle_98.coeffs[tid.x % 16];
+    acc += bundle_99.albedo.SampleLevel(bundle_99.samp, uv, 0).x
+          + bundle_99.normal.SampleLevel(bundle_99.samp, uv, 0).y
+          + bundle_99.coeffs[tid.x % 16];
+    acc += bundle_100.albedo.SampleLevel(bundle_100.samp, uv, 0).x
+          + bundle_100.normal.SampleLevel(bundle_100.samp, uv, 0).y
+          + bundle_100.coeffs[tid.x % 16];
+    acc += bundle_101.albedo.SampleLevel(bundle_101.samp, uv, 0).x
+          + bundle_101.normal.SampleLevel(bundle_101.samp, uv, 0).y
+          + bundle_101.coeffs[tid.x % 16];
+    acc += bundle_102.albedo.SampleLevel(bundle_102.samp, uv, 0).x
+          + bundle_102.normal.SampleLevel(bundle_102.samp, uv, 0).y
+          + bundle_102.coeffs[tid.x % 16];
+    acc += bundle_103.albedo.SampleLevel(bundle_103.samp, uv, 0).x
+          + bundle_103.normal.SampleLevel(bundle_103.samp, uv, 0).y
+          + bundle_103.coeffs[tid.x % 16];
+    acc += bundle_104.albedo.SampleLevel(bundle_104.samp, uv, 0).x
+          + bundle_104.normal.SampleLevel(bundle_104.samp, uv, 0).y
+          + bundle_104.coeffs[tid.x % 16];
+    acc += bundle_105.albedo.SampleLevel(bundle_105.samp, uv, 0).x
+          + bundle_105.normal.SampleLevel(bundle_105.samp, uv, 0).y
+          + bundle_105.coeffs[tid.x % 16];
+    acc += bundle_106.albedo.SampleLevel(bundle_106.samp, uv, 0).x
+          + bundle_106.normal.SampleLevel(bundle_106.samp, uv, 0).y
+          + bundle_106.coeffs[tid.x % 16];
+    acc += bundle_107.albedo.SampleLevel(bundle_107.samp, uv, 0).x
+          + bundle_107.normal.SampleLevel(bundle_107.samp, uv, 0).y
+          + bundle_107.coeffs[tid.x % 16];
+    acc += bundle_108.albedo.SampleLevel(bundle_108.samp, uv, 0).x
+          + bundle_108.normal.SampleLevel(bundle_108.samp, uv, 0).y
+          + bundle_108.coeffs[tid.x % 16];
+    acc += bundle_109.albedo.SampleLevel(bundle_109.samp, uv, 0).x
+          + bundle_109.normal.SampleLevel(bundle_109.samp, uv, 0).y
+          + bundle_109.coeffs[tid.x % 16];
+    acc += bundle_110.albedo.SampleLevel(bundle_110.samp, uv, 0).x
+          + bundle_110.normal.SampleLevel(bundle_110.samp, uv, 0).y
+          + bundle_110.coeffs[tid.x % 16];
+    acc += bundle_111.albedo.SampleLevel(bundle_111.samp, uv, 0).x
+          + bundle_111.normal.SampleLevel(bundle_111.samp, uv, 0).y
+          + bundle_111.coeffs[tid.x % 16];
+    acc += bundle_112.albedo.SampleLevel(bundle_112.samp, uv, 0).x
+          + bundle_112.normal.SampleLevel(bundle_112.samp, uv, 0).y
+          + bundle_112.coeffs[tid.x % 16];
+    acc += bundle_113.albedo.SampleLevel(bundle_113.samp, uv, 0).x
+          + bundle_113.normal.SampleLevel(bundle_113.samp, uv, 0).y
+          + bundle_113.coeffs[tid.x % 16];
+    acc += bundle_114.albedo.SampleLevel(bundle_114.samp, uv, 0).x
+          + bundle_114.normal.SampleLevel(bundle_114.samp, uv, 0).y
+          + bundle_114.coeffs[tid.x % 16];
+    acc += bundle_115.albedo.SampleLevel(bundle_115.samp, uv, 0).x
+          + bundle_115.normal.SampleLevel(bundle_115.samp, uv, 0).y
+          + bundle_115.coeffs[tid.x % 16];
+    acc += bundle_116.albedo.SampleLevel(bundle_116.samp, uv, 0).x
+          + bundle_116.normal.SampleLevel(bundle_116.samp, uv, 0).y
+          + bundle_116.coeffs[tid.x % 16];
+    acc += bundle_117.albedo.SampleLevel(bundle_117.samp, uv, 0).x
+          + bundle_117.normal.SampleLevel(bundle_117.samp, uv, 0).y
+          + bundle_117.coeffs[tid.x % 16];
+    acc += bundle_118.albedo.SampleLevel(bundle_118.samp, uv, 0).x
+          + bundle_118.normal.SampleLevel(bundle_118.samp, uv, 0).y
+          + bundle_118.coeffs[tid.x % 16];
+    acc += bundle_119.albedo.SampleLevel(bundle_119.samp, uv, 0).x
+          + bundle_119.normal.SampleLevel(bundle_119.samp, uv, 0).y
+          + bundle_119.coeffs[tid.x % 16];
+    acc += bundle_120.albedo.SampleLevel(bundle_120.samp, uv, 0).x
+          + bundle_120.normal.SampleLevel(bundle_120.samp, uv, 0).y
+          + bundle_120.coeffs[tid.x % 16];
+    acc += bundle_121.albedo.SampleLevel(bundle_121.samp, uv, 0).x
+          + bundle_121.normal.SampleLevel(bundle_121.samp, uv, 0).y
+          + bundle_121.coeffs[tid.x % 16];
+    acc += bundle_122.albedo.SampleLevel(bundle_122.samp, uv, 0).x
+          + bundle_122.normal.SampleLevel(bundle_122.samp, uv, 0).y
+          + bundle_122.coeffs[tid.x % 16];
+    acc += bundle_123.albedo.SampleLevel(bundle_123.samp, uv, 0).x
+          + bundle_123.normal.SampleLevel(bundle_123.samp, uv, 0).y
+          + bundle_123.coeffs[tid.x % 16];
+    acc += bundle_124.albedo.SampleLevel(bundle_124.samp, uv, 0).x
+          + bundle_124.normal.SampleLevel(bundle_124.samp, uv, 0).y
+          + bundle_124.coeffs[tid.x % 16];
+    acc += bundle_125.albedo.SampleLevel(bundle_125.samp, uv, 0).x
+          + bundle_125.normal.SampleLevel(bundle_125.samp, uv, 0).y
+          + bundle_125.coeffs[tid.x % 16];
+    acc += bundle_126.albedo.SampleLevel(bundle_126.samp, uv, 0).x
+          + bundle_126.normal.SampleLevel(bundle_126.samp, uv, 0).y
+          + bundle_126.coeffs[tid.x % 16];
+    acc += bundle_127.albedo.SampleLevel(bundle_127.samp, uv, 0).x
+          + bundle_127.normal.SampleLevel(bundle_127.samp, uv, 0).y
+          + bundle_127.coeffs[tid.x % 16];
+    acc += bundle_128.albedo.SampleLevel(bundle_128.samp, uv, 0).x
+          + bundle_128.normal.SampleLevel(bundle_128.samp, uv, 0).y
+          + bundle_128.coeffs[tid.x % 16];
+    acc += bundle_129.albedo.SampleLevel(bundle_129.samp, uv, 0).x
+          + bundle_129.normal.SampleLevel(bundle_129.samp, uv, 0).y
+          + bundle_129.coeffs[tid.x % 16];
+    acc += bundle_130.albedo.SampleLevel(bundle_130.samp, uv, 0).x
+          + bundle_130.normal.SampleLevel(bundle_130.samp, uv, 0).y
+          + bundle_130.coeffs[tid.x % 16];
+    acc += bundle_131.albedo.SampleLevel(bundle_131.samp, uv, 0).x
+          + bundle_131.normal.SampleLevel(bundle_131.samp, uv, 0).y
+          + bundle_131.coeffs[tid.x % 16];
+    acc += bundle_132.albedo.SampleLevel(bundle_132.samp, uv, 0).x
+          + bundle_132.normal.SampleLevel(bundle_132.samp, uv, 0).y
+          + bundle_132.coeffs[tid.x % 16];
+    acc += bundle_133.albedo.SampleLevel(bundle_133.samp, uv, 0).x
+          + bundle_133.normal.SampleLevel(bundle_133.samp, uv, 0).y
+          + bundle_133.coeffs[tid.x % 16];
+    acc += bundle_134.albedo.SampleLevel(bundle_134.samp, uv, 0).x
+          + bundle_134.normal.SampleLevel(bundle_134.samp, uv, 0).y
+          + bundle_134.coeffs[tid.x % 16];
+    acc += bundle_135.albedo.SampleLevel(bundle_135.samp, uv, 0).x
+          + bundle_135.normal.SampleLevel(bundle_135.samp, uv, 0).y
+          + bundle_135.coeffs[tid.x % 16];
+    acc += bundle_136.albedo.SampleLevel(bundle_136.samp, uv, 0).x
+          + bundle_136.normal.SampleLevel(bundle_136.samp, uv, 0).y
+          + bundle_136.coeffs[tid.x % 16];
+    acc += bundle_137.albedo.SampleLevel(bundle_137.samp, uv, 0).x
+          + bundle_137.normal.SampleLevel(bundle_137.samp, uv, 0).y
+          + bundle_137.coeffs[tid.x % 16];
+    acc += bundle_138.albedo.SampleLevel(bundle_138.samp, uv, 0).x
+          + bundle_138.normal.SampleLevel(bundle_138.samp, uv, 0).y
+          + bundle_138.coeffs[tid.x % 16];
+    acc += bundle_139.albedo.SampleLevel(bundle_139.samp, uv, 0).x
+          + bundle_139.normal.SampleLevel(bundle_139.samp, uv, 0).y
+          + bundle_139.coeffs[tid.x % 16];
+    acc += bundle_140.albedo.SampleLevel(bundle_140.samp, uv, 0).x
+          + bundle_140.normal.SampleLevel(bundle_140.samp, uv, 0).y
+          + bundle_140.coeffs[tid.x % 16];
+    acc += bundle_141.albedo.SampleLevel(bundle_141.samp, uv, 0).x
+          + bundle_141.normal.SampleLevel(bundle_141.samp, uv, 0).y
+          + bundle_141.coeffs[tid.x % 16];
+    acc += bundle_142.albedo.SampleLevel(bundle_142.samp, uv, 0).x
+          + bundle_142.normal.SampleLevel(bundle_142.samp, uv, 0).y
+          + bundle_142.coeffs[tid.x % 16];
+    acc += bundle_143.albedo.SampleLevel(bundle_143.samp, uv, 0).x
+          + bundle_143.normal.SampleLevel(bundle_143.samp, uv, 0).y
+          + bundle_143.coeffs[tid.x % 16];
+    acc += bundle_144.albedo.SampleLevel(bundle_144.samp, uv, 0).x
+          + bundle_144.normal.SampleLevel(bundle_144.samp, uv, 0).y
+          + bundle_144.coeffs[tid.x % 16];
+    acc += bundle_145.albedo.SampleLevel(bundle_145.samp, uv, 0).x
+          + bundle_145.normal.SampleLevel(bundle_145.samp, uv, 0).y
+          + bundle_145.coeffs[tid.x % 16];
+    acc += bundle_146.albedo.SampleLevel(bundle_146.samp, uv, 0).x
+          + bundle_146.normal.SampleLevel(bundle_146.samp, uv, 0).y
+          + bundle_146.coeffs[tid.x % 16];
+    acc += bundle_147.albedo.SampleLevel(bundle_147.samp, uv, 0).x
+          + bundle_147.normal.SampleLevel(bundle_147.samp, uv, 0).y
+          + bundle_147.coeffs[tid.x % 16];
+    acc += bundle_148.albedo.SampleLevel(bundle_148.samp, uv, 0).x
+          + bundle_148.normal.SampleLevel(bundle_148.samp, uv, 0).y
+          + bundle_148.coeffs[tid.x % 16];
+    acc += bundle_149.albedo.SampleLevel(bundle_149.samp, uv, 0).x
+          + bundle_149.normal.SampleLevel(bundle_149.samp, uv, 0).y
+          + bundle_149.coeffs[tid.x % 16];
+    acc += bundle_150.albedo.SampleLevel(bundle_150.samp, uv, 0).x
+          + bundle_150.normal.SampleLevel(bundle_150.samp, uv, 0).y
+          + bundle_150.coeffs[tid.x % 16];
+    acc += bundle_151.albedo.SampleLevel(bundle_151.samp, uv, 0).x
+          + bundle_151.normal.SampleLevel(bundle_151.samp, uv, 0).y
+          + bundle_151.coeffs[tid.x % 16];
+    acc += bundle_152.albedo.SampleLevel(bundle_152.samp, uv, 0).x
+          + bundle_152.normal.SampleLevel(bundle_152.samp, uv, 0).y
+          + bundle_152.coeffs[tid.x % 16];
+    acc += bundle_153.albedo.SampleLevel(bundle_153.samp, uv, 0).x
+          + bundle_153.normal.SampleLevel(bundle_153.samp, uv, 0).y
+          + bundle_153.coeffs[tid.x % 16];
+    acc += bundle_154.albedo.SampleLevel(bundle_154.samp, uv, 0).x
+          + bundle_154.normal.SampleLevel(bundle_154.samp, uv, 0).y
+          + bundle_154.coeffs[tid.x % 16];
+    acc += bundle_155.albedo.SampleLevel(bundle_155.samp, uv, 0).x
+          + bundle_155.normal.SampleLevel(bundle_155.samp, uv, 0).y
+          + bundle_155.coeffs[tid.x % 16];
+    acc += bundle_156.albedo.SampleLevel(bundle_156.samp, uv, 0).x
+          + bundle_156.normal.SampleLevel(bundle_156.samp, uv, 0).y
+          + bundle_156.coeffs[tid.x % 16];
+    acc += bundle_157.albedo.SampleLevel(bundle_157.samp, uv, 0).x
+          + bundle_157.normal.SampleLevel(bundle_157.samp, uv, 0).y
+          + bundle_157.coeffs[tid.x % 16];
+    acc += bundle_158.albedo.SampleLevel(bundle_158.samp, uv, 0).x
+          + bundle_158.normal.SampleLevel(bundle_158.samp, uv, 0).y
+          + bundle_158.coeffs[tid.x % 16];
+    acc += bundle_159.albedo.SampleLevel(bundle_159.samp, uv, 0).x
+          + bundle_159.normal.SampleLevel(bundle_159.samp, uv, 0).y
+          + bundle_159.coeffs[tid.x % 16];
+    acc += bundle_160.albedo.SampleLevel(bundle_160.samp, uv, 0).x
+          + bundle_160.normal.SampleLevel(bundle_160.samp, uv, 0).y
+          + bundle_160.coeffs[tid.x % 16];
+    acc += bundle_161.albedo.SampleLevel(bundle_161.samp, uv, 0).x
+          + bundle_161.normal.SampleLevel(bundle_161.samp, uv, 0).y
+          + bundle_161.coeffs[tid.x % 16];
+    acc += bundle_162.albedo.SampleLevel(bundle_162.samp, uv, 0).x
+          + bundle_162.normal.SampleLevel(bundle_162.samp, uv, 0).y
+          + bundle_162.coeffs[tid.x % 16];
+    acc += bundle_163.albedo.SampleLevel(bundle_163.samp, uv, 0).x
+          + bundle_163.normal.SampleLevel(bundle_163.samp, uv, 0).y
+          + bundle_163.coeffs[tid.x % 16];
+    acc += bundle_164.albedo.SampleLevel(bundle_164.samp, uv, 0).x
+          + bundle_164.normal.SampleLevel(bundle_164.samp, uv, 0).y
+          + bundle_164.coeffs[tid.x % 16];
+    acc += bundle_165.albedo.SampleLevel(bundle_165.samp, uv, 0).x
+          + bundle_165.normal.SampleLevel(bundle_165.samp, uv, 0).y
+          + bundle_165.coeffs[tid.x % 16];
+    acc += bundle_166.albedo.SampleLevel(bundle_166.samp, uv, 0).x
+          + bundle_166.normal.SampleLevel(bundle_166.samp, uv, 0).y
+          + bundle_166.coeffs[tid.x % 16];
+    acc += bundle_167.albedo.SampleLevel(bundle_167.samp, uv, 0).x
+          + bundle_167.normal.SampleLevel(bundle_167.samp, uv, 0).y
+          + bundle_167.coeffs[tid.x % 16];
+    acc += bundle_168.albedo.SampleLevel(bundle_168.samp, uv, 0).x
+          + bundle_168.normal.SampleLevel(bundle_168.samp, uv, 0).y
+          + bundle_168.coeffs[tid.x % 16];
+    acc += bundle_169.albedo.SampleLevel(bundle_169.samp, uv, 0).x
+          + bundle_169.normal.SampleLevel(bundle_169.samp, uv, 0).y
+          + bundle_169.coeffs[tid.x % 16];
+    acc += bundle_170.albedo.SampleLevel(bundle_170.samp, uv, 0).x
+          + bundle_170.normal.SampleLevel(bundle_170.samp, uv, 0).y
+          + bundle_170.coeffs[tid.x % 16];
+    acc += bundle_171.albedo.SampleLevel(bundle_171.samp, uv, 0).x
+          + bundle_171.normal.SampleLevel(bundle_171.samp, uv, 0).y
+          + bundle_171.coeffs[tid.x % 16];
+    acc += bundle_172.albedo.SampleLevel(bundle_172.samp, uv, 0).x
+          + bundle_172.normal.SampleLevel(bundle_172.samp, uv, 0).y
+          + bundle_172.coeffs[tid.x % 16];
+    acc += bundle_173.albedo.SampleLevel(bundle_173.samp, uv, 0).x
+          + bundle_173.normal.SampleLevel(bundle_173.samp, uv, 0).y
+          + bundle_173.coeffs[tid.x % 16];
+    acc += bundle_174.albedo.SampleLevel(bundle_174.samp, uv, 0).x
+          + bundle_174.normal.SampleLevel(bundle_174.samp, uv, 0).y
+          + bundle_174.coeffs[tid.x % 16];
+    acc += bundle_175.albedo.SampleLevel(bundle_175.samp, uv, 0).x
+          + bundle_175.normal.SampleLevel(bundle_175.samp, uv, 0).y
+          + bundle_175.coeffs[tid.x % 16];
+    acc += bundle_176.albedo.SampleLevel(bundle_176.samp, uv, 0).x
+          + bundle_176.normal.SampleLevel(bundle_176.samp, uv, 0).y
+          + bundle_176.coeffs[tid.x % 16];
+    acc += bundle_177.albedo.SampleLevel(bundle_177.samp, uv, 0).x
+          + bundle_177.normal.SampleLevel(bundle_177.samp, uv, 0).y
+          + bundle_177.coeffs[tid.x % 16];
+    acc += bundle_178.albedo.SampleLevel(bundle_178.samp, uv, 0).x
+          + bundle_178.normal.SampleLevel(bundle_178.samp, uv, 0).y
+          + bundle_178.coeffs[tid.x % 16];
+    acc += bundle_179.albedo.SampleLevel(bundle_179.samp, uv, 0).x
+          + bundle_179.normal.SampleLevel(bundle_179.samp, uv, 0).y
+          + bundle_179.coeffs[tid.x % 16];
+    acc += bundle_180.albedo.SampleLevel(bundle_180.samp, uv, 0).x
+          + bundle_180.normal.SampleLevel(bundle_180.samp, uv, 0).y
+          + bundle_180.coeffs[tid.x % 16];
+    acc += bundle_181.albedo.SampleLevel(bundle_181.samp, uv, 0).x
+          + bundle_181.normal.SampleLevel(bundle_181.samp, uv, 0).y
+          + bundle_181.coeffs[tid.x % 16];
+    acc += bundle_182.albedo.SampleLevel(bundle_182.samp, uv, 0).x
+          + bundle_182.normal.SampleLevel(bundle_182.samp, uv, 0).y
+          + bundle_182.coeffs[tid.x % 16];
+    acc += bundle_183.albedo.SampleLevel(bundle_183.samp, uv, 0).x
+          + bundle_183.normal.SampleLevel(bundle_183.samp, uv, 0).y
+          + bundle_183.coeffs[tid.x % 16];
+    acc += bundle_184.albedo.SampleLevel(bundle_184.samp, uv, 0).x
+          + bundle_184.normal.SampleLevel(bundle_184.samp, uv, 0).y
+          + bundle_184.coeffs[tid.x % 16];
+    acc += bundle_185.albedo.SampleLevel(bundle_185.samp, uv, 0).x
+          + bundle_185.normal.SampleLevel(bundle_185.samp, uv, 0).y
+          + bundle_185.coeffs[tid.x % 16];
+    acc += bundle_186.albedo.SampleLevel(bundle_186.samp, uv, 0).x
+          + bundle_186.normal.SampleLevel(bundle_186.samp, uv, 0).y
+          + bundle_186.coeffs[tid.x % 16];
+    acc += bundle_187.albedo.SampleLevel(bundle_187.samp, uv, 0).x
+          + bundle_187.normal.SampleLevel(bundle_187.samp, uv, 0).y
+          + bundle_187.coeffs[tid.x % 16];
+    acc += bundle_188.albedo.SampleLevel(bundle_188.samp, uv, 0).x
+          + bundle_188.normal.SampleLevel(bundle_188.samp, uv, 0).y
+          + bundle_188.coeffs[tid.x % 16];
+    acc += bundle_189.albedo.SampleLevel(bundle_189.samp, uv, 0).x
+          + bundle_189.normal.SampleLevel(bundle_189.samp, uv, 0).y
+          + bundle_189.coeffs[tid.x % 16];
+    acc += bundle_190.albedo.SampleLevel(bundle_190.samp, uv, 0).x
+          + bundle_190.normal.SampleLevel(bundle_190.samp, uv, 0).y
+          + bundle_190.coeffs[tid.x % 16];
+    acc += bundle_191.albedo.SampleLevel(bundle_191.samp, uv, 0).x
+          + bundle_191.normal.SampleLevel(bundle_191.samp, uv, 0).y
+          + bundle_191.coeffs[tid.x % 16];
+    acc += bundle_192.albedo.SampleLevel(bundle_192.samp, uv, 0).x
+          + bundle_192.normal.SampleLevel(bundle_192.samp, uv, 0).y
+          + bundle_192.coeffs[tid.x % 16];
+    acc += bundle_193.albedo.SampleLevel(bundle_193.samp, uv, 0).x
+          + bundle_193.normal.SampleLevel(bundle_193.samp, uv, 0).y
+          + bundle_193.coeffs[tid.x % 16];
+    acc += bundle_194.albedo.SampleLevel(bundle_194.samp, uv, 0).x
+          + bundle_194.normal.SampleLevel(bundle_194.samp, uv, 0).y
+          + bundle_194.coeffs[tid.x % 16];
+    acc += bundle_195.albedo.SampleLevel(bundle_195.samp, uv, 0).x
+          + bundle_195.normal.SampleLevel(bundle_195.samp, uv, 0).y
+          + bundle_195.coeffs[tid.x % 16];
+    acc += bundle_196.albedo.SampleLevel(bundle_196.samp, uv, 0).x
+          + bundle_196.normal.SampleLevel(bundle_196.samp, uv, 0).y
+          + bundle_196.coeffs[tid.x % 16];
+    acc += bundle_197.albedo.SampleLevel(bundle_197.samp, uv, 0).x
+          + bundle_197.normal.SampleLevel(bundle_197.samp, uv, 0).y
+          + bundle_197.coeffs[tid.x % 16];
+    acc += bundle_198.albedo.SampleLevel(bundle_198.samp, uv, 0).x
+          + bundle_198.normal.SampleLevel(bundle_198.samp, uv, 0).y
+          + bundle_198.coeffs[tid.x % 16];
+    acc += bundle_199.albedo.SampleLevel(bundle_199.samp, uv, 0).x
+          + bundle_199.normal.SampleLevel(bundle_199.samp, uv, 0).y
+          + bundle_199.coeffs[tid.x % 16];
+    acc += bundle_200.albedo.SampleLevel(bundle_200.samp, uv, 0).x
+          + bundle_200.normal.SampleLevel(bundle_200.samp, uv, 0).y
+          + bundle_200.coeffs[tid.x % 16];
+    acc += bundle_201.albedo.SampleLevel(bundle_201.samp, uv, 0).x
+          + bundle_201.normal.SampleLevel(bundle_201.samp, uv, 0).y
+          + bundle_201.coeffs[tid.x % 16];
+    acc += bundle_202.albedo.SampleLevel(bundle_202.samp, uv, 0).x
+          + bundle_202.normal.SampleLevel(bundle_202.samp, uv, 0).y
+          + bundle_202.coeffs[tid.x % 16];
+    acc += bundle_203.albedo.SampleLevel(bundle_203.samp, uv, 0).x
+          + bundle_203.normal.SampleLevel(bundle_203.samp, uv, 0).y
+          + bundle_203.coeffs[tid.x % 16];
+    acc += bundle_204.albedo.SampleLevel(bundle_204.samp, uv, 0).x
+          + bundle_204.normal.SampleLevel(bundle_204.samp, uv, 0).y
+          + bundle_204.coeffs[tid.x % 16];
+    acc += bundle_205.albedo.SampleLevel(bundle_205.samp, uv, 0).x
+          + bundle_205.normal.SampleLevel(bundle_205.samp, uv, 0).y
+          + bundle_205.coeffs[tid.x % 16];
+    acc += bundle_206.albedo.SampleLevel(bundle_206.samp, uv, 0).x
+          + bundle_206.normal.SampleLevel(bundle_206.samp, uv, 0).y
+          + bundle_206.coeffs[tid.x % 16];
+    acc += bundle_207.albedo.SampleLevel(bundle_207.samp, uv, 0).x
+          + bundle_207.normal.SampleLevel(bundle_207.samp, uv, 0).y
+          + bundle_207.coeffs[tid.x % 16];
+    acc += bundle_208.albedo.SampleLevel(bundle_208.samp, uv, 0).x
+          + bundle_208.normal.SampleLevel(bundle_208.samp, uv, 0).y
+          + bundle_208.coeffs[tid.x % 16];
+    acc += bundle_209.albedo.SampleLevel(bundle_209.samp, uv, 0).x
+          + bundle_209.normal.SampleLevel(bundle_209.samp, uv, 0).y
+          + bundle_209.coeffs[tid.x % 16];
+    acc += bundle_210.albedo.SampleLevel(bundle_210.samp, uv, 0).x
+          + bundle_210.normal.SampleLevel(bundle_210.samp, uv, 0).y
+          + bundle_210.coeffs[tid.x % 16];
+    acc += bundle_211.albedo.SampleLevel(bundle_211.samp, uv, 0).x
+          + bundle_211.normal.SampleLevel(bundle_211.samp, uv, 0).y
+          + bundle_211.coeffs[tid.x % 16];
+    acc += bundle_212.albedo.SampleLevel(bundle_212.samp, uv, 0).x
+          + bundle_212.normal.SampleLevel(bundle_212.samp, uv, 0).y
+          + bundle_212.coeffs[tid.x % 16];
+    acc += bundle_213.albedo.SampleLevel(bundle_213.samp, uv, 0).x
+          + bundle_213.normal.SampleLevel(bundle_213.samp, uv, 0).y
+          + bundle_213.coeffs[tid.x % 16];
+    acc += bundle_214.albedo.SampleLevel(bundle_214.samp, uv, 0).x
+          + bundle_214.normal.SampleLevel(bundle_214.samp, uv, 0).y
+          + bundle_214.coeffs[tid.x % 16];
+    acc += bundle_215.albedo.SampleLevel(bundle_215.samp, uv, 0).x
+          + bundle_215.normal.SampleLevel(bundle_215.samp, uv, 0).y
+          + bundle_215.coeffs[tid.x % 16];
+    acc += bundle_216.albedo.SampleLevel(bundle_216.samp, uv, 0).x
+          + bundle_216.normal.SampleLevel(bundle_216.samp, uv, 0).y
+          + bundle_216.coeffs[tid.x % 16];
+    acc += bundle_217.albedo.SampleLevel(bundle_217.samp, uv, 0).x
+          + bundle_217.normal.SampleLevel(bundle_217.samp, uv, 0).y
+          + bundle_217.coeffs[tid.x % 16];
+    acc += bundle_218.albedo.SampleLevel(bundle_218.samp, uv, 0).x
+          + bundle_218.normal.SampleLevel(bundle_218.samp, uv, 0).y
+          + bundle_218.coeffs[tid.x % 16];
+    acc += bundle_219.albedo.SampleLevel(bundle_219.samp, uv, 0).x
+          + bundle_219.normal.SampleLevel(bundle_219.samp, uv, 0).y
+          + bundle_219.coeffs[tid.x % 16];
+    acc += bundle_220.albedo.SampleLevel(bundle_220.samp, uv, 0).x
+          + bundle_220.normal.SampleLevel(bundle_220.samp, uv, 0).y
+          + bundle_220.coeffs[tid.x % 16];
+    acc += bundle_221.albedo.SampleLevel(bundle_221.samp, uv, 0).x
+          + bundle_221.normal.SampleLevel(bundle_221.samp, uv, 0).y
+          + bundle_221.coeffs[tid.x % 16];
+    acc += bundle_222.albedo.SampleLevel(bundle_222.samp, uv, 0).x
+          + bundle_222.normal.SampleLevel(bundle_222.samp, uv, 0).y
+          + bundle_222.coeffs[tid.x % 16];
+    acc += bundle_223.albedo.SampleLevel(bundle_223.samp, uv, 0).x
+          + bundle_223.normal.SampleLevel(bundle_223.samp, uv, 0).y
+          + bundle_223.coeffs[tid.x % 16];
+    acc += bundle_224.albedo.SampleLevel(bundle_224.samp, uv, 0).x
+          + bundle_224.normal.SampleLevel(bundle_224.samp, uv, 0).y
+          + bundle_224.coeffs[tid.x % 16];
+    acc += bundle_225.albedo.SampleLevel(bundle_225.samp, uv, 0).x
+          + bundle_225.normal.SampleLevel(bundle_225.samp, uv, 0).y
+          + bundle_225.coeffs[tid.x % 16];
+    acc += bundle_226.albedo.SampleLevel(bundle_226.samp, uv, 0).x
+          + bundle_226.normal.SampleLevel(bundle_226.samp, uv, 0).y
+          + bundle_226.coeffs[tid.x % 16];
+    acc += bundle_227.albedo.SampleLevel(bundle_227.samp, uv, 0).x
+          + bundle_227.normal.SampleLevel(bundle_227.samp, uv, 0).y
+          + bundle_227.coeffs[tid.x % 16];
+    acc += bundle_228.albedo.SampleLevel(bundle_228.samp, uv, 0).x
+          + bundle_228.normal.SampleLevel(bundle_228.samp, uv, 0).y
+          + bundle_228.coeffs[tid.x % 16];
+    acc += bundle_229.albedo.SampleLevel(bundle_229.samp, uv, 0).x
+          + bundle_229.normal.SampleLevel(bundle_229.samp, uv, 0).y
+          + bundle_229.coeffs[tid.x % 16];
+    acc += bundle_230.albedo.SampleLevel(bundle_230.samp, uv, 0).x
+          + bundle_230.normal.SampleLevel(bundle_230.samp, uv, 0).y
+          + bundle_230.coeffs[tid.x % 16];
+    acc += bundle_231.albedo.SampleLevel(bundle_231.samp, uv, 0).x
+          + bundle_231.normal.SampleLevel(bundle_231.samp, uv, 0).y
+          + bundle_231.coeffs[tid.x % 16];
+    acc += bundle_232.albedo.SampleLevel(bundle_232.samp, uv, 0).x
+          + bundle_232.normal.SampleLevel(bundle_232.samp, uv, 0).y
+          + bundle_232.coeffs[tid.x % 16];
+    acc += bundle_233.albedo.SampleLevel(bundle_233.samp, uv, 0).x
+          + bundle_233.normal.SampleLevel(bundle_233.samp, uv, 0).y
+          + bundle_233.coeffs[tid.x % 16];
+    acc += bundle_234.albedo.SampleLevel(bundle_234.samp, uv, 0).x
+          + bundle_234.normal.SampleLevel(bundle_234.samp, uv, 0).y
+          + bundle_234.coeffs[tid.x % 16];
+    acc += bundle_235.albedo.SampleLevel(bundle_235.samp, uv, 0).x
+          + bundle_235.normal.SampleLevel(bundle_235.samp, uv, 0).y
+          + bundle_235.coeffs[tid.x % 16];
+    acc += bundle_236.albedo.SampleLevel(bundle_236.samp, uv, 0).x
+          + bundle_236.normal.SampleLevel(bundle_236.samp, uv, 0).y
+          + bundle_236.coeffs[tid.x % 16];
+    acc += bundle_237.albedo.SampleLevel(bundle_237.samp, uv, 0).x
+          + bundle_237.normal.SampleLevel(bundle_237.samp, uv, 0).y
+          + bundle_237.coeffs[tid.x % 16];
+    acc += bundle_238.albedo.SampleLevel(bundle_238.samp, uv, 0).x
+          + bundle_238.normal.SampleLevel(bundle_238.samp, uv, 0).y
+          + bundle_238.coeffs[tid.x % 16];
+    acc += bundle_239.albedo.SampleLevel(bundle_239.samp, uv, 0).x
+          + bundle_239.normal.SampleLevel(bundle_239.samp, uv, 0).y
+          + bundle_239.coeffs[tid.x % 16];
+    acc += bundle_240.albedo.SampleLevel(bundle_240.samp, uv, 0).x
+          + bundle_240.normal.SampleLevel(bundle_240.samp, uv, 0).y
+          + bundle_240.coeffs[tid.x % 16];
+    acc += bundle_241.albedo.SampleLevel(bundle_241.samp, uv, 0).x
+          + bundle_241.normal.SampleLevel(bundle_241.samp, uv, 0).y
+          + bundle_241.coeffs[tid.x % 16];
+    acc += bundle_242.albedo.SampleLevel(bundle_242.samp, uv, 0).x
+          + bundle_242.normal.SampleLevel(bundle_242.samp, uv, 0).y
+          + bundle_242.coeffs[tid.x % 16];
+    acc += bundle_243.albedo.SampleLevel(bundle_243.samp, uv, 0).x
+          + bundle_243.normal.SampleLevel(bundle_243.samp, uv, 0).y
+          + bundle_243.coeffs[tid.x % 16];
+    acc += bundle_244.albedo.SampleLevel(bundle_244.samp, uv, 0).x
+          + bundle_244.normal.SampleLevel(bundle_244.samp, uv, 0).y
+          + bundle_244.coeffs[tid.x % 16];
+    acc += bundle_245.albedo.SampleLevel(bundle_245.samp, uv, 0).x
+          + bundle_245.normal.SampleLevel(bundle_245.samp, uv, 0).y
+          + bundle_245.coeffs[tid.x % 16];
+    acc += bundle_246.albedo.SampleLevel(bundle_246.samp, uv, 0).x
+          + bundle_246.normal.SampleLevel(bundle_246.samp, uv, 0).y
+          + bundle_246.coeffs[tid.x % 16];
+    acc += bundle_247.albedo.SampleLevel(bundle_247.samp, uv, 0).x
+          + bundle_247.normal.SampleLevel(bundle_247.samp, uv, 0).y
+          + bundle_247.coeffs[tid.x % 16];
+    acc += bundle_248.albedo.SampleLevel(bundle_248.samp, uv, 0).x
+          + bundle_248.normal.SampleLevel(bundle_248.samp, uv, 0).y
+          + bundle_248.coeffs[tid.x % 16];
+    acc += bundle_249.albedo.SampleLevel(bundle_249.samp, uv, 0).x
+          + bundle_249.normal.SampleLevel(bundle_249.samp, uv, 0).y
+          + bundle_249.coeffs[tid.x % 16];
+    acc += bundle_250.albedo.SampleLevel(bundle_250.samp, uv, 0).x
+          + bundle_250.normal.SampleLevel(bundle_250.samp, uv, 0).y
+          + bundle_250.coeffs[tid.x % 16];
+    acc += bundle_251.albedo.SampleLevel(bundle_251.samp, uv, 0).x
+          + bundle_251.normal.SampleLevel(bundle_251.samp, uv, 0).y
+          + bundle_251.coeffs[tid.x % 16];
+    acc += bundle_252.albedo.SampleLevel(bundle_252.samp, uv, 0).x
+          + bundle_252.normal.SampleLevel(bundle_252.samp, uv, 0).y
+          + bundle_252.coeffs[tid.x % 16];
+    acc += bundle_253.albedo.SampleLevel(bundle_253.samp, uv, 0).x
+          + bundle_253.normal.SampleLevel(bundle_253.samp, uv, 0).y
+          + bundle_253.coeffs[tid.x % 16];
+    acc += bundle_254.albedo.SampleLevel(bundle_254.samp, uv, 0).x
+          + bundle_254.normal.SampleLevel(bundle_254.samp, uv, 0).y
+          + bundle_254.coeffs[tid.x % 16];
+    acc += bundle_255.albedo.SampleLevel(bundle_255.samp, uv, 0).x
+          + bundle_255.normal.SampleLevel(bundle_255.samp, uv, 0).y
+          + bundle_255.coeffs[tid.x % 16];
+    acc += bundle_256.albedo.SampleLevel(bundle_256.samp, uv, 0).x
+          + bundle_256.normal.SampleLevel(bundle_256.samp, uv, 0).y
+          + bundle_256.coeffs[tid.x % 16];
+    acc += bundle_257.albedo.SampleLevel(bundle_257.samp, uv, 0).x
+          + bundle_257.normal.SampleLevel(bundle_257.samp, uv, 0).y
+          + bundle_257.coeffs[tid.x % 16];
+    acc += bundle_258.albedo.SampleLevel(bundle_258.samp, uv, 0).x
+          + bundle_258.normal.SampleLevel(bundle_258.samp, uv, 0).y
+          + bundle_258.coeffs[tid.x % 16];
+    acc += bundle_259.albedo.SampleLevel(bundle_259.samp, uv, 0).x
+          + bundle_259.normal.SampleLevel(bundle_259.samp, uv, 0).y
+          + bundle_259.coeffs[tid.x % 16];
+    acc += bundle_260.albedo.SampleLevel(bundle_260.samp, uv, 0).x
+          + bundle_260.normal.SampleLevel(bundle_260.samp, uv, 0).y
+          + bundle_260.coeffs[tid.x % 16];
+    acc += bundle_261.albedo.SampleLevel(bundle_261.samp, uv, 0).x
+          + bundle_261.normal.SampleLevel(bundle_261.samp, uv, 0).y
+          + bundle_261.coeffs[tid.x % 16];
+    acc += bundle_262.albedo.SampleLevel(bundle_262.samp, uv, 0).x
+          + bundle_262.normal.SampleLevel(bundle_262.samp, uv, 0).y
+          + bundle_262.coeffs[tid.x % 16];
+    acc += bundle_263.albedo.SampleLevel(bundle_263.samp, uv, 0).x
+          + bundle_263.normal.SampleLevel(bundle_263.samp, uv, 0).y
+          + bundle_263.coeffs[tid.x % 16];
+    acc += bundle_264.albedo.SampleLevel(bundle_264.samp, uv, 0).x
+          + bundle_264.normal.SampleLevel(bundle_264.samp, uv, 0).y
+          + bundle_264.coeffs[tid.x % 16];
+    acc += bundle_265.albedo.SampleLevel(bundle_265.samp, uv, 0).x
+          + bundle_265.normal.SampleLevel(bundle_265.samp, uv, 0).y
+          + bundle_265.coeffs[tid.x % 16];
+    acc += bundle_266.albedo.SampleLevel(bundle_266.samp, uv, 0).x
+          + bundle_266.normal.SampleLevel(bundle_266.samp, uv, 0).y
+          + bundle_266.coeffs[tid.x % 16];
+    acc += bundle_267.albedo.SampleLevel(bundle_267.samp, uv, 0).x
+          + bundle_267.normal.SampleLevel(bundle_267.samp, uv, 0).y
+          + bundle_267.coeffs[tid.x % 16];
+    acc += bundle_268.albedo.SampleLevel(bundle_268.samp, uv, 0).x
+          + bundle_268.normal.SampleLevel(bundle_268.samp, uv, 0).y
+          + bundle_268.coeffs[tid.x % 16];
+    acc += bundle_269.albedo.SampleLevel(bundle_269.samp, uv, 0).x
+          + bundle_269.normal.SampleLevel(bundle_269.samp, uv, 0).y
+          + bundle_269.coeffs[tid.x % 16];
+    acc += bundle_270.albedo.SampleLevel(bundle_270.samp, uv, 0).x
+          + bundle_270.normal.SampleLevel(bundle_270.samp, uv, 0).y
+          + bundle_270.coeffs[tid.x % 16];
+    acc += bundle_271.albedo.SampleLevel(bundle_271.samp, uv, 0).x
+          + bundle_271.normal.SampleLevel(bundle_271.samp, uv, 0).y
+          + bundle_271.coeffs[tid.x % 16];
+    acc += bundle_272.albedo.SampleLevel(bundle_272.samp, uv, 0).x
+          + bundle_272.normal.SampleLevel(bundle_272.samp, uv, 0).y
+          + bundle_272.coeffs[tid.x % 16];
+    acc += bundle_273.albedo.SampleLevel(bundle_273.samp, uv, 0).x
+          + bundle_273.normal.SampleLevel(bundle_273.samp, uv, 0).y
+          + bundle_273.coeffs[tid.x % 16];
+    acc += bundle_274.albedo.SampleLevel(bundle_274.samp, uv, 0).x
+          + bundle_274.normal.SampleLevel(bundle_274.samp, uv, 0).y
+          + bundle_274.coeffs[tid.x % 16];
+    acc += bundle_275.albedo.SampleLevel(bundle_275.samp, uv, 0).x
+          + bundle_275.normal.SampleLevel(bundle_275.samp, uv, 0).y
+          + bundle_275.coeffs[tid.x % 16];
+    acc += bundle_276.albedo.SampleLevel(bundle_276.samp, uv, 0).x
+          + bundle_276.normal.SampleLevel(bundle_276.samp, uv, 0).y
+          + bundle_276.coeffs[tid.x % 16];
+    acc += bundle_277.albedo.SampleLevel(bundle_277.samp, uv, 0).x
+          + bundle_277.normal.SampleLevel(bundle_277.samp, uv, 0).y
+          + bundle_277.coeffs[tid.x % 16];
+    acc += bundle_278.albedo.SampleLevel(bundle_278.samp, uv, 0).x
+          + bundle_278.normal.SampleLevel(bundle_278.samp, uv, 0).y
+          + bundle_278.coeffs[tid.x % 16];
+    acc += bundle_279.albedo.SampleLevel(bundle_279.samp, uv, 0).x
+          + bundle_279.normal.SampleLevel(bundle_279.samp, uv, 0).y
+          + bundle_279.coeffs[tid.x % 16];
+    acc += bundle_280.albedo.SampleLevel(bundle_280.samp, uv, 0).x
+          + bundle_280.normal.SampleLevel(bundle_280.samp, uv, 0).y
+          + bundle_280.coeffs[tid.x % 16];
+    acc += bundle_281.albedo.SampleLevel(bundle_281.samp, uv, 0).x
+          + bundle_281.normal.SampleLevel(bundle_281.samp, uv, 0).y
+          + bundle_281.coeffs[tid.x % 16];
+    acc += bundle_282.albedo.SampleLevel(bundle_282.samp, uv, 0).x
+          + bundle_282.normal.SampleLevel(bundle_282.samp, uv, 0).y
+          + bundle_282.coeffs[tid.x % 16];
+    acc += bundle_283.albedo.SampleLevel(bundle_283.samp, uv, 0).x
+          + bundle_283.normal.SampleLevel(bundle_283.samp, uv, 0).y
+          + bundle_283.coeffs[tid.x % 16];
+    acc += bundle_284.albedo.SampleLevel(bundle_284.samp, uv, 0).x
+          + bundle_284.normal.SampleLevel(bundle_284.samp, uv, 0).y
+          + bundle_284.coeffs[tid.x % 16];
+    acc += bundle_285.albedo.SampleLevel(bundle_285.samp, uv, 0).x
+          + bundle_285.normal.SampleLevel(bundle_285.samp, uv, 0).y
+          + bundle_285.coeffs[tid.x % 16];
+    acc += bundle_286.albedo.SampleLevel(bundle_286.samp, uv, 0).x
+          + bundle_286.normal.SampleLevel(bundle_286.samp, uv, 0).y
+          + bundle_286.coeffs[tid.x % 16];
+    acc += bundle_287.albedo.SampleLevel(bundle_287.samp, uv, 0).x
+          + bundle_287.normal.SampleLevel(bundle_287.samp, uv, 0).y
+          + bundle_287.coeffs[tid.x % 16];
+    acc += bundle_288.albedo.SampleLevel(bundle_288.samp, uv, 0).x
+          + bundle_288.normal.SampleLevel(bundle_288.samp, uv, 0).y
+          + bundle_288.coeffs[tid.x % 16];
+    acc += bundle_289.albedo.SampleLevel(bundle_289.samp, uv, 0).x
+          + bundle_289.normal.SampleLevel(bundle_289.samp, uv, 0).y
+          + bundle_289.coeffs[tid.x % 16];
+    acc += bundle_290.albedo.SampleLevel(bundle_290.samp, uv, 0).x
+          + bundle_290.normal.SampleLevel(bundle_290.samp, uv, 0).y
+          + bundle_290.coeffs[tid.x % 16];
+    acc += bundle_291.albedo.SampleLevel(bundle_291.samp, uv, 0).x
+          + bundle_291.normal.SampleLevel(bundle_291.samp, uv, 0).y
+          + bundle_291.coeffs[tid.x % 16];
+    acc += bundle_292.albedo.SampleLevel(bundle_292.samp, uv, 0).x
+          + bundle_292.normal.SampleLevel(bundle_292.samp, uv, 0).y
+          + bundle_292.coeffs[tid.x % 16];
+    acc += bundle_293.albedo.SampleLevel(bundle_293.samp, uv, 0).x
+          + bundle_293.normal.SampleLevel(bundle_293.samp, uv, 0).y
+          + bundle_293.coeffs[tid.x % 16];
+    acc += bundle_294.albedo.SampleLevel(bundle_294.samp, uv, 0).x
+          + bundle_294.normal.SampleLevel(bundle_294.samp, uv, 0).y
+          + bundle_294.coeffs[tid.x % 16];
+    acc += bundle_295.albedo.SampleLevel(bundle_295.samp, uv, 0).x
+          + bundle_295.normal.SampleLevel(bundle_295.samp, uv, 0).y
+          + bundle_295.coeffs[tid.x % 16];
+    acc += bundle_296.albedo.SampleLevel(bundle_296.samp, uv, 0).x
+          + bundle_296.normal.SampleLevel(bundle_296.samp, uv, 0).y
+          + bundle_296.coeffs[tid.x % 16];
+    acc += bundle_297.albedo.SampleLevel(bundle_297.samp, uv, 0).x
+          + bundle_297.normal.SampleLevel(bundle_297.samp, uv, 0).y
+          + bundle_297.coeffs[tid.x % 16];
+    acc += bundle_298.albedo.SampleLevel(bundle_298.samp, uv, 0).x
+          + bundle_298.normal.SampleLevel(bundle_298.samp, uv, 0).y
+          + bundle_298.coeffs[tid.x % 16];
+    acc += bundle_299.albedo.SampleLevel(bundle_299.samp, uv, 0).x
+          + bundle_299.normal.SampleLevel(bundle_299.samp, uv, 0).y
+          + bundle_299.coeffs[tid.x % 16];
+    acc += bundle_300.albedo.SampleLevel(bundle_300.samp, uv, 0).x
+          + bundle_300.normal.SampleLevel(bundle_300.samp, uv, 0).y
+          + bundle_300.coeffs[tid.x % 16];
+    acc += bundle_301.albedo.SampleLevel(bundle_301.samp, uv, 0).x
+          + bundle_301.normal.SampleLevel(bundle_301.samp, uv, 0).y
+          + bundle_301.coeffs[tid.x % 16];
+    acc += bundle_302.albedo.SampleLevel(bundle_302.samp, uv, 0).x
+          + bundle_302.normal.SampleLevel(bundle_302.samp, uv, 0).y
+          + bundle_302.coeffs[tid.x % 16];
+    acc += bundle_303.albedo.SampleLevel(bundle_303.samp, uv, 0).x
+          + bundle_303.normal.SampleLevel(bundle_303.samp, uv, 0).y
+          + bundle_303.coeffs[tid.x % 16];
+    acc += bundle_304.albedo.SampleLevel(bundle_304.samp, uv, 0).x
+          + bundle_304.normal.SampleLevel(bundle_304.samp, uv, 0).y
+          + bundle_304.coeffs[tid.x % 16];
+    acc += bundle_305.albedo.SampleLevel(bundle_305.samp, uv, 0).x
+          + bundle_305.normal.SampleLevel(bundle_305.samp, uv, 0).y
+          + bundle_305.coeffs[tid.x % 16];
+    acc += bundle_306.albedo.SampleLevel(bundle_306.samp, uv, 0).x
+          + bundle_306.normal.SampleLevel(bundle_306.samp, uv, 0).y
+          + bundle_306.coeffs[tid.x % 16];
+    acc += bundle_307.albedo.SampleLevel(bundle_307.samp, uv, 0).x
+          + bundle_307.normal.SampleLevel(bundle_307.samp, uv, 0).y
+          + bundle_307.coeffs[tid.x % 16];
+    acc += bundle_308.albedo.SampleLevel(bundle_308.samp, uv, 0).x
+          + bundle_308.normal.SampleLevel(bundle_308.samp, uv, 0).y
+          + bundle_308.coeffs[tid.x % 16];
+    acc += bundle_309.albedo.SampleLevel(bundle_309.samp, uv, 0).x
+          + bundle_309.normal.SampleLevel(bundle_309.samp, uv, 0).y
+          + bundle_309.coeffs[tid.x % 16];
+    acc += bundle_310.albedo.SampleLevel(bundle_310.samp, uv, 0).x
+          + bundle_310.normal.SampleLevel(bundle_310.samp, uv, 0).y
+          + bundle_310.coeffs[tid.x % 16];
+    acc += bundle_311.albedo.SampleLevel(bundle_311.samp, uv, 0).x
+          + bundle_311.normal.SampleLevel(bundle_311.samp, uv, 0).y
+          + bundle_311.coeffs[tid.x % 16];
+    acc += bundle_312.albedo.SampleLevel(bundle_312.samp, uv, 0).x
+          + bundle_312.normal.SampleLevel(bundle_312.samp, uv, 0).y
+          + bundle_312.coeffs[tid.x % 16];
+    acc += bundle_313.albedo.SampleLevel(bundle_313.samp, uv, 0).x
+          + bundle_313.normal.SampleLevel(bundle_313.samp, uv, 0).y
+          + bundle_313.coeffs[tid.x % 16];
+    acc += bundle_314.albedo.SampleLevel(bundle_314.samp, uv, 0).x
+          + bundle_314.normal.SampleLevel(bundle_314.samp, uv, 0).y
+          + bundle_314.coeffs[tid.x % 16];
+    acc += bundle_315.albedo.SampleLevel(bundle_315.samp, uv, 0).x
+          + bundle_315.normal.SampleLevel(bundle_315.samp, uv, 0).y
+          + bundle_315.coeffs[tid.x % 16];
+    acc += bundle_316.albedo.SampleLevel(bundle_316.samp, uv, 0).x
+          + bundle_316.normal.SampleLevel(bundle_316.samp, uv, 0).y
+          + bundle_316.coeffs[tid.x % 16];
+    acc += bundle_317.albedo.SampleLevel(bundle_317.samp, uv, 0).x
+          + bundle_317.normal.SampleLevel(bundle_317.samp, uv, 0).y
+          + bundle_317.coeffs[tid.x % 16];
+    acc += bundle_318.albedo.SampleLevel(bundle_318.samp, uv, 0).x
+          + bundle_318.normal.SampleLevel(bundle_318.samp, uv, 0).y
+          + bundle_318.coeffs[tid.x % 16];
+    acc += bundle_319.albedo.SampleLevel(bundle_319.samp, uv, 0).x
+          + bundle_319.normal.SampleLevel(bundle_319.samp, uv, 0).y
+          + bundle_319.coeffs[tid.x % 16];
     outBuf[tid.x] = acc;
 }
 </pre></div><script>

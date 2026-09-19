@@ -1,0 +1,687 @@
+<!doctype html><meta charset=utf-8><title>flat_expr_dag — phase breakdown</title><style>
+.cbox{position:relative}
+.cbox>button.copy{position:absolute;top:8px;right:8px;z-index:1;
+  font:11px/1 -apple-system,Segoe UI,Roboto,sans-serif;padding:5px 9px;
+  color:#24292f;background:#fff;border:1px solid #d0d7de;border-radius:5px;
+  cursor:pointer;opacity:.75}
+.cbox>button.copy:hover{opacity:1;background:#f3f4f6}
+.cbox>button.copy[data-done]{color:#1a7f37;border-color:#1a7f37}
+</style><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; back</a></p><h1 style='font-size:21px;margin:0 0 6px'>flat_expr_dag</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>A single basic block of `n` sequential `float3` locals. Each one is a
+binary op combining exactly two earlier locals -- the immediately-
+preceding one (`lhs = n{i-1}`) and a second one further back (`rhs =
+max(0, i-3-(i%5))`, which for most `i` names a distinct, non-adjacent
+local, though it clamps to `n0` for the first several `i`) -- so per-node
+fan-in is always 2, not wide. What scales with `n` is that the block
+declares `n` distinct named locals, each its own instruction, rather than
+repeatedly reassigning one variable -- this is the shape of MaterialX-
+generated code's
+weight-computation blocks (observed: 80+ consecutive `const float3 nNN =
+nAA * nBB;` statements in one block of real `generated.slang` output, each
+combining two DIFFERENT earlier temporaries rather than threading one
+accumulator). No resources, no generics, no control flow: this isolates
+the pure local-value axis from `backend_loads_*` (resource `Call`s
+specifically) and from `gen_codegen` (a single serially-dependent
+accumulator chain, `acc = acc*k + sin(acc)...`, which reuses one variable
+rather than declaring N named locals). What actually scales with `n` here,
+and what `gen_codegen`'s single reused accumulator cannot exercise, is the
+NUMBER OF INSTRUCTIONS in one block that per-block CSE/dedup
+(`DeduplicateContext::deduplicate` in slang-ir-redundancy-removal.cpp) and
+the redundant load/store elimination fixed in shader-slang/slang#13012
+must scan: every local is a candidate for the backward scan in
+`tryRemoveRedundantLoad`, so cost tracks block length, not live-set width.
+
+Scaling null: n scales independent binary-op statements in one block; ideal
+cost is O(n).</p><p style='color:#666;font-size:13px'><b>bucket:</b> ir_infra &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target cuda</code> &nbsp;·&nbsp; <b>default N:</b> 500</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="716" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">flat_expr_dag — Daily tip-of-tree (last 30 days) (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">flat_expr_dag<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">18</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">36</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">08-21</text>
+<line x1="103.9" y1="516.0" x2="103.9" y2="519.0" stroke="#999"/>
+<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">08-22</text>
+<line x1="139.7" y1="516.0" x2="139.7" y2="519.0" stroke="#999"/>
+<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">08-23</text>
+<line x1="175.6" y1="516.0" x2="175.6" y2="519.0" stroke="#999"/>
+<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">08-24</text>
+<line x1="211.4" y1="516.0" x2="211.4" y2="519.0" stroke="#999"/>
+<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">08-25</text>
+<line x1="247.3" y1="516.0" x2="247.3" y2="519.0" stroke="#999"/>
+<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">08-26</text>
+<line x1="283.2" y1="516.0" x2="283.2" y2="519.0" stroke="#999"/>
+<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">08-27</text>
+<line x1="319.0" y1="516.0" x2="319.0" y2="519.0" stroke="#999"/>
+<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">08-28</text>
+<line x1="354.9" y1="516.0" x2="354.9" y2="519.0" stroke="#999"/>
+<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">08-29</text>
+<line x1="390.8" y1="516.0" x2="390.8" y2="519.0" stroke="#999"/>
+<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">08-30</text>
+<line x1="426.6" y1="516.0" x2="426.6" y2="519.0" stroke="#999"/>
+<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">08-31</text>
+<line x1="462.5" y1="516.0" x2="462.5" y2="519.0" stroke="#999"/>
+<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">09-01</text>
+<line x1="498.3" y1="516.0" x2="498.3" y2="519.0" stroke="#999"/>
+<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-02</text>
+<line x1="534.2" y1="516.0" x2="534.2" y2="519.0" stroke="#999"/>
+<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-03</text>
+<line x1="570.1" y1="516.0" x2="570.1" y2="519.0" stroke="#999"/>
+<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-04</text>
+<line x1="605.9" y1="516.0" x2="605.9" y2="519.0" stroke="#999"/>
+<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-05</text>
+<line x1="641.8" y1="516.0" x2="641.8" y2="519.0" stroke="#999"/>
+<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-06</text>
+<line x1="677.7" y1="516.0" x2="677.7" y2="519.0" stroke="#999"/>
+<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-07</text>
+<line x1="713.5" y1="516.0" x2="713.5" y2="519.0" stroke="#999"/>
+<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-08</text>
+<line x1="749.4" y1="516.0" x2="749.4" y2="519.0" stroke="#999"/>
+<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-09</text>
+<line x1="785.2" y1="516.0" x2="785.2" y2="519.0" stroke="#999"/>
+<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-10</text>
+<line x1="821.1" y1="516.0" x2="821.1" y2="519.0" stroke="#999"/>
+<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-11</text>
+<line x1="857.0" y1="516.0" x2="857.0" y2="519.0" stroke="#999"/>
+<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-12</text>
+<line x1="892.8" y1="516.0" x2="892.8" y2="519.0" stroke="#999"/>
+<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-13</text>
+<line x1="928.7" y1="516.0" x2="928.7" y2="519.0" stroke="#999"/>
+<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-14</text>
+<line x1="964.6" y1="516.0" x2="964.6" y2="519.0" stroke="#999"/>
+<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-15</text>
+<line x1="1000.4" y1="516.0" x2="1000.4" y2="519.0" stroke="#999"/>
+<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-16</text>
+<line x1="1036.3" y1="516.0" x2="1036.3" y2="519.0" stroke="#999"/>
+<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-17</text>
+<line x1="1072.1" y1="516.0" x2="1072.1" y2="519.0" stroke="#999"/>
+<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-18</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-19</text>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#3f007d"/>
+<text x="28" y="650" fill="#222">deferBufferLoad</text>
+<rect x="289" y="640" width="12" height="12" fill="#54278f"/>
+<text x="305" y="650" fill="#222">simplifyNonSSAIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#9970ab"/>
+<text x="582" y="650" fill="#222">lowerCombinedTextureSamplers</text>
+<rect x="843" y="640" width="12" height="12" fill="#c2a5cf"/>
+<text x="859" y="650" fill="#222">legalizeMatrixTypes</text>
+<rect x="12" y="658" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="668" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="658" width="12" height="12" fill="#fdd0a2"/>
+<text x="305" y="668" fill="#222">emitEntryPointsSourceFromIR (self)</text>
+<rect x="566" y="658" width="12" height="12" fill="#fd8d3c"/>
+<text x="582" y="668" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="843" y="658" width="12" height="12" fill="#e6550d"/>
+<text x="859" y="668" fill="#222">generateOutput (self)</text>
+<rect x="12" y="676" width="12" height="12" fill="#969696"/>
+<text x="28" y="686" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only flat_expr_dag --label repro --gen-dir repro-flat_expr_dag</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 500), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>flat_expr_dag.slang <span style='font-weight:400;color:#888'>(509 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+[shader("compute")]
+[numthreads(64,1,1)]
+void computeMain(uint3 tid : SV_DispatchThreadID)
+{
+    float3 n0 = float3(outBuf[tid.x], outBuf[tid.x] + 1.0, outBuf[tid.x] + 2.0);
+    float3 n1 = n0 * 1.0009 + float3(0.1, 0.2, 0.3);
+    float3 n2 = n1 - n0 + float3(2.0, 2.0, 2.0) * 0.01;
+    float3 n3 = n2 * n0 + float3(3.0, 3.0, 3.0) * 0.01;
+    float3 n4 = n3 + n0 + float3(4.0, 4.0, 4.0) * 0.01;
+    float3 n5 = n4 - n2 + float3(5.0, 5.0, 5.0) * 0.01;
+    float3 n6 = n5 * n2 + float3(6.0, 6.0, 6.0) * 0.01;
+    float3 n7 = n6 + n2 + float3(7.0, 0.0, 7.0) * 0.01;
+    float3 n8 = n7 - n2 + float3(8.0, 1.0, 8.0) * 0.01;
+    float3 n9 = n8 * n2 + float3(9.0, 2.0, 9.0) * 0.01;
+    float3 n10 = n9 + n7 + float3(10.0, 3.0, 10.0) * 0.01;
+    float3 n11 = n10 - n7 + float3(11.0, 4.0, 0.0) * 0.01;
+    float3 n12 = n11 * n7 + float3(12.0, 5.0, 1.0) * 0.01;
+    float3 n13 = n12 + n7 + float3(0.0, 6.0, 2.0) * 0.01;
+    float3 n14 = n13 - n7 + float3(1.0, 0.0, 3.0) * 0.01;
+    float3 n15 = n14 * n12 + float3(2.0, 1.0, 4.0) * 0.01;
+    float3 n16 = n15 + n12 + float3(3.0, 2.0, 5.0) * 0.01;
+    float3 n17 = n16 - n12 + float3(4.0, 3.0, 6.0) * 0.01;
+    float3 n18 = n17 * n12 + float3(5.0, 4.0, 7.0) * 0.01;
+    float3 n19 = n18 + n12 + float3(6.0, 5.0, 8.0) * 0.01;
+    float3 n20 = n19 - n17 + float3(7.0, 6.0, 9.0) * 0.01;
+    float3 n21 = n20 * n17 + float3(8.0, 0.0, 10.0) * 0.01;
+    float3 n22 = n21 + n17 + float3(9.0, 1.0, 0.0) * 0.01;
+    float3 n23 = n22 - n17 + float3(10.0, 2.0, 1.0) * 0.01;
+    float3 n24 = n23 * n17 + float3(11.0, 3.0, 2.0) * 0.01;
+    float3 n25 = n24 + n22 + float3(12.0, 4.0, 3.0) * 0.01;
+    float3 n26 = n25 - n22 + float3(0.0, 5.0, 4.0) * 0.01;
+    float3 n27 = n26 * n22 + float3(1.0, 6.0, 5.0) * 0.01;
+    float3 n28 = n27 + n22 + float3(2.0, 0.0, 6.0) * 0.01;
+    float3 n29 = n28 - n22 + float3(3.0, 1.0, 7.0) * 0.01;
+    float3 n30 = n29 * n27 + float3(4.0, 2.0, 8.0) * 0.01;
+    float3 n31 = n30 + n27 + float3(5.0, 3.0, 9.0) * 0.01;
+    float3 n32 = n31 - n27 + float3(6.0, 4.0, 10.0) * 0.01;
+    float3 n33 = n32 * n27 + float3(7.0, 5.0, 0.0) * 0.01;
+    float3 n34 = n33 + n27 + float3(8.0, 6.0, 1.0) * 0.01;
+    float3 n35 = n34 - n32 + float3(9.0, 0.0, 2.0) * 0.01;
+    float3 n36 = n35 * n32 + float3(10.0, 1.0, 3.0) * 0.01;
+    float3 n37 = n36 + n32 + float3(11.0, 2.0, 4.0) * 0.01;
+    float3 n38 = n37 - n32 + float3(12.0, 3.0, 5.0) * 0.01;
+    float3 n39 = n38 * n32 + float3(0.0, 4.0, 6.0) * 0.01;
+    float3 n40 = n39 + n37 + float3(1.0, 5.0, 7.0) * 0.01;
+    float3 n41 = n40 - n37 + float3(2.0, 6.0, 8.0) * 0.01;
+    float3 n42 = n41 * n37 + float3(3.0, 0.0, 9.0) * 0.01;
+    float3 n43 = n42 + n37 + float3(4.0, 1.0, 10.0) * 0.01;
+    float3 n44 = n43 - n37 + float3(5.0, 2.0, 0.0) * 0.01;
+    float3 n45 = n44 * n42 + float3(6.0, 3.0, 1.0) * 0.01;
+    float3 n46 = n45 + n42 + float3(7.0, 4.0, 2.0) * 0.01;
+    float3 n47 = n46 - n42 + float3(8.0, 5.0, 3.0) * 0.01;
+    float3 n48 = n47 * n42 + float3(9.0, 6.0, 4.0) * 0.01;
+    float3 n49 = n48 + n42 + float3(10.0, 0.0, 5.0) * 0.01;
+    float3 n50 = n49 - n47 + float3(11.0, 1.0, 6.0) * 0.01;
+    float3 n51 = n50 * n47 + float3(12.0, 2.0, 7.0) * 0.01;
+    float3 n52 = n51 + n47 + float3(0.0, 3.0, 8.0) * 0.01;
+    float3 n53 = n52 - n47 + float3(1.0, 4.0, 9.0) * 0.01;
+    float3 n54 = n53 * n47 + float3(2.0, 5.0, 10.0) * 0.01;
+    float3 n55 = n54 + n52 + float3(3.0, 6.0, 0.0) * 0.01;
+    float3 n56 = n55 - n52 + float3(4.0, 0.0, 1.0) * 0.01;
+    float3 n57 = n56 * n52 + float3(5.0, 1.0, 2.0) * 0.01;
+    float3 n58 = n57 + n52 + float3(6.0, 2.0, 3.0) * 0.01;
+    float3 n59 = n58 - n52 + float3(7.0, 3.0, 4.0) * 0.01;
+    float3 n60 = n59 * n57 + float3(8.0, 4.0, 5.0) * 0.01;
+    float3 n61 = n60 + n57 + float3(9.0, 5.0, 6.0) * 0.01;
+    float3 n62 = n61 - n57 + float3(10.0, 6.0, 7.0) * 0.01;
+    float3 n63 = n62 * n57 + float3(11.0, 0.0, 8.0) * 0.01;
+    float3 n64 = n63 + n57 + float3(12.0, 1.0, 9.0) * 0.01;
+    float3 n65 = n64 - n62 + float3(0.0, 2.0, 10.0) * 0.01;
+    float3 n66 = n65 * n62 + float3(1.0, 3.0, 0.0) * 0.01;
+    float3 n67 = n66 + n62 + float3(2.0, 4.0, 1.0) * 0.01;
+    float3 n68 = n67 - n62 + float3(3.0, 5.0, 2.0) * 0.01;
+    float3 n69 = n68 * n62 + float3(4.0, 6.0, 3.0) * 0.01;
+    float3 n70 = n69 + n67 + float3(5.0, 0.0, 4.0) * 0.01;
+    float3 n71 = n70 - n67 + float3(6.0, 1.0, 5.0) * 0.01;
+    float3 n72 = n71 * n67 + float3(7.0, 2.0, 6.0) * 0.01;
+    float3 n73 = n72 + n67 + float3(8.0, 3.0, 7.0) * 0.01;
+    float3 n74 = n73 - n67 + float3(9.0, 4.0, 8.0) * 0.01;
+    float3 n75 = n74 * n72 + float3(10.0, 5.0, 9.0) * 0.01;
+    float3 n76 = n75 + n72 + float3(11.0, 6.0, 10.0) * 0.01;
+    float3 n77 = n76 - n72 + float3(12.0, 0.0, 0.0) * 0.01;
+    float3 n78 = n77 * n72 + float3(0.0, 1.0, 1.0) * 0.01;
+    float3 n79 = n78 + n72 + float3(1.0, 2.0, 2.0) * 0.01;
+    float3 n80 = n79 - n77 + float3(2.0, 3.0, 3.0) * 0.01;
+    float3 n81 = n80 * n77 + float3(3.0, 4.0, 4.0) * 0.01;
+    float3 n82 = n81 + n77 + float3(4.0, 5.0, 5.0) * 0.01;
+    float3 n83 = n82 - n77 + float3(5.0, 6.0, 6.0) * 0.01;
+    float3 n84 = n83 * n77 + float3(6.0, 0.0, 7.0) * 0.01;
+    float3 n85 = n84 + n82 + float3(7.0, 1.0, 8.0) * 0.01;
+    float3 n86 = n85 - n82 + float3(8.0, 2.0, 9.0) * 0.01;
+    float3 n87 = n86 * n82 + float3(9.0, 3.0, 10.0) * 0.01;
+    float3 n88 = n87 + n82 + float3(10.0, 4.0, 0.0) * 0.01;
+    float3 n89 = n88 - n82 + float3(11.0, 5.0, 1.0) * 0.01;
+    float3 n90 = n89 * n87 + float3(12.0, 6.0, 2.0) * 0.01;
+    float3 n91 = n90 + n87 + float3(0.0, 0.0, 3.0) * 0.01;
+    float3 n92 = n91 - n87 + float3(1.0, 1.0, 4.0) * 0.01;
+    float3 n93 = n92 * n87 + float3(2.0, 2.0, 5.0) * 0.01;
+    float3 n94 = n93 + n87 + float3(3.0, 3.0, 6.0) * 0.01;
+    float3 n95 = n94 - n92 + float3(4.0, 4.0, 7.0) * 0.01;
+    float3 n96 = n95 * n92 + float3(5.0, 5.0, 8.0) * 0.01;
+    float3 n97 = n96 + n92 + float3(6.0, 6.0, 9.0) * 0.01;
+    float3 n98 = n97 - n92 + float3(7.0, 0.0, 10.0) * 0.01;
+    float3 n99 = n98 * n92 + float3(8.0, 1.0, 0.0) * 0.01;
+    float3 n100 = n99 + n97 + float3(9.0, 2.0, 1.0) * 0.01;
+    float3 n101 = n100 - n97 + float3(10.0, 3.0, 2.0) * 0.01;
+    float3 n102 = n101 * n97 + float3(11.0, 4.0, 3.0) * 0.01;
+    float3 n103 = n102 + n97 + float3(12.0, 5.0, 4.0) * 0.01;
+    float3 n104 = n103 - n97 + float3(0.0, 6.0, 5.0) * 0.01;
+    float3 n105 = n104 * n102 + float3(1.0, 0.0, 6.0) * 0.01;
+    float3 n106 = n105 + n102 + float3(2.0, 1.0, 7.0) * 0.01;
+    float3 n107 = n106 - n102 + float3(3.0, 2.0, 8.0) * 0.01;
+    float3 n108 = n107 * n102 + float3(4.0, 3.0, 9.0) * 0.01;
+    float3 n109 = n108 + n102 + float3(5.0, 4.0, 10.0) * 0.01;
+    float3 n110 = n109 - n107 + float3(6.0, 5.0, 0.0) * 0.01;
+    float3 n111 = n110 * n107 + float3(7.0, 6.0, 1.0) * 0.01;
+    float3 n112 = n111 + n107 + float3(8.0, 0.0, 2.0) * 0.01;
+    float3 n113 = n112 - n107 + float3(9.0, 1.0, 3.0) * 0.01;
+    float3 n114 = n113 * n107 + float3(10.0, 2.0, 4.0) * 0.01;
+    float3 n115 = n114 + n112 + float3(11.0, 3.0, 5.0) * 0.01;
+    float3 n116 = n115 - n112 + float3(12.0, 4.0, 6.0) * 0.01;
+    float3 n117 = n116 * n112 + float3(0.0, 5.0, 7.0) * 0.01;
+    float3 n118 = n117 + n112 + float3(1.0, 6.0, 8.0) * 0.01;
+    float3 n119 = n118 - n112 + float3(2.0, 0.0, 9.0) * 0.01;
+    float3 n120 = n119 * n117 + float3(3.0, 1.0, 10.0) * 0.01;
+    float3 n121 = n120 + n117 + float3(4.0, 2.0, 0.0) * 0.01;
+    float3 n122 = n121 - n117 + float3(5.0, 3.0, 1.0) * 0.01;
+    float3 n123 = n122 * n117 + float3(6.0, 4.0, 2.0) * 0.01;
+    float3 n124 = n123 + n117 + float3(7.0, 5.0, 3.0) * 0.01;
+    float3 n125 = n124 - n122 + float3(8.0, 6.0, 4.0) * 0.01;
+    float3 n126 = n125 * n122 + float3(9.0, 0.0, 5.0) * 0.01;
+    float3 n127 = n126 + n122 + float3(10.0, 1.0, 6.0) * 0.01;
+    float3 n128 = n127 - n122 + float3(11.0, 2.0, 7.0) * 0.01;
+    float3 n129 = n128 * n122 + float3(12.0, 3.0, 8.0) * 0.01;
+    float3 n130 = n129 + n127 + float3(0.0, 4.0, 9.0) * 0.01;
+    float3 n131 = n130 - n127 + float3(1.0, 5.0, 10.0) * 0.01;
+    float3 n132 = n131 * n127 + float3(2.0, 6.0, 0.0) * 0.01;
+    float3 n133 = n132 + n127 + float3(3.0, 0.0, 1.0) * 0.01;
+    float3 n134 = n133 - n127 + float3(4.0, 1.0, 2.0) * 0.01;
+    float3 n135 = n134 * n132 + float3(5.0, 2.0, 3.0) * 0.01;
+    float3 n136 = n135 + n132 + float3(6.0, 3.0, 4.0) * 0.01;
+    float3 n137 = n136 - n132 + float3(7.0, 4.0, 5.0) * 0.01;
+    float3 n138 = n137 * n132 + float3(8.0, 5.0, 6.0) * 0.01;
+    float3 n139 = n138 + n132 + float3(9.0, 6.0, 7.0) * 0.01;
+    float3 n140 = n139 - n137 + float3(10.0, 0.0, 8.0) * 0.01;
+    float3 n141 = n140 * n137 + float3(11.0, 1.0, 9.0) * 0.01;
+    float3 n142 = n141 + n137 + float3(12.0, 2.0, 10.0) * 0.01;
+    float3 n143 = n142 - n137 + float3(0.0, 3.0, 0.0) * 0.01;
+    float3 n144 = n143 * n137 + float3(1.0, 4.0, 1.0) * 0.01;
+    float3 n145 = n144 + n142 + float3(2.0, 5.0, 2.0) * 0.01;
+    float3 n146 = n145 - n142 + float3(3.0, 6.0, 3.0) * 0.01;
+    float3 n147 = n146 * n142 + float3(4.0, 0.0, 4.0) * 0.01;
+    float3 n148 = n147 + n142 + float3(5.0, 1.0, 5.0) * 0.01;
+    float3 n149 = n148 - n142 + float3(6.0, 2.0, 6.0) * 0.01;
+    float3 n150 = n149 * n147 + float3(7.0, 3.0, 7.0) * 0.01;
+    float3 n151 = n150 + n147 + float3(8.0, 4.0, 8.0) * 0.01;
+    float3 n152 = n151 - n147 + float3(9.0, 5.0, 9.0) * 0.01;
+    float3 n153 = n152 * n147 + float3(10.0, 6.0, 10.0) * 0.01;
+    float3 n154 = n153 + n147 + float3(11.0, 0.0, 0.0) * 0.01;
+    float3 n155 = n154 - n152 + float3(12.0, 1.0, 1.0) * 0.01;
+    float3 n156 = n155 * n152 + float3(0.0, 2.0, 2.0) * 0.01;
+    float3 n157 = n156 + n152 + float3(1.0, 3.0, 3.0) * 0.01;
+    float3 n158 = n157 - n152 + float3(2.0, 4.0, 4.0) * 0.01;
+    float3 n159 = n158 * n152 + float3(3.0, 5.0, 5.0) * 0.01;
+    float3 n160 = n159 + n157 + float3(4.0, 6.0, 6.0) * 0.01;
+    float3 n161 = n160 - n157 + float3(5.0, 0.0, 7.0) * 0.01;
+    float3 n162 = n161 * n157 + float3(6.0, 1.0, 8.0) * 0.01;
+    float3 n163 = n162 + n157 + float3(7.0, 2.0, 9.0) * 0.01;
+    float3 n164 = n163 - n157 + float3(8.0, 3.0, 10.0) * 0.01;
+    float3 n165 = n164 * n162 + float3(9.0, 4.0, 0.0) * 0.01;
+    float3 n166 = n165 + n162 + float3(10.0, 5.0, 1.0) * 0.01;
+    float3 n167 = n166 - n162 + float3(11.0, 6.0, 2.0) * 0.01;
+    float3 n168 = n167 * n162 + float3(12.0, 0.0, 3.0) * 0.01;
+    float3 n169 = n168 + n162 + float3(0.0, 1.0, 4.0) * 0.01;
+    float3 n170 = n169 - n167 + float3(1.0, 2.0, 5.0) * 0.01;
+    float3 n171 = n170 * n167 + float3(2.0, 3.0, 6.0) * 0.01;
+    float3 n172 = n171 + n167 + float3(3.0, 4.0, 7.0) * 0.01;
+    float3 n173 = n172 - n167 + float3(4.0, 5.0, 8.0) * 0.01;
+    float3 n174 = n173 * n167 + float3(5.0, 6.0, 9.0) * 0.01;
+    float3 n175 = n174 + n172 + float3(6.0, 0.0, 10.0) * 0.01;
+    float3 n176 = n175 - n172 + float3(7.0, 1.0, 0.0) * 0.01;
+    float3 n177 = n176 * n172 + float3(8.0, 2.0, 1.0) * 0.01;
+    float3 n178 = n177 + n172 + float3(9.0, 3.0, 2.0) * 0.01;
+    float3 n179 = n178 - n172 + float3(10.0, 4.0, 3.0) * 0.01;
+    float3 n180 = n179 * n177 + float3(11.0, 5.0, 4.0) * 0.01;
+    float3 n181 = n180 + n177 + float3(12.0, 6.0, 5.0) * 0.01;
+    float3 n182 = n181 - n177 + float3(0.0, 0.0, 6.0) * 0.01;
+    float3 n183 = n182 * n177 + float3(1.0, 1.0, 7.0) * 0.01;
+    float3 n184 = n183 + n177 + float3(2.0, 2.0, 8.0) * 0.01;
+    float3 n185 = n184 - n182 + float3(3.0, 3.0, 9.0) * 0.01;
+    float3 n186 = n185 * n182 + float3(4.0, 4.0, 10.0) * 0.01;
+    float3 n187 = n186 + n182 + float3(5.0, 5.0, 0.0) * 0.01;
+    float3 n188 = n187 - n182 + float3(6.0, 6.0, 1.0) * 0.01;
+    float3 n189 = n188 * n182 + float3(7.0, 0.0, 2.0) * 0.01;
+    float3 n190 = n189 + n187 + float3(8.0, 1.0, 3.0) * 0.01;
+    float3 n191 = n190 - n187 + float3(9.0, 2.0, 4.0) * 0.01;
+    float3 n192 = n191 * n187 + float3(10.0, 3.0, 5.0) * 0.01;
+    float3 n193 = n192 + n187 + float3(11.0, 4.0, 6.0) * 0.01;
+    float3 n194 = n193 - n187 + float3(12.0, 5.0, 7.0) * 0.01;
+    float3 n195 = n194 * n192 + float3(0.0, 6.0, 8.0) * 0.01;
+    float3 n196 = n195 + n192 + float3(1.0, 0.0, 9.0) * 0.01;
+    float3 n197 = n196 - n192 + float3(2.0, 1.0, 10.0) * 0.01;
+    float3 n198 = n197 * n192 + float3(3.0, 2.0, 0.0) * 0.01;
+    float3 n199 = n198 + n192 + float3(4.0, 3.0, 1.0) * 0.01;
+    float3 n200 = n199 - n197 + float3(5.0, 4.0, 2.0) * 0.01;
+    float3 n201 = n200 * n197 + float3(6.0, 5.0, 3.0) * 0.01;
+    float3 n202 = n201 + n197 + float3(7.0, 6.0, 4.0) * 0.01;
+    float3 n203 = n202 - n197 + float3(8.0, 0.0, 5.0) * 0.01;
+    float3 n204 = n203 * n197 + float3(9.0, 1.0, 6.0) * 0.01;
+    float3 n205 = n204 + n202 + float3(10.0, 2.0, 7.0) * 0.01;
+    float3 n206 = n205 - n202 + float3(11.0, 3.0, 8.0) * 0.01;
+    float3 n207 = n206 * n202 + float3(12.0, 4.0, 9.0) * 0.01;
+    float3 n208 = n207 + n202 + float3(0.0, 5.0, 10.0) * 0.01;
+    float3 n209 = n208 - n202 + float3(1.0, 6.0, 0.0) * 0.01;
+    float3 n210 = n209 * n207 + float3(2.0, 0.0, 1.0) * 0.01;
+    float3 n211 = n210 + n207 + float3(3.0, 1.0, 2.0) * 0.01;
+    float3 n212 = n211 - n207 + float3(4.0, 2.0, 3.0) * 0.01;
+    float3 n213 = n212 * n207 + float3(5.0, 3.0, 4.0) * 0.01;
+    float3 n214 = n213 + n207 + float3(6.0, 4.0, 5.0) * 0.01;
+    float3 n215 = n214 - n212 + float3(7.0, 5.0, 6.0) * 0.01;
+    float3 n216 = n215 * n212 + float3(8.0, 6.0, 7.0) * 0.01;
+    float3 n217 = n216 + n212 + float3(9.0, 0.0, 8.0) * 0.01;
+    float3 n218 = n217 - n212 + float3(10.0, 1.0, 9.0) * 0.01;
+    float3 n219 = n218 * n212 + float3(11.0, 2.0, 10.0) * 0.01;
+    float3 n220 = n219 + n217 + float3(12.0, 3.0, 0.0) * 0.01;
+    float3 n221 = n220 - n217 + float3(0.0, 4.0, 1.0) * 0.01;
+    float3 n222 = n221 * n217 + float3(1.0, 5.0, 2.0) * 0.01;
+    float3 n223 = n222 + n217 + float3(2.0, 6.0, 3.0) * 0.01;
+    float3 n224 = n223 - n217 + float3(3.0, 0.0, 4.0) * 0.01;
+    float3 n225 = n224 * n222 + float3(4.0, 1.0, 5.0) * 0.01;
+    float3 n226 = n225 + n222 + float3(5.0, 2.0, 6.0) * 0.01;
+    float3 n227 = n226 - n222 + float3(6.0, 3.0, 7.0) * 0.01;
+    float3 n228 = n227 * n222 + float3(7.0, 4.0, 8.0) * 0.01;
+    float3 n229 = n228 + n222 + float3(8.0, 5.0, 9.0) * 0.01;
+    float3 n230 = n229 - n227 + float3(9.0, 6.0, 10.0) * 0.01;
+    float3 n231 = n230 * n227 + float3(10.0, 0.0, 0.0) * 0.01;
+    float3 n232 = n231 + n227 + float3(11.0, 1.0, 1.0) * 0.01;
+    float3 n233 = n232 - n227 + float3(12.0, 2.0, 2.0) * 0.01;
+    float3 n234 = n233 * n227 + float3(0.0, 3.0, 3.0) * 0.01;
+    float3 n235 = n234 + n232 + float3(1.0, 4.0, 4.0) * 0.01;
+    float3 n236 = n235 - n232 + float3(2.0, 5.0, 5.0) * 0.01;
+    float3 n237 = n236 * n232 + float3(3.0, 6.0, 6.0) * 0.01;
+    float3 n238 = n237 + n232 + float3(4.0, 0.0, 7.0) * 0.01;
+    float3 n239 = n238 - n232 + float3(5.0, 1.0, 8.0) * 0.01;
+    float3 n240 = n239 * n237 + float3(6.0, 2.0, 9.0) * 0.01;
+    float3 n241 = n240 + n237 + float3(7.0, 3.0, 10.0) * 0.01;
+    float3 n242 = n241 - n237 + float3(8.0, 4.0, 0.0) * 0.01;
+    float3 n243 = n242 * n237 + float3(9.0, 5.0, 1.0) * 0.01;
+    float3 n244 = n243 + n237 + float3(10.0, 6.0, 2.0) * 0.01;
+    float3 n245 = n244 - n242 + float3(11.0, 0.0, 3.0) * 0.01;
+    float3 n246 = n245 * n242 + float3(12.0, 1.0, 4.0) * 0.01;
+    float3 n247 = n246 + n242 + float3(0.0, 2.0, 5.0) * 0.01;
+    float3 n248 = n247 - n242 + float3(1.0, 3.0, 6.0) * 0.01;
+    float3 n249 = n248 * n242 + float3(2.0, 4.0, 7.0) * 0.01;
+    float3 n250 = n249 + n247 + float3(3.0, 5.0, 8.0) * 0.01;
+    float3 n251 = n250 - n247 + float3(4.0, 6.0, 9.0) * 0.01;
+    float3 n252 = n251 * n247 + float3(5.0, 0.0, 10.0) * 0.01;
+    float3 n253 = n252 + n247 + float3(6.0, 1.0, 0.0) * 0.01;
+    float3 n254 = n253 - n247 + float3(7.0, 2.0, 1.0) * 0.01;
+    float3 n255 = n254 * n252 + float3(8.0, 3.0, 2.0) * 0.01;
+    float3 n256 = n255 + n252 + float3(9.0, 4.0, 3.0) * 0.01;
+    float3 n257 = n256 - n252 + float3(10.0, 5.0, 4.0) * 0.01;
+    float3 n258 = n257 * n252 + float3(11.0, 6.0, 5.0) * 0.01;
+    float3 n259 = n258 + n252 + float3(12.0, 0.0, 6.0) * 0.01;
+    float3 n260 = n259 - n257 + float3(0.0, 1.0, 7.0) * 0.01;
+    float3 n261 = n260 * n257 + float3(1.0, 2.0, 8.0) * 0.01;
+    float3 n262 = n261 + n257 + float3(2.0, 3.0, 9.0) * 0.01;
+    float3 n263 = n262 - n257 + float3(3.0, 4.0, 10.0) * 0.01;
+    float3 n264 = n263 * n257 + float3(4.0, 5.0, 0.0) * 0.01;
+    float3 n265 = n264 + n262 + float3(5.0, 6.0, 1.0) * 0.01;
+    float3 n266 = n265 - n262 + float3(6.0, 0.0, 2.0) * 0.01;
+    float3 n267 = n266 * n262 + float3(7.0, 1.0, 3.0) * 0.01;
+    float3 n268 = n267 + n262 + float3(8.0, 2.0, 4.0) * 0.01;
+    float3 n269 = n268 - n262 + float3(9.0, 3.0, 5.0) * 0.01;
+    float3 n270 = n269 * n267 + float3(10.0, 4.0, 6.0) * 0.01;
+    float3 n271 = n270 + n267 + float3(11.0, 5.0, 7.0) * 0.01;
+    float3 n272 = n271 - n267 + float3(12.0, 6.0, 8.0) * 0.01;
+    float3 n273 = n272 * n267 + float3(0.0, 0.0, 9.0) * 0.01;
+    float3 n274 = n273 + n267 + float3(1.0, 1.0, 10.0) * 0.01;
+    float3 n275 = n274 - n272 + float3(2.0, 2.0, 0.0) * 0.01;
+    float3 n276 = n275 * n272 + float3(3.0, 3.0, 1.0) * 0.01;
+    float3 n277 = n276 + n272 + float3(4.0, 4.0, 2.0) * 0.01;
+    float3 n278 = n277 - n272 + float3(5.0, 5.0, 3.0) * 0.01;
+    float3 n279 = n278 * n272 + float3(6.0, 6.0, 4.0) * 0.01;
+    float3 n280 = n279 + n277 + float3(7.0, 0.0, 5.0) * 0.01;
+    float3 n281 = n280 - n277 + float3(8.0, 1.0, 6.0) * 0.01;
+    float3 n282 = n281 * n277 + float3(9.0, 2.0, 7.0) * 0.01;
+    float3 n283 = n282 + n277 + float3(10.0, 3.0, 8.0) * 0.01;
+    float3 n284 = n283 - n277 + float3(11.0, 4.0, 9.0) * 0.01;
+    float3 n285 = n284 * n282 + float3(12.0, 5.0, 10.0) * 0.01;
+    float3 n286 = n285 + n282 + float3(0.0, 6.0, 0.0) * 0.01;
+    float3 n287 = n286 - n282 + float3(1.0, 0.0, 1.0) * 0.01;
+    float3 n288 = n287 * n282 + float3(2.0, 1.0, 2.0) * 0.01;
+    float3 n289 = n288 + n282 + float3(3.0, 2.0, 3.0) * 0.01;
+    float3 n290 = n289 - n287 + float3(4.0, 3.0, 4.0) * 0.01;
+    float3 n291 = n290 * n287 + float3(5.0, 4.0, 5.0) * 0.01;
+    float3 n292 = n291 + n287 + float3(6.0, 5.0, 6.0) * 0.01;
+    float3 n293 = n292 - n287 + float3(7.0, 6.0, 7.0) * 0.01;
+    float3 n294 = n293 * n287 + float3(8.0, 0.0, 8.0) * 0.01;
+    float3 n295 = n294 + n292 + float3(9.0, 1.0, 9.0) * 0.01;
+    float3 n296 = n295 - n292 + float3(10.0, 2.0, 10.0) * 0.01;
+    float3 n297 = n296 * n292 + float3(11.0, 3.0, 0.0) * 0.01;
+    float3 n298 = n297 + n292 + float3(12.0, 4.0, 1.0) * 0.01;
+    float3 n299 = n298 - n292 + float3(0.0, 5.0, 2.0) * 0.01;
+    float3 n300 = n299 * n297 + float3(1.0, 6.0, 3.0) * 0.01;
+    float3 n301 = n300 + n297 + float3(2.0, 0.0, 4.0) * 0.01;
+    float3 n302 = n301 - n297 + float3(3.0, 1.0, 5.0) * 0.01;
+    float3 n303 = n302 * n297 + float3(4.0, 2.0, 6.0) * 0.01;
+    float3 n304 = n303 + n297 + float3(5.0, 3.0, 7.0) * 0.01;
+    float3 n305 = n304 - n302 + float3(6.0, 4.0, 8.0) * 0.01;
+    float3 n306 = n305 * n302 + float3(7.0, 5.0, 9.0) * 0.01;
+    float3 n307 = n306 + n302 + float3(8.0, 6.0, 10.0) * 0.01;
+    float3 n308 = n307 - n302 + float3(9.0, 0.0, 0.0) * 0.01;
+    float3 n309 = n308 * n302 + float3(10.0, 1.0, 1.0) * 0.01;
+    float3 n310 = n309 + n307 + float3(11.0, 2.0, 2.0) * 0.01;
+    float3 n311 = n310 - n307 + float3(12.0, 3.0, 3.0) * 0.01;
+    float3 n312 = n311 * n307 + float3(0.0, 4.0, 4.0) * 0.01;
+    float3 n313 = n312 + n307 + float3(1.0, 5.0, 5.0) * 0.01;
+    float3 n314 = n313 - n307 + float3(2.0, 6.0, 6.0) * 0.01;
+    float3 n315 = n314 * n312 + float3(3.0, 0.0, 7.0) * 0.01;
+    float3 n316 = n315 + n312 + float3(4.0, 1.0, 8.0) * 0.01;
+    float3 n317 = n316 - n312 + float3(5.0, 2.0, 9.0) * 0.01;
+    float3 n318 = n317 * n312 + float3(6.0, 3.0, 10.0) * 0.01;
+    float3 n319 = n318 + n312 + float3(7.0, 4.0, 0.0) * 0.01;
+    float3 n320 = n319 - n317 + float3(8.0, 5.0, 1.0) * 0.01;
+    float3 n321 = n320 * n317 + float3(9.0, 6.0, 2.0) * 0.01;
+    float3 n322 = n321 + n317 + float3(10.0, 0.0, 3.0) * 0.01;
+    float3 n323 = n322 - n317 + float3(11.0, 1.0, 4.0) * 0.01;
+    float3 n324 = n323 * n317 + float3(12.0, 2.0, 5.0) * 0.01;
+    float3 n325 = n324 + n322 + float3(0.0, 3.0, 6.0) * 0.01;
+    float3 n326 = n325 - n322 + float3(1.0, 4.0, 7.0) * 0.01;
+    float3 n327 = n326 * n322 + float3(2.0, 5.0, 8.0) * 0.01;
+    float3 n328 = n327 + n322 + float3(3.0, 6.0, 9.0) * 0.01;
+    float3 n329 = n328 - n322 + float3(4.0, 0.0, 10.0) * 0.01;
+    float3 n330 = n329 * n327 + float3(5.0, 1.0, 0.0) * 0.01;
+    float3 n331 = n330 + n327 + float3(6.0, 2.0, 1.0) * 0.01;
+    float3 n332 = n331 - n327 + float3(7.0, 3.0, 2.0) * 0.01;
+    float3 n333 = n332 * n327 + float3(8.0, 4.0, 3.0) * 0.01;
+    float3 n334 = n333 + n327 + float3(9.0, 5.0, 4.0) * 0.01;
+    float3 n335 = n334 - n332 + float3(10.0, 6.0, 5.0) * 0.01;
+    float3 n336 = n335 * n332 + float3(11.0, 0.0, 6.0) * 0.01;
+    float3 n337 = n336 + n332 + float3(12.0, 1.0, 7.0) * 0.01;
+    float3 n338 = n337 - n332 + float3(0.0, 2.0, 8.0) * 0.01;
+    float3 n339 = n338 * n332 + float3(1.0, 3.0, 9.0) * 0.01;
+    float3 n340 = n339 + n337 + float3(2.0, 4.0, 10.0) * 0.01;
+    float3 n341 = n340 - n337 + float3(3.0, 5.0, 0.0) * 0.01;
+    float3 n342 = n341 * n337 + float3(4.0, 6.0, 1.0) * 0.01;
+    float3 n343 = n342 + n337 + float3(5.0, 0.0, 2.0) * 0.01;
+    float3 n344 = n343 - n337 + float3(6.0, 1.0, 3.0) * 0.01;
+    float3 n345 = n344 * n342 + float3(7.0, 2.0, 4.0) * 0.01;
+    float3 n346 = n345 + n342 + float3(8.0, 3.0, 5.0) * 0.01;
+    float3 n347 = n346 - n342 + float3(9.0, 4.0, 6.0) * 0.01;
+    float3 n348 = n347 * n342 + float3(10.0, 5.0, 7.0) * 0.01;
+    float3 n349 = n348 + n342 + float3(11.0, 6.0, 8.0) * 0.01;
+    float3 n350 = n349 - n347 + float3(12.0, 0.0, 9.0) * 0.01;
+    float3 n351 = n350 * n347 + float3(0.0, 1.0, 10.0) * 0.01;
+    float3 n352 = n351 + n347 + float3(1.0, 2.0, 0.0) * 0.01;
+    float3 n353 = n352 - n347 + float3(2.0, 3.0, 1.0) * 0.01;
+    float3 n354 = n353 * n347 + float3(3.0, 4.0, 2.0) * 0.01;
+    float3 n355 = n354 + n352 + float3(4.0, 5.0, 3.0) * 0.01;
+    float3 n356 = n355 - n352 + float3(5.0, 6.0, 4.0) * 0.01;
+    float3 n357 = n356 * n352 + float3(6.0, 0.0, 5.0) * 0.01;
+    float3 n358 = n357 + n352 + float3(7.0, 1.0, 6.0) * 0.01;
+    float3 n359 = n358 - n352 + float3(8.0, 2.0, 7.0) * 0.01;
+    float3 n360 = n359 * n357 + float3(9.0, 3.0, 8.0) * 0.01;
+    float3 n361 = n360 + n357 + float3(10.0, 4.0, 9.0) * 0.01;
+    float3 n362 = n361 - n357 + float3(11.0, 5.0, 10.0) * 0.01;
+    float3 n363 = n362 * n357 + float3(12.0, 6.0, 0.0) * 0.01;
+    float3 n364 = n363 + n357 + float3(0.0, 0.0, 1.0) * 0.01;
+    float3 n365 = n364 - n362 + float3(1.0, 1.0, 2.0) * 0.01;
+    float3 n366 = n365 * n362 + float3(2.0, 2.0, 3.0) * 0.01;
+    float3 n367 = n366 + n362 + float3(3.0, 3.0, 4.0) * 0.01;
+    float3 n368 = n367 - n362 + float3(4.0, 4.0, 5.0) * 0.01;
+    float3 n369 = n368 * n362 + float3(5.0, 5.0, 6.0) * 0.01;
+    float3 n370 = n369 + n367 + float3(6.0, 6.0, 7.0) * 0.01;
+    float3 n371 = n370 - n367 + float3(7.0, 0.0, 8.0) * 0.01;
+    float3 n372 = n371 * n367 + float3(8.0, 1.0, 9.0) * 0.01;
+    float3 n373 = n372 + n367 + float3(9.0, 2.0, 10.0) * 0.01;
+    float3 n374 = n373 - n367 + float3(10.0, 3.0, 0.0) * 0.01;
+    float3 n375 = n374 * n372 + float3(11.0, 4.0, 1.0) * 0.01;
+    float3 n376 = n375 + n372 + float3(12.0, 5.0, 2.0) * 0.01;
+    float3 n377 = n376 - n372 + float3(0.0, 6.0, 3.0) * 0.01;
+    float3 n378 = n377 * n372 + float3(1.0, 0.0, 4.0) * 0.01;
+    float3 n379 = n378 + n372 + float3(2.0, 1.0, 5.0) * 0.01;
+    float3 n380 = n379 - n377 + float3(3.0, 2.0, 6.0) * 0.01;
+    float3 n381 = n380 * n377 + float3(4.0, 3.0, 7.0) * 0.01;
+    float3 n382 = n381 + n377 + float3(5.0, 4.0, 8.0) * 0.01;
+    float3 n383 = n382 - n377 + float3(6.0, 5.0, 9.0) * 0.01;
+    float3 n384 = n383 * n377 + float3(7.0, 6.0, 10.0) * 0.01;
+    float3 n385 = n384 + n382 + float3(8.0, 0.0, 0.0) * 0.01;
+    float3 n386 = n385 - n382 + float3(9.0, 1.0, 1.0) * 0.01;
+    float3 n387 = n386 * n382 + float3(10.0, 2.0, 2.0) * 0.01;
+    float3 n388 = n387 + n382 + float3(11.0, 3.0, 3.0) * 0.01;
+    float3 n389 = n388 - n382 + float3(12.0, 4.0, 4.0) * 0.01;
+    float3 n390 = n389 * n387 + float3(0.0, 5.0, 5.0) * 0.01;
+    float3 n391 = n390 + n387 + float3(1.0, 6.0, 6.0) * 0.01;
+    float3 n392 = n391 - n387 + float3(2.0, 0.0, 7.0) * 0.01;
+    float3 n393 = n392 * n387 + float3(3.0, 1.0, 8.0) * 0.01;
+    float3 n394 = n393 + n387 + float3(4.0, 2.0, 9.0) * 0.01;
+    float3 n395 = n394 - n392 + float3(5.0, 3.0, 10.0) * 0.01;
+    float3 n396 = n395 * n392 + float3(6.0, 4.0, 0.0) * 0.01;
+    float3 n397 = n396 + n392 + float3(7.0, 5.0, 1.0) * 0.01;
+    float3 n398 = n397 - n392 + float3(8.0, 6.0, 2.0) * 0.01;
+    float3 n399 = n398 * n392 + float3(9.0, 0.0, 3.0) * 0.01;
+    float3 n400 = n399 + n397 + float3(10.0, 1.0, 4.0) * 0.01;
+    float3 n401 = n400 - n397 + float3(11.0, 2.0, 5.0) * 0.01;
+    float3 n402 = n401 * n397 + float3(12.0, 3.0, 6.0) * 0.01;
+    float3 n403 = n402 + n397 + float3(0.0, 4.0, 7.0) * 0.01;
+    float3 n404 = n403 - n397 + float3(1.0, 5.0, 8.0) * 0.01;
+    float3 n405 = n404 * n402 + float3(2.0, 6.0, 9.0) * 0.01;
+    float3 n406 = n405 + n402 + float3(3.0, 0.0, 10.0) * 0.01;
+    float3 n407 = n406 - n402 + float3(4.0, 1.0, 0.0) * 0.01;
+    float3 n408 = n407 * n402 + float3(5.0, 2.0, 1.0) * 0.01;
+    float3 n409 = n408 + n402 + float3(6.0, 3.0, 2.0) * 0.01;
+    float3 n410 = n409 - n407 + float3(7.0, 4.0, 3.0) * 0.01;
+    float3 n411 = n410 * n407 + float3(8.0, 5.0, 4.0) * 0.01;
+    float3 n412 = n411 + n407 + float3(9.0, 6.0, 5.0) * 0.01;
+    float3 n413 = n412 - n407 + float3(10.0, 0.0, 6.0) * 0.01;
+    float3 n414 = n413 * n407 + float3(11.0, 1.0, 7.0) * 0.01;
+    float3 n415 = n414 + n412 + float3(12.0, 2.0, 8.0) * 0.01;
+    float3 n416 = n415 - n412 + float3(0.0, 3.0, 9.0) * 0.01;
+    float3 n417 = n416 * n412 + float3(1.0, 4.0, 10.0) * 0.01;
+    float3 n418 = n417 + n412 + float3(2.0, 5.0, 0.0) * 0.01;
+    float3 n419 = n418 - n412 + float3(3.0, 6.0, 1.0) * 0.01;
+    float3 n420 = n419 * n417 + float3(4.0, 0.0, 2.0) * 0.01;
+    float3 n421 = n420 + n417 + float3(5.0, 1.0, 3.0) * 0.01;
+    float3 n422 = n421 - n417 + float3(6.0, 2.0, 4.0) * 0.01;
+    float3 n423 = n422 * n417 + float3(7.0, 3.0, 5.0) * 0.01;
+    float3 n424 = n423 + n417 + float3(8.0, 4.0, 6.0) * 0.01;
+    float3 n425 = n424 - n422 + float3(9.0, 5.0, 7.0) * 0.01;
+    float3 n426 = n425 * n422 + float3(10.0, 6.0, 8.0) * 0.01;
+    float3 n427 = n426 + n422 + float3(11.0, 0.0, 9.0) * 0.01;
+    float3 n428 = n427 - n422 + float3(12.0, 1.0, 10.0) * 0.01;
+    float3 n429 = n428 * n422 + float3(0.0, 2.0, 0.0) * 0.01;
+    float3 n430 = n429 + n427 + float3(1.0, 3.0, 1.0) * 0.01;
+    float3 n431 = n430 - n427 + float3(2.0, 4.0, 2.0) * 0.01;
+    float3 n432 = n431 * n427 + float3(3.0, 5.0, 3.0) * 0.01;
+    float3 n433 = n432 + n427 + float3(4.0, 6.0, 4.0) * 0.01;
+    float3 n434 = n433 - n427 + float3(5.0, 0.0, 5.0) * 0.01;
+    float3 n435 = n434 * n432 + float3(6.0, 1.0, 6.0) * 0.01;
+    float3 n436 = n435 + n432 + float3(7.0, 2.0, 7.0) * 0.01;
+    float3 n437 = n436 - n432 + float3(8.0, 3.0, 8.0) * 0.01;
+    float3 n438 = n437 * n432 + float3(9.0, 4.0, 9.0) * 0.01;
+    float3 n439 = n438 + n432 + float3(10.0, 5.0, 10.0) * 0.01;
+    float3 n440 = n439 - n437 + float3(11.0, 6.0, 0.0) * 0.01;
+    float3 n441 = n440 * n437 + float3(12.0, 0.0, 1.0) * 0.01;
+    float3 n442 = n441 + n437 + float3(0.0, 1.0, 2.0) * 0.01;
+    float3 n443 = n442 - n437 + float3(1.0, 2.0, 3.0) * 0.01;
+    float3 n444 = n443 * n437 + float3(2.0, 3.0, 4.0) * 0.01;
+    float3 n445 = n444 + n442 + float3(3.0, 4.0, 5.0) * 0.01;
+    float3 n446 = n445 - n442 + float3(4.0, 5.0, 6.0) * 0.01;
+    float3 n447 = n446 * n442 + float3(5.0, 6.0, 7.0) * 0.01;
+    float3 n448 = n447 + n442 + float3(6.0, 0.0, 8.0) * 0.01;
+    float3 n449 = n448 - n442 + float3(7.0, 1.0, 9.0) * 0.01;
+    float3 n450 = n449 * n447 + float3(8.0, 2.0, 10.0) * 0.01;
+    float3 n451 = n450 + n447 + float3(9.0, 3.0, 0.0) * 0.01;
+    float3 n452 = n451 - n447 + float3(10.0, 4.0, 1.0) * 0.01;
+    float3 n453 = n452 * n447 + float3(11.0, 5.0, 2.0) * 0.01;
+    float3 n454 = n453 + n447 + float3(12.0, 6.0, 3.0) * 0.01;
+    float3 n455 = n454 - n452 + float3(0.0, 0.0, 4.0) * 0.01;
+    float3 n456 = n455 * n452 + float3(1.0, 1.0, 5.0) * 0.01;
+    float3 n457 = n456 + n452 + float3(2.0, 2.0, 6.0) * 0.01;
+    float3 n458 = n457 - n452 + float3(3.0, 3.0, 7.0) * 0.01;
+    float3 n459 = n458 * n452 + float3(4.0, 4.0, 8.0) * 0.01;
+    float3 n460 = n459 + n457 + float3(5.0, 5.0, 9.0) * 0.01;
+    float3 n461 = n460 - n457 + float3(6.0, 6.0, 10.0) * 0.01;
+    float3 n462 = n461 * n457 + float3(7.0, 0.0, 0.0) * 0.01;
+    float3 n463 = n462 + n457 + float3(8.0, 1.0, 1.0) * 0.01;
+    float3 n464 = n463 - n457 + float3(9.0, 2.0, 2.0) * 0.01;
+    float3 n465 = n464 * n462 + float3(10.0, 3.0, 3.0) * 0.01;
+    float3 n466 = n465 + n462 + float3(11.0, 4.0, 4.0) * 0.01;
+    float3 n467 = n466 - n462 + float3(12.0, 5.0, 5.0) * 0.01;
+    float3 n468 = n467 * n462 + float3(0.0, 6.0, 6.0) * 0.01;
+    float3 n469 = n468 + n462 + float3(1.0, 0.0, 7.0) * 0.01;
+    float3 n470 = n469 - n467 + float3(2.0, 1.0, 8.0) * 0.01;
+    float3 n471 = n470 * n467 + float3(3.0, 2.0, 9.0) * 0.01;
+    float3 n472 = n471 + n467 + float3(4.0, 3.0, 10.0) * 0.01;
+    float3 n473 = n472 - n467 + float3(5.0, 4.0, 0.0) * 0.01;
+    float3 n474 = n473 * n467 + float3(6.0, 5.0, 1.0) * 0.01;
+    float3 n475 = n474 + n472 + float3(7.0, 6.0, 2.0) * 0.01;
+    float3 n476 = n475 - n472 + float3(8.0, 0.0, 3.0) * 0.01;
+    float3 n477 = n476 * n472 + float3(9.0, 1.0, 4.0) * 0.01;
+    float3 n478 = n477 + n472 + float3(10.0, 2.0, 5.0) * 0.01;
+    float3 n479 = n478 - n472 + float3(11.0, 3.0, 6.0) * 0.01;
+    float3 n480 = n479 * n477 + float3(12.0, 4.0, 7.0) * 0.01;
+    float3 n481 = n480 + n477 + float3(0.0, 5.0, 8.0) * 0.01;
+    float3 n482 = n481 - n477 + float3(1.0, 6.0, 9.0) * 0.01;
+    float3 n483 = n482 * n477 + float3(2.0, 0.0, 10.0) * 0.01;
+    float3 n484 = n483 + n477 + float3(3.0, 1.0, 0.0) * 0.01;
+    float3 n485 = n484 - n482 + float3(4.0, 2.0, 1.0) * 0.01;
+    float3 n486 = n485 * n482 + float3(5.0, 3.0, 2.0) * 0.01;
+    float3 n487 = n486 + n482 + float3(6.0, 4.0, 3.0) * 0.01;
+    float3 n488 = n487 - n482 + float3(7.0, 5.0, 4.0) * 0.01;
+    float3 n489 = n488 * n482 + float3(8.0, 6.0, 5.0) * 0.01;
+    float3 n490 = n489 + n487 + float3(9.0, 0.0, 6.0) * 0.01;
+    float3 n491 = n490 - n487 + float3(10.0, 1.0, 7.0) * 0.01;
+    float3 n492 = n491 * n487 + float3(11.0, 2.0, 8.0) * 0.01;
+    float3 n493 = n492 + n487 + float3(12.0, 3.0, 9.0) * 0.01;
+    float3 n494 = n493 - n487 + float3(0.0, 4.0, 10.0) * 0.01;
+    float3 n495 = n494 * n492 + float3(1.0, 5.0, 0.0) * 0.01;
+    float3 n496 = n495 + n492 + float3(2.0, 6.0, 1.0) * 0.01;
+    float3 n497 = n496 - n492 + float3(3.0, 0.0, 2.0) * 0.01;
+    float3 n498 = n497 * n492 + float3(4.0, 1.0, 3.0) * 0.01;
+    float3 n499 = n498 + n492 + float3(5.0, 2.0, 4.0) * 0.01;
+    outBuf[tid.x] = n499.x + n499.y + n499.z;
+}
+</pre></div><script>
+document.addEventListener('click', function (ev) {
+  var btn = ev.target.closest && ev.target.closest('button.copy');
+  if (!btn) return;
+  var el = document.getElementById(btn.getAttribute('data-copy'));
+  if (!el) return;
+  var text = el.textContent;
+  function flash(ok) {
+    btn.textContent = ok ? 'Copied' : 'Press Ctrl+C';
+    if (ok) btn.setAttribute('data-done', '1');
+    setTimeout(function () {
+      btn.textContent = 'Copy'; btn.removeAttribute('data-done');
+    }, 1400);
+  }
+  function fallback() {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta); flash(ok);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () { flash(true); }, fallback);
+  } else {
+    fallback();
+  }
+});
+</script></body>

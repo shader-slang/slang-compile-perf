@@ -1,0 +1,646 @@
+<!doctype html><meta charset=utf-8><title>vector_matrix_overload_set — phase breakdown</title><style>
+.cbox{position:relative}
+.cbox>button.copy{position:absolute;top:8px;right:8px;z-index:1;
+  font:11px/1 -apple-system,Segoe UI,Roboto,sans-serif;padding:5px 9px;
+  color:#24292f;background:#fff;border:1px solid #d0d7de;border-radius:5px;
+  cursor:pointer;opacity:.75}
+.cbox>button.copy:hover{opacity:1;background:#f3f4f6}
+.cbox>button.copy[data-done]{color:#1a7f37;border-color:#1a7f37}
+</style><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; back</a></p><h1 style='font-size:21px;margin:0 0 6px'>vector_matrix_overload_set</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>A user-defined function name (`mx_mix`, mirroring MaterialX's own
+`mx_matrix_mul`/`mx_square`/etc. naming) overloaded across float, float2,
+float3, float4, float3x3 and float4x4 -- 6 overloads including MATRIX
+types, which `overload_resolution` does not cover (its fixed 12-candidate
+`pick`/`pick2` set spans scalar + vector only). `n` call sites rotate
+through all 6 argument types so every call re-ranks the full
+scalar/vector/matrix candidate set, isolating overload resolution's cost
+specifically when matrix types are in the candidate pool (a materially
+larger per-candidate conversion-rank computation than scalar/vector).
+
+Scaling null: n scales call sites against a FIXED 6-overload candidate set;
+ideal resolution cost is O(n).</p><p style='color:#666;font-size:13px'><b>bucket:</b> typecheck &nbsp;·&nbsp; <b>compile mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 200</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="716" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">vector_matrix_overload_set — Daily tip-of-tree (last 30 days) (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">vector_matrix_overload_set<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">13</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">26</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">08-21</text>
+<line x1="103.9" y1="516.0" x2="103.9" y2="519.0" stroke="#999"/>
+<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">08-22</text>
+<line x1="139.7" y1="516.0" x2="139.7" y2="519.0" stroke="#999"/>
+<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">08-23</text>
+<line x1="175.6" y1="516.0" x2="175.6" y2="519.0" stroke="#999"/>
+<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">08-24</text>
+<line x1="211.4" y1="516.0" x2="211.4" y2="519.0" stroke="#999"/>
+<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">08-25</text>
+<line x1="247.3" y1="516.0" x2="247.3" y2="519.0" stroke="#999"/>
+<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">08-26</text>
+<line x1="283.2" y1="516.0" x2="283.2" y2="519.0" stroke="#999"/>
+<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">08-27</text>
+<line x1="319.0" y1="516.0" x2="319.0" y2="519.0" stroke="#999"/>
+<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">08-28</text>
+<line x1="354.9" y1="516.0" x2="354.9" y2="519.0" stroke="#999"/>
+<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">08-29</text>
+<line x1="390.8" y1="516.0" x2="390.8" y2="519.0" stroke="#999"/>
+<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">08-30</text>
+<line x1="426.6" y1="516.0" x2="426.6" y2="519.0" stroke="#999"/>
+<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">08-31</text>
+<line x1="462.5" y1="516.0" x2="462.5" y2="519.0" stroke="#999"/>
+<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">09-01</text>
+<line x1="498.3" y1="516.0" x2="498.3" y2="519.0" stroke="#999"/>
+<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-02</text>
+<line x1="534.2" y1="516.0" x2="534.2" y2="519.0" stroke="#999"/>
+<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-03</text>
+<line x1="570.1" y1="516.0" x2="570.1" y2="519.0" stroke="#999"/>
+<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-04</text>
+<line x1="605.9" y1="516.0" x2="605.9" y2="519.0" stroke="#999"/>
+<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-05</text>
+<line x1="641.8" y1="516.0" x2="641.8" y2="519.0" stroke="#999"/>
+<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-06</text>
+<line x1="677.7" y1="516.0" x2="677.7" y2="519.0" stroke="#999"/>
+<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-07</text>
+<line x1="713.5" y1="516.0" x2="713.5" y2="519.0" stroke="#999"/>
+<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-08</text>
+<line x1="749.4" y1="516.0" x2="749.4" y2="519.0" stroke="#999"/>
+<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-09</text>
+<line x1="785.2" y1="516.0" x2="785.2" y2="519.0" stroke="#999"/>
+<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-10</text>
+<line x1="821.1" y1="516.0" x2="821.1" y2="519.0" stroke="#999"/>
+<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-11</text>
+<line x1="857.0" y1="516.0" x2="857.0" y2="519.0" stroke="#999"/>
+<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-12</text>
+<line x1="892.8" y1="516.0" x2="892.8" y2="519.0" stroke="#999"/>
+<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-13</text>
+<line x1="928.7" y1="516.0" x2="928.7" y2="519.0" stroke="#999"/>
+<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-14</text>
+<line x1="964.6" y1="516.0" x2="964.6" y2="519.0" stroke="#999"/>
+<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-15</text>
+<line x1="1000.4" y1="516.0" x2="1000.4" y2="519.0" stroke="#999"/>
+<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-16</text>
+<line x1="1036.3" y1="516.0" x2="1036.3" y2="519.0" stroke="#999"/>
+<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-17</text>
+<line x1="1072.1" y1="516.0" x2="1072.1" y2="519.0" stroke="#999"/>
+<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-18</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-19</text>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#3f007d"/>
+<text x="28" y="650" fill="#222">deferBufferLoad</text>
+<rect x="289" y="640" width="12" height="12" fill="#54278f"/>
+<text x="305" y="650" fill="#222">simplifyNonSSAIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#9970ab"/>
+<text x="582" y="650" fill="#222">lowerCombinedTextureSamplers</text>
+<rect x="843" y="640" width="12" height="12" fill="#c2a5cf"/>
+<text x="859" y="650" fill="#222">legalizeMatrixTypes</text>
+<rect x="12" y="658" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="668" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="658" width="12" height="12" fill="#fdd0a2"/>
+<text x="305" y="668" fill="#222">emitEntryPointsSourceFromIR (self)</text>
+<rect x="566" y="658" width="12" height="12" fill="#fd8d3c"/>
+<text x="582" y="668" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="843" y="658" width="12" height="12" fill="#e6550d"/>
+<text x="859" y="668" fill="#222">generateOutput (self)</text>
+<rect x="12" y="676" width="12" height="12" fill="#969696"/>
+<text x="28" y="686" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only vector_matrix_overload_set --label repro --gen-dir repro-vector_matrix_overload_set</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 200), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>vector_matrix_overload_set.slang <span style='font-weight:400;color:#888'>(482 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+float mx_mix(float a, float b, float t) { return a + (b - a) * t; }
+float2 mx_mix(float2 a, float2 b, float t) { return a + (b - a) * t; }
+float3 mx_mix(float3 a, float3 b, float t) { return a + (b - a) * t; }
+float4 mx_mix(float4 a, float4 b, float t) { return a + (b - a) * t; }
+float3x3 mx_mix(float3x3 a, float3x3 b, float t) { return a + (b - a) * t; }
+float4x4 mx_mix(float4x4 a, float4x4 b, float t) { return a + (b - a) * t; }
+
+float call_0() { float a = float(0.0); float b = float(0.0); float r = mx_mix(a, b, 0.0 * 0.1); return r;
+}
+float call_1() { float2 a = float2(1.0); float2 b = float2(1.0); float2 r = mx_mix(a, b, 1.0 * 0.1); return r[0];
+}
+float call_2() { float3 a = float3(2.0); float3 b = float3(2.0); float3 r = mx_mix(a, b, 2.0 * 0.1); return r[0];
+}
+float call_3() { float4 a = float4(3.0); float4 b = float4(3.0); float4 r = mx_mix(a, b, 3.0 * 0.1); return r[0];
+}
+float call_4() { float3x3 a = float3x3(4.0); float3x3 b = float3x3(4.0); float3x3 r = mx_mix(a, b, 4.0 * 0.1); return r[0][0];
+}
+float call_5() { float4x4 a = float4x4(0.0); float4x4 b = float4x4(5.0); float4x4 r = mx_mix(a, b, 5.0 * 0.1); return r[0][0];
+}
+float call_6() { float a = float(1.0); float b = float(6.0); float r = mx_mix(a, b, 6.0 * 0.1); return r;
+}
+float call_7() { float2 a = float2(2.0); float2 b = float2(0.0); float2 r = mx_mix(a, b, 7.0 * 0.1); return r[0];
+}
+float call_8() { float3 a = float3(3.0); float3 b = float3(1.0); float3 r = mx_mix(a, b, 8.0 * 0.1); return r[0];
+}
+float call_9() { float4 a = float4(4.0); float4 b = float4(2.0); float4 r = mx_mix(a, b, 9.0 * 0.1); return r[0];
+}
+float call_10() { float3x3 a = float3x3(0.0); float3x3 b = float3x3(3.0); float3x3 r = mx_mix(a, b, 10.0 * 0.1); return r[0][0];
+}
+float call_11() { float4x4 a = float4x4(1.0); float4x4 b = float4x4(4.0); float4x4 r = mx_mix(a, b, 0.0 * 0.1); return r[0][0];
+}
+float call_12() { float a = float(2.0); float b = float(5.0); float r = mx_mix(a, b, 1.0 * 0.1); return r;
+}
+float call_13() { float2 a = float2(3.0); float2 b = float2(6.0); float2 r = mx_mix(a, b, 2.0 * 0.1); return r[0];
+}
+float call_14() { float3 a = float3(4.0); float3 b = float3(0.0); float3 r = mx_mix(a, b, 3.0 * 0.1); return r[0];
+}
+float call_15() { float4 a = float4(0.0); float4 b = float4(1.0); float4 r = mx_mix(a, b, 4.0 * 0.1); return r[0];
+}
+float call_16() { float3x3 a = float3x3(1.0); float3x3 b = float3x3(2.0); float3x3 r = mx_mix(a, b, 5.0 * 0.1); return r[0][0];
+}
+float call_17() { float4x4 a = float4x4(2.0); float4x4 b = float4x4(3.0); float4x4 r = mx_mix(a, b, 6.0 * 0.1); return r[0][0];
+}
+float call_18() { float a = float(3.0); float b = float(4.0); float r = mx_mix(a, b, 7.0 * 0.1); return r;
+}
+float call_19() { float2 a = float2(4.0); float2 b = float2(5.0); float2 r = mx_mix(a, b, 8.0 * 0.1); return r[0];
+}
+float call_20() { float3 a = float3(0.0); float3 b = float3(6.0); float3 r = mx_mix(a, b, 9.0 * 0.1); return r[0];
+}
+float call_21() { float4 a = float4(1.0); float4 b = float4(0.0); float4 r = mx_mix(a, b, 10.0 * 0.1); return r[0];
+}
+float call_22() { float3x3 a = float3x3(2.0); float3x3 b = float3x3(1.0); float3x3 r = mx_mix(a, b, 0.0 * 0.1); return r[0][0];
+}
+float call_23() { float4x4 a = float4x4(3.0); float4x4 b = float4x4(2.0); float4x4 r = mx_mix(a, b, 1.0 * 0.1); return r[0][0];
+}
+float call_24() { float a = float(4.0); float b = float(3.0); float r = mx_mix(a, b, 2.0 * 0.1); return r;
+}
+float call_25() { float2 a = float2(0.0); float2 b = float2(4.0); float2 r = mx_mix(a, b, 3.0 * 0.1); return r[0];
+}
+float call_26() { float3 a = float3(1.0); float3 b = float3(5.0); float3 r = mx_mix(a, b, 4.0 * 0.1); return r[0];
+}
+float call_27() { float4 a = float4(2.0); float4 b = float4(6.0); float4 r = mx_mix(a, b, 5.0 * 0.1); return r[0];
+}
+float call_28() { float3x3 a = float3x3(3.0); float3x3 b = float3x3(0.0); float3x3 r = mx_mix(a, b, 6.0 * 0.1); return r[0][0];
+}
+float call_29() { float4x4 a = float4x4(4.0); float4x4 b = float4x4(1.0); float4x4 r = mx_mix(a, b, 7.0 * 0.1); return r[0][0];
+}
+float call_30() { float a = float(0.0); float b = float(2.0); float r = mx_mix(a, b, 8.0 * 0.1); return r;
+}
+float call_31() { float2 a = float2(1.0); float2 b = float2(3.0); float2 r = mx_mix(a, b, 9.0 * 0.1); return r[0];
+}
+float call_32() { float3 a = float3(2.0); float3 b = float3(4.0); float3 r = mx_mix(a, b, 10.0 * 0.1); return r[0];
+}
+float call_33() { float4 a = float4(3.0); float4 b = float4(5.0); float4 r = mx_mix(a, b, 0.0 * 0.1); return r[0];
+}
+float call_34() { float3x3 a = float3x3(4.0); float3x3 b = float3x3(6.0); float3x3 r = mx_mix(a, b, 1.0 * 0.1); return r[0][0];
+}
+float call_35() { float4x4 a = float4x4(0.0); float4x4 b = float4x4(0.0); float4x4 r = mx_mix(a, b, 2.0 * 0.1); return r[0][0];
+}
+float call_36() { float a = float(1.0); float b = float(1.0); float r = mx_mix(a, b, 3.0 * 0.1); return r;
+}
+float call_37() { float2 a = float2(2.0); float2 b = float2(2.0); float2 r = mx_mix(a, b, 4.0 * 0.1); return r[0];
+}
+float call_38() { float3 a = float3(3.0); float3 b = float3(3.0); float3 r = mx_mix(a, b, 5.0 * 0.1); return r[0];
+}
+float call_39() { float4 a = float4(4.0); float4 b = float4(4.0); float4 r = mx_mix(a, b, 6.0 * 0.1); return r[0];
+}
+float call_40() { float3x3 a = float3x3(0.0); float3x3 b = float3x3(5.0); float3x3 r = mx_mix(a, b, 7.0 * 0.1); return r[0][0];
+}
+float call_41() { float4x4 a = float4x4(1.0); float4x4 b = float4x4(6.0); float4x4 r = mx_mix(a, b, 8.0 * 0.1); return r[0][0];
+}
+float call_42() { float a = float(2.0); float b = float(0.0); float r = mx_mix(a, b, 9.0 * 0.1); return r;
+}
+float call_43() { float2 a = float2(3.0); float2 b = float2(1.0); float2 r = mx_mix(a, b, 10.0 * 0.1); return r[0];
+}
+float call_44() { float3 a = float3(4.0); float3 b = float3(2.0); float3 r = mx_mix(a, b, 0.0 * 0.1); return r[0];
+}
+float call_45() { float4 a = float4(0.0); float4 b = float4(3.0); float4 r = mx_mix(a, b, 1.0 * 0.1); return r[0];
+}
+float call_46() { float3x3 a = float3x3(1.0); float3x3 b = float3x3(4.0); float3x3 r = mx_mix(a, b, 2.0 * 0.1); return r[0][0];
+}
+float call_47() { float4x4 a = float4x4(2.0); float4x4 b = float4x4(5.0); float4x4 r = mx_mix(a, b, 3.0 * 0.1); return r[0][0];
+}
+float call_48() { float a = float(3.0); float b = float(6.0); float r = mx_mix(a, b, 4.0 * 0.1); return r;
+}
+float call_49() { float2 a = float2(4.0); float2 b = float2(0.0); float2 r = mx_mix(a, b, 5.0 * 0.1); return r[0];
+}
+float call_50() { float3 a = float3(0.0); float3 b = float3(1.0); float3 r = mx_mix(a, b, 6.0 * 0.1); return r[0];
+}
+float call_51() { float4 a = float4(1.0); float4 b = float4(2.0); float4 r = mx_mix(a, b, 7.0 * 0.1); return r[0];
+}
+float call_52() { float3x3 a = float3x3(2.0); float3x3 b = float3x3(3.0); float3x3 r = mx_mix(a, b, 8.0 * 0.1); return r[0][0];
+}
+float call_53() { float4x4 a = float4x4(3.0); float4x4 b = float4x4(4.0); float4x4 r = mx_mix(a, b, 9.0 * 0.1); return r[0][0];
+}
+float call_54() { float a = float(4.0); float b = float(5.0); float r = mx_mix(a, b, 10.0 * 0.1); return r;
+}
+float call_55() { float2 a = float2(0.0); float2 b = float2(6.0); float2 r = mx_mix(a, b, 0.0 * 0.1); return r[0];
+}
+float call_56() { float3 a = float3(1.0); float3 b = float3(0.0); float3 r = mx_mix(a, b, 1.0 * 0.1); return r[0];
+}
+float call_57() { float4 a = float4(2.0); float4 b = float4(1.0); float4 r = mx_mix(a, b, 2.0 * 0.1); return r[0];
+}
+float call_58() { float3x3 a = float3x3(3.0); float3x3 b = float3x3(2.0); float3x3 r = mx_mix(a, b, 3.0 * 0.1); return r[0][0];
+}
+float call_59() { float4x4 a = float4x4(4.0); float4x4 b = float4x4(3.0); float4x4 r = mx_mix(a, b, 4.0 * 0.1); return r[0][0];
+}
+float call_60() { float a = float(0.0); float b = float(4.0); float r = mx_mix(a, b, 5.0 * 0.1); return r;
+}
+float call_61() { float2 a = float2(1.0); float2 b = float2(5.0); float2 r = mx_mix(a, b, 6.0 * 0.1); return r[0];
+}
+float call_62() { float3 a = float3(2.0); float3 b = float3(6.0); float3 r = mx_mix(a, b, 7.0 * 0.1); return r[0];
+}
+float call_63() { float4 a = float4(3.0); float4 b = float4(0.0); float4 r = mx_mix(a, b, 8.0 * 0.1); return r[0];
+}
+float call_64() { float3x3 a = float3x3(4.0); float3x3 b = float3x3(1.0); float3x3 r = mx_mix(a, b, 9.0 * 0.1); return r[0][0];
+}
+float call_65() { float4x4 a = float4x4(0.0); float4x4 b = float4x4(2.0); float4x4 r = mx_mix(a, b, 10.0 * 0.1); return r[0][0];
+}
+float call_66() { float a = float(1.0); float b = float(3.0); float r = mx_mix(a, b, 0.0 * 0.1); return r;
+}
+float call_67() { float2 a = float2(2.0); float2 b = float2(4.0); float2 r = mx_mix(a, b, 1.0 * 0.1); return r[0];
+}
+float call_68() { float3 a = float3(3.0); float3 b = float3(5.0); float3 r = mx_mix(a, b, 2.0 * 0.1); return r[0];
+}
+float call_69() { float4 a = float4(4.0); float4 b = float4(6.0); float4 r = mx_mix(a, b, 3.0 * 0.1); return r[0];
+}
+float call_70() { float3x3 a = float3x3(0.0); float3x3 b = float3x3(0.0); float3x3 r = mx_mix(a, b, 4.0 * 0.1); return r[0][0];
+}
+float call_71() { float4x4 a = float4x4(1.0); float4x4 b = float4x4(1.0); float4x4 r = mx_mix(a, b, 5.0 * 0.1); return r[0][0];
+}
+float call_72() { float a = float(2.0); float b = float(2.0); float r = mx_mix(a, b, 6.0 * 0.1); return r;
+}
+float call_73() { float2 a = float2(3.0); float2 b = float2(3.0); float2 r = mx_mix(a, b, 7.0 * 0.1); return r[0];
+}
+float call_74() { float3 a = float3(4.0); float3 b = float3(4.0); float3 r = mx_mix(a, b, 8.0 * 0.1); return r[0];
+}
+float call_75() { float4 a = float4(0.0); float4 b = float4(5.0); float4 r = mx_mix(a, b, 9.0 * 0.1); return r[0];
+}
+float call_76() { float3x3 a = float3x3(1.0); float3x3 b = float3x3(6.0); float3x3 r = mx_mix(a, b, 10.0 * 0.1); return r[0][0];
+}
+float call_77() { float4x4 a = float4x4(2.0); float4x4 b = float4x4(0.0); float4x4 r = mx_mix(a, b, 0.0 * 0.1); return r[0][0];
+}
+float call_78() { float a = float(3.0); float b = float(1.0); float r = mx_mix(a, b, 1.0 * 0.1); return r;
+}
+float call_79() { float2 a = float2(4.0); float2 b = float2(2.0); float2 r = mx_mix(a, b, 2.0 * 0.1); return r[0];
+}
+float call_80() { float3 a = float3(0.0); float3 b = float3(3.0); float3 r = mx_mix(a, b, 3.0 * 0.1); return r[0];
+}
+float call_81() { float4 a = float4(1.0); float4 b = float4(4.0); float4 r = mx_mix(a, b, 4.0 * 0.1); return r[0];
+}
+float call_82() { float3x3 a = float3x3(2.0); float3x3 b = float3x3(5.0); float3x3 r = mx_mix(a, b, 5.0 * 0.1); return r[0][0];
+}
+float call_83() { float4x4 a = float4x4(3.0); float4x4 b = float4x4(6.0); float4x4 r = mx_mix(a, b, 6.0 * 0.1); return r[0][0];
+}
+float call_84() { float a = float(4.0); float b = float(0.0); float r = mx_mix(a, b, 7.0 * 0.1); return r;
+}
+float call_85() { float2 a = float2(0.0); float2 b = float2(1.0); float2 r = mx_mix(a, b, 8.0 * 0.1); return r[0];
+}
+float call_86() { float3 a = float3(1.0); float3 b = float3(2.0); float3 r = mx_mix(a, b, 9.0 * 0.1); return r[0];
+}
+float call_87() { float4 a = float4(2.0); float4 b = float4(3.0); float4 r = mx_mix(a, b, 10.0 * 0.1); return r[0];
+}
+float call_88() { float3x3 a = float3x3(3.0); float3x3 b = float3x3(4.0); float3x3 r = mx_mix(a, b, 0.0 * 0.1); return r[0][0];
+}
+float call_89() { float4x4 a = float4x4(4.0); float4x4 b = float4x4(5.0); float4x4 r = mx_mix(a, b, 1.0 * 0.1); return r[0][0];
+}
+float call_90() { float a = float(0.0); float b = float(6.0); float r = mx_mix(a, b, 2.0 * 0.1); return r;
+}
+float call_91() { float2 a = float2(1.0); float2 b = float2(0.0); float2 r = mx_mix(a, b, 3.0 * 0.1); return r[0];
+}
+float call_92() { float3 a = float3(2.0); float3 b = float3(1.0); float3 r = mx_mix(a, b, 4.0 * 0.1); return r[0];
+}
+float call_93() { float4 a = float4(3.0); float4 b = float4(2.0); float4 r = mx_mix(a, b, 5.0 * 0.1); return r[0];
+}
+float call_94() { float3x3 a = float3x3(4.0); float3x3 b = float3x3(3.0); float3x3 r = mx_mix(a, b, 6.0 * 0.1); return r[0][0];
+}
+float call_95() { float4x4 a = float4x4(0.0); float4x4 b = float4x4(4.0); float4x4 r = mx_mix(a, b, 7.0 * 0.1); return r[0][0];
+}
+float call_96() { float a = float(1.0); float b = float(5.0); float r = mx_mix(a, b, 8.0 * 0.1); return r;
+}
+float call_97() { float2 a = float2(2.0); float2 b = float2(6.0); float2 r = mx_mix(a, b, 9.0 * 0.1); return r[0];
+}
+float call_98() { float3 a = float3(3.0); float3 b = float3(0.0); float3 r = mx_mix(a, b, 10.0 * 0.1); return r[0];
+}
+float call_99() { float4 a = float4(4.0); float4 b = float4(1.0); float4 r = mx_mix(a, b, 0.0 * 0.1); return r[0];
+}
+float call_100() { float3x3 a = float3x3(0.0); float3x3 b = float3x3(2.0); float3x3 r = mx_mix(a, b, 1.0 * 0.1); return r[0][0];
+}
+float call_101() { float4x4 a = float4x4(1.0); float4x4 b = float4x4(3.0); float4x4 r = mx_mix(a, b, 2.0 * 0.1); return r[0][0];
+}
+float call_102() { float a = float(2.0); float b = float(4.0); float r = mx_mix(a, b, 3.0 * 0.1); return r;
+}
+float call_103() { float2 a = float2(3.0); float2 b = float2(5.0); float2 r = mx_mix(a, b, 4.0 * 0.1); return r[0];
+}
+float call_104() { float3 a = float3(4.0); float3 b = float3(6.0); float3 r = mx_mix(a, b, 5.0 * 0.1); return r[0];
+}
+float call_105() { float4 a = float4(0.0); float4 b = float4(0.0); float4 r = mx_mix(a, b, 6.0 * 0.1); return r[0];
+}
+float call_106() { float3x3 a = float3x3(1.0); float3x3 b = float3x3(1.0); float3x3 r = mx_mix(a, b, 7.0 * 0.1); return r[0][0];
+}
+float call_107() { float4x4 a = float4x4(2.0); float4x4 b = float4x4(2.0); float4x4 r = mx_mix(a, b, 8.0 * 0.1); return r[0][0];
+}
+float call_108() { float a = float(3.0); float b = float(3.0); float r = mx_mix(a, b, 9.0 * 0.1); return r;
+}
+float call_109() { float2 a = float2(4.0); float2 b = float2(4.0); float2 r = mx_mix(a, b, 10.0 * 0.1); return r[0];
+}
+float call_110() { float3 a = float3(0.0); float3 b = float3(5.0); float3 r = mx_mix(a, b, 0.0 * 0.1); return r[0];
+}
+float call_111() { float4 a = float4(1.0); float4 b = float4(6.0); float4 r = mx_mix(a, b, 1.0 * 0.1); return r[0];
+}
+float call_112() { float3x3 a = float3x3(2.0); float3x3 b = float3x3(0.0); float3x3 r = mx_mix(a, b, 2.0 * 0.1); return r[0][0];
+}
+float call_113() { float4x4 a = float4x4(3.0); float4x4 b = float4x4(1.0); float4x4 r = mx_mix(a, b, 3.0 * 0.1); return r[0][0];
+}
+float call_114() { float a = float(4.0); float b = float(2.0); float r = mx_mix(a, b, 4.0 * 0.1); return r;
+}
+float call_115() { float2 a = float2(0.0); float2 b = float2(3.0); float2 r = mx_mix(a, b, 5.0 * 0.1); return r[0];
+}
+float call_116() { float3 a = float3(1.0); float3 b = float3(4.0); float3 r = mx_mix(a, b, 6.0 * 0.1); return r[0];
+}
+float call_117() { float4 a = float4(2.0); float4 b = float4(5.0); float4 r = mx_mix(a, b, 7.0 * 0.1); return r[0];
+}
+float call_118() { float3x3 a = float3x3(3.0); float3x3 b = float3x3(6.0); float3x3 r = mx_mix(a, b, 8.0 * 0.1); return r[0][0];
+}
+float call_119() { float4x4 a = float4x4(4.0); float4x4 b = float4x4(0.0); float4x4 r = mx_mix(a, b, 9.0 * 0.1); return r[0][0];
+}
+float call_120() { float a = float(0.0); float b = float(1.0); float r = mx_mix(a, b, 10.0 * 0.1); return r;
+}
+float call_121() { float2 a = float2(1.0); float2 b = float2(2.0); float2 r = mx_mix(a, b, 0.0 * 0.1); return r[0];
+}
+float call_122() { float3 a = float3(2.0); float3 b = float3(3.0); float3 r = mx_mix(a, b, 1.0 * 0.1); return r[0];
+}
+float call_123() { float4 a = float4(3.0); float4 b = float4(4.0); float4 r = mx_mix(a, b, 2.0 * 0.1); return r[0];
+}
+float call_124() { float3x3 a = float3x3(4.0); float3x3 b = float3x3(5.0); float3x3 r = mx_mix(a, b, 3.0 * 0.1); return r[0][0];
+}
+float call_125() { float4x4 a = float4x4(0.0); float4x4 b = float4x4(6.0); float4x4 r = mx_mix(a, b, 4.0 * 0.1); return r[0][0];
+}
+float call_126() { float a = float(1.0); float b = float(0.0); float r = mx_mix(a, b, 5.0 * 0.1); return r;
+}
+float call_127() { float2 a = float2(2.0); float2 b = float2(1.0); float2 r = mx_mix(a, b, 6.0 * 0.1); return r[0];
+}
+float call_128() { float3 a = float3(3.0); float3 b = float3(2.0); float3 r = mx_mix(a, b, 7.0 * 0.1); return r[0];
+}
+float call_129() { float4 a = float4(4.0); float4 b = float4(3.0); float4 r = mx_mix(a, b, 8.0 * 0.1); return r[0];
+}
+float call_130() { float3x3 a = float3x3(0.0); float3x3 b = float3x3(4.0); float3x3 r = mx_mix(a, b, 9.0 * 0.1); return r[0][0];
+}
+float call_131() { float4x4 a = float4x4(1.0); float4x4 b = float4x4(5.0); float4x4 r = mx_mix(a, b, 10.0 * 0.1); return r[0][0];
+}
+float call_132() { float a = float(2.0); float b = float(6.0); float r = mx_mix(a, b, 0.0 * 0.1); return r;
+}
+float call_133() { float2 a = float2(3.0); float2 b = float2(0.0); float2 r = mx_mix(a, b, 1.0 * 0.1); return r[0];
+}
+float call_134() { float3 a = float3(4.0); float3 b = float3(1.0); float3 r = mx_mix(a, b, 2.0 * 0.1); return r[0];
+}
+float call_135() { float4 a = float4(0.0); float4 b = float4(2.0); float4 r = mx_mix(a, b, 3.0 * 0.1); return r[0];
+}
+float call_136() { float3x3 a = float3x3(1.0); float3x3 b = float3x3(3.0); float3x3 r = mx_mix(a, b, 4.0 * 0.1); return r[0][0];
+}
+float call_137() { float4x4 a = float4x4(2.0); float4x4 b = float4x4(4.0); float4x4 r = mx_mix(a, b, 5.0 * 0.1); return r[0][0];
+}
+float call_138() { float a = float(3.0); float b = float(5.0); float r = mx_mix(a, b, 6.0 * 0.1); return r;
+}
+float call_139() { float2 a = float2(4.0); float2 b = float2(6.0); float2 r = mx_mix(a, b, 7.0 * 0.1); return r[0];
+}
+float call_140() { float3 a = float3(0.0); float3 b = float3(0.0); float3 r = mx_mix(a, b, 8.0 * 0.1); return r[0];
+}
+float call_141() { float4 a = float4(1.0); float4 b = float4(1.0); float4 r = mx_mix(a, b, 9.0 * 0.1); return r[0];
+}
+float call_142() { float3x3 a = float3x3(2.0); float3x3 b = float3x3(2.0); float3x3 r = mx_mix(a, b, 10.0 * 0.1); return r[0][0];
+}
+float call_143() { float4x4 a = float4x4(3.0); float4x4 b = float4x4(3.0); float4x4 r = mx_mix(a, b, 0.0 * 0.1); return r[0][0];
+}
+float call_144() { float a = float(4.0); float b = float(4.0); float r = mx_mix(a, b, 1.0 * 0.1); return r;
+}
+float call_145() { float2 a = float2(0.0); float2 b = float2(5.0); float2 r = mx_mix(a, b, 2.0 * 0.1); return r[0];
+}
+float call_146() { float3 a = float3(1.0); float3 b = float3(6.0); float3 r = mx_mix(a, b, 3.0 * 0.1); return r[0];
+}
+float call_147() { float4 a = float4(2.0); float4 b = float4(0.0); float4 r = mx_mix(a, b, 4.0 * 0.1); return r[0];
+}
+float call_148() { float3x3 a = float3x3(3.0); float3x3 b = float3x3(1.0); float3x3 r = mx_mix(a, b, 5.0 * 0.1); return r[0][0];
+}
+float call_149() { float4x4 a = float4x4(4.0); float4x4 b = float4x4(2.0); float4x4 r = mx_mix(a, b, 6.0 * 0.1); return r[0][0];
+}
+float call_150() { float a = float(0.0); float b = float(3.0); float r = mx_mix(a, b, 7.0 * 0.1); return r;
+}
+float call_151() { float2 a = float2(1.0); float2 b = float2(4.0); float2 r = mx_mix(a, b, 8.0 * 0.1); return r[0];
+}
+float call_152() { float3 a = float3(2.0); float3 b = float3(5.0); float3 r = mx_mix(a, b, 9.0 * 0.1); return r[0];
+}
+float call_153() { float4 a = float4(3.0); float4 b = float4(6.0); float4 r = mx_mix(a, b, 10.0 * 0.1); return r[0];
+}
+float call_154() { float3x3 a = float3x3(4.0); float3x3 b = float3x3(0.0); float3x3 r = mx_mix(a, b, 0.0 * 0.1); return r[0][0];
+}
+float call_155() { float4x4 a = float4x4(0.0); float4x4 b = float4x4(1.0); float4x4 r = mx_mix(a, b, 1.0 * 0.1); return r[0][0];
+}
+float call_156() { float a = float(1.0); float b = float(2.0); float r = mx_mix(a, b, 2.0 * 0.1); return r;
+}
+float call_157() { float2 a = float2(2.0); float2 b = float2(3.0); float2 r = mx_mix(a, b, 3.0 * 0.1); return r[0];
+}
+float call_158() { float3 a = float3(3.0); float3 b = float3(4.0); float3 r = mx_mix(a, b, 4.0 * 0.1); return r[0];
+}
+float call_159() { float4 a = float4(4.0); float4 b = float4(5.0); float4 r = mx_mix(a, b, 5.0 * 0.1); return r[0];
+}
+float call_160() { float3x3 a = float3x3(0.0); float3x3 b = float3x3(6.0); float3x3 r = mx_mix(a, b, 6.0 * 0.1); return r[0][0];
+}
+float call_161() { float4x4 a = float4x4(1.0); float4x4 b = float4x4(0.0); float4x4 r = mx_mix(a, b, 7.0 * 0.1); return r[0][0];
+}
+float call_162() { float a = float(2.0); float b = float(1.0); float r = mx_mix(a, b, 8.0 * 0.1); return r;
+}
+float call_163() { float2 a = float2(3.0); float2 b = float2(2.0); float2 r = mx_mix(a, b, 9.0 * 0.1); return r[0];
+}
+float call_164() { float3 a = float3(4.0); float3 b = float3(3.0); float3 r = mx_mix(a, b, 10.0 * 0.1); return r[0];
+}
+float call_165() { float4 a = float4(0.0); float4 b = float4(4.0); float4 r = mx_mix(a, b, 0.0 * 0.1); return r[0];
+}
+float call_166() { float3x3 a = float3x3(1.0); float3x3 b = float3x3(5.0); float3x3 r = mx_mix(a, b, 1.0 * 0.1); return r[0][0];
+}
+float call_167() { float4x4 a = float4x4(2.0); float4x4 b = float4x4(6.0); float4x4 r = mx_mix(a, b, 2.0 * 0.1); return r[0][0];
+}
+float call_168() { float a = float(3.0); float b = float(0.0); float r = mx_mix(a, b, 3.0 * 0.1); return r;
+}
+float call_169() { float2 a = float2(4.0); float2 b = float2(1.0); float2 r = mx_mix(a, b, 4.0 * 0.1); return r[0];
+}
+float call_170() { float3 a = float3(0.0); float3 b = float3(2.0); float3 r = mx_mix(a, b, 5.0 * 0.1); return r[0];
+}
+float call_171() { float4 a = float4(1.0); float4 b = float4(3.0); float4 r = mx_mix(a, b, 6.0 * 0.1); return r[0];
+}
+float call_172() { float3x3 a = float3x3(2.0); float3x3 b = float3x3(4.0); float3x3 r = mx_mix(a, b, 7.0 * 0.1); return r[0][0];
+}
+float call_173() { float4x4 a = float4x4(3.0); float4x4 b = float4x4(5.0); float4x4 r = mx_mix(a, b, 8.0 * 0.1); return r[0][0];
+}
+float call_174() { float a = float(4.0); float b = float(6.0); float r = mx_mix(a, b, 9.0 * 0.1); return r;
+}
+float call_175() { float2 a = float2(0.0); float2 b = float2(0.0); float2 r = mx_mix(a, b, 10.0 * 0.1); return r[0];
+}
+float call_176() { float3 a = float3(1.0); float3 b = float3(1.0); float3 r = mx_mix(a, b, 0.0 * 0.1); return r[0];
+}
+float call_177() { float4 a = float4(2.0); float4 b = float4(2.0); float4 r = mx_mix(a, b, 1.0 * 0.1); return r[0];
+}
+float call_178() { float3x3 a = float3x3(3.0); float3x3 b = float3x3(3.0); float3x3 r = mx_mix(a, b, 2.0 * 0.1); return r[0][0];
+}
+float call_179() { float4x4 a = float4x4(4.0); float4x4 b = float4x4(4.0); float4x4 r = mx_mix(a, b, 3.0 * 0.1); return r[0][0];
+}
+float call_180() { float a = float(0.0); float b = float(5.0); float r = mx_mix(a, b, 4.0 * 0.1); return r;
+}
+float call_181() { float2 a = float2(1.0); float2 b = float2(6.0); float2 r = mx_mix(a, b, 5.0 * 0.1); return r[0];
+}
+float call_182() { float3 a = float3(2.0); float3 b = float3(0.0); float3 r = mx_mix(a, b, 6.0 * 0.1); return r[0];
+}
+float call_183() { float4 a = float4(3.0); float4 b = float4(1.0); float4 r = mx_mix(a, b, 7.0 * 0.1); return r[0];
+}
+float call_184() { float3x3 a = float3x3(4.0); float3x3 b = float3x3(2.0); float3x3 r = mx_mix(a, b, 8.0 * 0.1); return r[0][0];
+}
+float call_185() { float4x4 a = float4x4(0.0); float4x4 b = float4x4(3.0); float4x4 r = mx_mix(a, b, 9.0 * 0.1); return r[0][0];
+}
+float call_186() { float a = float(1.0); float b = float(4.0); float r = mx_mix(a, b, 10.0 * 0.1); return r;
+}
+float call_187() { float2 a = float2(2.0); float2 b = float2(5.0); float2 r = mx_mix(a, b, 0.0 * 0.1); return r[0];
+}
+float call_188() { float3 a = float3(3.0); float3 b = float3(6.0); float3 r = mx_mix(a, b, 1.0 * 0.1); return r[0];
+}
+float call_189() { float4 a = float4(4.0); float4 b = float4(0.0); float4 r = mx_mix(a, b, 2.0 * 0.1); return r[0];
+}
+float call_190() { float3x3 a = float3x3(0.0); float3x3 b = float3x3(1.0); float3x3 r = mx_mix(a, b, 3.0 * 0.1); return r[0][0];
+}
+float call_191() { float4x4 a = float4x4(1.0); float4x4 b = float4x4(2.0); float4x4 r = mx_mix(a, b, 4.0 * 0.1); return r[0][0];
+}
+float call_192() { float a = float(2.0); float b = float(3.0); float r = mx_mix(a, b, 5.0 * 0.1); return r;
+}
+float call_193() { float2 a = float2(3.0); float2 b = float2(4.0); float2 r = mx_mix(a, b, 6.0 * 0.1); return r[0];
+}
+float call_194() { float3 a = float3(4.0); float3 b = float3(5.0); float3 r = mx_mix(a, b, 7.0 * 0.1); return r[0];
+}
+float call_195() { float4 a = float4(0.0); float4 b = float4(6.0); float4 r = mx_mix(a, b, 8.0 * 0.1); return r[0];
+}
+float call_196() { float3x3 a = float3x3(1.0); float3x3 b = float3x3(0.0); float3x3 r = mx_mix(a, b, 9.0 * 0.1); return r[0][0];
+}
+float call_197() { float4x4 a = float4x4(2.0); float4x4 b = float4x4(1.0); float4x4 r = mx_mix(a, b, 10.0 * 0.1); return r[0][0];
+}
+float call_198() { float a = float(3.0); float b = float(2.0); float r = mx_mix(a, b, 0.0 * 0.1); return r;
+}
+float call_199() { float2 a = float2(4.0); float2 b = float2(3.0); float2 r = mx_mix(a, b, 1.0 * 0.1); return r[0];
+}
+
+[shader("compute")]
+[numthreads(1,1,1)]
+void computeMain()
+{
+    float acc = 0.0;
+    acc += call_0();
+    acc += call_1();
+    acc += call_2();
+    acc += call_3();
+    acc += call_4();
+    acc += call_5();
+    acc += call_6();
+    acc += call_7();
+    acc += call_8();
+    acc += call_9();
+    acc += call_10();
+    acc += call_11();
+    acc += call_12();
+    acc += call_13();
+    acc += call_14();
+    acc += call_15();
+    acc += call_16();
+    acc += call_17();
+    acc += call_18();
+    acc += call_19();
+    acc += call_20();
+    acc += call_21();
+    acc += call_22();
+    acc += call_23();
+    acc += call_24();
+    acc += call_25();
+    acc += call_26();
+    acc += call_27();
+    acc += call_28();
+    acc += call_29();
+    acc += call_30();
+    acc += call_31();
+    acc += call_32();
+    acc += call_33();
+    acc += call_34();
+    acc += call_35();
+    acc += call_36();
+    acc += call_37();
+    acc += call_38();
+    acc += call_39();
+    acc += call_40();
+    acc += call_41();
+    acc += call_42();
+    acc += call_43();
+    acc += call_44();
+    acc += call_45();
+    acc += call_46();
+    acc += call_47();
+    acc += call_48();
+    acc += call_49();
+    acc += call_50();
+    acc += call_51();
+    acc += call_52();
+    acc += call_53();
+    acc += call_54();
+    acc += call_55();
+    acc += call_56();
+    acc += call_57();
+    acc += call_58();
+    acc += call_59();
+    acc += call_60();
+    acc += call_61();
+    acc += call_62();
+    acc += call_63();
+    outBuf[0] = acc;
+}
+</pre></div><script>
+document.addEventListener('click', function (ev) {
+  var btn = ev.target.closest && ev.target.closest('button.copy');
+  if (!btn) return;
+  var el = document.getElementById(btn.getAttribute('data-copy'));
+  if (!el) return;
+  var text = el.textContent;
+  function flash(ok) {
+    btn.textContent = ok ? 'Copied' : 'Press Ctrl+C';
+    if (ok) btn.setAttribute('data-done', '1');
+    setTimeout(function () {
+      btn.textContent = 'Copy'; btn.removeAttribute('data-done');
+    }, 1400);
+  }
+  function fallback() {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta); flash(ok);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () { flash(true); }, fallback);
+  } else {
+    fallback();
+  }
+});
+</script></body>

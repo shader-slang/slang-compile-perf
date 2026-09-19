@@ -1,0 +1,1442 @@
+<!doctype html><meta charset=utf-8><title>conditional_compilation — phase breakdown</title><style>
+.cbox{position:relative}
+.cbox>button.copy{position:absolute;top:8px;right:8px;z-index:1;
+  font:11px/1 -apple-system,Segoe UI,Roboto,sans-serif;padding:5px 9px;
+  color:#24292f;background:#fff;border:1px solid #d0d7de;border-radius:5px;
+  cursor:pointer;opacity:.75}
+.cbox>button.copy:hover{opacity:1;background:#f3f4f6}
+.cbox>button.copy[data-done]{color:#1a7f37;border-color:#1a7f37}
+</style><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; back</a></p><h1 style='font-size:21px;margin:0 0 6px'>conditional_compilation</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>`n` `#if`/`#else`/`#endif`-gated function bodies, each behind a distinct
+macro defined to a rotating 0/1 value, so roughly half the generated text
+is textually present in the token stream but discarded by the
+preprocessor's conditional-inclusion skip path, and half is retained and
+reaches the parser -- mirroring MaterialX-generated code's heavy use of
+per-material-graph conditionals (`#if MATERIALX_HAS_EMISSION`, `#if
+MATERIALX_EVALUATE_OPACITY`, `#if MATERIALX_PAYLOAD_SIZE &gt;
+MATERIAL_PAYLOAD_LIMIT`), which gate large blocks based on `#define`s that
+vary per generated material. No existing workload has more than a handful
+of directives; `parse`/`diagnostics_clean` are unconditioned code, so
+preprocessor conditional-skip cost at scale is otherwise untested.
+
+Scaling null: n scales directive pairs and gated bodies, each O(1); ideal
+preprocessing cost is O(n).</p><p style='color:#666;font-size:13px'><b>bucket:</b> parse &nbsp;·&nbsp; <b>compile mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 200</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="716" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">conditional_compilation — Daily tip-of-tree (last 30 days) (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">conditional_compilation<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">9.9</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">20</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">08-21</text>
+<line x1="103.9" y1="516.0" x2="103.9" y2="519.0" stroke="#999"/>
+<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">08-22</text>
+<line x1="139.7" y1="516.0" x2="139.7" y2="519.0" stroke="#999"/>
+<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">08-23</text>
+<line x1="175.6" y1="516.0" x2="175.6" y2="519.0" stroke="#999"/>
+<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">08-24</text>
+<line x1="211.4" y1="516.0" x2="211.4" y2="519.0" stroke="#999"/>
+<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">08-25</text>
+<line x1="247.3" y1="516.0" x2="247.3" y2="519.0" stroke="#999"/>
+<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">08-26</text>
+<line x1="283.2" y1="516.0" x2="283.2" y2="519.0" stroke="#999"/>
+<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">08-27</text>
+<line x1="319.0" y1="516.0" x2="319.0" y2="519.0" stroke="#999"/>
+<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">08-28</text>
+<line x1="354.9" y1="516.0" x2="354.9" y2="519.0" stroke="#999"/>
+<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">08-29</text>
+<line x1="390.8" y1="516.0" x2="390.8" y2="519.0" stroke="#999"/>
+<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">08-30</text>
+<line x1="426.6" y1="516.0" x2="426.6" y2="519.0" stroke="#999"/>
+<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">08-31</text>
+<line x1="462.5" y1="516.0" x2="462.5" y2="519.0" stroke="#999"/>
+<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">09-01</text>
+<line x1="498.3" y1="516.0" x2="498.3" y2="519.0" stroke="#999"/>
+<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-02</text>
+<line x1="534.2" y1="516.0" x2="534.2" y2="519.0" stroke="#999"/>
+<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-03</text>
+<line x1="570.1" y1="516.0" x2="570.1" y2="519.0" stroke="#999"/>
+<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-04</text>
+<line x1="605.9" y1="516.0" x2="605.9" y2="519.0" stroke="#999"/>
+<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-05</text>
+<line x1="641.8" y1="516.0" x2="641.8" y2="519.0" stroke="#999"/>
+<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-06</text>
+<line x1="677.7" y1="516.0" x2="677.7" y2="519.0" stroke="#999"/>
+<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-07</text>
+<line x1="713.5" y1="516.0" x2="713.5" y2="519.0" stroke="#999"/>
+<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-08</text>
+<line x1="749.4" y1="516.0" x2="749.4" y2="519.0" stroke="#999"/>
+<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-09</text>
+<line x1="785.2" y1="516.0" x2="785.2" y2="519.0" stroke="#999"/>
+<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-10</text>
+<line x1="821.1" y1="516.0" x2="821.1" y2="519.0" stroke="#999"/>
+<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-11</text>
+<line x1="857.0" y1="516.0" x2="857.0" y2="519.0" stroke="#999"/>
+<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-12</text>
+<line x1="892.8" y1="516.0" x2="892.8" y2="519.0" stroke="#999"/>
+<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-13</text>
+<line x1="928.7" y1="516.0" x2="928.7" y2="519.0" stroke="#999"/>
+<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-14</text>
+<line x1="964.6" y1="516.0" x2="964.6" y2="519.0" stroke="#999"/>
+<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-15</text>
+<line x1="1000.4" y1="516.0" x2="1000.4" y2="519.0" stroke="#999"/>
+<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-16</text>
+<line x1="1036.3" y1="516.0" x2="1036.3" y2="519.0" stroke="#999"/>
+<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-17</text>
+<line x1="1072.1" y1="516.0" x2="1072.1" y2="519.0" stroke="#999"/>
+<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-18</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-19</text>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#3f007d"/>
+<text x="28" y="650" fill="#222">deferBufferLoad</text>
+<rect x="289" y="640" width="12" height="12" fill="#54278f"/>
+<text x="305" y="650" fill="#222">simplifyNonSSAIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#9970ab"/>
+<text x="582" y="650" fill="#222">lowerCombinedTextureSamplers</text>
+<rect x="843" y="640" width="12" height="12" fill="#c2a5cf"/>
+<text x="859" y="650" fill="#222">legalizeMatrixTypes</text>
+<rect x="12" y="658" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="668" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="658" width="12" height="12" fill="#fdd0a2"/>
+<text x="305" y="668" fill="#222">emitEntryPointsSourceFromIR (self)</text>
+<rect x="566" y="658" width="12" height="12" fill="#fd8d3c"/>
+<text x="582" y="668" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="843" y="658" width="12" height="12" fill="#e6550d"/>
+<text x="859" y="668" fill="#222">generateOutput (self)</text>
+<rect x="12" y="676" width="12" height="12" fill="#969696"/>
+<text x="28" y="686" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only conditional_compilation --label repro --gen-dir repro-conditional_compilation</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 200), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>conditional_compilation.slang <span style='font-weight:400;color:#888'>(1276 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+#define FEATURE_0 0
+#define FEATURE_1 1
+#define FEATURE_2 0
+#define FEATURE_3 1
+#define FEATURE_4 0
+#define FEATURE_5 1
+#define FEATURE_6 0
+#define FEATURE_7 1
+#define FEATURE_8 0
+#define FEATURE_9 1
+#define FEATURE_10 0
+#define FEATURE_11 1
+#define FEATURE_12 0
+#define FEATURE_13 1
+#define FEATURE_14 0
+#define FEATURE_15 1
+#define FEATURE_16 0
+#define FEATURE_17 1
+#define FEATURE_18 0
+#define FEATURE_19 1
+#define FEATURE_20 0
+#define FEATURE_21 1
+#define FEATURE_22 0
+#define FEATURE_23 1
+#define FEATURE_24 0
+#define FEATURE_25 1
+#define FEATURE_26 0
+#define FEATURE_27 1
+#define FEATURE_28 0
+#define FEATURE_29 1
+#define FEATURE_30 0
+#define FEATURE_31 1
+#define FEATURE_32 0
+#define FEATURE_33 1
+#define FEATURE_34 0
+#define FEATURE_35 1
+#define FEATURE_36 0
+#define FEATURE_37 1
+#define FEATURE_38 0
+#define FEATURE_39 1
+#define FEATURE_40 0
+#define FEATURE_41 1
+#define FEATURE_42 0
+#define FEATURE_43 1
+#define FEATURE_44 0
+#define FEATURE_45 1
+#define FEATURE_46 0
+#define FEATURE_47 1
+#define FEATURE_48 0
+#define FEATURE_49 1
+#define FEATURE_50 0
+#define FEATURE_51 1
+#define FEATURE_52 0
+#define FEATURE_53 1
+#define FEATURE_54 0
+#define FEATURE_55 1
+#define FEATURE_56 0
+#define FEATURE_57 1
+#define FEATURE_58 0
+#define FEATURE_59 1
+#define FEATURE_60 0
+#define FEATURE_61 1
+#define FEATURE_62 0
+#define FEATURE_63 1
+#define FEATURE_64 0
+#define FEATURE_65 1
+#define FEATURE_66 0
+#define FEATURE_67 1
+#define FEATURE_68 0
+#define FEATURE_69 1
+#define FEATURE_70 0
+#define FEATURE_71 1
+#define FEATURE_72 0
+#define FEATURE_73 1
+#define FEATURE_74 0
+#define FEATURE_75 1
+#define FEATURE_76 0
+#define FEATURE_77 1
+#define FEATURE_78 0
+#define FEATURE_79 1
+#define FEATURE_80 0
+#define FEATURE_81 1
+#define FEATURE_82 0
+#define FEATURE_83 1
+#define FEATURE_84 0
+#define FEATURE_85 1
+#define FEATURE_86 0
+#define FEATURE_87 1
+#define FEATURE_88 0
+#define FEATURE_89 1
+#define FEATURE_90 0
+#define FEATURE_91 1
+#define FEATURE_92 0
+#define FEATURE_93 1
+#define FEATURE_94 0
+#define FEATURE_95 1
+#define FEATURE_96 0
+#define FEATURE_97 1
+#define FEATURE_98 0
+#define FEATURE_99 1
+#define FEATURE_100 0
+#define FEATURE_101 1
+#define FEATURE_102 0
+#define FEATURE_103 1
+#define FEATURE_104 0
+#define FEATURE_105 1
+#define FEATURE_106 0
+#define FEATURE_107 1
+#define FEATURE_108 0
+#define FEATURE_109 1
+#define FEATURE_110 0
+#define FEATURE_111 1
+#define FEATURE_112 0
+#define FEATURE_113 1
+#define FEATURE_114 0
+#define FEATURE_115 1
+#define FEATURE_116 0
+#define FEATURE_117 1
+#define FEATURE_118 0
+#define FEATURE_119 1
+#define FEATURE_120 0
+#define FEATURE_121 1
+#define FEATURE_122 0
+#define FEATURE_123 1
+#define FEATURE_124 0
+#define FEATURE_125 1
+#define FEATURE_126 0
+#define FEATURE_127 1
+#define FEATURE_128 0
+#define FEATURE_129 1
+#define FEATURE_130 0
+#define FEATURE_131 1
+#define FEATURE_132 0
+#define FEATURE_133 1
+#define FEATURE_134 0
+#define FEATURE_135 1
+#define FEATURE_136 0
+#define FEATURE_137 1
+#define FEATURE_138 0
+#define FEATURE_139 1
+#define FEATURE_140 0
+#define FEATURE_141 1
+#define FEATURE_142 0
+#define FEATURE_143 1
+#define FEATURE_144 0
+#define FEATURE_145 1
+#define FEATURE_146 0
+#define FEATURE_147 1
+#define FEATURE_148 0
+#define FEATURE_149 1
+#define FEATURE_150 0
+#define FEATURE_151 1
+#define FEATURE_152 0
+#define FEATURE_153 1
+#define FEATURE_154 0
+#define FEATURE_155 1
+#define FEATURE_156 0
+#define FEATURE_157 1
+#define FEATURE_158 0
+#define FEATURE_159 1
+#define FEATURE_160 0
+#define FEATURE_161 1
+#define FEATURE_162 0
+#define FEATURE_163 1
+#define FEATURE_164 0
+#define FEATURE_165 1
+#define FEATURE_166 0
+#define FEATURE_167 1
+#define FEATURE_168 0
+#define FEATURE_169 1
+#define FEATURE_170 0
+#define FEATURE_171 1
+#define FEATURE_172 0
+#define FEATURE_173 1
+#define FEATURE_174 0
+#define FEATURE_175 1
+#define FEATURE_176 0
+#define FEATURE_177 1
+#define FEATURE_178 0
+#define FEATURE_179 1
+#define FEATURE_180 0
+#define FEATURE_181 1
+#define FEATURE_182 0
+#define FEATURE_183 1
+#define FEATURE_184 0
+#define FEATURE_185 1
+#define FEATURE_186 0
+#define FEATURE_187 1
+#define FEATURE_188 0
+#define FEATURE_189 1
+#define FEATURE_190 0
+#define FEATURE_191 1
+#define FEATURE_192 0
+#define FEATURE_193 1
+#define FEATURE_194 0
+#define FEATURE_195 1
+#define FEATURE_196 0
+#define FEATURE_197 1
+#define FEATURE_198 0
+#define FEATURE_199 1
+
+#if FEATURE_0
+float feat_0(float x) { return x * 1.0 + sin(x + 0.0); }
+#else
+float feat_0(float x) { return x - 1.0; }
+#endif
+#if FEATURE_1
+float feat_1(float x) { return x * 2.0 + sin(x + 1.0); }
+#else
+float feat_1(float x) { return x - 2.0; }
+#endif
+#if FEATURE_2
+float feat_2(float x) { return x * 3.0 + sin(x + 2.0); }
+#else
+float feat_2(float x) { return x - 3.0; }
+#endif
+#if FEATURE_3
+float feat_3(float x) { return x * 4.0 + sin(x + 3.0); }
+#else
+float feat_3(float x) { return x - 1.0; }
+#endif
+#if FEATURE_4
+float feat_4(float x) { return x * 5.0 + sin(x + 4.0); }
+#else
+float feat_4(float x) { return x - 2.0; }
+#endif
+#if FEATURE_5
+float feat_5(float x) { return x * 1.0 + sin(x + 5.0); }
+#else
+float feat_5(float x) { return x - 3.0; }
+#endif
+#if FEATURE_6
+float feat_6(float x) { return x * 2.0 + sin(x + 6.0); }
+#else
+float feat_6(float x) { return x - 1.0; }
+#endif
+#if FEATURE_7
+float feat_7(float x) { return x * 3.0 + sin(x + 0.0); }
+#else
+float feat_7(float x) { return x - 2.0; }
+#endif
+#if FEATURE_8
+float feat_8(float x) { return x * 4.0 + sin(x + 1.0); }
+#else
+float feat_8(float x) { return x - 3.0; }
+#endif
+#if FEATURE_9
+float feat_9(float x) { return x * 5.0 + sin(x + 2.0); }
+#else
+float feat_9(float x) { return x - 1.0; }
+#endif
+#if FEATURE_10
+float feat_10(float x) { return x * 1.0 + sin(x + 3.0); }
+#else
+float feat_10(float x) { return x - 2.0; }
+#endif
+#if FEATURE_11
+float feat_11(float x) { return x * 2.0 + sin(x + 4.0); }
+#else
+float feat_11(float x) { return x - 3.0; }
+#endif
+#if FEATURE_12
+float feat_12(float x) { return x * 3.0 + sin(x + 5.0); }
+#else
+float feat_12(float x) { return x - 1.0; }
+#endif
+#if FEATURE_13
+float feat_13(float x) { return x * 4.0 + sin(x + 6.0); }
+#else
+float feat_13(float x) { return x - 2.0; }
+#endif
+#if FEATURE_14
+float feat_14(float x) { return x * 5.0 + sin(x + 0.0); }
+#else
+float feat_14(float x) { return x - 3.0; }
+#endif
+#if FEATURE_15
+float feat_15(float x) { return x * 1.0 + sin(x + 1.0); }
+#else
+float feat_15(float x) { return x - 1.0; }
+#endif
+#if FEATURE_16
+float feat_16(float x) { return x * 2.0 + sin(x + 2.0); }
+#else
+float feat_16(float x) { return x - 2.0; }
+#endif
+#if FEATURE_17
+float feat_17(float x) { return x * 3.0 + sin(x + 3.0); }
+#else
+float feat_17(float x) { return x - 3.0; }
+#endif
+#if FEATURE_18
+float feat_18(float x) { return x * 4.0 + sin(x + 4.0); }
+#else
+float feat_18(float x) { return x - 1.0; }
+#endif
+#if FEATURE_19
+float feat_19(float x) { return x * 5.0 + sin(x + 5.0); }
+#else
+float feat_19(float x) { return x - 2.0; }
+#endif
+#if FEATURE_20
+float feat_20(float x) { return x * 1.0 + sin(x + 6.0); }
+#else
+float feat_20(float x) { return x - 3.0; }
+#endif
+#if FEATURE_21
+float feat_21(float x) { return x * 2.0 + sin(x + 0.0); }
+#else
+float feat_21(float x) { return x - 1.0; }
+#endif
+#if FEATURE_22
+float feat_22(float x) { return x * 3.0 + sin(x + 1.0); }
+#else
+float feat_22(float x) { return x - 2.0; }
+#endif
+#if FEATURE_23
+float feat_23(float x) { return x * 4.0 + sin(x + 2.0); }
+#else
+float feat_23(float x) { return x - 3.0; }
+#endif
+#if FEATURE_24
+float feat_24(float x) { return x * 5.0 + sin(x + 3.0); }
+#else
+float feat_24(float x) { return x - 1.0; }
+#endif
+#if FEATURE_25
+float feat_25(float x) { return x * 1.0 + sin(x + 4.0); }
+#else
+float feat_25(float x) { return x - 2.0; }
+#endif
+#if FEATURE_26
+float feat_26(float x) { return x * 2.0 + sin(x + 5.0); }
+#else
+float feat_26(float x) { return x - 3.0; }
+#endif
+#if FEATURE_27
+float feat_27(float x) { return x * 3.0 + sin(x + 6.0); }
+#else
+float feat_27(float x) { return x - 1.0; }
+#endif
+#if FEATURE_28
+float feat_28(float x) { return x * 4.0 + sin(x + 0.0); }
+#else
+float feat_28(float x) { return x - 2.0; }
+#endif
+#if FEATURE_29
+float feat_29(float x) { return x * 5.0 + sin(x + 1.0); }
+#else
+float feat_29(float x) { return x - 3.0; }
+#endif
+#if FEATURE_30
+float feat_30(float x) { return x * 1.0 + sin(x + 2.0); }
+#else
+float feat_30(float x) { return x - 1.0; }
+#endif
+#if FEATURE_31
+float feat_31(float x) { return x * 2.0 + sin(x + 3.0); }
+#else
+float feat_31(float x) { return x - 2.0; }
+#endif
+#if FEATURE_32
+float feat_32(float x) { return x * 3.0 + sin(x + 4.0); }
+#else
+float feat_32(float x) { return x - 3.0; }
+#endif
+#if FEATURE_33
+float feat_33(float x) { return x * 4.0 + sin(x + 5.0); }
+#else
+float feat_33(float x) { return x - 1.0; }
+#endif
+#if FEATURE_34
+float feat_34(float x) { return x * 5.0 + sin(x + 6.0); }
+#else
+float feat_34(float x) { return x - 2.0; }
+#endif
+#if FEATURE_35
+float feat_35(float x) { return x * 1.0 + sin(x + 0.0); }
+#else
+float feat_35(float x) { return x - 3.0; }
+#endif
+#if FEATURE_36
+float feat_36(float x) { return x * 2.0 + sin(x + 1.0); }
+#else
+float feat_36(float x) { return x - 1.0; }
+#endif
+#if FEATURE_37
+float feat_37(float x) { return x * 3.0 + sin(x + 2.0); }
+#else
+float feat_37(float x) { return x - 2.0; }
+#endif
+#if FEATURE_38
+float feat_38(float x) { return x * 4.0 + sin(x + 3.0); }
+#else
+float feat_38(float x) { return x - 3.0; }
+#endif
+#if FEATURE_39
+float feat_39(float x) { return x * 5.0 + sin(x + 4.0); }
+#else
+float feat_39(float x) { return x - 1.0; }
+#endif
+#if FEATURE_40
+float feat_40(float x) { return x * 1.0 + sin(x + 5.0); }
+#else
+float feat_40(float x) { return x - 2.0; }
+#endif
+#if FEATURE_41
+float feat_41(float x) { return x * 2.0 + sin(x + 6.0); }
+#else
+float feat_41(float x) { return x - 3.0; }
+#endif
+#if FEATURE_42
+float feat_42(float x) { return x * 3.0 + sin(x + 0.0); }
+#else
+float feat_42(float x) { return x - 1.0; }
+#endif
+#if FEATURE_43
+float feat_43(float x) { return x * 4.0 + sin(x + 1.0); }
+#else
+float feat_43(float x) { return x - 2.0; }
+#endif
+#if FEATURE_44
+float feat_44(float x) { return x * 5.0 + sin(x + 2.0); }
+#else
+float feat_44(float x) { return x - 3.0; }
+#endif
+#if FEATURE_45
+float feat_45(float x) { return x * 1.0 + sin(x + 3.0); }
+#else
+float feat_45(float x) { return x - 1.0; }
+#endif
+#if FEATURE_46
+float feat_46(float x) { return x * 2.0 + sin(x + 4.0); }
+#else
+float feat_46(float x) { return x - 2.0; }
+#endif
+#if FEATURE_47
+float feat_47(float x) { return x * 3.0 + sin(x + 5.0); }
+#else
+float feat_47(float x) { return x - 3.0; }
+#endif
+#if FEATURE_48
+float feat_48(float x) { return x * 4.0 + sin(x + 6.0); }
+#else
+float feat_48(float x) { return x - 1.0; }
+#endif
+#if FEATURE_49
+float feat_49(float x) { return x * 5.0 + sin(x + 0.0); }
+#else
+float feat_49(float x) { return x - 2.0; }
+#endif
+#if FEATURE_50
+float feat_50(float x) { return x * 1.0 + sin(x + 1.0); }
+#else
+float feat_50(float x) { return x - 3.0; }
+#endif
+#if FEATURE_51
+float feat_51(float x) { return x * 2.0 + sin(x + 2.0); }
+#else
+float feat_51(float x) { return x - 1.0; }
+#endif
+#if FEATURE_52
+float feat_52(float x) { return x * 3.0 + sin(x + 3.0); }
+#else
+float feat_52(float x) { return x - 2.0; }
+#endif
+#if FEATURE_53
+float feat_53(float x) { return x * 4.0 + sin(x + 4.0); }
+#else
+float feat_53(float x) { return x - 3.0; }
+#endif
+#if FEATURE_54
+float feat_54(float x) { return x * 5.0 + sin(x + 5.0); }
+#else
+float feat_54(float x) { return x - 1.0; }
+#endif
+#if FEATURE_55
+float feat_55(float x) { return x * 1.0 + sin(x + 6.0); }
+#else
+float feat_55(float x) { return x - 2.0; }
+#endif
+#if FEATURE_56
+float feat_56(float x) { return x * 2.0 + sin(x + 0.0); }
+#else
+float feat_56(float x) { return x - 3.0; }
+#endif
+#if FEATURE_57
+float feat_57(float x) { return x * 3.0 + sin(x + 1.0); }
+#else
+float feat_57(float x) { return x - 1.0; }
+#endif
+#if FEATURE_58
+float feat_58(float x) { return x * 4.0 + sin(x + 2.0); }
+#else
+float feat_58(float x) { return x - 2.0; }
+#endif
+#if FEATURE_59
+float feat_59(float x) { return x * 5.0 + sin(x + 3.0); }
+#else
+float feat_59(float x) { return x - 3.0; }
+#endif
+#if FEATURE_60
+float feat_60(float x) { return x * 1.0 + sin(x + 4.0); }
+#else
+float feat_60(float x) { return x - 1.0; }
+#endif
+#if FEATURE_61
+float feat_61(float x) { return x * 2.0 + sin(x + 5.0); }
+#else
+float feat_61(float x) { return x - 2.0; }
+#endif
+#if FEATURE_62
+float feat_62(float x) { return x * 3.0 + sin(x + 6.0); }
+#else
+float feat_62(float x) { return x - 3.0; }
+#endif
+#if FEATURE_63
+float feat_63(float x) { return x * 4.0 + sin(x + 0.0); }
+#else
+float feat_63(float x) { return x - 1.0; }
+#endif
+#if FEATURE_64
+float feat_64(float x) { return x * 5.0 + sin(x + 1.0); }
+#else
+float feat_64(float x) { return x - 2.0; }
+#endif
+#if FEATURE_65
+float feat_65(float x) { return x * 1.0 + sin(x + 2.0); }
+#else
+float feat_65(float x) { return x - 3.0; }
+#endif
+#if FEATURE_66
+float feat_66(float x) { return x * 2.0 + sin(x + 3.0); }
+#else
+float feat_66(float x) { return x - 1.0; }
+#endif
+#if FEATURE_67
+float feat_67(float x) { return x * 3.0 + sin(x + 4.0); }
+#else
+float feat_67(float x) { return x - 2.0; }
+#endif
+#if FEATURE_68
+float feat_68(float x) { return x * 4.0 + sin(x + 5.0); }
+#else
+float feat_68(float x) { return x - 3.0; }
+#endif
+#if FEATURE_69
+float feat_69(float x) { return x * 5.0 + sin(x + 6.0); }
+#else
+float feat_69(float x) { return x - 1.0; }
+#endif
+#if FEATURE_70
+float feat_70(float x) { return x * 1.0 + sin(x + 0.0); }
+#else
+float feat_70(float x) { return x - 2.0; }
+#endif
+#if FEATURE_71
+float feat_71(float x) { return x * 2.0 + sin(x + 1.0); }
+#else
+float feat_71(float x) { return x - 3.0; }
+#endif
+#if FEATURE_72
+float feat_72(float x) { return x * 3.0 + sin(x + 2.0); }
+#else
+float feat_72(float x) { return x - 1.0; }
+#endif
+#if FEATURE_73
+float feat_73(float x) { return x * 4.0 + sin(x + 3.0); }
+#else
+float feat_73(float x) { return x - 2.0; }
+#endif
+#if FEATURE_74
+float feat_74(float x) { return x * 5.0 + sin(x + 4.0); }
+#else
+float feat_74(float x) { return x - 3.0; }
+#endif
+#if FEATURE_75
+float feat_75(float x) { return x * 1.0 + sin(x + 5.0); }
+#else
+float feat_75(float x) { return x - 1.0; }
+#endif
+#if FEATURE_76
+float feat_76(float x) { return x * 2.0 + sin(x + 6.0); }
+#else
+float feat_76(float x) { return x - 2.0; }
+#endif
+#if FEATURE_77
+float feat_77(float x) { return x * 3.0 + sin(x + 0.0); }
+#else
+float feat_77(float x) { return x - 3.0; }
+#endif
+#if FEATURE_78
+float feat_78(float x) { return x * 4.0 + sin(x + 1.0); }
+#else
+float feat_78(float x) { return x - 1.0; }
+#endif
+#if FEATURE_79
+float feat_79(float x) { return x * 5.0 + sin(x + 2.0); }
+#else
+float feat_79(float x) { return x - 2.0; }
+#endif
+#if FEATURE_80
+float feat_80(float x) { return x * 1.0 + sin(x + 3.0); }
+#else
+float feat_80(float x) { return x - 3.0; }
+#endif
+#if FEATURE_81
+float feat_81(float x) { return x * 2.0 + sin(x + 4.0); }
+#else
+float feat_81(float x) { return x - 1.0; }
+#endif
+#if FEATURE_82
+float feat_82(float x) { return x * 3.0 + sin(x + 5.0); }
+#else
+float feat_82(float x) { return x - 2.0; }
+#endif
+#if FEATURE_83
+float feat_83(float x) { return x * 4.0 + sin(x + 6.0); }
+#else
+float feat_83(float x) { return x - 3.0; }
+#endif
+#if FEATURE_84
+float feat_84(float x) { return x * 5.0 + sin(x + 0.0); }
+#else
+float feat_84(float x) { return x - 1.0; }
+#endif
+#if FEATURE_85
+float feat_85(float x) { return x * 1.0 + sin(x + 1.0); }
+#else
+float feat_85(float x) { return x - 2.0; }
+#endif
+#if FEATURE_86
+float feat_86(float x) { return x * 2.0 + sin(x + 2.0); }
+#else
+float feat_86(float x) { return x - 3.0; }
+#endif
+#if FEATURE_87
+float feat_87(float x) { return x * 3.0 + sin(x + 3.0); }
+#else
+float feat_87(float x) { return x - 1.0; }
+#endif
+#if FEATURE_88
+float feat_88(float x) { return x * 4.0 + sin(x + 4.0); }
+#else
+float feat_88(float x) { return x - 2.0; }
+#endif
+#if FEATURE_89
+float feat_89(float x) { return x * 5.0 + sin(x + 5.0); }
+#else
+float feat_89(float x) { return x - 3.0; }
+#endif
+#if FEATURE_90
+float feat_90(float x) { return x * 1.0 + sin(x + 6.0); }
+#else
+float feat_90(float x) { return x - 1.0; }
+#endif
+#if FEATURE_91
+float feat_91(float x) { return x * 2.0 + sin(x + 0.0); }
+#else
+float feat_91(float x) { return x - 2.0; }
+#endif
+#if FEATURE_92
+float feat_92(float x) { return x * 3.0 + sin(x + 1.0); }
+#else
+float feat_92(float x) { return x - 3.0; }
+#endif
+#if FEATURE_93
+float feat_93(float x) { return x * 4.0 + sin(x + 2.0); }
+#else
+float feat_93(float x) { return x - 1.0; }
+#endif
+#if FEATURE_94
+float feat_94(float x) { return x * 5.0 + sin(x + 3.0); }
+#else
+float feat_94(float x) { return x - 2.0; }
+#endif
+#if FEATURE_95
+float feat_95(float x) { return x * 1.0 + sin(x + 4.0); }
+#else
+float feat_95(float x) { return x - 3.0; }
+#endif
+#if FEATURE_96
+float feat_96(float x) { return x * 2.0 + sin(x + 5.0); }
+#else
+float feat_96(float x) { return x - 1.0; }
+#endif
+#if FEATURE_97
+float feat_97(float x) { return x * 3.0 + sin(x + 6.0); }
+#else
+float feat_97(float x) { return x - 2.0; }
+#endif
+#if FEATURE_98
+float feat_98(float x) { return x * 4.0 + sin(x + 0.0); }
+#else
+float feat_98(float x) { return x - 3.0; }
+#endif
+#if FEATURE_99
+float feat_99(float x) { return x * 5.0 + sin(x + 1.0); }
+#else
+float feat_99(float x) { return x - 1.0; }
+#endif
+#if FEATURE_100
+float feat_100(float x) { return x * 1.0 + sin(x + 2.0); }
+#else
+float feat_100(float x) { return x - 2.0; }
+#endif
+#if FEATURE_101
+float feat_101(float x) { return x * 2.0 + sin(x + 3.0); }
+#else
+float feat_101(float x) { return x - 3.0; }
+#endif
+#if FEATURE_102
+float feat_102(float x) { return x * 3.0 + sin(x + 4.0); }
+#else
+float feat_102(float x) { return x - 1.0; }
+#endif
+#if FEATURE_103
+float feat_103(float x) { return x * 4.0 + sin(x + 5.0); }
+#else
+float feat_103(float x) { return x - 2.0; }
+#endif
+#if FEATURE_104
+float feat_104(float x) { return x * 5.0 + sin(x + 6.0); }
+#else
+float feat_104(float x) { return x - 3.0; }
+#endif
+#if FEATURE_105
+float feat_105(float x) { return x * 1.0 + sin(x + 0.0); }
+#else
+float feat_105(float x) { return x - 1.0; }
+#endif
+#if FEATURE_106
+float feat_106(float x) { return x * 2.0 + sin(x + 1.0); }
+#else
+float feat_106(float x) { return x - 2.0; }
+#endif
+#if FEATURE_107
+float feat_107(float x) { return x * 3.0 + sin(x + 2.0); }
+#else
+float feat_107(float x) { return x - 3.0; }
+#endif
+#if FEATURE_108
+float feat_108(float x) { return x * 4.0 + sin(x + 3.0); }
+#else
+float feat_108(float x) { return x - 1.0; }
+#endif
+#if FEATURE_109
+float feat_109(float x) { return x * 5.0 + sin(x + 4.0); }
+#else
+float feat_109(float x) { return x - 2.0; }
+#endif
+#if FEATURE_110
+float feat_110(float x) { return x * 1.0 + sin(x + 5.0); }
+#else
+float feat_110(float x) { return x - 3.0; }
+#endif
+#if FEATURE_111
+float feat_111(float x) { return x * 2.0 + sin(x + 6.0); }
+#else
+float feat_111(float x) { return x - 1.0; }
+#endif
+#if FEATURE_112
+float feat_112(float x) { return x * 3.0 + sin(x + 0.0); }
+#else
+float feat_112(float x) { return x - 2.0; }
+#endif
+#if FEATURE_113
+float feat_113(float x) { return x * 4.0 + sin(x + 1.0); }
+#else
+float feat_113(float x) { return x - 3.0; }
+#endif
+#if FEATURE_114
+float feat_114(float x) { return x * 5.0 + sin(x + 2.0); }
+#else
+float feat_114(float x) { return x - 1.0; }
+#endif
+#if FEATURE_115
+float feat_115(float x) { return x * 1.0 + sin(x + 3.0); }
+#else
+float feat_115(float x) { return x - 2.0; }
+#endif
+#if FEATURE_116
+float feat_116(float x) { return x * 2.0 + sin(x + 4.0); }
+#else
+float feat_116(float x) { return x - 3.0; }
+#endif
+#if FEATURE_117
+float feat_117(float x) { return x * 3.0 + sin(x + 5.0); }
+#else
+float feat_117(float x) { return x - 1.0; }
+#endif
+#if FEATURE_118
+float feat_118(float x) { return x * 4.0 + sin(x + 6.0); }
+#else
+float feat_118(float x) { return x - 2.0; }
+#endif
+#if FEATURE_119
+float feat_119(float x) { return x * 5.0 + sin(x + 0.0); }
+#else
+float feat_119(float x) { return x - 3.0; }
+#endif
+#if FEATURE_120
+float feat_120(float x) { return x * 1.0 + sin(x + 1.0); }
+#else
+float feat_120(float x) { return x - 1.0; }
+#endif
+#if FEATURE_121
+float feat_121(float x) { return x * 2.0 + sin(x + 2.0); }
+#else
+float feat_121(float x) { return x - 2.0; }
+#endif
+#if FEATURE_122
+float feat_122(float x) { return x * 3.0 + sin(x + 3.0); }
+#else
+float feat_122(float x) { return x - 3.0; }
+#endif
+#if FEATURE_123
+float feat_123(float x) { return x * 4.0 + sin(x + 4.0); }
+#else
+float feat_123(float x) { return x - 1.0; }
+#endif
+#if FEATURE_124
+float feat_124(float x) { return x * 5.0 + sin(x + 5.0); }
+#else
+float feat_124(float x) { return x - 2.0; }
+#endif
+#if FEATURE_125
+float feat_125(float x) { return x * 1.0 + sin(x + 6.0); }
+#else
+float feat_125(float x) { return x - 3.0; }
+#endif
+#if FEATURE_126
+float feat_126(float x) { return x * 2.0 + sin(x + 0.0); }
+#else
+float feat_126(float x) { return x - 1.0; }
+#endif
+#if FEATURE_127
+float feat_127(float x) { return x * 3.0 + sin(x + 1.0); }
+#else
+float feat_127(float x) { return x - 2.0; }
+#endif
+#if FEATURE_128
+float feat_128(float x) { return x * 4.0 + sin(x + 2.0); }
+#else
+float feat_128(float x) { return x - 3.0; }
+#endif
+#if FEATURE_129
+float feat_129(float x) { return x * 5.0 + sin(x + 3.0); }
+#else
+float feat_129(float x) { return x - 1.0; }
+#endif
+#if FEATURE_130
+float feat_130(float x) { return x * 1.0 + sin(x + 4.0); }
+#else
+float feat_130(float x) { return x - 2.0; }
+#endif
+#if FEATURE_131
+float feat_131(float x) { return x * 2.0 + sin(x + 5.0); }
+#else
+float feat_131(float x) { return x - 3.0; }
+#endif
+#if FEATURE_132
+float feat_132(float x) { return x * 3.0 + sin(x + 6.0); }
+#else
+float feat_132(float x) { return x - 1.0; }
+#endif
+#if FEATURE_133
+float feat_133(float x) { return x * 4.0 + sin(x + 0.0); }
+#else
+float feat_133(float x) { return x - 2.0; }
+#endif
+#if FEATURE_134
+float feat_134(float x) { return x * 5.0 + sin(x + 1.0); }
+#else
+float feat_134(float x) { return x - 3.0; }
+#endif
+#if FEATURE_135
+float feat_135(float x) { return x * 1.0 + sin(x + 2.0); }
+#else
+float feat_135(float x) { return x - 1.0; }
+#endif
+#if FEATURE_136
+float feat_136(float x) { return x * 2.0 + sin(x + 3.0); }
+#else
+float feat_136(float x) { return x - 2.0; }
+#endif
+#if FEATURE_137
+float feat_137(float x) { return x * 3.0 + sin(x + 4.0); }
+#else
+float feat_137(float x) { return x - 3.0; }
+#endif
+#if FEATURE_138
+float feat_138(float x) { return x * 4.0 + sin(x + 5.0); }
+#else
+float feat_138(float x) { return x - 1.0; }
+#endif
+#if FEATURE_139
+float feat_139(float x) { return x * 5.0 + sin(x + 6.0); }
+#else
+float feat_139(float x) { return x - 2.0; }
+#endif
+#if FEATURE_140
+float feat_140(float x) { return x * 1.0 + sin(x + 0.0); }
+#else
+float feat_140(float x) { return x - 3.0; }
+#endif
+#if FEATURE_141
+float feat_141(float x) { return x * 2.0 + sin(x + 1.0); }
+#else
+float feat_141(float x) { return x - 1.0; }
+#endif
+#if FEATURE_142
+float feat_142(float x) { return x * 3.0 + sin(x + 2.0); }
+#else
+float feat_142(float x) { return x - 2.0; }
+#endif
+#if FEATURE_143
+float feat_143(float x) { return x * 4.0 + sin(x + 3.0); }
+#else
+float feat_143(float x) { return x - 3.0; }
+#endif
+#if FEATURE_144
+float feat_144(float x) { return x * 5.0 + sin(x + 4.0); }
+#else
+float feat_144(float x) { return x - 1.0; }
+#endif
+#if FEATURE_145
+float feat_145(float x) { return x * 1.0 + sin(x + 5.0); }
+#else
+float feat_145(float x) { return x - 2.0; }
+#endif
+#if FEATURE_146
+float feat_146(float x) { return x * 2.0 + sin(x + 6.0); }
+#else
+float feat_146(float x) { return x - 3.0; }
+#endif
+#if FEATURE_147
+float feat_147(float x) { return x * 3.0 + sin(x + 0.0); }
+#else
+float feat_147(float x) { return x - 1.0; }
+#endif
+#if FEATURE_148
+float feat_148(float x) { return x * 4.0 + sin(x + 1.0); }
+#else
+float feat_148(float x) { return x - 2.0; }
+#endif
+#if FEATURE_149
+float feat_149(float x) { return x * 5.0 + sin(x + 2.0); }
+#else
+float feat_149(float x) { return x - 3.0; }
+#endif
+#if FEATURE_150
+float feat_150(float x) { return x * 1.0 + sin(x + 3.0); }
+#else
+float feat_150(float x) { return x - 1.0; }
+#endif
+#if FEATURE_151
+float feat_151(float x) { return x * 2.0 + sin(x + 4.0); }
+#else
+float feat_151(float x) { return x - 2.0; }
+#endif
+#if FEATURE_152
+float feat_152(float x) { return x * 3.0 + sin(x + 5.0); }
+#else
+float feat_152(float x) { return x - 3.0; }
+#endif
+#if FEATURE_153
+float feat_153(float x) { return x * 4.0 + sin(x + 6.0); }
+#else
+float feat_153(float x) { return x - 1.0; }
+#endif
+#if FEATURE_154
+float feat_154(float x) { return x * 5.0 + sin(x + 0.0); }
+#else
+float feat_154(float x) { return x - 2.0; }
+#endif
+#if FEATURE_155
+float feat_155(float x) { return x * 1.0 + sin(x + 1.0); }
+#else
+float feat_155(float x) { return x - 3.0; }
+#endif
+#if FEATURE_156
+float feat_156(float x) { return x * 2.0 + sin(x + 2.0); }
+#else
+float feat_156(float x) { return x - 1.0; }
+#endif
+#if FEATURE_157
+float feat_157(float x) { return x * 3.0 + sin(x + 3.0); }
+#else
+float feat_157(float x) { return x - 2.0; }
+#endif
+#if FEATURE_158
+float feat_158(float x) { return x * 4.0 + sin(x + 4.0); }
+#else
+float feat_158(float x) { return x - 3.0; }
+#endif
+#if FEATURE_159
+float feat_159(float x) { return x * 5.0 + sin(x + 5.0); }
+#else
+float feat_159(float x) { return x - 1.0; }
+#endif
+#if FEATURE_160
+float feat_160(float x) { return x * 1.0 + sin(x + 6.0); }
+#else
+float feat_160(float x) { return x - 2.0; }
+#endif
+#if FEATURE_161
+float feat_161(float x) { return x * 2.0 + sin(x + 0.0); }
+#else
+float feat_161(float x) { return x - 3.0; }
+#endif
+#if FEATURE_162
+float feat_162(float x) { return x * 3.0 + sin(x + 1.0); }
+#else
+float feat_162(float x) { return x - 1.0; }
+#endif
+#if FEATURE_163
+float feat_163(float x) { return x * 4.0 + sin(x + 2.0); }
+#else
+float feat_163(float x) { return x - 2.0; }
+#endif
+#if FEATURE_164
+float feat_164(float x) { return x * 5.0 + sin(x + 3.0); }
+#else
+float feat_164(float x) { return x - 3.0; }
+#endif
+#if FEATURE_165
+float feat_165(float x) { return x * 1.0 + sin(x + 4.0); }
+#else
+float feat_165(float x) { return x - 1.0; }
+#endif
+#if FEATURE_166
+float feat_166(float x) { return x * 2.0 + sin(x + 5.0); }
+#else
+float feat_166(float x) { return x - 2.0; }
+#endif
+#if FEATURE_167
+float feat_167(float x) { return x * 3.0 + sin(x + 6.0); }
+#else
+float feat_167(float x) { return x - 3.0; }
+#endif
+#if FEATURE_168
+float feat_168(float x) { return x * 4.0 + sin(x + 0.0); }
+#else
+float feat_168(float x) { return x - 1.0; }
+#endif
+#if FEATURE_169
+float feat_169(float x) { return x * 5.0 + sin(x + 1.0); }
+#else
+float feat_169(float x) { return x - 2.0; }
+#endif
+#if FEATURE_170
+float feat_170(float x) { return x * 1.0 + sin(x + 2.0); }
+#else
+float feat_170(float x) { return x - 3.0; }
+#endif
+#if FEATURE_171
+float feat_171(float x) { return x * 2.0 + sin(x + 3.0); }
+#else
+float feat_171(float x) { return x - 1.0; }
+#endif
+#if FEATURE_172
+float feat_172(float x) { return x * 3.0 + sin(x + 4.0); }
+#else
+float feat_172(float x) { return x - 2.0; }
+#endif
+#if FEATURE_173
+float feat_173(float x) { return x * 4.0 + sin(x + 5.0); }
+#else
+float feat_173(float x) { return x - 3.0; }
+#endif
+#if FEATURE_174
+float feat_174(float x) { return x * 5.0 + sin(x + 6.0); }
+#else
+float feat_174(float x) { return x - 1.0; }
+#endif
+#if FEATURE_175
+float feat_175(float x) { return x * 1.0 + sin(x + 0.0); }
+#else
+float feat_175(float x) { return x - 2.0; }
+#endif
+#if FEATURE_176
+float feat_176(float x) { return x * 2.0 + sin(x + 1.0); }
+#else
+float feat_176(float x) { return x - 3.0; }
+#endif
+#if FEATURE_177
+float feat_177(float x) { return x * 3.0 + sin(x + 2.0); }
+#else
+float feat_177(float x) { return x - 1.0; }
+#endif
+#if FEATURE_178
+float feat_178(float x) { return x * 4.0 + sin(x + 3.0); }
+#else
+float feat_178(float x) { return x - 2.0; }
+#endif
+#if FEATURE_179
+float feat_179(float x) { return x * 5.0 + sin(x + 4.0); }
+#else
+float feat_179(float x) { return x - 3.0; }
+#endif
+#if FEATURE_180
+float feat_180(float x) { return x * 1.0 + sin(x + 5.0); }
+#else
+float feat_180(float x) { return x - 1.0; }
+#endif
+#if FEATURE_181
+float feat_181(float x) { return x * 2.0 + sin(x + 6.0); }
+#else
+float feat_181(float x) { return x - 2.0; }
+#endif
+#if FEATURE_182
+float feat_182(float x) { return x * 3.0 + sin(x + 0.0); }
+#else
+float feat_182(float x) { return x - 3.0; }
+#endif
+#if FEATURE_183
+float feat_183(float x) { return x * 4.0 + sin(x + 1.0); }
+#else
+float feat_183(float x) { return x - 1.0; }
+#endif
+#if FEATURE_184
+float feat_184(float x) { return x * 5.0 + sin(x + 2.0); }
+#else
+float feat_184(float x) { return x - 2.0; }
+#endif
+#if FEATURE_185
+float feat_185(float x) { return x * 1.0 + sin(x + 3.0); }
+#else
+float feat_185(float x) { return x - 3.0; }
+#endif
+#if FEATURE_186
+float feat_186(float x) { return x * 2.0 + sin(x + 4.0); }
+#else
+float feat_186(float x) { return x - 1.0; }
+#endif
+#if FEATURE_187
+float feat_187(float x) { return x * 3.0 + sin(x + 5.0); }
+#else
+float feat_187(float x) { return x - 2.0; }
+#endif
+#if FEATURE_188
+float feat_188(float x) { return x * 4.0 + sin(x + 6.0); }
+#else
+float feat_188(float x) { return x - 3.0; }
+#endif
+#if FEATURE_189
+float feat_189(float x) { return x * 5.0 + sin(x + 0.0); }
+#else
+float feat_189(float x) { return x - 1.0; }
+#endif
+#if FEATURE_190
+float feat_190(float x) { return x * 1.0 + sin(x + 1.0); }
+#else
+float feat_190(float x) { return x - 2.0; }
+#endif
+#if FEATURE_191
+float feat_191(float x) { return x * 2.0 + sin(x + 2.0); }
+#else
+float feat_191(float x) { return x - 3.0; }
+#endif
+#if FEATURE_192
+float feat_192(float x) { return x * 3.0 + sin(x + 3.0); }
+#else
+float feat_192(float x) { return x - 1.0; }
+#endif
+#if FEATURE_193
+float feat_193(float x) { return x * 4.0 + sin(x + 4.0); }
+#else
+float feat_193(float x) { return x - 2.0; }
+#endif
+#if FEATURE_194
+float feat_194(float x) { return x * 5.0 + sin(x + 5.0); }
+#else
+float feat_194(float x) { return x - 3.0; }
+#endif
+#if FEATURE_195
+float feat_195(float x) { return x * 1.0 + sin(x + 6.0); }
+#else
+float feat_195(float x) { return x - 1.0; }
+#endif
+#if FEATURE_196
+float feat_196(float x) { return x * 2.0 + sin(x + 0.0); }
+#else
+float feat_196(float x) { return x - 2.0; }
+#endif
+#if FEATURE_197
+float feat_197(float x) { return x * 3.0 + sin(x + 1.0); }
+#else
+float feat_197(float x) { return x - 3.0; }
+#endif
+#if FEATURE_198
+float feat_198(float x) { return x * 4.0 + sin(x + 2.0); }
+#else
+float feat_198(float x) { return x - 1.0; }
+#endif
+#if FEATURE_199
+float feat_199(float x) { return x * 5.0 + sin(x + 3.0); }
+#else
+float feat_199(float x) { return x - 2.0; }
+#endif
+
+[shader("compute")]
+[numthreads(1,1,1)]
+void computeMain()
+{
+    float acc = outBuf[0];
+    acc = feat_0(acc);
+    acc = feat_1(acc);
+    acc = feat_2(acc);
+    acc = feat_3(acc);
+    acc = feat_4(acc);
+    acc = feat_5(acc);
+    acc = feat_6(acc);
+    acc = feat_7(acc);
+    acc = feat_8(acc);
+    acc = feat_9(acc);
+    acc = feat_10(acc);
+    acc = feat_11(acc);
+    acc = feat_12(acc);
+    acc = feat_13(acc);
+    acc = feat_14(acc);
+    acc = feat_15(acc);
+    acc = feat_16(acc);
+    acc = feat_17(acc);
+    acc = feat_18(acc);
+    acc = feat_19(acc);
+    acc = feat_20(acc);
+    acc = feat_21(acc);
+    acc = feat_22(acc);
+    acc = feat_23(acc);
+    acc = feat_24(acc);
+    acc = feat_25(acc);
+    acc = feat_26(acc);
+    acc = feat_27(acc);
+    acc = feat_28(acc);
+    acc = feat_29(acc);
+    acc = feat_30(acc);
+    acc = feat_31(acc);
+    acc = feat_32(acc);
+    acc = feat_33(acc);
+    acc = feat_34(acc);
+    acc = feat_35(acc);
+    acc = feat_36(acc);
+    acc = feat_37(acc);
+    acc = feat_38(acc);
+    acc = feat_39(acc);
+    acc = feat_40(acc);
+    acc = feat_41(acc);
+    acc = feat_42(acc);
+    acc = feat_43(acc);
+    acc = feat_44(acc);
+    acc = feat_45(acc);
+    acc = feat_46(acc);
+    acc = feat_47(acc);
+    acc = feat_48(acc);
+    acc = feat_49(acc);
+    acc = feat_50(acc);
+    acc = feat_51(acc);
+    acc = feat_52(acc);
+    acc = feat_53(acc);
+    acc = feat_54(acc);
+    acc = feat_55(acc);
+    acc = feat_56(acc);
+    acc = feat_57(acc);
+    acc = feat_58(acc);
+    acc = feat_59(acc);
+    acc = feat_60(acc);
+    acc = feat_61(acc);
+    acc = feat_62(acc);
+    acc = feat_63(acc);
+    outBuf[0] = acc;
+}
+</pre></div><script>
+document.addEventListener('click', function (ev) {
+  var btn = ev.target.closest && ev.target.closest('button.copy');
+  if (!btn) return;
+  var el = document.getElementById(btn.getAttribute('data-copy'));
+  if (!el) return;
+  var text = el.textContent;
+  function flash(ok) {
+    btn.textContent = ok ? 'Copied' : 'Press Ctrl+C';
+    if (ok) btn.setAttribute('data-done', '1');
+    setTimeout(function () {
+      btn.textContent = 'Copy'; btn.removeAttribute('data-done');
+    }, 1400);
+  }
+  function fallback() {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta); flash(ok);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () { flash(true); }, fallback);
+  } else {
+    fallback();
+  }
+});
+</script></body>

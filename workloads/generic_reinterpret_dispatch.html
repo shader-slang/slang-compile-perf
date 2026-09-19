@@ -1,0 +1,327 @@
+<!doctype html><meta charset=utf-8><title>generic_reinterpret_dispatch — phase breakdown</title><style>
+.cbox{position:relative}
+.cbox>button.copy{position:absolute;top:8px;right:8px;z-index:1;
+  font:11px/1 -apple-system,Segoe UI,Roboto,sans-serif;padding:5px 9px;
+  color:#24292f;background:#fff;border:1px solid #d0d7de;border-radius:5px;
+  cursor:pointer;opacity:.75}
+.cbox>button.copy:hover{opacity:1;background:#f3f4f6}
+.cbox>button.copy[data-done]{color:#1a7f37;border-color:#1a7f37}
+</style><body style='font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;color:#1a1a1a;max-width:1180px'><p><a href='../index.html'>&larr; back</a></p><h1 style='font-size:21px;margin:0 0 6px'>generic_reinterpret_dispatch</h1><p style='color:#444;max-width:900px;white-space:pre-wrap'>An n-slot "tagged stack" mirroring MaterialX's `MxStackData` pattern: a
+fixed struct with `n` fields, each a DISTINCT concrete implementation of an
+`[anyValueSize(...)]` interface, and one generic `setSlot&lt;T : IShade&gt;(int
+slot, T value)` that reinterprets `value` into the concrete slot type
+selected by `slot` inside an n-way switch -- the same shape as real
+MaterialX-generated code's `set_bsdf&lt;TBSDF : IBSDF&gt;(int bsdf_index, TBSDF
+bsdf)`, which does `reinterpret&lt;ConcreteType, TBSDF&gt;(bsdf)` per case to
+store one of ~11 differently-typed BSDF slots (e.g.
+`MxCompensatedDielectricBSDF&lt;MxDielectricFresnel,
+MxTurquinAnalyticDielectricCompensation, MxScatterStaticRMode&gt;`, 2-3
+levels of nested generic composition) into a common-layout stack struct.
+
+This is distinct from every existing generic/dispatch workload:
+`generic_nesting` self-nests ONE type N levels deep (a chain, not N
+distinct slot types); `dynamic_dispatch`/`existential_aggregate` dispatch
+through a witness table with trivial non-generic implementations and never
+call `reinterpret`. Here every slot is a separately-generated concrete
+type, and writing into it requires the compiler to validate
+`reinterpret`'s size equality across `n` distinct generic specializations
+each reached through a switch, stressing specializeModule and the
+reinterpret lowering path (`kIROp_Reinterpret`) together at the same
+breadth other dispatch workloads test for witness tables alone.
+
+Scaling null: `setSlot&lt;T&gt;` is specialized once per distinct slot type (n
+specializations), and each specialization contains the full n-case
+switch, so the workload's OWN generated-code size is O(n^2) by
+construction (unlike this suite's other breadth workloads, which are
+O(n)) -- that quadratic floor is the honest baseline to compare a sweep
+against, not O(n).
+
+THIS IS THE ONE PLACE the open finding's measured figures live; the
+WorkloadSpec comment in manifest.py points back here rather than
+restating them, so the two cannot drift apart. Measured at n=8/16/32
+(2026-09, Release, local, inside this workload's registered sweep_sizes)
+plus one point at n=64 taken manually BEYOND the default sweep (not
+reproducible from the checked-in ladder -- n=64 would add ~2.4s per
+sample to every nightly run, so it is reported here rather than swept by
+default): compileInner 34/91/406/2370 ms, i.e. roughly 2.7x/4.5x/5.8x per
+doubling -- growing FASTER than the O(n^2) floor already predicts, and at
+n=64 dominated by ~2352ms of `generateOutput` cost against well under
+half that summed across every visible leaf timer (linkAndOptimizeIR,
+specializeModule, lowerReinterpret, simplifyIR). Not yet root-caused;
+filed as shader-slang/slang#13016, which is authoritative for the LIVE
+figures if this compiler-behavior finding advances -- treat the numbers
+above as the state as of this PR, not a promise they still hold.</p><p style='color:#666;font-size:13px'><b>bucket:</b> specialization &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 16</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="716" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">generic_reinterpret_dispatch — Daily tip-of-tree (last 30 days) (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">generic_reinterpret_dispatch<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">54</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">108</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">08-21</text>
+<line x1="103.9" y1="516.0" x2="103.9" y2="519.0" stroke="#999"/>
+<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">08-22</text>
+<line x1="139.7" y1="516.0" x2="139.7" y2="519.0" stroke="#999"/>
+<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">08-23</text>
+<line x1="175.6" y1="516.0" x2="175.6" y2="519.0" stroke="#999"/>
+<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">08-24</text>
+<line x1="211.4" y1="516.0" x2="211.4" y2="519.0" stroke="#999"/>
+<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">08-25</text>
+<line x1="247.3" y1="516.0" x2="247.3" y2="519.0" stroke="#999"/>
+<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">08-26</text>
+<line x1="283.2" y1="516.0" x2="283.2" y2="519.0" stroke="#999"/>
+<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">08-27</text>
+<line x1="319.0" y1="516.0" x2="319.0" y2="519.0" stroke="#999"/>
+<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">08-28</text>
+<line x1="354.9" y1="516.0" x2="354.9" y2="519.0" stroke="#999"/>
+<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">08-29</text>
+<line x1="390.8" y1="516.0" x2="390.8" y2="519.0" stroke="#999"/>
+<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">08-30</text>
+<line x1="426.6" y1="516.0" x2="426.6" y2="519.0" stroke="#999"/>
+<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">08-31</text>
+<line x1="462.5" y1="516.0" x2="462.5" y2="519.0" stroke="#999"/>
+<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">09-01</text>
+<line x1="498.3" y1="516.0" x2="498.3" y2="519.0" stroke="#999"/>
+<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-02</text>
+<line x1="534.2" y1="516.0" x2="534.2" y2="519.0" stroke="#999"/>
+<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-03</text>
+<line x1="570.1" y1="516.0" x2="570.1" y2="519.0" stroke="#999"/>
+<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-04</text>
+<line x1="605.9" y1="516.0" x2="605.9" y2="519.0" stroke="#999"/>
+<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-05</text>
+<line x1="641.8" y1="516.0" x2="641.8" y2="519.0" stroke="#999"/>
+<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-06</text>
+<line x1="677.7" y1="516.0" x2="677.7" y2="519.0" stroke="#999"/>
+<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-07</text>
+<line x1="713.5" y1="516.0" x2="713.5" y2="519.0" stroke="#999"/>
+<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-08</text>
+<line x1="749.4" y1="516.0" x2="749.4" y2="519.0" stroke="#999"/>
+<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-09</text>
+<line x1="785.2" y1="516.0" x2="785.2" y2="519.0" stroke="#999"/>
+<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-10</text>
+<line x1="821.1" y1="516.0" x2="821.1" y2="519.0" stroke="#999"/>
+<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-11</text>
+<line x1="857.0" y1="516.0" x2="857.0" y2="519.0" stroke="#999"/>
+<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-12</text>
+<line x1="892.8" y1="516.0" x2="892.8" y2="519.0" stroke="#999"/>
+<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-13</text>
+<line x1="928.7" y1="516.0" x2="928.7" y2="519.0" stroke="#999"/>
+<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-14</text>
+<line x1="964.6" y1="516.0" x2="964.6" y2="519.0" stroke="#999"/>
+<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-15</text>
+<line x1="1000.4" y1="516.0" x2="1000.4" y2="519.0" stroke="#999"/>
+<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-16</text>
+<line x1="1036.3" y1="516.0" x2="1036.3" y2="519.0" stroke="#999"/>
+<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-17</text>
+<line x1="1072.1" y1="516.0" x2="1072.1" y2="519.0" stroke="#999"/>
+<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-18</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-19</text>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#3f007d"/>
+<text x="28" y="650" fill="#222">deferBufferLoad</text>
+<rect x="289" y="640" width="12" height="12" fill="#54278f"/>
+<text x="305" y="650" fill="#222">simplifyNonSSAIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#9970ab"/>
+<text x="582" y="650" fill="#222">lowerCombinedTextureSamplers</text>
+<rect x="843" y="640" width="12" height="12" fill="#c2a5cf"/>
+<text x="859" y="650" fill="#222">legalizeMatrixTypes</text>
+<rect x="12" y="658" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="668" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="658" width="12" height="12" fill="#fdd0a2"/>
+<text x="305" y="668" fill="#222">emitEntryPointsSourceFromIR (self)</text>
+<rect x="566" y="658" width="12" height="12" fill="#fd8d3c"/>
+<text x="582" y="668" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="843" y="658" width="12" height="12" fill="#e6550d"/>
+<text x="859" y="668" fill="#222">generateOutput (self)</text>
+<rect x="12" y="676" width="12" height="12" fill="#969696"/>
+<text x="28" y="686" fill="#222">compileInner (self)</text>
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only generic_reinterpret_dispatch --label repro --gen-dir repro-generic_reinterpret_dispatch</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 16), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>generic_reinterpret_dispatch.slang <span style='font-weight:400;color:#888'>(130 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+RWStructuredBuffer&lt;float&gt; outBuf;
+
+[anyValueSize(16)]
+interface IShade { float shade(float x); }
+
+struct Wrap0 : IShade { float a; float b; float shade(float x) { return x * a + b * 1.0; } }
+struct Wrap1 : IShade { float a; float b; float shade(float x) { return x * a + b * 2.0; } }
+struct Wrap2 : IShade { float a; float b; float shade(float x) { return x * a + b * 3.0; } }
+struct Wrap3 : IShade { float a; float b; float shade(float x) { return x * a + b * 4.0; } }
+struct Wrap4 : IShade { float a; float b; float shade(float x) { return x * a + b * 5.0; } }
+struct Wrap5 : IShade { float a; float b; float shade(float x) { return x * a + b * 1.0; } }
+struct Wrap6 : IShade { float a; float b; float shade(float x) { return x * a + b * 2.0; } }
+struct Wrap7 : IShade { float a; float b; float shade(float x) { return x * a + b * 3.0; } }
+struct Wrap8 : IShade { float a; float b; float shade(float x) { return x * a + b * 4.0; } }
+struct Wrap9 : IShade { float a; float b; float shade(float x) { return x * a + b * 5.0; } }
+struct Wrap10 : IShade { float a; float b; float shade(float x) { return x * a + b * 1.0; } }
+struct Wrap11 : IShade { float a; float b; float shade(float x) { return x * a + b * 2.0; } }
+struct Wrap12 : IShade { float a; float b; float shade(float x) { return x * a + b * 3.0; } }
+struct Wrap13 : IShade { float a; float b; float shade(float x) { return x * a + b * 4.0; } }
+struct Wrap14 : IShade { float a; float b; float shade(float x) { return x * a + b * 5.0; } }
+struct Wrap15 : IShade { float a; float b; float shade(float x) { return x * a + b * 1.0; } }
+
+struct Stack
+{
+    Wrap0 slot0;
+    Wrap1 slot1;
+    Wrap2 slot2;
+    Wrap3 slot3;
+    Wrap4 slot4;
+    Wrap5 slot5;
+    Wrap6 slot6;
+    Wrap7 slot7;
+    Wrap8 slot8;
+    Wrap9 slot9;
+    Wrap10 slot10;
+    Wrap11 slot11;
+    Wrap12 slot12;
+    Wrap13 slot13;
+    Wrap14 slot14;
+    Wrap15 slot15;
+}
+
+void setSlot&lt;T : IShade&gt;(inout Stack st, int slot, T value)
+{
+    switch (slot)
+    {
+    case 0: st.slot0 = reinterpret&lt;Wrap0, T&gt;(value); break;
+    case 1: st.slot1 = reinterpret&lt;Wrap1, T&gt;(value); break;
+    case 2: st.slot2 = reinterpret&lt;Wrap2, T&gt;(value); break;
+    case 3: st.slot3 = reinterpret&lt;Wrap3, T&gt;(value); break;
+    case 4: st.slot4 = reinterpret&lt;Wrap4, T&gt;(value); break;
+    case 5: st.slot5 = reinterpret&lt;Wrap5, T&gt;(value); break;
+    case 6: st.slot6 = reinterpret&lt;Wrap6, T&gt;(value); break;
+    case 7: st.slot7 = reinterpret&lt;Wrap7, T&gt;(value); break;
+    case 8: st.slot8 = reinterpret&lt;Wrap8, T&gt;(value); break;
+    case 9: st.slot9 = reinterpret&lt;Wrap9, T&gt;(value); break;
+    case 10: st.slot10 = reinterpret&lt;Wrap10, T&gt;(value); break;
+    case 11: st.slot11 = reinterpret&lt;Wrap11, T&gt;(value); break;
+    case 12: st.slot12 = reinterpret&lt;Wrap12, T&gt;(value); break;
+    case 13: st.slot13 = reinterpret&lt;Wrap13, T&gt;(value); break;
+    case 14: st.slot14 = reinterpret&lt;Wrap14, T&gt;(value); break;
+    case 15: st.slot15 = reinterpret&lt;Wrap15, T&gt;(value); break;
+    }
+}
+
+float evalSlot(Stack st, int slot, float x)
+{
+    switch (slot)
+    {
+    case 0: return st.slot0.shade(x);
+    case 1: return st.slot1.shade(x);
+    case 2: return st.slot2.shade(x);
+    case 3: return st.slot3.shade(x);
+    case 4: return st.slot4.shade(x);
+    case 5: return st.slot5.shade(x);
+    case 6: return st.slot6.shade(x);
+    case 7: return st.slot7.shade(x);
+    case 8: return st.slot8.shade(x);
+    case 9: return st.slot9.shade(x);
+    case 10: return st.slot10.shade(x);
+    case 11: return st.slot11.shade(x);
+    case 12: return st.slot12.shade(x);
+    case 13: return st.slot13.shade(x);
+    case 14: return st.slot14.shade(x);
+    case 15: return st.slot15.shade(x);
+    default: return 0.0;
+    }
+}
+
+[shader("compute")]
+[numthreads(1,1,1)]
+void computeMain()
+{
+    Stack st;
+    { Wrap0 w; w.a = 0.0; w.b = 0.0; setSlot(st, 0, w); }
+    { Wrap1 w; w.a = 1.0; w.b = 1.0; setSlot(st, 1, w); }
+    { Wrap2 w; w.a = 2.0; w.b = 2.0; setSlot(st, 2, w); }
+    { Wrap3 w; w.a = 3.0; w.b = 3.0; setSlot(st, 3, w); }
+    { Wrap4 w; w.a = 4.0; w.b = 4.0; setSlot(st, 4, w); }
+    { Wrap5 w; w.a = 5.0; w.b = 5.0; setSlot(st, 5, w); }
+    { Wrap6 w; w.a = 6.0; w.b = 6.0; setSlot(st, 6, w); }
+    { Wrap7 w; w.a = 0.0; w.b = 7.0; setSlot(st, 7, w); }
+    { Wrap8 w; w.a = 1.0; w.b = 8.0; setSlot(st, 8, w); }
+    { Wrap9 w; w.a = 2.0; w.b = 9.0; setSlot(st, 9, w); }
+    { Wrap10 w; w.a = 3.0; w.b = 10.0; setSlot(st, 10, w); }
+    { Wrap11 w; w.a = 4.0; w.b = 0.0; setSlot(st, 11, w); }
+    { Wrap12 w; w.a = 5.0; w.b = 1.0; setSlot(st, 12, w); }
+    { Wrap13 w; w.a = 6.0; w.b = 2.0; setSlot(st, 13, w); }
+    { Wrap14 w; w.a = 0.0; w.b = 3.0; setSlot(st, 14, w); }
+    { Wrap15 w; w.a = 1.0; w.b = 4.0; setSlot(st, 15, w); }
+    float acc = 0.0;
+    acc += evalSlot(st, 0, outBuf[0] + 0.0);
+    acc += evalSlot(st, 1, outBuf[0] + 1.0);
+    acc += evalSlot(st, 2, outBuf[0] + 2.0);
+    acc += evalSlot(st, 3, outBuf[0] + 3.0);
+    acc += evalSlot(st, 4, outBuf[0] + 4.0);
+    acc += evalSlot(st, 5, outBuf[0] + 5.0);
+    acc += evalSlot(st, 6, outBuf[0] + 6.0);
+    acc += evalSlot(st, 7, outBuf[0] + 7.0);
+    acc += evalSlot(st, 8, outBuf[0] + 8.0);
+    acc += evalSlot(st, 9, outBuf[0] + 9.0);
+    acc += evalSlot(st, 10, outBuf[0] + 10.0);
+    acc += evalSlot(st, 11, outBuf[0] + 11.0);
+    acc += evalSlot(st, 12, outBuf[0] + 12.0);
+    acc += evalSlot(st, 13, outBuf[0] + 13.0);
+    acc += evalSlot(st, 14, outBuf[0] + 14.0);
+    acc += evalSlot(st, 15, outBuf[0] + 15.0);
+    outBuf[0] = acc;
+}
+</pre></div><script>
+document.addEventListener('click', function (ev) {
+  var btn = ev.target.closest && ev.target.closest('button.copy');
+  if (!btn) return;
+  var el = document.getElementById(btn.getAttribute('data-copy'));
+  if (!el) return;
+  var text = el.textContent;
+  function flash(ok) {
+    btn.textContent = ok ? 'Copied' : 'Press Ctrl+C';
+    if (ok) btn.setAttribute('data-done', '1');
+    setTimeout(function () {
+      btn.textContent = 'Copy'; btn.removeAttribute('data-done');
+    }, 1400);
+  }
+  function fallback() {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta); flash(ok);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () { flash(true); }, fallback);
+  } else {
+    fallback();
+  }
+});
+</script></body>
