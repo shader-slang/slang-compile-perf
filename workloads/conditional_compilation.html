@@ -19,7 +19,102 @@ of directives; `parse`/`diagnostics_clean` are unconditioned code, so
 preprocessor conditional-skip cost at scale is otherwise untested.
 
 Scaling null: n scales directive pairs and gated bodies, each O(1); ideal
-preprocessing cost is O(n).</p><p style='color:#666;font-size:13px'><b>bucket:</b> parse &nbsp;·&nbsp; <b>compile mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 200</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+preprocessing cost is O(n).</p><p style='color:#666;font-size:13px'><b>bucket:</b> parse &nbsp;·&nbsp; <b>compile mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 200</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Across releases</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="716" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">conditional_compilation — Across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">conditional_compilation<tspan fill="#888" font-weight="400" text-decoration="none">  0.90×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">13</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">26</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">25.12</text>
+<line x1="133.0" y1="516.0" x2="133.0" y2="519.0" stroke="#999"/>
+<text x="133.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 133.0 531.0)">25.14</text>
+<line x1="198.0" y1="516.0" x2="198.0" y2="519.0" stroke="#999"/>
+<text x="198.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 198.0 531.0)">25.16</text>
+<line x1="263.0" y1="516.0" x2="263.0" y2="519.0" stroke="#999"/>
+<text x="263.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 263.0 531.0)">25.18</text>
+<line x1="328.0" y1="516.0" x2="328.0" y2="519.0" stroke="#999"/>
+<text x="328.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 328.0 531.0)">25.20</text>
+<line x1="393.0" y1="516.0" x2="393.0" y2="519.0" stroke="#999"/>
+<text x="393.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 393.0 531.0)">25.22</text>
+<line x1="458.0" y1="516.0" x2="458.0" y2="519.0" stroke="#999"/>
+<text x="458.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 458.0 531.0)">25.24</text>
+<line x1="523.0" y1="516.0" x2="523.0" y2="519.0" stroke="#999"/>
+<text x="523.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 523.0 531.0)">26.2</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.4</text>
+<line x1="653.0" y1="516.0" x2="653.0" y2="519.0" stroke="#999"/>
+<text x="653.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 653.0 531.0)">26.7</text>
+<line x1="718.0" y1="516.0" x2="718.0" y2="519.0" stroke="#999"/>
+<text x="718.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 718.0 531.0)">26.9</text>
+<line x1="783.0" y1="516.0" x2="783.0" y2="519.0" stroke="#999"/>
+<text x="783.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 783.0 531.0)">26.11</text>
+<line x1="848.0" y1="516.0" x2="848.0" y2="519.0" stroke="#999"/>
+<text x="848.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 848.0 531.0)">26.13</text>
+<line x1="913.0" y1="516.0" x2="913.0" y2="519.0" stroke="#999"/>
+<text x="913.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 913.0 531.0)">26.14</text>
+<line x1="978.0" y1="516.0" x2="978.0" y2="519.0" stroke="#999"/>
+<text x="978.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 978.0 531.0)">26.16</text>
+<line x1="1043.0" y1="516.0" x2="1043.0" y2="519.0" stroke="#999"/>
+<text x="1043.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1043.0 531.0)">26.17</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.18</text>
+<polygon points="783.0,493.5 815.5,494.0 848.0,492.8 913.0,496.4 978.0,498.1 1043.0,498.8 1108.0,498.8 1108.0,516.0 1043.0,516.0 978.0,516.0 913.0,516.0 848.0,516.0 815.5,516.0 783.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conditional_compilation — parseTranslationUnit</title></polygon>
+<polygon points="783.0,296.7 815.5,273.2 848.0,272.2 913.0,309.0 978.0,323.5 1043.0,326.9 1108.0,311.7 1108.0,498.8 1043.0,498.8 978.0,498.1 913.0,496.4 848.0,492.8 815.5,494.0 783.0,493.5" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conditional_compilation — SemanticChecking</title></polygon>
+<polygon points="783.0,199.2 815.5,173.5 848.0,163.5 913.0,218.5 978.0,243.2 1043.0,264.2 1108.0,235.5 1108.0,311.7 1043.0,326.9 978.0,323.5 913.0,309.0 848.0,272.2 815.5,273.2 783.0,296.7" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conditional_compilation — generateIR</title></polygon>
+<polygon points="783.0,197.7 815.5,171.1 848.0,160.9 913.0,211.3 978.0,240.6 1043.0,261.8 1108.0,233.0 1108.0,235.5 1043.0,264.2 978.0,243.2 913.0,218.5 848.0,163.5 815.5,173.5 783.0,199.2" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conditional_compilation — frontEndExecute (self)</title></polygon>
+<polygon points="783.0,146.6 815.5,121.5 848.0,110.8 913.0,164.5 978.0,195.2 1043.0,215.6 1108.0,184.6 1108.0,233.0 1043.0,261.8 978.0,240.6 913.0,211.3 848.0,160.9 815.5,171.1 783.0,197.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conditional_compilation — generateOutput (self)</title></polygon>
+<polygon points="783.0,145.9 815.5,121.5 848.0,108.6 913.0,148.6 978.0,195.0 1043.0,215.4 1108.0,184.1 1108.0,184.6 1043.0,215.6 978.0,195.2 913.0,164.5 848.0,110.8 815.5,121.5 783.0,146.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>conditional_compilation — compileInner (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#3f007d"/>
+<text x="28" y="650" fill="#222">deferBufferLoad</text>
+<rect x="289" y="640" width="12" height="12" fill="#54278f"/>
+<text x="305" y="650" fill="#222">simplifyNonSSAIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#9970ab"/>
+<text x="582" y="650" fill="#222">lowerCombinedTextureSamplers</text>
+<rect x="843" y="640" width="12" height="12" fill="#c2a5cf"/>
+<text x="859" y="650" fill="#222">legalizeMatrixTypes</text>
+<rect x="12" y="658" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="668" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="658" width="12" height="12" fill="#fdd0a2"/>
+<text x="305" y="668" fill="#222">emitEntryPointsSourceFromIR (self)</text>
+<rect x="566" y="658" width="12" height="12" fill="#fd8d3c"/>
+<text x="582" y="668" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="843" y="658" width="12" height="12" fill="#e6550d"/>
+<text x="859" y="668" fill="#222">generateOutput (self)</text>
+<rect x="12" y="676" width="12" height="12" fill="#969696"/>
+<text x="28" y="686" fill="#222">compileInner (self)</text>
+</svg><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="716" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">conditional_compilation — Daily tip-of-tree (last 30 days) (median ms)</text>
 <text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">conditional_compilation<tspan fill="#888" font-weight="400" text-decoration="none">  0.98×</tspan></text>

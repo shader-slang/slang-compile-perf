@@ -20,7 +20,115 @@ Paired with `resource_load_chain`, which is the same shape with the
 combination removed, so the two A/B the splitting cost directly.
 
 Scaling null: n scales combined samplers, each split independently; ideal
-cost is O(n).</p><p style='color:#666;font-size:13px'><b>bucket:</b> backend_legalize &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target hlsl -entry computeMain</code> &nbsp;·&nbsp; <b>default N:</b> 256</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+cost is O(n).</p><p style='color:#666;font-size:13px'><b>bucket:</b> backend_legalize &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target hlsl -entry computeMain</code> &nbsp;·&nbsp; <b>default N:</b> 256</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Across releases</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="716" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">backend_samplers_hlsl — Across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">backend_samplers_hlsl<tspan fill="#888" font-weight="400" text-decoration="none">  0.47×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">62</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">125</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">25.12</text>
+<line x1="133.0" y1="516.0" x2="133.0" y2="519.0" stroke="#999"/>
+<text x="133.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 133.0 531.0)">25.14</text>
+<line x1="198.0" y1="516.0" x2="198.0" y2="519.0" stroke="#999"/>
+<text x="198.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 198.0 531.0)">25.16</text>
+<line x1="263.0" y1="516.0" x2="263.0" y2="519.0" stroke="#999"/>
+<text x="263.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 263.0 531.0)">25.18</text>
+<line x1="328.0" y1="516.0" x2="328.0" y2="519.0" stroke="#999"/>
+<text x="328.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 328.0 531.0)">25.20</text>
+<line x1="393.0" y1="516.0" x2="393.0" y2="519.0" stroke="#999"/>
+<text x="393.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 393.0 531.0)">25.22</text>
+<line x1="458.0" y1="516.0" x2="458.0" y2="519.0" stroke="#999"/>
+<text x="458.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 458.0 531.0)">25.24</text>
+<line x1="523.0" y1="516.0" x2="523.0" y2="519.0" stroke="#999"/>
+<text x="523.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 523.0 531.0)">26.2</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.4</text>
+<line x1="653.0" y1="516.0" x2="653.0" y2="519.0" stroke="#999"/>
+<text x="653.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 653.0 531.0)">26.7</text>
+<line x1="718.0" y1="516.0" x2="718.0" y2="519.0" stroke="#999"/>
+<text x="718.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 718.0 531.0)">26.9</text>
+<line x1="783.0" y1="516.0" x2="783.0" y2="519.0" stroke="#999"/>
+<text x="783.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 783.0 531.0)">26.11</text>
+<line x1="848.0" y1="516.0" x2="848.0" y2="519.0" stroke="#999"/>
+<text x="848.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 848.0 531.0)">26.13</text>
+<line x1="913.0" y1="516.0" x2="913.0" y2="519.0" stroke="#999"/>
+<text x="913.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 913.0 531.0)">26.14</text>
+<line x1="978.0" y1="516.0" x2="978.0" y2="519.0" stroke="#999"/>
+<text x="978.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 978.0 531.0)">26.16</text>
+<line x1="1043.0" y1="516.0" x2="1043.0" y2="519.0" stroke="#999"/>
+<text x="1043.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1043.0 531.0)">26.17</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.18</text>
+<polygon points="783.0,512.9 815.5,513.0 848.0,512.8 913.0,513.4 978.0,513.4 1043.0,513.6 1108.0,513.6 1108.0,516.0 1043.0,516.0 978.0,516.0 913.0,516.0 848.0,516.0 815.5,516.0 783.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — parseTranslationUnit</title></polygon>
+<polygon points="783.0,452.1 815.5,450.0 848.0,438.2 913.0,447.3 978.0,451.8 1043.0,454.6 1108.0,455.0 1108.0,513.6 1043.0,513.6 978.0,513.4 913.0,513.4 848.0,512.8 815.5,513.0 783.0,512.9" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — SemanticChecking</title></polygon>
+<polygon points="783.0,417.5 815.5,414.4 848.0,394.0 913.0,419.4 978.0,423.3 1043.0,428.7 1108.0,429.7 1108.0,455.0 1043.0,454.6 978.0,451.8 913.0,447.3 848.0,438.2 815.5,450.0 783.0,452.1" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — generateIR</title></polygon>
+<polygon points="783.0,407.7 815.5,404.4 848.0,381.0 913.0,410.2 978.0,415.7 1043.0,422.5 1108.0,422.6 1108.0,429.7 1043.0,428.7 978.0,423.3 913.0,419.4 848.0,394.0 815.5,414.4 783.0,417.5" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — frontEndExecute (self)</title></polygon>
+<polygon points="783.0,363.3 815.5,360.0 848.0,340.1 913.0,389.7 978.0,396.3 1043.0,403.2 1108.0,403.1 1108.0,422.6 1043.0,422.5 978.0,415.7 913.0,410.2 848.0,381.0 815.5,404.4 783.0,407.7" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — specializeModule</title></polygon>
+<polygon points="783.0,304.4 815.5,307.0 848.0,289.3 913.0,376.1 978.0,383.3 1043.0,390.3 1108.0,389.9 1108.0,403.1 1043.0,403.2 978.0,396.3 913.0,389.7 848.0,340.1 815.5,360.0 783.0,363.3" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — simplifyIR</title></polygon>
+<polygon points="783.0,298.2 815.5,300.8 848.0,283.5 913.0,372.8 978.0,380.2 1043.0,387.2 1108.0,386.8 1108.0,389.9 1043.0,390.3 978.0,383.3 913.0,376.1 848.0,289.3 815.5,307.0 783.0,304.4" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — linkIR</title></polygon>
+<polygon points="783.0,298.2 815.5,300.7 848.0,283.4 913.0,372.7 978.0,380.2 1043.0,387.2 1108.0,386.7 1108.0,386.8 1043.0,387.2 978.0,380.2 913.0,372.8 848.0,283.5 815.5,300.8 783.0,298.2" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — unrollLoopsInModule</title></polygon>
+<polygon points="783.0,240.7 815.5,244.3 848.0,204.0 913.0,362.5 978.0,372.4 1043.0,379.4 1108.0,379.4 1108.0,386.7 1043.0,387.2 978.0,380.2 913.0,372.7 848.0,283.4 815.5,300.7 783.0,298.2" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — legalizeResourceTypes</title></polygon>
+<polygon points="783.0,198.7 815.5,202.7 848.0,153.4 913.0,357.7 978.0,369.0 1043.0,376.0 1108.0,376.3 1108.0,379.4 1043.0,379.4 978.0,372.4 913.0,362.5 848.0,204.0 815.5,244.3 783.0,240.7" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="783.0,196.1 815.5,200.0 848.0,149.6 913.0,354.6 978.0,366.0 1043.0,373.9 1108.0,374.2 1108.0,376.3 1043.0,376.0 978.0,369.0 913.0,357.7 848.0,153.4 815.5,202.7 783.0,198.7" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — performMandatoryEarlyInlining</title></polygon>
+<polygon points="783.0,194.1 815.5,197.9 848.0,147.1 913.0,353.1 978.0,364.7 1043.0,372.7 1108.0,372.9 1108.0,374.2 1043.0,373.9 978.0,366.0 913.0,354.6 848.0,149.6 815.5,200.0 783.0,196.1" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — performForceInlining</title></polygon>
+<polygon points="783.0,193.8 815.5,197.6 848.0,146.7 913.0,352.8 978.0,364.5 1043.0,372.4 1108.0,372.6 1108.0,372.9 1043.0,372.7 978.0,364.7 913.0,353.1 848.0,147.1 815.5,197.9 783.0,194.1" fill="#3f007d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — deferBufferLoad</title></polygon>
+<polygon points="783.0,192.3 815.5,196.2 848.0,144.9 913.0,351.8 978.0,363.5 1043.0,371.5 1108.0,371.7 1108.0,372.6 1043.0,372.4 978.0,364.5 913.0,352.8 848.0,146.7 815.5,197.6 783.0,193.8" fill="#54278f" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — simplifyNonSSAIR</title></polygon>
+<polygon points="783.0,190.7 815.5,194.5 848.0,143.6 913.0,351.0 978.0,362.8 1043.0,370.7 1108.0,370.9 1108.0,371.7 1043.0,371.5 978.0,363.5 913.0,351.8 848.0,144.9 815.5,196.2 783.0,192.3" fill="#9970ab" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — lowerCombinedTextureSamplers</title></polygon>
+<polygon points="783.0,190.2 815.5,194.0 848.0,142.6 913.0,351.0 978.0,362.8 1043.0,370.7 1108.0,370.9 1108.0,370.9 1043.0,370.7 978.0,362.8 913.0,351.0 848.0,143.6 815.5,194.5 783.0,190.7" fill="#c2a5cf" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — legalizeMatrixTypes</title></polygon>
+<polygon points="783.0,175.9 815.5,178.2 848.0,120.9 913.0,340.3 978.0,352.1 1043.0,360.2 1108.0,361.2 1108.0,370.9 1043.0,370.7 978.0,362.8 913.0,351.0 848.0,142.6 815.5,194.0 783.0,190.2" fill="#fdd0a2" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — emitEntryPointsSourceFromIR (self)</title></polygon>
+<polygon points="783.0,174.2 815.5,176.4 848.0,118.4 913.0,338.4 978.0,350.2 1043.0,358.5 1108.0,359.4 1108.0,361.2 1043.0,360.2 978.0,352.1 913.0,340.3 848.0,120.9 815.5,178.2 783.0,175.9" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — generateOutput (self)</title></polygon>
+<polygon points="783.0,163.1 815.5,167.0 848.0,108.6 913.0,331.4 978.0,341.8 1043.0,351.8 1108.0,351.7 1108.0,359.4 1043.0,358.5 978.0,350.2 913.0,338.4 848.0,118.4 815.5,176.4 783.0,174.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_samplers_hlsl — compileInner (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#3f007d"/>
+<text x="28" y="650" fill="#222">deferBufferLoad</text>
+<rect x="289" y="640" width="12" height="12" fill="#54278f"/>
+<text x="305" y="650" fill="#222">simplifyNonSSAIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#9970ab"/>
+<text x="582" y="650" fill="#222">lowerCombinedTextureSamplers</text>
+<rect x="843" y="640" width="12" height="12" fill="#c2a5cf"/>
+<text x="859" y="650" fill="#222">legalizeMatrixTypes</text>
+<rect x="12" y="658" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="668" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="658" width="12" height="12" fill="#fdd0a2"/>
+<text x="305" y="668" fill="#222">emitEntryPointsSourceFromIR (self)</text>
+<rect x="566" y="658" width="12" height="12" fill="#fd8d3c"/>
+<text x="582" y="668" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="843" y="658" width="12" height="12" fill="#e6550d"/>
+<text x="859" y="668" fill="#222">generateOutput (self)</text>
+<rect x="12" y="676" width="12" height="12" fill="#969696"/>
+<text x="28" y="686" fill="#222">compileInner (self)</text>
+</svg><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="716" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">backend_samplers_hlsl — Daily tip-of-tree (last 30 days) (median ms)</text>
 <text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">backend_samplers_hlsl<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>

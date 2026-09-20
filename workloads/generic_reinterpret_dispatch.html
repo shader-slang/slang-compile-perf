@@ -50,7 +50,113 @@ half that summed across every visible leaf timer (linkAndOptimizeIR,
 specializeModule, lowerReinterpret, simplifyIR). Not yet root-caused;
 filed as shader-slang/slang#13016, which is authoritative for the LIVE
 figures if this compiler-behavior finding advances -- treat the numbers
-above as the state as of this PR, not a promise they still hold.</p><p style='color:#666;font-size:13px'><b>bucket:</b> specialization &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 16</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+above as the state as of this PR, not a promise they still hold.</p><p style='color:#666;font-size:13px'><b>bucket:</b> specialization &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 16</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Across releases</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+<rect width="1132" height="716" fill="white"/>
+<text x="12" y="30" font-size="20" font-weight="bold">generic_reinterpret_dispatch — Across releases (median ms)</text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">generic_reinterpret_dispatch<tspan fill="#888" font-weight="400" text-decoration="none">  0.84×</tspan></text>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
+<text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
+<line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">64</text>
+<line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">129</text>
+<line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
+<line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
+<text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">25.12</text>
+<line x1="133.0" y1="516.0" x2="133.0" y2="519.0" stroke="#999"/>
+<text x="133.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 133.0 531.0)">25.14</text>
+<line x1="198.0" y1="516.0" x2="198.0" y2="519.0" stroke="#999"/>
+<text x="198.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 198.0 531.0)">25.16</text>
+<line x1="263.0" y1="516.0" x2="263.0" y2="519.0" stroke="#999"/>
+<text x="263.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 263.0 531.0)">25.18</text>
+<line x1="328.0" y1="516.0" x2="328.0" y2="519.0" stroke="#999"/>
+<text x="328.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 328.0 531.0)">25.20</text>
+<line x1="393.0" y1="516.0" x2="393.0" y2="519.0" stroke="#999"/>
+<text x="393.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 393.0 531.0)">25.22</text>
+<line x1="458.0" y1="516.0" x2="458.0" y2="519.0" stroke="#999"/>
+<text x="458.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 458.0 531.0)">25.24</text>
+<line x1="523.0" y1="516.0" x2="523.0" y2="519.0" stroke="#999"/>
+<text x="523.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 523.0 531.0)">26.2</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.4</text>
+<line x1="653.0" y1="516.0" x2="653.0" y2="519.0" stroke="#999"/>
+<text x="653.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 653.0 531.0)">26.7</text>
+<line x1="718.0" y1="516.0" x2="718.0" y2="519.0" stroke="#999"/>
+<text x="718.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 718.0 531.0)">26.9</text>
+<line x1="783.0" y1="516.0" x2="783.0" y2="519.0" stroke="#999"/>
+<text x="783.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 783.0 531.0)">26.11</text>
+<line x1="848.0" y1="516.0" x2="848.0" y2="519.0" stroke="#999"/>
+<text x="848.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 848.0 531.0)">26.13</text>
+<line x1="913.0" y1="516.0" x2="913.0" y2="519.0" stroke="#999"/>
+<text x="913.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 913.0 531.0)">26.14</text>
+<line x1="978.0" y1="516.0" x2="978.0" y2="519.0" stroke="#999"/>
+<text x="978.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 978.0 531.0)">26.16</text>
+<line x1="1043.0" y1="516.0" x2="1043.0" y2="519.0" stroke="#999"/>
+<text x="1043.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1043.0 531.0)">26.17</text>
+<line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.18</text>
+<polygon points="783.0,514.5 815.5,514.5 848.0,514.1 913.0,514.7 978.0,514.7 1043.0,514.8 1108.0,514.9 1108.0,516.0 1043.0,516.0 978.0,516.0 913.0,516.0 848.0,516.0 815.5,516.0 783.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_reinterpret_dispatch — parseTranslationUnit</title></polygon>
+<polygon points="783.0,488.3 815.5,484.2 848.0,479.2 913.0,483.0 978.0,482.5 1043.0,486.7 1108.0,488.0 1108.0,514.9 1043.0,514.8 978.0,514.7 913.0,514.7 848.0,514.1 815.5,514.5 783.0,514.5" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_reinterpret_dispatch — SemanticChecking</title></polygon>
+<polygon points="783.0,477.0 815.5,472.3 848.0,462.8 913.0,470.9 978.0,470.1 1043.0,478.7 1108.0,479.6 1108.0,488.0 1043.0,486.7 978.0,482.5 913.0,483.0 848.0,479.2 815.5,484.2 783.0,488.3" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_reinterpret_dispatch — generateIR</title></polygon>
+<polygon points="783.0,475.7 815.5,470.7 848.0,461.6 913.0,469.1 978.0,470.1 1043.0,477.6 1108.0,478.6 1108.0,479.6 1043.0,478.7 978.0,470.1 913.0,470.9 848.0,462.8 815.5,472.3 783.0,477.0" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_reinterpret_dispatch — frontEndExecute (self)</title></polygon>
+<polygon points="783.0,444.0 815.5,438.5 848.0,430.6 913.0,446.8 978.0,450.4 1043.0,459.6 1108.0,460.4 1108.0,478.6 1043.0,477.6 978.0,470.1 913.0,469.1 848.0,461.6 815.5,470.7 783.0,475.7" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_reinterpret_dispatch — specializeModule</title></polygon>
+<polygon points="783.0,405.1 815.5,399.8 848.0,401.0 913.0,425.2 978.0,430.0 1043.0,440.1 1108.0,441.5 1108.0,460.4 1043.0,459.6 978.0,450.4 913.0,446.8 848.0,430.6 815.5,438.5 783.0,444.0" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_reinterpret_dispatch — simplifyIR</title></polygon>
+<polygon points="783.0,402.9 815.5,397.4 848.0,399.4 913.0,424.3 978.0,429.2 1043.0,439.2 1108.0,440.6 1108.0,441.5 1043.0,440.1 978.0,430.0 913.0,425.2 848.0,401.0 815.5,399.8 783.0,405.1" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_reinterpret_dispatch — linkIR</title></polygon>
+<polygon points="783.0,402.8 815.5,397.3 848.0,399.2 913.0,424.2 978.0,429.1 1043.0,439.1 1108.0,440.5 1108.0,440.6 1043.0,439.2 978.0,429.2 913.0,424.3 848.0,399.4 815.5,397.4 783.0,402.9" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_reinterpret_dispatch — unrollLoopsInModule</title></polygon>
+<polygon points="783.0,397.4 815.5,391.6 848.0,393.6 913.0,419.6 978.0,425.9 1043.0,435.9 1108.0,437.5 1108.0,440.5 1043.0,439.1 978.0,429.1 913.0,424.2 848.0,399.2 815.5,397.3 783.0,402.8" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_reinterpret_dispatch — legalizeResourceTypes</title></polygon>
+<polygon points="783.0,391.2 815.5,385.3 848.0,387.3 913.0,414.5 978.0,422.2 1043.0,432.5 1108.0,434.4 1108.0,437.5 1043.0,435.9 978.0,425.9 913.0,419.6 848.0,393.6 815.5,391.6 783.0,397.4" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_reinterpret_dispatch — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="783.0,390.8 815.5,384.8 848.0,386.7 913.0,414.1 978.0,421.8 1043.0,432.2 1108.0,434.0 1108.0,434.4 1043.0,432.5 978.0,422.2 913.0,414.5 848.0,387.3 815.5,385.3 783.0,391.2" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_reinterpret_dispatch — performMandatoryEarlyInlining</title></polygon>
+<polygon points="783.0,389.6 815.5,383.6 848.0,385.4 913.0,413.0 978.0,420.8 1043.0,431.2 1108.0,433.0 1108.0,434.0 1043.0,432.2 978.0,421.8 913.0,414.1 848.0,386.7 815.5,384.8 783.0,390.8" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_reinterpret_dispatch — performForceInlining</title></polygon>
+<polygon points="783.0,388.1 815.5,382.1 848.0,384.1 913.0,412.0 978.0,420.0 1043.0,430.4 1108.0,432.1 1108.0,433.0 1043.0,431.2 978.0,420.8 913.0,413.0 848.0,385.4 815.5,383.6 783.0,389.6" fill="#3f007d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_reinterpret_dispatch — deferBufferLoad</title></polygon>
+<polygon points="783.0,385.2 815.5,379.2 848.0,381.4 913.0,410.1 978.0,417.4 1043.0,428.8 1108.0,430.4 1108.0,432.1 1043.0,430.4 978.0,420.0 913.0,412.0 848.0,384.1 815.5,382.1 783.0,388.1" fill="#54278f" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_reinterpret_dispatch — simplifyNonSSAIR</title></polygon>
+<polygon points="783.0,384.6 815.5,378.7 848.0,380.8 913.0,410.1 978.0,417.3 1043.0,428.7 1108.0,430.4 1108.0,430.4 1043.0,428.8 978.0,417.4 913.0,410.1 848.0,381.4 815.5,379.2 783.0,385.2" fill="#c2a5cf" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_reinterpret_dispatch — legalizeMatrixTypes</title></polygon>
+<polygon points="783.0,137.6 815.5,127.9 848.0,108.9 913.0,144.3 978.0,152.3 1043.0,189.9 1108.0,195.6 1108.0,430.4 1043.0,428.7 978.0,417.3 913.0,410.1 848.0,380.8 815.5,378.7 783.0,384.6" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_reinterpret_dispatch — generateOutput (self)</title></polygon>
+<polygon points="783.0,136.7 815.5,127.3 848.0,108.6 913.0,144.2 978.0,149.1 1043.0,189.0 1108.0,195.6 1108.0,195.6 1043.0,189.9 978.0,152.3 913.0,144.3 848.0,108.9 815.5,127.9 783.0,137.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_reinterpret_dispatch — compileInner (self)</title></polygon>
+<text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
+<rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
+<text x="28" y="596" fill="#222">parseTranslationUnit</text>
+<rect x="289" y="586" width="12" height="12" fill="#41ab5d"/>
+<text x="305" y="596" fill="#222">SemanticChecking</text>
+<rect x="566" y="586" width="12" height="12" fill="#006d2c"/>
+<text x="582" y="596" fill="#222">generateIR</text>
+<rect x="843" y="586" width="12" height="12" fill="#74c476"/>
+<text x="859" y="596" fill="#222">frontEndExecute (self)</text>
+<rect x="12" y="604" width="12" height="12" fill="#6baed6"/>
+<text x="28" y="614" fill="#222">specializeModule</text>
+<rect x="289" y="604" width="12" height="12" fill="#2171b5"/>
+<text x="305" y="614" fill="#222">simplifyIR</text>
+<rect x="566" y="604" width="12" height="12" fill="#08306b"/>
+<text x="582" y="614" fill="#222">linkIR</text>
+<rect x="843" y="604" width="12" height="12" fill="#9e9ac8"/>
+<text x="859" y="614" fill="#222">unrollLoopsInModule</text>
+<rect x="12" y="622" width="12" height="12" fill="#807dba"/>
+<text x="28" y="632" fill="#222">legalizeResourceTypes</text>
+<rect x="289" y="622" width="12" height="12" fill="#6a51a3"/>
+<text x="305" y="632" fill="#222">legalizeExistentialTypeLayout</text>
+<rect x="566" y="622" width="12" height="12" fill="#bcbddc"/>
+<text x="582" y="632" fill="#222">performMandatoryEarlyInlining</text>
+<rect x="843" y="622" width="12" height="12" fill="#dadaeb"/>
+<text x="859" y="632" fill="#222">performForceInlining</text>
+<rect x="12" y="640" width="12" height="12" fill="#3f007d"/>
+<text x="28" y="650" fill="#222">deferBufferLoad</text>
+<rect x="289" y="640" width="12" height="12" fill="#54278f"/>
+<text x="305" y="650" fill="#222">simplifyNonSSAIR</text>
+<rect x="566" y="640" width="12" height="12" fill="#9970ab"/>
+<text x="582" y="650" fill="#222">lowerCombinedTextureSamplers</text>
+<rect x="843" y="640" width="12" height="12" fill="#c2a5cf"/>
+<text x="859" y="650" fill="#222">legalizeMatrixTypes</text>
+<rect x="12" y="658" width="12" height="12" fill="#4a1486"/>
+<text x="28" y="668" fill="#222">linkAndOptimizeIR (self)</text>
+<rect x="289" y="658" width="12" height="12" fill="#fdd0a2"/>
+<text x="305" y="668" fill="#222">emitEntryPointsSourceFromIR (self)</text>
+<rect x="566" y="658" width="12" height="12" fill="#fd8d3c"/>
+<text x="582" y="668" fill="#222">emitEntryPointsSourceFromIR</text>
+<rect x="843" y="658" width="12" height="12" fill="#e6550d"/>
+<text x="859" y="668" fill="#222">generateOutput (self)</text>
+<rect x="12" y="676" width="12" height="12" fill="#969696"/>
+<text x="28" y="686" fill="#222">compileInner (self)</text>
+</svg><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="716" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">generic_reinterpret_dispatch — Daily tip-of-tree (last 30 days) (median ms)</text>
 <text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">generic_reinterpret_dispatch<tspan fill="#888" font-weight="400" text-decoration="none">  0.98×</tspan></text>
