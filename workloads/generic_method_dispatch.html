@@ -32,66 +32,68 @@ Scaling null: n scales implementations and call sites, each O(1); ideal
 cost is O(n).</p><p style='color:#666;font-size:13px'><b>bucket:</b> dynamic_dispatch &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 32</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Across releases</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="716" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">generic_method_dispatch — Across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">generic_method_dispatch<tspan fill="#888" font-weight="400" text-decoration="none">  0.79×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">generic_method_dispatch<tspan fill="#888" font-weight="400" text-decoration="none">  1.34×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
-<text x="64.0" y="299.0" text-anchor="end" fill="#999">40</text>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">52</text>
 <line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
-<text x="64.0" y="79.0" text-anchor="end" fill="#999">80</text>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">104</text>
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
 <text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">25.12</text>
-<line x1="133.0" y1="516.0" x2="133.0" y2="519.0" stroke="#999"/>
-<text x="133.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 133.0 531.0)">25.14</text>
-<line x1="198.0" y1="516.0" x2="198.0" y2="519.0" stroke="#999"/>
-<text x="198.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 198.0 531.0)">25.16</text>
-<line x1="263.0" y1="516.0" x2="263.0" y2="519.0" stroke="#999"/>
-<text x="263.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 263.0 531.0)">25.18</text>
-<line x1="328.0" y1="516.0" x2="328.0" y2="519.0" stroke="#999"/>
-<text x="328.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 328.0 531.0)">25.20</text>
-<line x1="393.0" y1="516.0" x2="393.0" y2="519.0" stroke="#999"/>
-<text x="393.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 393.0 531.0)">25.22</text>
-<line x1="458.0" y1="516.0" x2="458.0" y2="519.0" stroke="#999"/>
-<text x="458.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 458.0 531.0)">25.24</text>
-<line x1="523.0" y1="516.0" x2="523.0" y2="519.0" stroke="#999"/>
-<text x="523.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 523.0 531.0)">26.2</text>
-<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
-<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.4</text>
-<line x1="653.0" y1="516.0" x2="653.0" y2="519.0" stroke="#999"/>
-<text x="653.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 653.0 531.0)">26.7</text>
-<line x1="718.0" y1="516.0" x2="718.0" y2="519.0" stroke="#999"/>
-<text x="718.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 718.0 531.0)">26.9</text>
-<line x1="783.0" y1="516.0" x2="783.0" y2="519.0" stroke="#999"/>
-<text x="783.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 783.0 531.0)">26.11</text>
-<line x1="848.0" y1="516.0" x2="848.0" y2="519.0" stroke="#999"/>
-<text x="848.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 848.0 531.0)">26.13</text>
-<line x1="913.0" y1="516.0" x2="913.0" y2="519.0" stroke="#999"/>
-<text x="913.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 913.0 531.0)">26.14</text>
-<line x1="978.0" y1="516.0" x2="978.0" y2="519.0" stroke="#999"/>
-<text x="978.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 978.0 531.0)">26.16</text>
-<line x1="1043.0" y1="516.0" x2="1043.0" y2="519.0" stroke="#999"/>
-<text x="1043.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1043.0 531.0)">26.17</text>
+<line x1="129.2" y1="516.0" x2="129.2" y2="519.0" stroke="#999"/>
+<text x="129.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 129.2 531.0)">25.14</text>
+<line x1="190.4" y1="516.0" x2="190.4" y2="519.0" stroke="#999"/>
+<text x="190.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 190.4 531.0)">25.16</text>
+<line x1="251.5" y1="516.0" x2="251.5" y2="519.0" stroke="#999"/>
+<text x="251.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 251.5 531.0)">25.18</text>
+<line x1="312.7" y1="516.0" x2="312.7" y2="519.0" stroke="#999"/>
+<text x="312.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 312.7 531.0)">25.20</text>
+<line x1="373.9" y1="516.0" x2="373.9" y2="519.0" stroke="#999"/>
+<text x="373.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 373.9 531.0)">25.22</text>
+<line x1="435.1" y1="516.0" x2="435.1" y2="519.0" stroke="#999"/>
+<text x="435.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 435.1 531.0)">25.24</text>
+<line x1="496.2" y1="516.0" x2="496.2" y2="519.0" stroke="#999"/>
+<text x="496.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 496.2 531.0)">26.2</text>
+<line x1="557.4" y1="516.0" x2="557.4" y2="519.0" stroke="#999"/>
+<text x="557.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 557.4 531.0)">26.4</text>
+<line x1="618.6" y1="516.0" x2="618.6" y2="519.0" stroke="#999"/>
+<text x="618.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 618.6 531.0)">26.7</text>
+<line x1="679.8" y1="516.0" x2="679.8" y2="519.0" stroke="#999"/>
+<text x="679.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 679.8 531.0)">26.9</text>
+<line x1="740.9" y1="516.0" x2="740.9" y2="519.0" stroke="#999"/>
+<text x="740.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 740.9 531.0)">26.11</text>
+<line x1="802.1" y1="516.0" x2="802.1" y2="519.0" stroke="#999"/>
+<text x="802.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 802.1 531.0)">26.13</text>
+<line x1="863.3" y1="516.0" x2="863.3" y2="519.0" stroke="#999"/>
+<text x="863.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 863.3 531.0)">26.14</text>
+<line x1="924.5" y1="516.0" x2="924.5" y2="519.0" stroke="#999"/>
+<text x="924.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 924.5 531.0)">26.16</text>
+<line x1="985.6" y1="516.0" x2="985.6" y2="519.0" stroke="#999"/>
+<text x="985.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 985.6 531.0)">26.17</text>
+<line x1="1046.8" y1="516.0" x2="1046.8" y2="519.0" stroke="#999"/>
+<text x="1046.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1046.8 531.0)">26.18</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.18</text>
-<polygon points="783.0,513.0 815.5,513.0 848.0,512.9 913.0,513.4 978.0,513.3 1043.0,513.7 1108.0,513.7 1108.0,516.0 1043.0,516.0 978.0,516.0 913.0,516.0 848.0,516.0 815.5,516.0 783.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — parseTranslationUnit</title></polygon>
-<polygon points="783.0,287.0 815.5,276.9 848.0,290.3 913.0,262.7 978.0,288.0 1043.0,299.3 1108.0,302.5 1108.0,513.7 1043.0,513.7 978.0,513.3 913.0,513.4 848.0,512.9 815.5,513.0 783.0,513.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — SemanticChecking</title></polygon>
-<polygon points="783.0,260.0 815.5,249.0 848.0,254.5 913.0,231.3 978.0,261.7 1043.0,277.4 1108.0,282.5 1108.0,302.5 1043.0,299.3 978.0,288.0 913.0,262.7 848.0,290.3 815.5,276.9 783.0,287.0" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — generateIR</title></polygon>
-<polygon points="783.0,257.6 815.5,246.7 848.0,247.8 913.0,227.9 978.0,257.0 1043.0,273.0 1108.0,281.9 1108.0,282.5 1043.0,277.4 978.0,261.7 913.0,231.3 848.0,254.5 815.5,249.0 783.0,260.0" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — frontEndExecute (self)</title></polygon>
-<polygon points="783.0,215.8 815.5,205.6 848.0,211.4 913.0,197.6 978.0,231.8 1043.0,248.2 1108.0,257.7 1108.0,281.9 1043.0,273.0 978.0,257.0 913.0,227.9 848.0,247.8 815.5,246.7 783.0,257.6" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — specializeModule</title></polygon>
-<polygon points="783.0,180.0 815.5,170.9 848.0,183.7 913.0,175.8 978.0,214.1 1043.0,230.2 1108.0,240.2 1108.0,257.7 1043.0,248.2 978.0,231.8 913.0,197.6 848.0,211.4 815.5,205.6 783.0,215.8" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — simplifyIR</title></polygon>
-<polygon points="783.0,175.7 815.5,166.7 848.0,180.2 913.0,173.2 978.0,211.8 1043.0,228.0 1108.0,238.5 1108.0,240.2 1043.0,230.2 978.0,214.1 913.0,175.8 848.0,183.7 815.5,170.9 783.0,180.0" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — linkIR</title></polygon>
-<polygon points="783.0,175.7 815.5,166.6 848.0,180.1 913.0,173.2 978.0,211.7 1043.0,228.0 1108.0,238.5 1108.0,238.5 1043.0,228.0 978.0,211.8 913.0,173.2 848.0,180.2 815.5,166.7 783.0,175.7" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — unrollLoopsInModule</title></polygon>
-<polygon points="783.0,170.4 815.5,161.4 848.0,174.6 913.0,169.0 978.0,209.5 1043.0,225.8 1108.0,236.4 1108.0,238.5 1043.0,228.0 978.0,211.7 913.0,173.2 848.0,180.1 815.5,166.6 783.0,175.7" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — legalizeResourceTypes</title></polygon>
-<polygon points="783.0,164.4 815.5,155.4 848.0,168.2 913.0,164.5 978.0,207.0 1043.0,223.4 1108.0,234.1 1108.0,236.4 1043.0,225.8 978.0,209.5 913.0,169.0 848.0,174.6 815.5,161.4 783.0,170.4" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — legalizeExistentialTypeLayout</title></polygon>
-<polygon points="783.0,163.1 815.5,154.0 848.0,166.5 913.0,163.2 978.0,205.9 1043.0,222.3 1108.0,233.0 1108.0,234.1 1043.0,223.4 978.0,207.0 913.0,164.5 848.0,168.2 815.5,155.4 783.0,164.4" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — performMandatoryEarlyInlining</title></polygon>
-<polygon points="783.0,162.2 815.5,153.1 848.0,165.8 913.0,162.7 978.0,205.5 1043.0,222.0 1108.0,232.6 1108.0,233.0 1043.0,222.3 978.0,205.9 913.0,163.2 848.0,166.5 815.5,154.0 783.0,163.1" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — performForceInlining</title></polygon>
-<polygon points="783.0,161.5 815.5,152.4 848.0,165.2 913.0,162.2 978.0,205.1 1043.0,221.5 1108.0,232.2 1108.0,232.6 1043.0,222.0 978.0,205.5 913.0,162.7 848.0,165.8 815.5,153.1 783.0,162.2" fill="#3f007d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — deferBufferLoad</title></polygon>
-<polygon points="783.0,160.2 815.5,151.2 848.0,163.9 913.0,161.3 978.0,204.3 1043.0,220.7 1108.0,231.4 1108.0,232.2 1043.0,221.5 978.0,205.1 913.0,162.2 848.0,165.2 815.5,152.4 783.0,161.5" fill="#54278f" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — simplifyNonSSAIR</title></polygon>
-<polygon points="783.0,159.8 815.5,150.7 848.0,163.5 913.0,161.3 978.0,204.3 1043.0,220.7 1108.0,231.4 1108.0,231.4 1043.0,220.7 978.0,204.3 913.0,161.3 848.0,163.9 815.5,151.2 783.0,160.2" fill="#c2a5cf" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — legalizeMatrixTypes</title></polygon>
-<polygon points="783.0,120.6 815.5,112.4 848.0,125.5 913.0,127.6 978.0,173.8 1043.0,190.5 1108.0,200.7 1108.0,231.4 1043.0,220.7 978.0,204.3 913.0,161.3 848.0,163.5 815.5,150.7 783.0,159.8" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — generateOutput (self)</title></polygon>
-<polygon points="783.0,118.8 815.5,108.6 848.0,123.0 913.0,124.2 978.0,173.4 1043.0,189.9 1108.0,200.7 1108.0,200.7 1043.0,190.5 978.0,173.8 913.0,127.6 848.0,125.5 815.5,112.4 783.0,120.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — compileInner (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.18.2</text>
+<polygon points="740.9,513.7 771.5,513.7 802.1,513.6 863.3,514.0 924.5,513.9 985.6,514.2 1046.8,514.3 1077.4,514.3 1108.0,514.0 1108.0,516.0 1077.4,516.0 1046.8,516.0 985.6,516.0 924.5,516.0 863.3,516.0 802.1,516.0 771.5,516.0 740.9,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — parseTranslationUnit</title></polygon>
+<polygon points="740.9,340.2 771.5,332.4 802.1,342.7 863.3,321.5 924.5,340.9 985.6,349.6 1046.8,352.0 1077.4,341.4 1108.0,216.5 1108.0,514.0 1077.4,514.3 1046.8,514.3 985.6,514.2 924.5,513.9 863.3,514.0 802.1,513.6 771.5,513.7 740.9,513.7" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — SemanticChecking</title></polygon>
+<polygon points="740.9,319.4 771.5,311.0 802.1,315.2 863.3,297.4 924.5,320.7 985.6,332.8 1046.8,336.7 1077.4,324.2 1108.0,192.4 1108.0,216.5 1077.4,341.4 1046.8,352.0 985.6,349.6 924.5,340.9 863.3,321.5 802.1,342.7 771.5,332.4 740.9,340.2" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — generateIR</title></polygon>
+<polygon points="740.9,317.6 771.5,309.2 802.1,310.1 863.3,294.8 924.5,317.1 985.6,329.4 1046.8,336.3 1077.4,322.8 1108.0,192.4 1108.0,192.4 1077.4,324.2 1046.8,336.7 985.6,332.8 924.5,320.7 863.3,297.4 802.1,315.2 771.5,311.0 740.9,319.4" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — frontEndExecute (self)</title></polygon>
+<polygon points="740.9,285.5 771.5,277.7 802.1,282.1 863.3,271.5 924.5,297.8 985.6,310.3 1046.8,317.7 1077.4,303.9 1108.0,165.4 1108.0,192.4 1077.4,322.8 1046.8,336.3 985.6,329.4 924.5,317.1 863.3,294.8 802.1,310.1 771.5,309.2 740.9,317.6" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — specializeModule</title></polygon>
+<polygon points="740.9,258.0 771.5,251.0 802.1,260.9 863.3,254.8 924.5,284.2 985.6,296.6 1046.8,304.3 1077.4,290.0 1108.0,146.2 1108.0,165.4 1077.4,303.9 1046.8,317.7 985.6,310.3 924.5,297.8 863.3,271.5 802.1,282.1 771.5,277.7 740.9,285.5" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — simplifyIR</title></polygon>
+<polygon points="740.9,254.7 771.5,247.8 802.1,258.2 863.3,252.8 924.5,282.4 985.6,294.9 1046.8,302.9 1077.4,288.7 1108.0,143.5 1108.0,146.2 1077.4,290.0 1046.8,304.3 985.6,296.6 924.5,284.2 863.3,254.8 802.1,260.9 771.5,251.0 740.9,258.0" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — linkIR</title></polygon>
+<polygon points="740.9,254.7 771.5,247.8 802.1,258.1 863.3,252.8 924.5,282.4 985.6,294.9 1046.8,302.9 1077.4,288.6 1108.0,143.5 1108.0,143.5 1077.4,288.7 1046.8,302.9 985.6,294.9 924.5,282.4 863.3,252.8 802.1,258.2 771.5,247.8 740.9,254.7" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — unrollLoopsInModule</title></polygon>
+<polygon points="740.9,250.6 771.5,243.7 802.1,253.9 863.3,249.5 924.5,280.6 985.6,293.2 1046.8,301.3 1077.4,286.9 1108.0,141.2 1108.0,143.5 1077.4,288.6 1046.8,302.9 985.6,294.9 924.5,282.4 863.3,252.8 802.1,258.1 771.5,247.8 740.9,254.7" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — legalizeResourceTypes</title></polygon>
+<polygon points="740.9,246.1 771.5,239.2 802.1,248.9 863.3,246.1 924.5,278.7 985.6,291.4 1046.8,299.5 1077.4,285.0 1108.0,139.2 1108.0,141.2 1077.4,286.9 1046.8,301.3 985.6,293.2 924.5,280.6 863.3,249.5 802.1,253.9 771.5,243.7 740.9,250.6" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="740.9,245.0 771.5,238.1 802.1,247.6 863.3,245.1 924.5,277.9 985.6,290.5 1046.8,298.7 1077.4,284.2 1108.0,138.2 1108.0,139.2 1077.4,285.0 1046.8,299.5 985.6,291.4 924.5,278.7 863.3,246.1 802.1,248.9 771.5,239.2 740.9,246.1" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — performMandatoryEarlyInlining</title></polygon>
+<polygon points="740.9,244.4 771.5,237.4 802.1,247.1 863.3,244.7 924.5,277.6 985.6,290.2 1046.8,298.4 1077.4,283.8 1108.0,137.9 1108.0,138.2 1077.4,284.2 1046.8,298.7 985.6,290.5 924.5,277.9 863.3,245.1 802.1,247.6 771.5,238.1 740.9,245.0" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — performForceInlining</title></polygon>
+<polygon points="740.9,243.8 771.5,236.8 802.1,246.6 863.3,244.4 924.5,277.3 985.6,289.9 1046.8,298.1 1077.4,283.5 1108.0,137.3 1108.0,137.9 1077.4,283.8 1046.8,298.4 985.6,290.2 924.5,277.6 863.3,244.7 802.1,247.1 771.5,237.4 740.9,244.4" fill="#3f007d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — deferBufferLoad</title></polygon>
+<polygon points="740.9,242.8 771.5,235.9 802.1,245.7 863.3,243.7 924.5,276.6 985.6,289.3 1046.8,297.5 1077.4,282.9 1108.0,136.6 1108.0,137.3 1077.4,283.5 1046.8,298.1 985.6,289.9 924.5,277.3 863.3,244.4 802.1,246.6 771.5,236.8 740.9,243.8" fill="#54278f" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — simplifyNonSSAIR</title></polygon>
+<polygon points="740.9,242.5 771.5,235.5 802.1,245.3 863.3,243.6 924.5,276.6 985.6,289.3 1046.8,297.5 1077.4,282.9 1108.0,136.6 1108.0,136.6 1077.4,282.9 1046.8,297.5 985.6,289.3 924.5,276.6 863.3,243.7 802.1,245.7 771.5,235.9 740.9,242.8" fill="#c2a5cf" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — legalizeMatrixTypes</title></polygon>
+<polygon points="740.9,212.4 771.5,206.1 802.1,216.2 863.3,217.8 924.5,253.3 985.6,266.1 1046.8,273.9 1077.4,259.2 1108.0,108.6 1108.0,136.6 1077.4,282.9 1046.8,297.5 985.6,289.3 924.5,276.6 863.3,243.6 802.1,245.3 771.5,235.5 740.9,242.5" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — generateOutput (self)</title></polygon>
+<polygon points="740.9,211.0 771.5,203.2 802.1,214.2 863.3,215.2 924.5,253.0 985.6,265.6 1046.8,273.9 1077.4,259.2 1108.0,108.6 1108.0,108.6 1077.4,259.2 1046.8,273.9 985.6,266.1 924.5,253.3 863.3,217.8 802.1,216.2 771.5,206.1 740.9,212.4" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
@@ -138,7 +140,7 @@ cost is O(n).</p><p style='color:#666;font-size:13px'><b>bucket:</b> dynamic_dis
 </svg><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="716" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">generic_method_dispatch — Daily tip-of-tree (last 30 days) (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">generic_method_dispatch<tspan fill="#888" font-weight="400" text-decoration="none">  0.98×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">generic_method_dispatch<tspan fill="#888" font-weight="400" text-decoration="none">  0.99×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -148,81 +150,81 @@ cost is O(n).</p><p style='color:#666;font-size:13px'><b>bucket:</b> dynamic_dis
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">08-24</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">08-25</text>
 <line x1="103.9" y1="516.0" x2="103.9" y2="519.0" stroke="#999"/>
-<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">08-25</text>
+<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">08-26</text>
 <line x1="139.7" y1="516.0" x2="139.7" y2="519.0" stroke="#999"/>
-<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">08-26</text>
+<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">08-27</text>
 <line x1="175.6" y1="516.0" x2="175.6" y2="519.0" stroke="#999"/>
-<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">08-27</text>
+<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">08-28</text>
 <line x1="211.4" y1="516.0" x2="211.4" y2="519.0" stroke="#999"/>
-<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">08-28</text>
+<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">08-29</text>
 <line x1="247.3" y1="516.0" x2="247.3" y2="519.0" stroke="#999"/>
-<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">08-29</text>
+<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">08-30</text>
 <line x1="283.2" y1="516.0" x2="283.2" y2="519.0" stroke="#999"/>
-<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">08-30</text>
+<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">08-31</text>
 <line x1="319.0" y1="516.0" x2="319.0" y2="519.0" stroke="#999"/>
-<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">08-31</text>
+<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">09-01</text>
 <line x1="354.9" y1="516.0" x2="354.9" y2="519.0" stroke="#999"/>
-<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">09-01</text>
+<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">09-02</text>
 <line x1="390.8" y1="516.0" x2="390.8" y2="519.0" stroke="#999"/>
-<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">09-02</text>
+<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">09-03</text>
 <line x1="426.6" y1="516.0" x2="426.6" y2="519.0" stroke="#999"/>
-<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">09-03</text>
+<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">09-04</text>
 <line x1="462.5" y1="516.0" x2="462.5" y2="519.0" stroke="#999"/>
-<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">09-04</text>
+<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">09-05</text>
 <line x1="498.3" y1="516.0" x2="498.3" y2="519.0" stroke="#999"/>
-<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-05</text>
+<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-06</text>
 <line x1="534.2" y1="516.0" x2="534.2" y2="519.0" stroke="#999"/>
-<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-06</text>
+<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-07</text>
 <line x1="570.1" y1="516.0" x2="570.1" y2="519.0" stroke="#999"/>
-<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-07</text>
+<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-08</text>
 <line x1="605.9" y1="516.0" x2="605.9" y2="519.0" stroke="#999"/>
-<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-08</text>
+<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-09</text>
 <line x1="641.8" y1="516.0" x2="641.8" y2="519.0" stroke="#999"/>
-<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-09</text>
+<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-10</text>
 <line x1="677.7" y1="516.0" x2="677.7" y2="519.0" stroke="#999"/>
-<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-10</text>
+<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-11</text>
 <line x1="713.5" y1="516.0" x2="713.5" y2="519.0" stroke="#999"/>
-<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-11</text>
+<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-12</text>
 <line x1="749.4" y1="516.0" x2="749.4" y2="519.0" stroke="#999"/>
-<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-12</text>
+<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-13</text>
 <line x1="785.2" y1="516.0" x2="785.2" y2="519.0" stroke="#999"/>
-<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-13</text>
+<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-14</text>
 <line x1="821.1" y1="516.0" x2="821.1" y2="519.0" stroke="#999"/>
-<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-14</text>
+<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-15</text>
 <line x1="857.0" y1="516.0" x2="857.0" y2="519.0" stroke="#999"/>
-<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-15</text>
+<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-16</text>
 <line x1="892.8" y1="516.0" x2="892.8" y2="519.0" stroke="#999"/>
-<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-16</text>
+<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-17</text>
 <line x1="928.7" y1="516.0" x2="928.7" y2="519.0" stroke="#999"/>
-<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-17</text>
+<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-18</text>
 <line x1="964.6" y1="516.0" x2="964.6" y2="519.0" stroke="#999"/>
-<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-18</text>
+<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-19</text>
 <line x1="1000.4" y1="516.0" x2="1000.4" y2="519.0" stroke="#999"/>
-<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-19</text>
+<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-20</text>
 <line x1="1036.3" y1="516.0" x2="1036.3" y2="519.0" stroke="#999"/>
-<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-20</text>
+<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-21</text>
 <line x1="1072.1" y1="516.0" x2="1072.1" y2="519.0" stroke="#999"/>
-<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-21</text>
+<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-22</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-22</text>
-<polygon points="1000.4,514.0 1036.3,514.0 1072.1,514.0 1108.0,514.1 1108.0,516.0 1072.1,516.0 1036.3,516.0 1000.4,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — parseTranslationUnit</title></polygon>
-<polygon points="1000.4,204.8 1036.3,210.5 1072.1,210.6 1108.0,213.8 1108.0,514.1 1072.1,514.0 1036.3,514.0 1000.4,514.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — SemanticChecking</title></polygon>
-<polygon points="1000.4,185.5 1036.3,191.2 1072.1,190.6 1108.0,193.6 1108.0,213.8 1072.1,210.6 1036.3,210.5 1000.4,204.8" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — generateIR</title></polygon>
-<polygon points="1000.4,185.5 1036.3,189.5 1072.1,188.6 1108.0,193.2 1108.0,193.6 1072.1,190.6 1036.3,191.2 1000.4,185.5" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — frontEndExecute (self)</title></polygon>
-<polygon points="1000.4,159.6 1036.3,164.3 1072.1,163.0 1108.0,168.3 1108.0,193.2 1072.1,188.6 1036.3,189.5 1000.4,185.5" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — specializeModule</title></polygon>
-<polygon points="1000.4,143.7 1036.3,148.8 1072.1,147.3 1108.0,152.9 1108.0,168.3 1072.1,163.0 1036.3,164.3 1000.4,159.6" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — simplifyIR</title></polygon>
-<polygon points="1000.4,141.7 1036.3,146.9 1072.1,145.4 1108.0,150.8 1108.0,152.9 1072.1,147.3 1036.3,148.8 1000.4,143.7" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — linkIR</title></polygon>
-<polygon points="1000.4,141.7 1036.3,146.8 1072.1,145.4 1108.0,150.8 1108.0,150.8 1072.1,145.4 1036.3,146.9 1000.4,141.7" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — unrollLoopsInModule</title></polygon>
-<polygon points="1000.4,139.7 1036.3,145.1 1072.1,143.5 1108.0,148.9 1108.0,150.8 1072.1,145.4 1036.3,146.8 1000.4,141.7" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — legalizeResourceTypes</title></polygon>
-<polygon points="1000.4,137.7 1036.3,143.0 1072.1,141.5 1108.0,146.8 1108.0,148.9 1072.1,143.5 1036.3,145.1 1000.4,139.7" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — legalizeExistentialTypeLayout</title></polygon>
-<polygon points="1000.4,136.8 1036.3,142.1 1072.1,140.6 1108.0,145.9 1108.0,146.8 1072.1,141.5 1036.3,143.0 1000.4,137.7" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — performMandatoryEarlyInlining</title></polygon>
-<polygon points="1000.4,136.4 1036.3,141.7 1072.1,140.2 1108.0,145.6 1108.0,145.9 1072.1,140.6 1036.3,142.1 1000.4,136.8" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — performForceInlining</title></polygon>
-<polygon points="1000.4,136.0 1036.3,141.4 1072.1,139.9 1108.0,145.2 1108.0,145.6 1072.1,140.2 1036.3,141.7 1000.4,136.4" fill="#3f007d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — deferBufferLoad</title></polygon>
-<polygon points="1000.4,135.3 1036.3,140.7 1072.1,139.2 1108.0,144.5 1108.0,145.2 1072.1,139.9 1036.3,141.4 1000.4,136.0" fill="#54278f" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — simplifyNonSSAIR</title></polygon>
-<polygon points="1000.4,108.6 1036.3,114.0 1072.1,113.3 1108.0,117.5 1108.0,144.5 1072.1,139.2 1036.3,140.7 1000.4,135.3" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — generateOutput (self)</title></polygon>
-<polygon points="1000.4,108.6 1036.3,113.5 1072.1,110.5 1108.0,116.9 1108.0,117.5 1072.1,113.3 1036.3,114.0 1000.4,108.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — compileInner (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-23</text>
+<polygon points="964.6,514.0 1000.4,514.0 1036.3,514.0 1072.1,514.1 1108.0,513.9 1108.0,516.0 1072.1,516.0 1036.3,516.0 1000.4,516.0 964.6,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — parseTranslationUnit</title></polygon>
+<polygon points="964.6,204.8 1000.4,210.5 1036.3,210.6 1072.1,213.8 1108.0,205.8 1108.0,513.9 1072.1,514.1 1036.3,514.0 1000.4,514.0 964.6,514.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — SemanticChecking</title></polygon>
+<polygon points="964.6,185.5 1000.4,191.2 1036.3,190.6 1072.1,193.6 1108.0,186.7 1108.0,205.8 1072.1,213.8 1036.3,210.6 1000.4,210.5 964.6,204.8" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — generateIR</title></polygon>
+<polygon points="964.6,185.5 1000.4,189.5 1036.3,188.6 1072.1,193.2 1108.0,186.7 1108.0,186.7 1072.1,193.6 1036.3,190.6 1000.4,191.2 964.6,185.5" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — frontEndExecute (self)</title></polygon>
+<polygon points="964.6,159.6 1000.4,164.3 1036.3,163.0 1072.1,168.3 1108.0,161.4 1108.0,186.7 1072.1,193.2 1036.3,188.6 1000.4,189.5 964.6,185.5" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — specializeModule</title></polygon>
+<polygon points="964.6,143.7 1000.4,148.8 1036.3,147.3 1072.1,152.9 1108.0,145.8 1108.0,161.4 1072.1,168.3 1036.3,163.0 1000.4,164.3 964.6,159.6" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — simplifyIR</title></polygon>
+<polygon points="964.6,141.7 1000.4,146.9 1036.3,145.4 1072.1,150.8 1108.0,143.9 1108.0,145.8 1072.1,152.9 1036.3,147.3 1000.4,148.8 964.6,143.7" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — linkIR</title></polygon>
+<polygon points="964.6,141.7 1000.4,146.8 1036.3,145.4 1072.1,150.8 1108.0,143.9 1108.0,143.9 1072.1,150.8 1036.3,145.4 1000.4,146.9 964.6,141.7" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — unrollLoopsInModule</title></polygon>
+<polygon points="964.6,139.7 1000.4,145.1 1036.3,143.5 1072.1,148.9 1108.0,142.0 1108.0,143.9 1072.1,150.8 1036.3,145.4 1000.4,146.8 964.6,141.7" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — legalizeResourceTypes</title></polygon>
+<polygon points="964.6,137.7 1000.4,143.0 1036.3,141.5 1072.1,146.8 1108.0,140.1 1108.0,142.0 1072.1,148.9 1036.3,143.5 1000.4,145.1 964.6,139.7" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="964.6,136.8 1000.4,142.1 1036.3,140.6 1072.1,145.9 1108.0,139.1 1108.0,140.1 1072.1,146.8 1036.3,141.5 1000.4,143.0 964.6,137.7" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — performMandatoryEarlyInlining</title></polygon>
+<polygon points="964.6,136.4 1000.4,141.7 1036.3,140.2 1072.1,145.6 1108.0,138.8 1108.0,139.1 1072.1,145.9 1036.3,140.6 1000.4,142.1 964.6,136.8" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — performForceInlining</title></polygon>
+<polygon points="964.6,136.0 1000.4,141.4 1036.3,139.9 1072.1,145.2 1108.0,138.5 1108.0,138.8 1072.1,145.6 1036.3,140.2 1000.4,141.7 964.6,136.4" fill="#3f007d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — deferBufferLoad</title></polygon>
+<polygon points="964.6,135.3 1000.4,140.7 1036.3,139.2 1072.1,144.5 1108.0,137.7 1108.0,138.5 1072.1,145.2 1036.3,139.9 1000.4,141.4 964.6,136.0" fill="#54278f" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — simplifyNonSSAIR</title></polygon>
+<polygon points="964.6,108.6 1000.4,114.0 1036.3,113.3 1072.1,117.5 1108.0,110.7 1108.0,137.7 1072.1,144.5 1036.3,139.2 1000.4,140.7 964.6,135.3" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — generateOutput (self)</title></polygon>
+<polygon points="964.6,108.6 1000.4,113.5 1036.3,110.5 1072.1,116.9 1108.0,110.7 1108.0,110.7 1072.1,117.5 1036.3,113.3 1000.4,114.0 964.6,108.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>generic_method_dispatch — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
@@ -266,7 +268,7 @@ cost is O(n).</p><p style='color:#666;font-size:13px'><b>bucket:</b> dynamic_dis
 <text x="859" y="668" fill="#222">generateOutput (self)</text>
 <rect x="12" y="676" width="12" height="12" fill="#969696"/>
 <text x="28" y="686" fill="#222">compileInner (self)</text>
-</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Daily window progress</h2><p style='font-size:15px'>Overall <code>compileInner</code>: 89.7 &rarr; 87.8 ms &nbsp;<b style='color:#1e8449'>-2.0%</b><span style='color:#666;font-size:13px'> &nbsp;(2026-09-19 282587ac1 &rarr; 2026-09-22 98bed9978)</span></p><p style='color:#666;font-size:13px;margin:10px 0 4px'>Contributors — the mutually-exclusive phase buckets (named leaves + <code>(self)</code> residuals) that tile compileInner; the pp column sums to the overall %. Buckets moving the total by &ge;0.2% are listed, the rest fold into the remainder row. Below them, every other reported counter (nested/overlapping, e.g. serialized-module reads — own change only):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>counter</th><th>&Delta;</th><th>own %</th><th>of total</th></tr><tr><td>SemanticChecking</td><td align=right>-2.0 ms</td><td align=right>-2.9%</td><td align=right>-2.2pp</td></tr><tr><td>specializeModule</td><td align=right>-0.2 ms</td><td align=right>-4.0%</td><td align=right>-0.3pp</td></tr><tr><td>generateIR</td><td align=right>+0.2 ms</td><td align=right>+4.8%</td><td align=right>+0.2pp</td></tr><tr><td>(remaining 13 buckets)</td><td align=right>+0.1 ms</td><td align=right>&ndash;</td><td align=right>+0.2pp</td></tr><tr><td>loadBuiltinModule</td><td align=right>+1.6 ms</td><td align=right>+1.5%</td><td align=right style='color:#aaa'>&ndash;</td></tr><tr><td>readSerializedModuleIR</td><td align=right>+1.0 ms</td><td align=right>+2.2%</td><td align=right style='color:#aaa'>&ndash;</td></tr></table><p style='color:#666;font-size:13px;margin:14px 0 4px'>Largest day steps (&ge;5% of the previous day, both directions; bisect with <code>git log &lt;c0&gt;..&lt;c1&gt; -- source/</code>):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>boundary</th><th>% vs prev day</th><th style='text-align:left'>commits</th><th style='text-align:left'>top buckets (own %)</th></tr><tr><td colspan=4 style='color:#888'>none</td></tr></table><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only generic_method_dispatch --label repro --gen-dir repro-generic_method_dispatch</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 32), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>generic_method_dispatch.slang <span style='font-weight:400;color:#888'>(176 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Daily window progress</h2><p style='font-size:15px'>Overall <code>compileInner</code>: 89.7 &rarr; 89.2 ms &nbsp;<b style='color:#1e8449'>-0.5%</b><span style='color:#666;font-size:13px'> &nbsp;(2026-09-19 282587ac1 &rarr; 2026-09-23 afeaf511c)</span></p><p style='color:#666;font-size:13px;margin:10px 0 4px'>Contributors — the mutually-exclusive phase buckets (named leaves + <code>(self)</code> residuals) that tile compileInner; the pp column sums to the overall %. Buckets moving the total by &ge;0.2% are listed, the rest fold into the remainder row. Below them, every other reported counter (nested/overlapping, e.g. serialized-module reads — own change only):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>counter</th><th>&Delta;</th><th>own %</th><th>of total</th></tr><tr><td>SemanticChecking</td><td align=right>-0.2 ms</td><td align=right>-0.3%</td><td align=right>-0.3pp</td></tr><tr><td>(remaining 13 buckets)</td><td align=right>-0.2 ms</td><td align=right>&ndash;</td><td align=right>-0.3pp</td></tr></table><p style='color:#666;font-size:13px;margin:14px 0 4px'>Largest day steps (&ge;5% of the previous day, both directions; bisect with <code>git log &lt;c0&gt;..&lt;c1&gt; -- source/</code>):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>boundary</th><th>% vs prev day</th><th style='text-align:left'>commits</th><th style='text-align:left'>top buckets (own %)</th></tr><tr><td colspan=4 style='color:#888'>none</td></tr></table><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only generic_method_dispatch --label repro --gen-dir repro-generic_method_dispatch</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 32), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>generic_method_dispatch.slang <span style='font-weight:400;color:#888'>(176 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 RWStructuredBuffer&lt;float&gt; outBuf;
 
 [anyValueSize(16)]

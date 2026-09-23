@@ -25,7 +25,7 @@ on every target. Measured at N=512 on ToT: cuda 17x spirv.
 Scaling null: n scales loads, each O(1); ideal cost is O(n).</p><p style='color:#666;font-size:13px'><b>bucket:</b> backend_legalize &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target spirv -emit-spirv-directly</code> &nbsp;·&nbsp; <b>default N:</b> 320</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Across releases</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="716" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">backend_loads_spirv — Across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">backend_loads_spirv<tspan fill="#888" font-weight="400" text-decoration="none">  0.44×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">backend_loads_spirv<tspan fill="#888" font-weight="400" text-decoration="none">  0.50×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -36,55 +36,57 @@ Scaling null: n scales loads, each O(1); ideal cost is O(n).</p><p style='color:
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
 <text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">25.12</text>
-<line x1="133.0" y1="516.0" x2="133.0" y2="519.0" stroke="#999"/>
-<text x="133.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 133.0 531.0)">25.14</text>
-<line x1="198.0" y1="516.0" x2="198.0" y2="519.0" stroke="#999"/>
-<text x="198.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 198.0 531.0)">25.16</text>
-<line x1="263.0" y1="516.0" x2="263.0" y2="519.0" stroke="#999"/>
-<text x="263.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 263.0 531.0)">25.18</text>
-<line x1="328.0" y1="516.0" x2="328.0" y2="519.0" stroke="#999"/>
-<text x="328.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 328.0 531.0)">25.20</text>
-<line x1="393.0" y1="516.0" x2="393.0" y2="519.0" stroke="#999"/>
-<text x="393.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 393.0 531.0)">25.22</text>
-<line x1="458.0" y1="516.0" x2="458.0" y2="519.0" stroke="#999"/>
-<text x="458.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 458.0 531.0)">25.24</text>
-<line x1="523.0" y1="516.0" x2="523.0" y2="519.0" stroke="#999"/>
-<text x="523.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 523.0 531.0)">26.2</text>
-<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
-<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.4</text>
-<line x1="653.0" y1="516.0" x2="653.0" y2="519.0" stroke="#999"/>
-<text x="653.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 653.0 531.0)">26.7</text>
-<line x1="718.0" y1="516.0" x2="718.0" y2="519.0" stroke="#999"/>
-<text x="718.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 718.0 531.0)">26.9</text>
-<line x1="783.0" y1="516.0" x2="783.0" y2="519.0" stroke="#999"/>
-<text x="783.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 783.0 531.0)">26.11</text>
-<line x1="848.0" y1="516.0" x2="848.0" y2="519.0" stroke="#999"/>
-<text x="848.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 848.0 531.0)">26.13</text>
-<line x1="913.0" y1="516.0" x2="913.0" y2="519.0" stroke="#999"/>
-<text x="913.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 913.0 531.0)">26.14</text>
-<line x1="978.0" y1="516.0" x2="978.0" y2="519.0" stroke="#999"/>
-<text x="978.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 978.0 531.0)">26.16</text>
-<line x1="1043.0" y1="516.0" x2="1043.0" y2="519.0" stroke="#999"/>
-<text x="1043.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1043.0 531.0)">26.17</text>
+<line x1="129.2" y1="516.0" x2="129.2" y2="519.0" stroke="#999"/>
+<text x="129.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 129.2 531.0)">25.14</text>
+<line x1="190.4" y1="516.0" x2="190.4" y2="519.0" stroke="#999"/>
+<text x="190.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 190.4 531.0)">25.16</text>
+<line x1="251.5" y1="516.0" x2="251.5" y2="519.0" stroke="#999"/>
+<text x="251.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 251.5 531.0)">25.18</text>
+<line x1="312.7" y1="516.0" x2="312.7" y2="519.0" stroke="#999"/>
+<text x="312.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 312.7 531.0)">25.20</text>
+<line x1="373.9" y1="516.0" x2="373.9" y2="519.0" stroke="#999"/>
+<text x="373.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 373.9 531.0)">25.22</text>
+<line x1="435.1" y1="516.0" x2="435.1" y2="519.0" stroke="#999"/>
+<text x="435.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 435.1 531.0)">25.24</text>
+<line x1="496.2" y1="516.0" x2="496.2" y2="519.0" stroke="#999"/>
+<text x="496.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 496.2 531.0)">26.2</text>
+<line x1="557.4" y1="516.0" x2="557.4" y2="519.0" stroke="#999"/>
+<text x="557.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 557.4 531.0)">26.4</text>
+<line x1="618.6" y1="516.0" x2="618.6" y2="519.0" stroke="#999"/>
+<text x="618.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 618.6 531.0)">26.7</text>
+<line x1="679.8" y1="516.0" x2="679.8" y2="519.0" stroke="#999"/>
+<text x="679.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 679.8 531.0)">26.9</text>
+<line x1="740.9" y1="516.0" x2="740.9" y2="519.0" stroke="#999"/>
+<text x="740.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 740.9 531.0)">26.11</text>
+<line x1="802.1" y1="516.0" x2="802.1" y2="519.0" stroke="#999"/>
+<text x="802.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 802.1 531.0)">26.13</text>
+<line x1="863.3" y1="516.0" x2="863.3" y2="519.0" stroke="#999"/>
+<text x="863.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 863.3 531.0)">26.14</text>
+<line x1="924.5" y1="516.0" x2="924.5" y2="519.0" stroke="#999"/>
+<text x="924.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 924.5 531.0)">26.16</text>
+<line x1="985.6" y1="516.0" x2="985.6" y2="519.0" stroke="#999"/>
+<text x="985.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 985.6 531.0)">26.17</text>
+<line x1="1046.8" y1="516.0" x2="1046.8" y2="519.0" stroke="#999"/>
+<text x="1046.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1046.8 531.0)">26.18</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.18</text>
-<polygon points="783.0,512.9 815.5,513.1 848.0,512.9 913.0,512.4 978.0,513.3 1043.0,513.5 1108.0,513.5 1108.0,516.0 1043.0,516.0 978.0,516.0 913.0,516.0 848.0,516.0 815.5,516.0 783.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — parseTranslationUnit</title></polygon>
-<polygon points="783.0,459.4 815.5,458.3 848.0,456.2 913.0,439.1 978.0,453.1 1043.0,462.0 1108.0,460.9 1108.0,513.5 1043.0,513.5 978.0,513.3 913.0,512.4 848.0,512.9 815.5,513.1 783.0,512.9" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — SemanticChecking</title></polygon>
-<polygon points="783.0,428.6 815.5,426.8 848.0,414.1 913.0,411.2 978.0,427.2 1043.0,440.2 1108.0,439.5 1108.0,460.9 1043.0,462.0 978.0,453.1 913.0,439.1 848.0,456.2 815.5,458.3 783.0,459.4" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — generateIR</title></polygon>
-<polygon points="783.0,421.0 815.5,418.8 848.0,409.3 913.0,399.3 978.0,422.7 1043.0,435.4 1108.0,434.9 1108.0,439.5 1043.0,440.2 978.0,427.2 913.0,411.2 848.0,414.1 815.5,426.8 783.0,428.6" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — frontEndExecute (self)</title></polygon>
-<polygon points="783.0,381.9 815.5,379.6 848.0,375.8 913.0,380.0 978.0,406.3 1043.0,419.1 1108.0,419.0 1108.0,434.9 1043.0,435.4 978.0,422.7 913.0,399.3 848.0,409.3 815.5,418.8 783.0,421.0" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — specializeModule</title></polygon>
-<polygon points="783.0,340.0 815.5,343.8 848.0,345.7 913.0,365.4 978.0,393.7 1043.0,407.0 1108.0,407.1 1108.0,419.0 1043.0,419.1 978.0,406.3 913.0,380.0 848.0,375.8 815.5,379.6 783.0,381.9" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — simplifyIR</title></polygon>
-<polygon points="783.0,335.3 815.5,339.2 848.0,341.8 913.0,362.6 978.0,391.2 1043.0,404.6 1108.0,404.9 1108.0,407.1 1043.0,407.0 978.0,393.7 913.0,365.4 848.0,345.7 815.5,343.8 783.0,340.0" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — linkIR</title></polygon>
-<polygon points="783.0,335.2 815.5,339.1 848.0,341.7 913.0,362.5 978.0,391.2 1043.0,404.6 1108.0,404.9 1108.0,404.9 1043.0,404.6 978.0,391.2 913.0,362.6 848.0,341.8 815.5,339.2 783.0,335.3" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — unrollLoopsInModule</title></polygon>
-<polygon points="783.0,286.7 815.5,290.0 848.0,285.3 913.0,355.6 978.0,387.6 1043.0,401.1 1108.0,401.5 1108.0,404.9 1043.0,404.6 978.0,391.2 913.0,362.5 848.0,341.7 815.5,339.1 783.0,335.2" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — legalizeResourceTypes</title></polygon>
-<polygon points="783.0,237.8 815.5,240.5 848.0,234.0 913.0,350.0 978.0,383.6 1043.0,397.2 1108.0,398.2 1108.0,401.5 1043.0,401.1 978.0,387.6 913.0,355.6 848.0,285.3 815.5,290.0 783.0,286.7" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — legalizeExistentialTypeLayout</title></polygon>
-<polygon points="783.0,235.3 815.5,237.9 848.0,231.1 913.0,347.3 978.0,381.4 1043.0,395.1 1108.0,396.1 1108.0,398.2 1043.0,397.2 978.0,383.6 913.0,350.0 848.0,234.0 815.5,240.5 783.0,237.8" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — performMandatoryEarlyInlining</title></polygon>
-<polygon points="783.0,232.5 815.5,235.1 848.0,228.2 913.0,344.8 978.0,379.7 1043.0,393.4 1108.0,394.6 1108.0,396.1 1043.0,395.1 978.0,381.4 913.0,347.3 848.0,231.1 815.5,237.9 783.0,235.3" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — performForceInlining</title></polygon>
-<polygon points="783.0,232.3 815.5,235.0 848.0,228.0 913.0,344.6 978.0,379.5 1043.0,393.2 1108.0,394.5 1108.0,394.6 1043.0,393.4 978.0,379.7 913.0,344.8 848.0,228.2 815.5,235.1 783.0,232.5" fill="#3f007d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — deferBufferLoad</title></polygon>
-<polygon points="783.0,231.5 815.5,234.2 848.0,227.1 913.0,343.8 978.0,378.8 1043.0,392.5 1108.0,393.8 1108.0,394.5 1043.0,393.2 978.0,379.5 913.0,344.6 848.0,228.0 815.5,235.0 783.0,232.3" fill="#54278f" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — simplifyNonSSAIR</title></polygon>
-<polygon points="783.0,231.0 815.5,233.7 848.0,226.4 913.0,343.7 978.0,378.7 1043.0,392.5 1108.0,393.7 1108.0,393.8 1043.0,392.5 978.0,378.8 913.0,343.8 848.0,227.1 815.5,234.2 783.0,231.5" fill="#c2a5cf" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — legalizeMatrixTypes</title></polygon>
-<polygon points="783.0,156.6 815.5,158.3 848.0,135.4 913.0,298.8 978.0,342.2 1043.0,358.6 1108.0,359.4 1108.0,393.7 1043.0,392.5 978.0,378.7 913.0,343.7 848.0,226.4 815.5,233.7 783.0,231.0" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — generateOutput (self)</title></polygon>
-<polygon points="783.0,149.0 815.5,151.6 848.0,108.6 913.0,290.5 978.0,329.8 1043.0,354.6 1108.0,355.4 1108.0,359.4 1043.0,358.6 978.0,342.2 913.0,298.8 848.0,135.4 815.5,158.3 783.0,156.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — compileInner (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.18.2</text>
+<polygon points="740.9,512.9 771.5,513.1 802.1,512.9 863.3,512.4 924.5,513.3 985.6,513.5 1046.8,513.5 1077.4,513.5 1108.0,513.2 1108.0,516.0 1077.4,516.0 1046.8,516.0 985.6,516.0 924.5,516.0 863.3,516.0 802.1,516.0 771.5,516.0 740.9,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — parseTranslationUnit</title></polygon>
+<polygon points="740.9,459.4 771.5,458.3 802.1,456.2 863.3,439.1 924.5,453.1 985.6,462.0 1046.8,460.9 1077.4,460.6 1108.0,452.5 1108.0,513.2 1077.4,513.5 1046.8,513.5 985.6,513.5 924.5,513.3 863.3,512.4 802.1,512.9 771.5,513.1 740.9,512.9" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — SemanticChecking</title></polygon>
+<polygon points="740.9,428.6 771.5,426.8 802.1,414.1 863.3,411.2 924.5,427.2 985.6,440.2 1046.8,439.5 1077.4,438.8 1108.0,427.2 1108.0,452.5 1077.4,460.6 1046.8,460.9 985.6,462.0 924.5,453.1 863.3,439.1 802.1,456.2 771.5,458.3 740.9,459.4" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — generateIR</title></polygon>
+<polygon points="740.9,421.0 771.5,418.8 802.1,409.3 863.3,399.3 924.5,422.7 985.6,435.4 1046.8,434.9 1077.4,434.3 1108.0,421.5 1108.0,427.2 1077.4,438.8 1046.8,439.5 985.6,440.2 924.5,427.2 863.3,411.2 802.1,414.1 771.5,426.8 740.9,428.6" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — frontEndExecute (self)</title></polygon>
+<polygon points="740.9,381.9 771.5,379.6 802.1,375.8 863.3,380.0 924.5,406.3 985.6,419.1 1046.8,419.0 1077.4,418.5 1108.0,402.9 1108.0,421.5 1077.4,434.3 1046.8,434.9 985.6,435.4 924.5,422.7 863.3,399.3 802.1,409.3 771.5,418.8 740.9,421.0" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — specializeModule</title></polygon>
+<polygon points="740.9,340.0 771.5,343.8 802.1,345.7 863.3,365.4 924.5,393.7 985.6,407.0 1046.8,407.1 1077.4,406.5 1108.0,390.3 1108.0,402.9 1077.4,418.5 1046.8,419.0 985.6,419.1 924.5,406.3 863.3,380.0 802.1,375.8 771.5,379.6 740.9,381.9" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — simplifyIR</title></polygon>
+<polygon points="740.9,335.3 771.5,339.2 802.1,341.8 863.3,362.6 924.5,391.2 985.6,404.6 1046.8,404.9 1077.4,404.2 1108.0,388.1 1108.0,390.3 1077.4,406.5 1046.8,407.1 985.6,407.0 924.5,393.7 863.3,365.4 802.1,345.7 771.5,343.8 740.9,340.0" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — linkIR</title></polygon>
+<polygon points="740.9,335.2 771.5,339.1 802.1,341.7 863.3,362.5 924.5,391.2 985.6,404.6 1046.8,404.9 1077.4,404.2 1108.0,388.0 1108.0,388.1 1077.4,404.2 1046.8,404.9 985.6,404.6 924.5,391.2 863.3,362.6 802.1,341.8 771.5,339.2 740.9,335.3" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — unrollLoopsInModule</title></polygon>
+<polygon points="740.9,286.7 771.5,290.0 802.1,285.3 863.3,355.6 924.5,387.6 985.6,401.1 1046.8,401.5 1077.4,400.8 1108.0,384.4 1108.0,388.0 1077.4,404.2 1046.8,404.9 985.6,404.6 924.5,391.2 863.3,362.5 802.1,341.7 771.5,339.1 740.9,335.2" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — legalizeResourceTypes</title></polygon>
+<polygon points="740.9,237.8 771.5,240.5 802.1,234.0 863.3,350.0 924.5,383.6 985.6,397.2 1046.8,398.2 1077.4,397.2 1108.0,380.7 1108.0,384.4 1077.4,400.8 1046.8,401.5 985.6,401.1 924.5,387.6 863.3,355.6 802.1,285.3 771.5,290.0 740.9,286.7" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="740.9,235.3 771.5,237.9 802.1,231.1 863.3,347.3 924.5,381.4 985.6,395.1 1046.8,396.1 1077.4,395.2 1108.0,378.6 1108.0,380.7 1077.4,397.2 1046.8,398.2 985.6,397.2 924.5,383.6 863.3,350.0 802.1,234.0 771.5,240.5 740.9,237.8" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — performMandatoryEarlyInlining</title></polygon>
+<polygon points="740.9,232.5 771.5,235.1 802.1,228.2 863.3,344.8 924.5,379.7 985.6,393.4 1046.8,394.6 1077.4,393.7 1108.0,377.1 1108.0,378.6 1077.4,395.2 1046.8,396.1 985.6,395.1 924.5,381.4 863.3,347.3 802.1,231.1 771.5,237.9 740.9,235.3" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — performForceInlining</title></polygon>
+<polygon points="740.9,232.3 771.5,235.0 802.1,228.0 863.3,344.6 924.5,379.5 985.6,393.2 1046.8,394.5 1077.4,393.6 1108.0,377.0 1108.0,377.1 1077.4,393.7 1046.8,394.6 985.6,393.4 924.5,379.7 863.3,344.8 802.1,228.2 771.5,235.1 740.9,232.5" fill="#3f007d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — deferBufferLoad</title></polygon>
+<polygon points="740.9,231.5 771.5,234.2 802.1,227.1 863.3,343.8 924.5,378.8 985.6,392.5 1046.8,393.8 1077.4,392.8 1108.0,376.3 1108.0,377.0 1077.4,393.6 1046.8,394.5 985.6,393.2 924.5,379.5 863.3,344.6 802.1,228.0 771.5,235.0 740.9,232.3" fill="#54278f" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — simplifyNonSSAIR</title></polygon>
+<polygon points="740.9,231.0 771.5,233.7 802.1,226.4 863.3,343.7 924.5,378.7 985.6,392.5 1046.8,393.7 1077.4,392.8 1108.0,376.3 1108.0,376.3 1077.4,392.8 1046.8,393.8 985.6,392.5 924.5,378.8 863.3,343.8 802.1,227.1 771.5,234.2 740.9,231.5" fill="#c2a5cf" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — legalizeMatrixTypes</title></polygon>
+<polygon points="740.9,156.6 771.5,158.3 802.1,135.4 863.3,298.8 924.5,342.2 985.6,358.6 1046.8,359.4 1077.4,358.0 1108.0,339.0 1108.0,376.3 1077.4,392.8 1046.8,393.7 985.6,392.5 924.5,378.7 863.3,343.7 802.1,226.4 771.5,233.7 740.9,231.0" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — generateOutput (self)</title></polygon>
+<polygon points="740.9,149.0 771.5,151.6 802.1,108.6 863.3,290.5 924.5,329.8 985.6,354.6 1046.8,355.4 1077.4,354.4 1108.0,332.9 1108.0,339.0 1077.4,358.0 1046.8,359.4 985.6,358.6 924.5,342.2 863.3,298.8 802.1,135.4 771.5,158.3 740.9,156.6" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
@@ -131,7 +133,7 @@ Scaling null: n scales loads, each O(1); ideal cost is O(n).</p><p style='color:
 </svg><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="716" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">backend_loads_spirv — Daily tip-of-tree (last 30 days) (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">backend_loads_spirv<tspan fill="#888" font-weight="400" text-decoration="none">  0.99×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">backend_loads_spirv<tspan fill="#888" font-weight="400" text-decoration="none">  1.00×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -141,82 +143,82 @@ Scaling null: n scales loads, each O(1); ideal cost is O(n).</p><p style='color:
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">08-24</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">08-25</text>
 <line x1="103.9" y1="516.0" x2="103.9" y2="519.0" stroke="#999"/>
-<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">08-25</text>
+<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">08-26</text>
 <line x1="139.7" y1="516.0" x2="139.7" y2="519.0" stroke="#999"/>
-<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">08-26</text>
+<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">08-27</text>
 <line x1="175.6" y1="516.0" x2="175.6" y2="519.0" stroke="#999"/>
-<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">08-27</text>
+<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">08-28</text>
 <line x1="211.4" y1="516.0" x2="211.4" y2="519.0" stroke="#999"/>
-<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">08-28</text>
+<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">08-29</text>
 <line x1="247.3" y1="516.0" x2="247.3" y2="519.0" stroke="#999"/>
-<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">08-29</text>
+<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">08-30</text>
 <line x1="283.2" y1="516.0" x2="283.2" y2="519.0" stroke="#999"/>
-<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">08-30</text>
+<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">08-31</text>
 <line x1="319.0" y1="516.0" x2="319.0" y2="519.0" stroke="#999"/>
-<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">08-31</text>
+<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">09-01</text>
 <line x1="354.9" y1="516.0" x2="354.9" y2="519.0" stroke="#999"/>
-<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">09-01</text>
+<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">09-02</text>
 <line x1="390.8" y1="516.0" x2="390.8" y2="519.0" stroke="#999"/>
-<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">09-02</text>
+<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">09-03</text>
 <line x1="426.6" y1="516.0" x2="426.6" y2="519.0" stroke="#999"/>
-<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">09-03</text>
+<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">09-04</text>
 <line x1="462.5" y1="516.0" x2="462.5" y2="519.0" stroke="#999"/>
-<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">09-04</text>
+<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">09-05</text>
 <line x1="498.3" y1="516.0" x2="498.3" y2="519.0" stroke="#999"/>
-<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-05</text>
+<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-06</text>
 <line x1="534.2" y1="516.0" x2="534.2" y2="519.0" stroke="#999"/>
-<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-06</text>
+<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-07</text>
 <line x1="570.1" y1="516.0" x2="570.1" y2="519.0" stroke="#999"/>
-<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-07</text>
+<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-08</text>
 <line x1="605.9" y1="516.0" x2="605.9" y2="519.0" stroke="#999"/>
-<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-08</text>
+<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-09</text>
 <line x1="641.8" y1="516.0" x2="641.8" y2="519.0" stroke="#999"/>
-<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-09</text>
+<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-10</text>
 <line x1="677.7" y1="516.0" x2="677.7" y2="519.0" stroke="#999"/>
-<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-10</text>
+<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-11</text>
 <line x1="713.5" y1="516.0" x2="713.5" y2="519.0" stroke="#999"/>
-<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-11</text>
+<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-12</text>
 <line x1="749.4" y1="516.0" x2="749.4" y2="519.0" stroke="#999"/>
-<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-12</text>
+<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-13</text>
 <line x1="785.2" y1="516.0" x2="785.2" y2="519.0" stroke="#999"/>
-<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-13</text>
+<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-14</text>
 <line x1="821.1" y1="516.0" x2="821.1" y2="519.0" stroke="#999"/>
-<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-14</text>
+<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-15</text>
 <line x1="857.0" y1="516.0" x2="857.0" y2="519.0" stroke="#999"/>
-<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-15</text>
+<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-16</text>
 <line x1="892.8" y1="516.0" x2="892.8" y2="519.0" stroke="#999"/>
-<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-16</text>
+<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-17</text>
 <line x1="928.7" y1="516.0" x2="928.7" y2="519.0" stroke="#999"/>
-<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-17</text>
+<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-18</text>
 <line x1="964.6" y1="516.0" x2="964.6" y2="519.0" stroke="#999"/>
-<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-18</text>
+<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-19</text>
 <line x1="1000.4" y1="516.0" x2="1000.4" y2="519.0" stroke="#999"/>
-<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-19</text>
+<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-20</text>
 <line x1="1036.3" y1="516.0" x2="1036.3" y2="519.0" stroke="#999"/>
-<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-20</text>
+<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-21</text>
 <line x1="1072.1" y1="516.0" x2="1072.1" y2="519.0" stroke="#999"/>
-<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-21</text>
+<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-22</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-22</text>
-<polygon points="964.6,510.1 1000.4,510.2 1036.3,510.2 1072.1,510.1 1108.0,510.3 1108.0,516.0 1072.1,516.0 1036.3,516.0 1000.4,516.0 964.6,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — parseTranslationUnit</title></polygon>
-<polygon points="964.6,383.5 1000.4,380.1 1036.3,381.7 1072.1,379.6 1108.0,383.7 1108.0,510.3 1072.1,510.1 1036.3,510.2 1000.4,510.2 964.6,510.1" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — SemanticChecking</title></polygon>
-<polygon points="964.6,330.9 1000.4,329.0 1036.3,327.6 1072.1,323.1 1108.0,331.9 1108.0,383.7 1072.1,379.6 1036.3,381.7 1000.4,380.1 964.6,383.5" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — generateIR</title></polygon>
-<polygon points="964.6,319.8 1000.4,318.1 1036.3,315.5 1072.1,311.1 1108.0,321.9 1108.0,331.9 1072.1,323.1 1036.3,327.6 1000.4,329.0 964.6,330.9" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — frontEndExecute (self)</title></polygon>
-<polygon points="964.6,272.6 1000.4,270.9 1036.3,268.1 1072.1,262.7 1108.0,275.0 1108.0,321.9 1072.1,311.1 1036.3,315.5 1000.4,318.1 964.6,319.8" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — specializeModule</title></polygon>
-<polygon points="964.6,243.0 1000.4,241.5 1036.3,238.5 1072.1,232.2 1108.0,245.6 1108.0,275.0 1072.1,262.7 1036.3,268.1 1000.4,270.9 964.6,272.6" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — simplifyIR</title></polygon>
-<polygon points="964.6,237.7 1000.4,236.7 1036.3,233.7 1072.1,227.4 1108.0,240.9 1108.0,245.6 1072.1,232.2 1036.3,238.5 1000.4,241.5 964.6,243.0" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — linkIR</title></polygon>
-<polygon points="964.6,237.6 1000.4,236.6 1036.3,233.7 1072.1,227.3 1108.0,240.9 1108.0,240.9 1072.1,227.4 1036.3,233.7 1000.4,236.7 964.6,237.7" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — unrollLoopsInModule</title></polygon>
-<polygon points="964.6,230.1 1000.4,229.2 1036.3,226.2 1072.1,219.0 1108.0,232.9 1108.0,240.9 1072.1,227.3 1036.3,233.7 1000.4,236.6 964.6,237.6" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — legalizeResourceTypes</title></polygon>
-<polygon points="964.6,222.4 1000.4,221.7 1036.3,218.6 1072.1,210.5 1108.0,224.7 1108.0,232.9 1072.1,219.0 1036.3,226.2 1000.4,229.2 964.6,230.1" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — legalizeExistentialTypeLayout</title></polygon>
-<polygon points="964.6,216.5 1000.4,215.8 1036.3,212.6 1072.1,204.6 1108.0,218.9 1108.0,224.7 1072.1,210.5 1036.3,218.6 1000.4,221.7 964.6,222.4" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — performMandatoryEarlyInlining</title></polygon>
-<polygon points="964.6,213.0 1000.4,212.4 1036.3,209.0 1072.1,201.1 1108.0,215.3 1108.0,218.9 1072.1,204.6 1036.3,212.6 1000.4,215.8 964.6,216.5" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — performForceInlining</title></polygon>
-<polygon points="964.6,212.6 1000.4,212.1 1036.3,208.7 1072.1,200.7 1108.0,215.0 1108.0,215.3 1072.1,201.1 1036.3,209.0 1000.4,212.4 964.6,213.0" fill="#3f007d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — deferBufferLoad</title></polygon>
-<polygon points="964.6,210.8 1000.4,210.3 1036.3,206.9 1072.1,198.9 1108.0,213.2 1108.0,215.0 1072.1,200.7 1036.3,208.7 1000.4,212.1 964.6,212.6" fill="#54278f" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — simplifyNonSSAIR</title></polygon>
-<polygon points="964.6,210.7 1000.4,210.2 1036.3,206.8 1072.1,198.8 1108.0,213.1 1108.0,213.2 1072.1,198.9 1036.3,206.9 1000.4,210.3 964.6,210.8" fill="#c2a5cf" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — legalizeMatrixTypes</title></polygon>
-<polygon points="964.6,128.8 1000.4,128.5 1036.3,122.2 1072.1,115.3 1108.0,135.2 1108.0,213.1 1072.1,198.8 1036.3,206.8 1000.4,210.2 964.6,210.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — generateOutput (self)</title></polygon>
-<polygon points="964.6,118.0 1000.4,118.8 1036.3,113.9 1072.1,108.6 1108.0,123.1 1108.0,135.2 1072.1,115.3 1036.3,122.2 1000.4,128.5 964.6,128.8" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — compileInner (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-23</text>
+<polygon points="928.7,510.1 964.6,510.2 1000.4,510.2 1036.3,510.1 1072.1,510.3 1108.0,510.0 1108.0,516.0 1072.1,516.0 1036.3,516.0 1000.4,516.0 964.6,516.0 928.7,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — parseTranslationUnit</title></polygon>
+<polygon points="928.7,383.5 964.6,380.1 1000.4,381.7 1036.3,379.6 1072.1,383.7 1108.0,380.7 1108.0,510.0 1072.1,510.3 1036.3,510.1 1000.4,510.2 964.6,510.2 928.7,510.1" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — SemanticChecking</title></polygon>
+<polygon points="928.7,330.9 964.6,329.0 1000.4,327.6 1036.3,323.1 1072.1,331.9 1108.0,328.7 1108.0,380.7 1072.1,383.7 1036.3,379.6 1000.4,381.7 964.6,380.1 928.7,383.5" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — generateIR</title></polygon>
+<polygon points="928.7,319.8 964.6,318.1 1000.4,315.5 1036.3,311.1 1072.1,321.9 1108.0,317.4 1108.0,328.7 1072.1,331.9 1036.3,323.1 1000.4,327.6 964.6,329.0 928.7,330.9" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — frontEndExecute (self)</title></polygon>
+<polygon points="928.7,272.6 964.6,270.9 1000.4,268.1 1036.3,262.7 1072.1,275.0 1108.0,270.4 1108.0,317.4 1072.1,321.9 1036.3,311.1 1000.4,315.5 964.6,318.1 928.7,319.8" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — specializeModule</title></polygon>
+<polygon points="928.7,243.0 964.6,241.5 1000.4,238.5 1036.3,232.2 1072.1,245.6 1108.0,240.9 1108.0,270.4 1072.1,275.0 1036.3,262.7 1000.4,268.1 964.6,270.9 928.7,272.6" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — simplifyIR</title></polygon>
+<polygon points="928.7,237.7 964.6,236.7 1000.4,233.7 1036.3,227.4 1072.1,240.9 1108.0,236.3 1108.0,240.9 1072.1,245.6 1036.3,232.2 1000.4,238.5 964.6,241.5 928.7,243.0" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — linkIR</title></polygon>
+<polygon points="928.7,237.6 964.6,236.6 1000.4,233.7 1036.3,227.3 1072.1,240.9 1108.0,236.3 1108.0,236.3 1072.1,240.9 1036.3,227.4 1000.4,233.7 964.6,236.7 928.7,237.7" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — unrollLoopsInModule</title></polygon>
+<polygon points="928.7,230.1 964.6,229.2 1000.4,226.2 1036.3,219.0 1072.1,232.9 1108.0,228.5 1108.0,236.3 1072.1,240.9 1036.3,227.3 1000.4,233.7 964.6,236.6 928.7,237.6" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — legalizeResourceTypes</title></polygon>
+<polygon points="928.7,222.4 964.6,221.7 1000.4,218.6 1036.3,210.5 1072.1,224.7 1108.0,220.7 1108.0,228.5 1072.1,232.9 1036.3,219.0 1000.4,226.2 964.6,229.2 928.7,230.1" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="928.7,216.5 964.6,215.8 1000.4,212.6 1036.3,204.6 1072.1,218.9 1108.0,214.8 1108.0,220.7 1072.1,224.7 1036.3,210.5 1000.4,218.6 964.6,221.7 928.7,222.4" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — performMandatoryEarlyInlining</title></polygon>
+<polygon points="928.7,213.0 964.6,212.4 1000.4,209.0 1036.3,201.1 1072.1,215.3 1108.0,211.3 1108.0,214.8 1072.1,218.9 1036.3,204.6 1000.4,212.6 964.6,215.8 928.7,216.5" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — performForceInlining</title></polygon>
+<polygon points="928.7,212.6 964.6,212.1 1000.4,208.7 1036.3,200.7 1072.1,215.0 1108.0,210.9 1108.0,211.3 1072.1,215.3 1036.3,201.1 1000.4,209.0 964.6,212.4 928.7,213.0" fill="#3f007d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — deferBufferLoad</title></polygon>
+<polygon points="928.7,210.8 964.6,210.3 1000.4,206.9 1036.3,198.9 1072.1,213.2 1108.0,209.1 1108.0,210.9 1072.1,215.0 1036.3,200.7 1000.4,208.7 964.6,212.1 928.7,212.6" fill="#54278f" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — simplifyNonSSAIR</title></polygon>
+<polygon points="928.7,210.7 964.6,210.2 1000.4,206.8 1036.3,198.8 1072.1,213.1 1108.0,209.0 1108.0,209.1 1072.1,213.2 1036.3,198.9 1000.4,206.9 964.6,210.3 928.7,210.8" fill="#c2a5cf" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — legalizeMatrixTypes</title></polygon>
+<polygon points="928.7,128.8 964.6,128.5 1000.4,122.2 1036.3,115.3 1072.1,135.2 1108.0,127.2 1108.0,209.0 1072.1,213.1 1036.3,198.8 1000.4,206.8 964.6,210.2 928.7,210.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — generateOutput (self)</title></polygon>
+<polygon points="928.7,118.0 964.6,118.8 1000.4,113.9 1036.3,108.6 1072.1,123.1 1108.0,116.5 1108.0,127.2 1072.1,135.2 1036.3,115.3 1000.4,122.2 964.6,128.5 928.7,128.8" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_loads_spirv — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
@@ -260,7 +262,7 @@ Scaling null: n scales loads, each O(1); ideal cost is O(n).</p><p style='color:
 <text x="859" y="668" fill="#222">generateOutput (self)</text>
 <rect x="12" y="676" width="12" height="12" fill="#969696"/>
 <text x="28" y="686" fill="#222">compileInner (self)</text>
-</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Daily window progress</h2><p style='font-size:15px'>Overall <code>compileInner</code>: 69.7 &rarr; 68.8 ms &nbsp;<b style='color:#1e8449'>-1.3%</b><span style='color:#666;font-size:13px'> &nbsp;(2026-09-18 09d258224 &rarr; 2026-09-22 98bed9978)</span></p><p style='color:#666;font-size:13px;margin:10px 0 4px'>Contributors — the mutually-exclusive phase buckets (named leaves + <code>(self)</code> residuals) that tile compileInner; the pp column sums to the overall %. Buckets moving the total by &ge;0.2% are listed, the rest fold into the remainder row. Below them, every other reported counter (nested/overlapping, e.g. serialized-module reads — own change only):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>counter</th><th>&Delta;</th><th>own %</th><th>of total</th></tr><tr><td>generateOutput (self)</td><td align=right>-0.7 ms</td><td align=right>-4.9%</td><td align=right>-1.0pp</td></tr><tr><td>compileInner (self)</td><td align=right>+0.2 ms</td><td align=right>+12.8%</td><td align=right>+0.3pp</td></tr><tr><td>frontEndExecute (self)</td><td align=right>-0.2 ms</td><td align=right>-10.8%</td><td align=right>-0.3pp</td></tr><tr><td>generateIR</td><td align=right>-0.1 ms</td><td align=right>-1.5%</td><td align=right>-0.2pp</td></tr><tr><td>(remaining 13 buckets)</td><td align=right>-0.1 ms</td><td align=right>&ndash;</td><td align=right>-0.1pp</td></tr><tr><td>loadBuiltinModule</td><td align=right>+3.6 ms</td><td align=right>+3.6%</td><td align=right style='color:#aaa'>&ndash;</td></tr><tr><td>readSerializedModuleAST</td><td align=right>+1.9 ms</td><td align=right>+5.3%</td><td align=right style='color:#aaa'>&ndash;</td></tr></table><p style='color:#666;font-size:13px;margin:14px 0 4px'>Largest day steps (&ge;5% of the previous day, both directions; bisect with <code>git log &lt;c0&gt;..&lt;c1&gt; -- source/</code>):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>boundary</th><th>% vs prev day</th><th style='text-align:left'>commits</th><th style='text-align:left'>top buckets (own %)</th></tr><tr><td colspan=4 style='color:#888'>none</td></tr></table><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only backend_loads_spirv --label repro --gen-dir repro-backend_loads_spirv</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 320), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>resource_load_chain.slang <span style='font-weight:400;color:#888'>(652 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Daily window progress</h2><p style='font-size:15px'>Overall <code>compileInner</code>: 69.7 &rarr; 69.9 ms &nbsp;<b style='color:#c0392b'>+0.4%</b><span style='color:#666;font-size:13px'> &nbsp;(2026-09-18 09d258224 &rarr; 2026-09-23 afeaf511c)</span></p><p style='color:#666;font-size:13px;margin:10px 0 4px'>Contributors — the mutually-exclusive phase buckets (named leaves + <code>(self)</code> residuals) that tile compileInner; the pp column sums to the overall %. Buckets moving the total by &ge;0.2% are listed, the rest fold into the remainder row. Below them, every other reported counter (nested/overlapping, e.g. serialized-module reads — own change only):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>counter</th><th>&Delta;</th><th>own %</th><th>of total</th></tr><tr><td>SemanticChecking</td><td align=right>+0.5 ms</td><td align=right>+2.2%</td><td align=right>+0.7pp</td></tr><tr><td>(remaining 16 buckets)</td><td align=right>-0.2 ms</td><td align=right>&ndash;</td><td align=right>-0.3pp</td></tr><tr><td>loadBuiltinModule</td><td align=right>+3.1 ms</td><td align=right>+3.1%</td><td align=right style='color:#aaa'>&ndash;</td></tr></table><p style='color:#666;font-size:13px;margin:14px 0 4px'>Largest day steps (&ge;5% of the previous day, both directions; bisect with <code>git log &lt;c0&gt;..&lt;c1&gt; -- source/</code>):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>boundary</th><th>% vs prev day</th><th style='text-align:left'>commits</th><th style='text-align:left'>top buckets (own %)</th></tr><tr><td colspan=4 style='color:#888'>none</td></tr></table><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only backend_loads_spirv --label repro --gen-dir repro-backend_loads_spirv</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 320), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>resource_load_chain.slang <span style='font-weight:400;color:#888'>(652 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 Texture2D&lt;float4&gt; tex_0;
 Texture2D&lt;float4&gt; tex_1;
 Texture2D&lt;float4&gt; tex_2;
