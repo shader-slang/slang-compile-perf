@@ -17,10 +17,10 @@ and the C-family emitters lower matrix ops to their own helper types. Only
 both only DECLARE matrices -- neither computes with them. Measured at
 N=256: 2.78x spread, CUDA scaling at exponent 1.32 against HLSL's 0.76.
 
-Scaling null: n scales matrix ops, each O(1); ideal cost is O(n).</p><p style='color:#666;font-size:13px'><b>bucket:</b> backend_legalize &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target glsl -entry computeMain</code> &nbsp;·&nbsp; <b>default N:</b> 256</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Across releases</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
+Scaling null: n scales matrix ops, each O(1); ideal cost is O(n).</p><p style='color:#666;font-size:13px'><b>bucket:</b> backend_legalize &nbsp;·&nbsp; <b>compile mode:</b> target &nbsp;·&nbsp; <b>flags:</b> <code>-target glsl -entry computeMain</code> &nbsp;·&nbsp; <b>default N:</b> 512</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Across releases</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="716" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">backend_matrix_glsl — Across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">backend_matrix_glsl<tspan fill="#888" font-weight="400" text-decoration="none">  0.36×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">backend_matrix_glsl<tspan fill="#888" font-weight="400" text-decoration="none">  0.68×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -31,60 +31,60 @@ Scaling null: n scales matrix ops, each O(1); ideal cost is O(n).</p><p style='c
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
 <text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">25.12</text>
-<line x1="127.4" y1="516.0" x2="127.4" y2="519.0" stroke="#999"/>
-<text x="127.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 127.4 531.0)">25.14</text>
-<line x1="186.9" y1="516.0" x2="186.9" y2="519.0" stroke="#999"/>
-<text x="186.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 186.9 531.0)">25.16</text>
-<line x1="246.3" y1="516.0" x2="246.3" y2="519.0" stroke="#999"/>
-<text x="246.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 246.3 531.0)">25.18</text>
-<line x1="305.7" y1="516.0" x2="305.7" y2="519.0" stroke="#999"/>
-<text x="305.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 305.7 531.0)">25.20</text>
-<line x1="365.1" y1="516.0" x2="365.1" y2="519.0" stroke="#999"/>
-<text x="365.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 365.1 531.0)">25.22</text>
-<line x1="424.6" y1="516.0" x2="424.6" y2="519.0" stroke="#999"/>
-<text x="424.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 424.6 531.0)">25.24</text>
-<line x1="484.0" y1="516.0" x2="484.0" y2="519.0" stroke="#999"/>
-<text x="484.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 484.0 531.0)">26.2</text>
-<line x1="543.4" y1="516.0" x2="543.4" y2="519.0" stroke="#999"/>
-<text x="543.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 543.4 531.0)">26.4</text>
-<line x1="602.9" y1="516.0" x2="602.9" y2="519.0" stroke="#999"/>
-<text x="602.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 602.9 531.0)">26.7</text>
-<line x1="662.3" y1="516.0" x2="662.3" y2="519.0" stroke="#999"/>
-<text x="662.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 662.3 531.0)">26.9</text>
-<line x1="721.7" y1="516.0" x2="721.7" y2="519.0" stroke="#999"/>
-<text x="721.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 721.7 531.0)">26.11</text>
-<line x1="781.1" y1="516.0" x2="781.1" y2="519.0" stroke="#999"/>
-<text x="781.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 781.1 531.0)">26.13</text>
-<line x1="840.6" y1="516.0" x2="840.6" y2="519.0" stroke="#999"/>
-<text x="840.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 840.6 531.0)">26.14</text>
-<line x1="900.0" y1="516.0" x2="900.0" y2="519.0" stroke="#999"/>
-<text x="900.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 900.0 531.0)">26.16</text>
-<line x1="959.4" y1="516.0" x2="959.4" y2="519.0" stroke="#999"/>
-<text x="959.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 959.4 531.0)">26.17</text>
-<line x1="1018.9" y1="516.0" x2="1018.9" y2="519.0" stroke="#999"/>
-<text x="1018.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1018.9 531.0)">26.18</text>
-<line x1="1078.3" y1="516.0" x2="1078.3" y2="519.0" stroke="#999"/>
-<text x="1078.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1078.3 531.0)">26.18.2</text>
+<line x1="125.8" y1="516.0" x2="125.8" y2="519.0" stroke="#999"/>
+<text x="125.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 125.8 531.0)">25.14</text>
+<line x1="183.6" y1="516.0" x2="183.6" y2="519.0" stroke="#999"/>
+<text x="183.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 183.6 531.0)">25.16</text>
+<line x1="241.3" y1="516.0" x2="241.3" y2="519.0" stroke="#999"/>
+<text x="241.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 241.3 531.0)">25.18</text>
+<line x1="299.1" y1="516.0" x2="299.1" y2="519.0" stroke="#999"/>
+<text x="299.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 299.1 531.0)">25.20</text>
+<line x1="356.9" y1="516.0" x2="356.9" y2="519.0" stroke="#999"/>
+<text x="356.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 356.9 531.0)">25.22</text>
+<line x1="414.7" y1="516.0" x2="414.7" y2="519.0" stroke="#999"/>
+<text x="414.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 414.7 531.0)">25.24</text>
+<line x1="472.4" y1="516.0" x2="472.4" y2="519.0" stroke="#999"/>
+<text x="472.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 472.4 531.0)">26.2</text>
+<line x1="530.2" y1="516.0" x2="530.2" y2="519.0" stroke="#999"/>
+<text x="530.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 530.2 531.0)">26.4</text>
+<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
+<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.7</text>
+<line x1="645.8" y1="516.0" x2="645.8" y2="519.0" stroke="#999"/>
+<text x="645.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 645.8 531.0)">26.9</text>
+<line x1="703.6" y1="516.0" x2="703.6" y2="519.0" stroke="#999"/>
+<text x="703.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 703.6 531.0)">26.11</text>
+<line x1="761.3" y1="516.0" x2="761.3" y2="519.0" stroke="#999"/>
+<text x="761.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 761.3 531.0)">26.13</text>
+<line x1="819.1" y1="516.0" x2="819.1" y2="519.0" stroke="#999"/>
+<text x="819.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 819.1 531.0)">26.14</text>
+<line x1="876.9" y1="516.0" x2="876.9" y2="519.0" stroke="#999"/>
+<text x="876.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 876.9 531.0)">26.16</text>
+<line x1="934.7" y1="516.0" x2="934.7" y2="519.0" stroke="#999"/>
+<text x="934.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 934.7 531.0)">26.17</text>
+<line x1="992.4" y1="516.0" x2="992.4" y2="519.0" stroke="#999"/>
+<text x="992.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 992.4 531.0)">26.18</text>
+<line x1="1050.2" y1="516.0" x2="1050.2" y2="519.0" stroke="#999"/>
+<text x="1050.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1050.2 531.0)">26.18.2</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.18.3</text>
-<polygon points="721.7,515.0 751.4,515.0 781.1,515.0 840.6,515.1 900.0,515.1 959.4,515.2 1018.9,515.1 1048.6,515.1 1078.3,514.9 1108.0,515.1 1108.0,516.0 1078.3,516.0 1048.6,516.0 1018.9,516.0 959.4,516.0 900.0,516.0 840.6,516.0 781.1,516.0 751.4,516.0 721.7,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — parseTranslationUnit</title></polygon>
-<polygon points="721.7,447.1 751.4,434.0 781.1,435.5 840.6,436.2 900.0,441.4 959.4,446.9 1018.9,446.8 1048.6,444.1 1078.3,428.5 1108.0,440.1 1108.0,515.1 1078.3,514.9 1048.6,515.1 1018.9,515.1 959.4,515.2 900.0,515.1 840.6,515.1 781.1,515.0 751.4,515.0 721.7,515.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — SemanticChecking</title></polygon>
-<polygon points="721.7,427.7 751.4,412.4 781.1,411.8 840.6,422.1 900.0,426.6 959.4,436.3 1018.9,436.4 1048.6,432.4 1078.3,414.2 1108.0,428.3 1108.0,440.1 1078.3,428.5 1048.6,444.1 1018.9,446.8 959.4,446.9 900.0,441.4 840.6,436.2 781.1,435.5 751.4,434.0 721.7,447.1" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — generateIR</title></polygon>
-<polygon points="721.7,427.1 751.4,411.5 781.1,411.8 840.6,421.1 900.0,424.3 959.4,435.7 1018.9,435.9 1048.6,432.4 1078.3,411.9 1108.0,428.3 1108.0,428.3 1078.3,414.2 1048.6,432.4 1018.9,436.4 959.4,436.3 900.0,426.6 840.6,422.1 781.1,411.8 751.4,412.4 721.7,427.7" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — frontEndExecute (self)</title></polygon>
-<polygon points="721.7,393.4 751.4,376.5 781.1,374.4 840.6,400.5 900.0,403.6 959.4,414.6 1018.9,415.2 1048.6,411.6 1078.3,392.1 1108.0,410.5 1108.0,428.3 1078.3,411.9 1048.6,432.4 1018.9,435.9 959.4,435.7 900.0,424.3 840.6,421.1 781.1,411.8 751.4,411.5 721.7,427.1" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — specializeModule</title></polygon>
-<polygon points="721.7,345.9 751.4,325.8 781.1,319.8 840.6,387.2 900.0,389.8 959.4,401.1 1018.9,401.8 1048.6,397.8 1078.3,381.2 1108.0,399.5 1108.0,410.5 1078.3,392.1 1048.6,411.6 1018.9,415.2 959.4,414.6 900.0,403.6 840.6,400.5 781.1,374.4 751.4,376.5 721.7,393.4" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — simplifyIR</title></polygon>
-<polygon points="721.7,344.3 751.4,324.2 781.1,318.2 840.6,386.0 900.0,388.5 959.4,399.8 1018.9,400.5 1048.6,396.4 1078.3,380.1 1108.0,398.7 1108.0,399.5 1078.3,381.2 1048.6,397.8 1018.9,401.8 959.4,401.1 900.0,389.8 840.6,387.2 781.1,319.8 751.4,325.8 721.7,345.9" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — linkIR</title></polygon>
-<polygon points="721.7,344.3 751.4,324.2 781.1,318.2 840.6,385.9 900.0,388.5 959.4,399.8 1018.9,400.5 1048.6,396.4 1078.3,380.1 1108.0,398.7 1108.0,398.7 1078.3,380.1 1048.6,396.4 1018.9,400.5 959.4,399.8 900.0,388.5 840.6,386.0 781.1,318.2 751.4,324.2 721.7,344.3" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — unrollLoopsInModule</title></polygon>
-<polygon points="721.7,302.0 751.4,277.9 781.1,271.1 840.6,362.4 900.0,387.0 959.4,398.4 1018.9,399.1 1048.6,395.0 1078.3,379.0 1108.0,397.6 1108.0,398.7 1078.3,380.1 1048.6,396.4 1018.9,400.5 959.4,399.8 900.0,388.5 840.6,385.9 781.1,318.2 751.4,324.2 721.7,344.3" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — legalizeResourceTypes</title></polygon>
-<polygon points="721.7,258.8 751.4,230.7 781.1,225.2 840.6,339.0 900.0,385.5 959.4,396.9 1018.9,397.6 1048.6,393.5 1078.3,377.9 1108.0,396.4 1108.0,397.6 1078.3,379.0 1048.6,395.0 1018.9,399.1 959.4,398.4 900.0,387.0 840.6,362.4 781.1,271.1 751.4,277.9 721.7,302.0" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — legalizeExistentialTypeLayout</title></polygon>
-<polygon points="721.7,257.2 751.4,229.0 781.1,223.5 840.6,337.4 900.0,383.9 959.4,395.3 1018.9,396.1 1048.6,391.9 1078.3,376.5 1108.0,395.1 1108.0,396.4 1078.3,377.9 1048.6,393.5 1018.9,397.6 959.4,396.9 900.0,385.5 840.6,339.0 781.1,225.2 751.4,230.7 721.7,258.8" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — performMandatoryEarlyInlining</title></polygon>
-<polygon points="721.7,257.0 751.4,228.8 781.1,223.2 840.6,337.2 900.0,383.6 959.4,395.0 1018.9,395.8 1048.6,391.6 1078.3,376.4 1108.0,394.9 1108.0,395.1 1078.3,376.5 1048.6,391.9 1018.9,396.1 959.4,395.3 900.0,383.9 840.6,337.4 781.1,223.5 751.4,229.0 721.7,257.2" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — performForceInlining</title></polygon>
-<polygon points="721.7,253.9 751.4,225.7 781.1,219.9 840.6,334.0 900.0,380.2 959.4,391.8 1018.9,392.5 1048.6,388.2 1078.3,373.6 1108.0,392.2 1108.0,394.9 1078.3,376.4 1048.6,391.6 1018.9,395.8 959.4,395.0 900.0,383.6 840.6,337.2 781.1,223.2 751.4,228.8 721.7,257.0" fill="#3f007d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — deferBufferLoad</title></polygon>
-<polygon points="721.7,161.9 751.4,127.9 781.1,117.7 840.6,250.3 900.0,296.4 959.4,308.4 1018.9,309.7 1048.6,301.8 1078.3,370.2 1108.0,389.3 1108.0,392.2 1078.3,373.6 1048.6,388.2 1018.9,392.5 959.4,391.8 900.0,380.2 840.6,334.0 781.1,219.9 751.4,225.7 721.7,253.9" fill="#54278f" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — simplifyNonSSAIR</title></polygon>
-<polygon points="721.7,161.7 751.4,127.7 781.1,117.4 840.6,250.3 900.0,296.4 959.4,308.4 1018.9,309.7 1048.6,301.8 1078.3,370.2 1108.0,389.3 1108.0,389.3 1078.3,370.2 1048.6,301.8 1018.9,309.7 959.4,308.4 900.0,296.4 840.6,250.3 781.1,117.7 751.4,127.9 721.7,161.9" fill="#c2a5cf" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — legalizeMatrixTypes</title></polygon>
-<polygon points="721.7,155.7 751.4,122.3 781.1,110.5 840.6,246.4 900.0,292.5 959.4,304.6 1018.9,305.8 1048.6,298.2 1078.3,366.5 1108.0,385.8 1108.0,389.3 1078.3,370.2 1048.6,301.8 1018.9,309.7 959.4,308.4 900.0,296.4 840.6,250.3 781.1,117.4 751.4,127.7 721.7,161.7" fill="#fdd0a2" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — emitEntryPointsSourceFromIR (self)</title></polygon>
-<polygon points="721.7,155.3 751.4,122.3 781.1,109.9 840.6,246.1 900.0,291.9 959.4,304.0 1018.9,305.3 1048.6,298.2 1078.3,365.5 1108.0,385.5 1108.0,385.8 1078.3,366.5 1048.6,298.2 1018.9,305.8 959.4,304.6 900.0,292.5 840.6,246.4 781.1,110.5 751.4,122.3 721.7,155.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — generateOutput (self)</title></polygon>
-<polygon points="721.7,155.3 751.4,122.3 781.1,108.6 840.6,246.1 900.0,291.7 959.4,303.9 1018.9,305.1 1048.6,298.2 1078.3,360.8 1108.0,385.5 1108.0,385.5 1078.3,365.5 1048.6,298.2 1018.9,305.3 959.4,304.0 900.0,291.9 840.6,246.1 781.1,109.9 751.4,122.3 721.7,155.3" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — compileInner (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.19</text>
+<polygon points="703.6,515.0 732.4,515.0 761.3,515.0 819.1,515.1 876.9,515.1 934.7,515.2 992.4,515.1 1021.3,515.1 1050.2,514.9 1079.1,515.1 1108.0,514.4 1108.0,516.0 1079.1,516.0 1050.2,516.0 1021.3,516.0 992.4,516.0 934.7,516.0 876.9,516.0 819.1,516.0 761.3,516.0 732.4,516.0 703.6,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — parseTranslationUnit</title></polygon>
+<polygon points="703.6,447.1 732.4,434.0 761.3,435.5 819.1,436.2 876.9,441.4 934.7,446.9 992.4,446.8 1021.3,444.1 1050.2,428.5 1079.1,440.1 1108.0,390.7 1108.0,514.4 1079.1,515.1 1050.2,514.9 1021.3,515.1 992.4,515.1 934.7,515.2 876.9,515.1 819.1,515.1 761.3,515.0 732.4,515.0 703.6,515.0" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — SemanticChecking</title></polygon>
+<polygon points="703.6,427.7 732.4,412.4 761.3,411.8 819.1,422.1 876.9,426.6 934.7,436.3 992.4,436.4 1021.3,432.4 1050.2,414.2 1079.1,428.3 1108.0,369.5 1108.0,390.7 1079.1,440.1 1050.2,428.5 1021.3,444.1 992.4,446.8 934.7,446.9 876.9,441.4 819.1,436.2 761.3,435.5 732.4,434.0 703.6,447.1" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — generateIR</title></polygon>
+<polygon points="703.6,427.1 732.4,411.5 761.3,411.8 819.1,421.1 876.9,424.3 934.7,435.7 992.4,435.9 1021.3,432.4 1050.2,411.9 1079.1,428.3 1108.0,369.1 1108.0,369.5 1079.1,428.3 1050.2,414.2 1021.3,432.4 992.4,436.4 934.7,436.3 876.9,426.6 819.1,422.1 761.3,411.8 732.4,412.4 703.6,427.7" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — frontEndExecute (self)</title></polygon>
+<polygon points="703.6,393.4 732.4,376.5 761.3,374.4 819.1,400.5 876.9,403.6 934.7,414.6 992.4,415.2 1021.3,411.6 1050.2,392.1 1079.1,410.5 1108.0,335.9 1108.0,369.1 1079.1,428.3 1050.2,411.9 1021.3,432.4 992.4,435.9 934.7,435.7 876.9,424.3 819.1,421.1 761.3,411.8 732.4,411.5 703.6,427.1" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — specializeModule</title></polygon>
+<polygon points="703.6,345.9 732.4,325.8 761.3,319.8 819.1,387.2 876.9,389.8 934.7,401.1 992.4,401.8 1021.3,397.8 1050.2,381.2 1079.1,399.5 1108.0,313.7 1108.0,335.9 1079.1,410.5 1050.2,392.1 1021.3,411.6 992.4,415.2 934.7,414.6 876.9,403.6 819.1,400.5 761.3,374.4 732.4,376.5 703.6,393.4" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — simplifyIR</title></polygon>
+<polygon points="703.6,344.3 732.4,324.2 761.3,318.2 819.1,386.0 876.9,388.5 934.7,399.8 992.4,400.5 1021.3,396.4 1050.2,380.1 1079.1,398.7 1108.0,312.4 1108.0,313.7 1079.1,399.5 1050.2,381.2 1021.3,397.8 992.4,401.8 934.7,401.1 876.9,389.8 819.1,387.2 761.3,319.8 732.4,325.8 703.6,345.9" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — linkIR</title></polygon>
+<polygon points="703.6,344.3 732.4,324.2 761.3,318.2 819.1,385.9 876.9,388.5 934.7,399.8 992.4,400.5 1021.3,396.4 1050.2,380.1 1079.1,398.7 1108.0,312.3 1108.0,312.4 1079.1,398.7 1050.2,380.1 1021.3,396.4 992.4,400.5 934.7,399.8 876.9,388.5 819.1,386.0 761.3,318.2 732.4,324.2 703.6,344.3" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — unrollLoopsInModule</title></polygon>
+<polygon points="703.6,302.0 732.4,277.9 761.3,271.1 819.1,362.4 876.9,387.0 934.7,398.4 992.4,399.1 1021.3,395.0 1050.2,379.0 1079.1,397.6 1108.0,310.2 1108.0,312.3 1079.1,398.7 1050.2,380.1 1021.3,396.4 992.4,400.5 934.7,399.8 876.9,388.5 819.1,385.9 761.3,318.2 732.4,324.2 703.6,344.3" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — legalizeResourceTypes</title></polygon>
+<polygon points="703.6,258.8 732.4,230.7 761.3,225.2 819.1,339.0 876.9,385.5 934.7,396.9 992.4,397.6 1021.3,393.5 1050.2,377.9 1079.1,396.4 1108.0,307.9 1108.0,310.2 1079.1,397.6 1050.2,379.0 1021.3,395.0 992.4,399.1 934.7,398.4 876.9,387.0 819.1,362.4 761.3,271.1 732.4,277.9 703.6,302.0" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="703.6,257.2 732.4,229.0 761.3,223.5 819.1,337.4 876.9,383.9 934.7,395.3 992.4,396.1 1021.3,391.9 1050.2,376.5 1079.1,395.1 1108.0,304.1 1108.0,307.9 1079.1,396.4 1050.2,377.9 1021.3,393.5 992.4,397.6 934.7,396.9 876.9,385.5 819.1,339.0 761.3,225.2 732.4,230.7 703.6,258.8" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — performMandatoryEarlyInlining</title></polygon>
+<polygon points="703.6,257.0 732.4,228.8 761.3,223.2 819.1,337.2 876.9,383.6 934.7,395.0 992.4,395.8 1021.3,391.6 1050.2,376.4 1079.1,394.9 1108.0,303.7 1108.0,304.1 1079.1,395.1 1050.2,376.5 1021.3,391.9 992.4,396.1 934.7,395.3 876.9,383.9 819.1,337.4 761.3,223.5 732.4,229.0 703.6,257.2" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — performForceInlining</title></polygon>
+<polygon points="703.6,253.9 732.4,225.7 761.3,219.9 819.1,334.0 876.9,380.2 934.7,391.8 992.4,392.5 1021.3,388.2 1050.2,373.6 1079.1,392.2 1108.0,293.3 1108.0,303.7 1079.1,394.9 1050.2,376.4 1021.3,391.6 992.4,395.8 934.7,395.0 876.9,383.6 819.1,337.2 761.3,223.2 732.4,228.8 703.6,257.0" fill="#3f007d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — deferBufferLoad</title></polygon>
+<polygon points="703.6,161.9 732.4,127.9 761.3,117.7 819.1,250.3 876.9,296.4 934.7,308.4 992.4,309.7 1021.3,301.8 1050.2,370.2 1079.1,389.3 1108.0,281.8 1108.0,293.3 1079.1,392.2 1050.2,373.6 1021.3,388.2 992.4,392.5 934.7,391.8 876.9,380.2 819.1,334.0 761.3,219.9 732.4,225.7 703.6,253.9" fill="#54278f" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — simplifyNonSSAIR</title></polygon>
+<polygon points="703.6,161.7 732.4,127.7 761.3,117.4 819.1,250.3 876.9,296.4 934.7,308.4 992.4,309.7 1021.3,301.8 1050.2,370.2 1079.1,389.3 1108.0,281.8 1108.0,281.8 1079.1,389.3 1050.2,370.2 1021.3,301.8 992.4,309.7 934.7,308.4 876.9,296.4 819.1,250.3 761.3,117.7 732.4,127.9 703.6,161.9" fill="#c2a5cf" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — legalizeMatrixTypes</title></polygon>
+<polygon points="703.6,155.7 732.4,122.3 761.3,110.5 819.1,246.4 876.9,292.5 934.7,304.6 992.4,305.8 1021.3,298.2 1050.2,366.5 1079.1,385.8 1108.0,273.3 1108.0,281.8 1079.1,389.3 1050.2,370.2 1021.3,301.8 992.4,309.7 934.7,308.4 876.9,296.4 819.1,250.3 761.3,117.4 732.4,127.7 703.6,161.7" fill="#fdd0a2" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — emitEntryPointsSourceFromIR (self)</title></polygon>
+<polygon points="703.6,155.3 732.4,122.3 761.3,109.9 819.1,246.1 876.9,291.9 934.7,304.0 992.4,305.3 1021.3,298.2 1050.2,365.5 1079.1,385.5 1108.0,272.5 1108.0,273.3 1079.1,385.8 1050.2,366.5 1021.3,298.2 992.4,305.8 934.7,304.6 876.9,292.5 819.1,246.4 761.3,110.5 732.4,122.3 703.6,155.7" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — generateOutput (self)</title></polygon>
+<polygon points="703.6,155.3 732.4,122.3 761.3,108.6 819.1,246.1 876.9,291.7 934.7,303.9 992.4,305.1 1021.3,298.2 1050.2,360.8 1079.1,385.5 1108.0,271.1 1108.0,272.5 1079.1,385.5 1050.2,365.5 1021.3,298.2 992.4,305.3 934.7,304.0 876.9,291.9 819.1,246.1 761.3,109.9 732.4,122.3 703.6,155.3" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
@@ -131,93 +131,93 @@ Scaling null: n scales matrix ops, each O(1); ideal cost is O(n).</p><p style='c
 </svg><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="716" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">backend_matrix_glsl — Daily tip-of-tree (last 30 days) (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">backend_matrix_glsl<tspan fill="#888" font-weight="400" text-decoration="none">  1.01×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">backend_matrix_glsl<tspan fill="#888" font-weight="400" text-decoration="none">  2.07×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
-<text x="64.0" y="299.0" text-anchor="end" fill="#999">53</text>
+<text x="64.0" y="299.0" text-anchor="end" fill="#999">97</text>
 <line x1="68.0" y1="76.0" x2="1108.0" y2="76.0" stroke="#eee"/>
-<text x="64.0" y="79.0" text-anchor="end" fill="#999">106</text>
+<text x="64.0" y="79.0" text-anchor="end" fill="#999">194</text>
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">08-31</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">09-01</text>
 <line x1="103.9" y1="516.0" x2="103.9" y2="519.0" stroke="#999"/>
-<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">09-01</text>
+<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">09-02</text>
 <line x1="139.7" y1="516.0" x2="139.7" y2="519.0" stroke="#999"/>
-<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">09-02</text>
+<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">09-03</text>
 <line x1="175.6" y1="516.0" x2="175.6" y2="519.0" stroke="#999"/>
-<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">09-03</text>
+<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">09-04</text>
 <line x1="211.4" y1="516.0" x2="211.4" y2="519.0" stroke="#999"/>
-<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">09-04</text>
+<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">09-05</text>
 <line x1="247.3" y1="516.0" x2="247.3" y2="519.0" stroke="#999"/>
-<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">09-05</text>
+<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">09-06</text>
 <line x1="283.2" y1="516.0" x2="283.2" y2="519.0" stroke="#999"/>
-<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">09-06</text>
+<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">09-07</text>
 <line x1="319.0" y1="516.0" x2="319.0" y2="519.0" stroke="#999"/>
-<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">09-07</text>
+<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">09-08</text>
 <line x1="354.9" y1="516.0" x2="354.9" y2="519.0" stroke="#999"/>
-<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">09-08</text>
+<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">09-09</text>
 <line x1="390.8" y1="516.0" x2="390.8" y2="519.0" stroke="#999"/>
-<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">09-09</text>
+<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">09-10</text>
 <line x1="426.6" y1="516.0" x2="426.6" y2="519.0" stroke="#999"/>
-<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">09-10</text>
+<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">09-11</text>
 <line x1="462.5" y1="516.0" x2="462.5" y2="519.0" stroke="#999"/>
-<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">09-11</text>
+<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">09-12</text>
 <line x1="498.3" y1="516.0" x2="498.3" y2="519.0" stroke="#999"/>
-<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-12</text>
+<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">09-13</text>
 <line x1="534.2" y1="516.0" x2="534.2" y2="519.0" stroke="#999"/>
-<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-13</text>
+<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">09-14</text>
 <line x1="570.1" y1="516.0" x2="570.1" y2="519.0" stroke="#999"/>
-<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-14</text>
+<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">09-15</text>
 <line x1="605.9" y1="516.0" x2="605.9" y2="519.0" stroke="#999"/>
-<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-15</text>
+<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">09-16</text>
 <line x1="641.8" y1="516.0" x2="641.8" y2="519.0" stroke="#999"/>
-<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-16</text>
+<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">09-17</text>
 <line x1="677.7" y1="516.0" x2="677.7" y2="519.0" stroke="#999"/>
-<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-17</text>
+<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">09-18</text>
 <line x1="713.5" y1="516.0" x2="713.5" y2="519.0" stroke="#999"/>
-<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-18</text>
+<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">09-19</text>
 <line x1="749.4" y1="516.0" x2="749.4" y2="519.0" stroke="#999"/>
-<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-19</text>
+<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">09-20</text>
 <line x1="785.2" y1="516.0" x2="785.2" y2="519.0" stroke="#999"/>
-<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-20</text>
+<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">09-21</text>
 <line x1="821.1" y1="516.0" x2="821.1" y2="519.0" stroke="#999"/>
-<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-21</text>
+<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">09-22</text>
 <line x1="857.0" y1="516.0" x2="857.0" y2="519.0" stroke="#999"/>
-<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-22</text>
+<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">09-23</text>
 <line x1="892.8" y1="516.0" x2="892.8" y2="519.0" stroke="#999"/>
-<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-23</text>
+<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">09-24</text>
 <line x1="928.7" y1="516.0" x2="928.7" y2="519.0" stroke="#999"/>
-<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-24</text>
+<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">09-25</text>
 <line x1="964.6" y1="516.0" x2="964.6" y2="519.0" stroke="#999"/>
-<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-25</text>
+<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">09-26</text>
 <line x1="1000.4" y1="516.0" x2="1000.4" y2="519.0" stroke="#999"/>
-<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-26</text>
+<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">09-27</text>
 <line x1="1036.3" y1="516.0" x2="1036.3" y2="519.0" stroke="#999"/>
-<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-27</text>
+<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">09-28</text>
 <line x1="1072.1" y1="516.0" x2="1072.1" y2="519.0" stroke="#999"/>
-<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-28</text>
+<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">09-29</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-29</text>
-<polygon points="713.5,513.6 749.4,513.7 785.2,513.6 821.1,513.7 857.0,513.8 892.8,513.7 928.7,513.7 964.6,513.7 1000.4,513.6 1036.3,513.7 1072.1,513.7 1108.0,513.7 1108.0,516.0 1072.1,516.0 1036.3,516.0 1000.4,516.0 964.6,516.0 928.7,516.0 892.8,516.0 857.0,516.0 821.1,516.0 785.2,516.0 749.4,516.0 713.5,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — parseTranslationUnit</title></polygon>
-<polygon points="713.5,318.9 749.4,316.7 785.2,315.5 821.1,315.4 857.0,318.1 892.8,316.2 928.7,314.0 964.6,313.3 1000.4,311.9 1036.3,285.5 1072.1,320.2 1108.0,315.3 1108.0,513.7 1072.1,513.7 1036.3,513.7 1000.4,513.6 964.6,513.7 928.7,513.7 892.8,513.7 857.0,513.8 821.1,513.7 785.2,513.6 749.4,513.7 713.5,513.6" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — SemanticChecking</title></polygon>
-<polygon points="713.5,286.0 749.4,284.3 785.2,279.7 821.1,281.8 857.0,285.5 892.8,283.8 928.7,282.1 964.6,280.4 1000.4,278.1 1036.3,247.5 1072.1,288.2 1108.0,283.6 1108.0,315.3 1072.1,320.2 1036.3,285.5 1000.4,311.9 964.6,313.3 928.7,314.0 892.8,316.2 857.0,318.1 821.1,315.4 785.2,315.5 749.4,316.7 713.5,318.9" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — generateIR</title></polygon>
-<polygon points="713.5,284.9 749.4,283.6 785.2,278.6 821.1,281.2 857.0,284.7 892.8,282.6 928.7,281.6 964.6,279.1 1000.4,276.0 1036.3,244.7 1072.1,287.0 1108.0,281.9 1108.0,283.6 1072.1,288.2 1036.3,247.5 1000.4,278.1 964.6,280.4 928.7,282.1 892.8,283.8 857.0,285.5 821.1,281.8 785.2,279.7 749.4,284.3 713.5,286.0" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — frontEndExecute (self)</title></polygon>
-<polygon points="713.5,230.9 749.4,228.6 785.2,224.1 821.1,226.0 857.0,230.1 892.8,228.3 928.7,227.2 964.6,225.1 1000.4,221.6 1036.3,186.8 1072.1,232.3 1108.0,227.5 1108.0,281.9 1072.1,287.0 1036.3,244.7 1000.4,276.0 964.6,279.1 928.7,281.6 892.8,282.6 857.0,284.7 821.1,281.2 785.2,278.6 749.4,283.6 713.5,284.9" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — specializeModule</title></polygon>
-<polygon points="713.5,198.7 749.4,195.4 785.2,191.7 821.1,192.9 857.0,197.3 892.8,196.5 928.7,194.3 964.6,192.4 1000.4,189.3 1036.3,150.6 1072.1,200.0 1108.0,194.5 1108.0,227.5 1072.1,232.3 1036.3,186.8 1000.4,221.6 964.6,225.1 928.7,227.2 892.8,228.3 857.0,230.1 821.1,226.0 785.2,224.1 749.4,228.6 713.5,230.9" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — simplifyIR</title></polygon>
-<polygon points="713.5,196.0 749.4,193.1 785.2,189.3 821.1,190.4 857.0,194.9 892.8,194.2 928.7,192.0 964.6,190.1 1000.4,186.9 1036.3,148.1 1072.1,197.7 1108.0,192.1 1108.0,194.5 1072.1,200.0 1036.3,150.6 1000.4,189.3 964.6,192.4 928.7,194.3 892.8,196.5 857.0,197.3 821.1,192.9 785.2,191.7 749.4,195.4 713.5,198.7" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — linkIR</title></polygon>
-<polygon points="713.5,195.9 749.4,193.0 785.2,189.2 821.1,190.4 857.0,194.9 892.8,194.2 928.7,192.0 964.6,190.1 1000.4,186.9 1036.3,148.1 1072.1,197.7 1108.0,192.1 1108.0,192.1 1072.1,197.7 1036.3,148.1 1000.4,186.9 964.6,190.1 928.7,192.0 892.8,194.2 857.0,194.9 821.1,190.4 785.2,189.3 749.4,193.1 713.5,196.0" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — unrollLoopsInModule</title></polygon>
-<polygon points="713.5,193.0 749.4,190.0 785.2,186.3 821.1,187.1 857.0,191.7 892.8,191.2 928.7,189.0 964.6,187.1 1000.4,183.6 1036.3,144.8 1072.1,194.7 1108.0,189.1 1108.0,192.1 1072.1,197.7 1036.3,148.1 1000.4,186.9 964.6,190.1 928.7,192.0 892.8,194.2 857.0,194.9 821.1,190.4 785.2,189.2 749.4,193.0 713.5,195.9" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — legalizeResourceTypes</title></polygon>
-<polygon points="713.5,190.0 749.4,186.8 785.2,183.2 821.1,183.7 857.0,188.5 892.8,188.1 928.7,185.9 964.6,184.0 1000.4,180.3 1036.3,141.5 1072.1,191.6 1108.0,186.1 1108.0,189.1 1072.1,194.7 1036.3,144.8 1000.4,183.6 964.6,187.1 928.7,189.0 892.8,191.2 857.0,191.7 821.1,187.1 785.2,186.3 749.4,190.0 713.5,193.0" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — legalizeExistentialTypeLayout</title></polygon>
-<polygon points="713.5,185.9 749.4,182.7 785.2,179.1 821.1,179.5 857.0,184.4 892.8,184.1 928.7,181.9 964.6,179.9 1000.4,176.3 1036.3,137.0 1072.1,187.6 1108.0,182.0 1108.0,186.1 1072.1,191.6 1036.3,141.5 1000.4,180.3 964.6,184.0 928.7,185.9 892.8,188.1 857.0,188.5 821.1,183.7 785.2,183.2 749.4,186.8 713.5,190.0" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — performMandatoryEarlyInlining</title></polygon>
-<polygon points="713.5,185.3 749.4,182.1 785.2,178.5 821.1,179.0 857.0,183.9 892.8,183.6 928.7,181.3 964.6,179.4 1000.4,175.7 1036.3,136.4 1072.1,187.0 1108.0,181.5 1108.0,182.0 1072.1,187.6 1036.3,137.0 1000.4,176.3 964.6,179.9 928.7,181.9 892.8,184.1 857.0,184.4 821.1,179.5 785.2,179.1 749.4,182.7 713.5,185.9" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — performForceInlining</title></polygon>
-<polygon points="713.5,177.5 749.4,173.9 785.2,170.7 821.1,171.1 857.0,176.1 892.8,176.4 928.7,172.8 964.6,171.3 1000.4,167.6 1036.3,127.9 1072.1,179.4 1108.0,174.0 1108.0,181.5 1072.1,187.0 1036.3,136.4 1000.4,175.7 964.6,179.4 928.7,181.3 892.8,183.6 857.0,183.9 821.1,179.0 785.2,178.5 749.4,182.1 713.5,185.3" fill="#3f007d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — deferBufferLoad</title></polygon>
-<polygon points="713.5,168.9 749.4,164.9 785.2,162.0 821.1,162.3 857.0,167.4 892.8,168.4 928.7,163.3 964.6,162.3 1000.4,158.5 1036.3,118.7 1072.1,170.8 1108.0,165.6 1108.0,174.0 1072.1,179.4 1036.3,127.9 1000.4,167.6 964.6,171.3 928.7,172.8 892.8,176.4 857.0,176.1 821.1,171.1 785.2,170.7 749.4,173.9 713.5,177.5" fill="#54278f" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — simplifyNonSSAIR</title></polygon>
-<polygon points="713.5,168.9 749.4,164.8 785.2,161.9 821.1,162.3 857.0,167.4 892.8,168.3 928.7,163.2 964.6,162.3 1000.4,158.5 1036.3,118.7 1072.1,170.8 1108.0,165.6 1108.0,165.6 1072.1,170.8 1036.3,118.7 1000.4,158.5 964.6,162.3 928.7,163.3 892.8,168.4 857.0,167.4 821.1,162.3 785.2,162.0 749.4,164.9 713.5,168.9" fill="#c2a5cf" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — legalizeMatrixTypes</title></polygon>
-<polygon points="713.5,158.4 749.4,154.9 785.2,151.8 821.1,152.1 857.0,157.3 892.8,158.3 928.7,153.1 964.6,152.1 1000.4,148.3 1036.3,108.6 1072.1,160.9 1108.0,155.6 1108.0,165.6 1072.1,170.8 1036.3,118.7 1000.4,158.5 964.6,162.3 928.7,163.2 892.8,168.3 857.0,167.4 821.1,162.3 785.2,161.9 749.4,164.8 713.5,168.9" fill="#fdd0a2" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — emitEntryPointsSourceFromIR (self)</title></polygon>
-<polygon points="713.5,156.7 749.4,153.1 785.2,149.9 821.1,150.3 857.0,155.6 892.8,156.6 928.7,151.9 964.6,150.6 1000.4,146.8 1036.3,108.6 1072.1,159.2 1108.0,153.8 1108.0,155.6 1072.1,160.9 1036.3,108.6 1000.4,148.3 964.6,152.1 928.7,153.1 892.8,158.3 857.0,157.3 821.1,152.1 785.2,151.8 749.4,154.9 713.5,158.4" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — generateOutput (self)</title></polygon>
-<polygon points="713.5,156.0 749.4,152.7 785.2,149.6 821.1,150.0 857.0,155.2 892.8,155.6 928.7,151.9 964.6,150.6 1000.4,146.8 1036.3,108.6 1072.1,159.1 1108.0,153.4 1108.0,153.8 1072.1,159.2 1036.3,108.6 1000.4,146.8 964.6,150.6 928.7,151.9 892.8,156.6 857.0,155.6 821.1,150.3 785.2,149.9 749.4,153.1 713.5,156.7" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — compileInner (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">09-30</text>
+<polygon points="677.7,514.7 713.5,514.8 749.4,514.7 785.2,514.7 821.1,514.8 857.0,514.7 892.8,514.8 928.7,514.8 964.6,514.7 1000.4,514.7 1036.3,514.7 1072.1,514.7 1108.0,513.8 1108.0,516.0 1072.1,516.0 1036.3,516.0 1000.4,516.0 964.6,516.0 928.7,516.0 892.8,516.0 857.0,516.0 821.1,516.0 785.2,516.0 749.4,516.0 713.5,516.0 677.7,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — parseTranslationUnit</title></polygon>
+<polygon points="677.7,408.2 713.5,407.0 749.4,406.3 785.2,406.3 821.1,407.7 857.0,406.7 892.8,405.5 928.7,405.1 964.6,404.3 1000.4,389.9 1036.3,408.9 1072.1,406.2 1108.0,316.2 1108.0,513.8 1072.1,514.7 1036.3,514.7 1000.4,514.7 964.6,514.7 928.7,514.8 892.8,514.8 857.0,514.7 821.1,514.8 785.2,514.7 749.4,514.7 713.5,514.8 677.7,514.7" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — SemanticChecking</title></polygon>
+<polygon points="677.7,390.2 713.5,389.3 749.4,386.7 785.2,387.9 821.1,389.9 857.0,389.0 892.8,388.1 928.7,387.1 964.6,385.8 1000.4,369.1 1036.3,391.4 1072.1,388.9 1108.0,278.8 1108.0,316.2 1072.1,406.2 1036.3,408.9 1000.4,389.9 964.6,404.3 928.7,405.1 892.8,405.5 857.0,406.7 821.1,407.7 785.2,406.3 749.4,406.3 713.5,407.0 677.7,408.2" fill="#006d2c" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — generateIR</title></polygon>
+<polygon points="677.7,389.6 713.5,388.9 749.4,386.1 785.2,387.6 821.1,389.5 857.0,388.3 892.8,387.8 928.7,386.4 964.6,384.7 1000.4,367.6 1036.3,390.7 1072.1,387.9 1108.0,277.0 1108.0,278.8 1072.1,388.9 1036.3,391.4 1000.4,369.1 964.6,385.8 928.7,387.1 892.8,388.1 857.0,389.0 821.1,389.9 785.2,387.9 749.4,386.7 713.5,389.3 677.7,390.2" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — frontEndExecute (self)</title></polygon>
+<polygon points="677.7,360.1 713.5,358.8 749.4,356.3 785.2,357.4 821.1,359.6 857.0,358.6 892.8,358.0 928.7,356.9 964.6,354.9 1000.4,335.9 1036.3,360.8 1072.1,358.2 1108.0,217.5 1108.0,277.0 1072.1,387.9 1036.3,390.7 1000.4,367.6 964.6,384.7 928.7,386.4 892.8,387.8 857.0,388.3 821.1,389.5 785.2,387.6 749.4,386.1 713.5,388.9 677.7,389.6" fill="#6baed6" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — specializeModule</title></polygon>
+<polygon points="677.7,342.4 713.5,340.6 749.4,338.6 785.2,339.2 821.1,341.6 857.0,341.2 892.8,340.0 928.7,339.0 964.6,337.3 1000.4,316.1 1036.3,343.1 1072.1,340.1 1108.0,179.9 1108.0,217.5 1072.1,358.2 1036.3,360.8 1000.4,335.9 964.6,354.9 928.7,356.9 892.8,358.0 857.0,358.6 821.1,359.6 785.2,357.4 749.4,356.3 713.5,358.8 677.7,360.1" fill="#2171b5" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — simplifyIR</title></polygon>
+<polygon points="677.7,340.9 713.5,339.3 749.4,337.3 785.2,337.9 821.1,340.3 857.0,340.0 892.8,338.8 928.7,337.7 964.6,336.0 1000.4,314.8 1036.3,341.9 1072.1,338.8 1108.0,177.7 1108.0,179.9 1072.1,340.1 1036.3,343.1 1000.4,316.1 964.6,337.3 928.7,339.0 892.8,340.0 857.0,341.2 821.1,341.6 785.2,339.2 749.4,338.6 713.5,340.6 677.7,342.4" fill="#08306b" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — linkIR</title></polygon>
+<polygon points="677.7,340.9 713.5,339.3 749.4,337.3 785.2,337.9 821.1,340.3 857.0,339.9 892.8,338.8 928.7,337.7 964.6,336.0 1000.4,314.7 1036.3,341.9 1072.1,338.8 1108.0,177.7 1108.0,177.7 1072.1,338.8 1036.3,341.9 1000.4,314.8 964.6,336.0 928.7,337.7 892.8,338.8 857.0,340.0 821.1,340.3 785.2,337.9 749.4,337.3 713.5,339.3 677.7,340.9" fill="#9e9ac8" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — unrollLoopsInModule</title></polygon>
+<polygon points="677.7,339.3 713.5,337.6 749.4,335.6 785.2,336.1 821.1,338.6 857.0,338.3 892.8,337.1 928.7,336.1 964.6,334.2 1000.4,313.0 1036.3,340.2 1072.1,337.2 1108.0,174.2 1108.0,177.7 1072.1,338.8 1036.3,341.9 1000.4,314.7 964.6,336.0 928.7,337.7 892.8,338.8 857.0,339.9 821.1,340.3 785.2,337.9 749.4,337.3 713.5,339.3 677.7,340.9" fill="#807dba" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — legalizeResourceTypes</title></polygon>
+<polygon points="677.7,337.7 713.5,335.9 749.4,333.9 785.2,334.2 821.1,336.8 857.0,336.7 892.8,335.4 928.7,334.4 964.6,332.4 1000.4,311.1 1036.3,338.5 1072.1,335.5 1108.0,170.6 1108.0,174.2 1072.1,337.2 1036.3,340.2 1000.4,313.0 964.6,334.2 928.7,336.1 892.8,337.1 857.0,338.3 821.1,338.6 785.2,336.1 749.4,335.6 713.5,337.6 677.7,339.3" fill="#6a51a3" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — legalizeExistentialTypeLayout</title></polygon>
+<polygon points="677.7,335.4 713.5,333.7 749.4,331.7 785.2,331.9 821.1,334.6 857.0,334.5 892.8,333.2 928.7,332.2 964.6,330.2 1000.4,308.7 1036.3,336.4 1072.1,333.3 1108.0,163.0 1108.0,170.6 1072.1,335.5 1036.3,338.5 1000.4,311.1 964.6,332.4 928.7,334.4 892.8,335.4 857.0,336.7 821.1,336.8 785.2,334.2 749.4,333.9 713.5,335.9 677.7,337.7" fill="#bcbddc" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — performMandatoryEarlyInlining</title></polygon>
+<polygon points="677.7,335.1 713.5,333.3 749.4,331.4 785.2,331.6 821.1,334.3 857.0,334.2 892.8,332.9 928.7,331.9 964.6,329.8 1000.4,308.3 1036.3,336.0 1072.1,333.0 1108.0,162.4 1108.0,163.0 1072.1,333.3 1036.3,336.4 1000.4,308.7 964.6,330.2 928.7,332.2 892.8,333.2 857.0,334.5 821.1,334.6 785.2,331.9 749.4,331.7 713.5,333.7 677.7,335.4" fill="#dadaeb" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — performForceInlining</title></polygon>
+<polygon points="677.7,330.9 713.5,328.9 749.4,327.1 785.2,327.3 821.1,330.1 857.0,330.2 892.8,328.2 928.7,327.4 964.6,325.4 1000.4,303.7 1036.3,331.8 1072.1,328.9 1108.0,144.1 1108.0,162.4 1072.1,333.0 1036.3,336.0 1000.4,308.3 964.6,329.8 928.7,331.9 892.8,332.9 857.0,334.2 821.1,334.3 785.2,331.6 749.4,331.4 713.5,333.3 677.7,335.1" fill="#3f007d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — deferBufferLoad</title></polygon>
+<polygon points="677.7,326.1 713.5,323.9 749.4,322.3 785.2,322.5 821.1,325.3 857.0,325.8 892.8,323.0 928.7,322.5 964.6,320.5 1000.4,298.7 1036.3,327.2 1072.1,324.3 1108.0,124.3 1108.0,144.1 1072.1,328.9 1036.3,331.8 1000.4,303.7 964.6,325.4 928.7,327.4 892.8,328.2 857.0,330.2 821.1,330.1 785.2,327.3 749.4,327.1 713.5,328.9 677.7,330.9" fill="#54278f" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — simplifyNonSSAIR</title></polygon>
+<polygon points="677.7,326.1 713.5,323.9 749.4,322.3 785.2,322.5 821.1,325.3 857.0,325.8 892.8,323.0 928.7,322.5 964.6,320.4 1000.4,298.6 1036.3,327.2 1072.1,324.3 1108.0,124.3 1108.0,124.3 1072.1,324.3 1036.3,327.2 1000.4,298.7 964.6,320.5 928.7,322.5 892.8,323.0 857.0,325.8 821.1,325.3 785.2,322.5 749.4,322.3 713.5,323.9 677.7,326.1" fill="#c2a5cf" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — legalizeMatrixTypes</title></polygon>
+<polygon points="677.7,320.4 713.5,318.5 749.4,316.8 785.2,316.9 821.1,319.8 857.0,320.3 892.8,317.5 928.7,316.9 964.6,314.9 1000.4,293.1 1036.3,321.7 1072.1,318.8 1108.0,110.5 1108.0,124.3 1072.1,324.3 1036.3,327.2 1000.4,298.6 964.6,320.4 928.7,322.5 892.8,323.0 857.0,325.8 821.1,325.3 785.2,322.5 749.4,322.3 713.5,323.9 677.7,326.1" fill="#fdd0a2" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — emitEntryPointsSourceFromIR (self)</title></polygon>
+<polygon points="677.7,319.4 713.5,317.5 749.4,315.7 785.2,316.0 821.1,318.8 857.0,319.4 892.8,316.8 928.7,316.1 964.6,314.0 1000.4,293.1 1036.3,320.8 1072.1,317.9 1108.0,108.8 1108.0,110.5 1072.1,318.8 1036.3,321.7 1000.4,293.1 964.6,314.9 928.7,316.9 892.8,317.5 857.0,320.3 821.1,319.8 785.2,316.9 749.4,316.8 713.5,318.5 677.7,320.4" fill="#e6550d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — generateOutput (self)</title></polygon>
+<polygon points="677.7,319.1 713.5,317.3 749.4,315.5 785.2,315.8 821.1,318.6 857.0,318.8 892.8,316.8 928.7,316.1 964.6,314.0 1000.4,293.1 1036.3,320.8 1072.1,317.7 1108.0,108.6 1108.0,108.8 1072.1,317.9 1036.3,320.8 1000.4,293.1 964.6,314.0 928.7,316.1 892.8,316.8 857.0,319.4 821.1,318.8 785.2,316.0 749.4,315.7 713.5,317.5 677.7,319.4" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>backend_matrix_glsl — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
@@ -261,7 +261,7 @@ Scaling null: n scales matrix ops, each O(1); ideal cost is O(n).</p><p style='c
 <text x="859" y="668" fill="#222">generateOutput (self)</text>
 <rect x="12" y="676" width="12" height="12" fill="#969696"/>
 <text x="28" y="686" fill="#222">compileInner (self)</text>
-</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Daily window progress</h2><p style='font-size:15px'>Overall <code>compileInner</code>: 87.0 &rarr; 87.6 ms &nbsp;<b style='color:#c0392b'>+0.7%</b><span style='color:#666;font-size:13px'> &nbsp;(2026-09-18 09d258224 &rarr; 2026-09-29 3bb522221)</span></p><p style='color:#666;font-size:13px;margin:10px 0 4px'>Contributors — the mutually-exclusive phase buckets (named leaves + <code>(self)</code> residuals) that tile compileInner; the pp column sums to the overall %. Buckets moving the total by &ge;0.2% are listed, the rest fold into the remainder row. Below them, every other reported counter (nested/overlapping, e.g. serialized-module reads — own change only):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>counter</th><th>&Delta;</th><th>own %</th><th>of total</th></tr><tr><td>SemanticChecking</td><td align=right>+0.9 ms</td><td align=right>+1.9%</td><td align=right>+1.0pp</td></tr><tr><td>generateIR</td><td align=right>-0.3 ms</td><td align=right>-3.9%</td><td align=right>-0.4pp</td></tr><tr><td>simplifyIR</td><td align=right>+0.2 ms</td><td align=right>+2.3%</td><td align=right>+0.2pp</td></tr><tr><td>(remaining 15 buckets)</td><td align=right>-0.1 ms</td><td align=right>&ndash;</td><td align=right>-0.2pp</td></tr><tr><td>loadBuiltinModule</td><td align=right>+2.2 ms</td><td align=right>+2.1%</td><td align=right style='color:#aaa'>&ndash;</td></tr><tr><td>readSerializedModuleAST</td><td align=right>+1.2 ms</td><td align=right>+3.4%</td><td align=right style='color:#aaa'>&ndash;</td></tr></table><p style='color:#666;font-size:13px;margin:14px 0 4px'>Largest day steps (&ge;5% of the previous day, both directions; bisect with <code>git log &lt;c0&gt;..&lt;c1&gt; -- source/</code>):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>boundary</th><th>% vs prev day</th><th style='text-align:left'>commits</th><th style='text-align:left'>top buckets (own %)</th></tr><tr><td>2026-09-27 &rarr; 2026-09-28</td><td align=right style='color:#1e8449;font-weight:600'>-12.4%</td><td><code>6eb89786c..fd923329e</code></td><td>SemanticChecking -15%, generateIR -16%</td></tr><tr><td>2026-09-26 &rarr; 2026-09-27</td><td align=right style='color:#c0392b;font-weight:600'>+10.3%</td><td><code>6eb89786c..6eb89786c</code></td><td>SemanticChecking +13%, generateIR +12%</td></tr></table><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only backend_matrix_glsl --label repro --gen-dir repro-backend_matrix_glsl</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 256), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>matrix_chain.slang <span style='font-weight:400;color:#888'>(524 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Daily window progress</h2><p style='font-size:15px'>Overall <code>compileInner</code>: 87.0 &rarr; 180.0 ms &nbsp;<b style='color:#c0392b'>+106.9%</b><span style='color:#666;font-size:13px'> &nbsp;(2026-09-18 09d258224 &rarr; 2026-09-30 16c3d3f68)</span></p><p style='color:#666;font-size:13px;margin:10px 0 4px'>Contributors — the mutually-exclusive phase buckets (named leaves + <code>(self)</code> residuals) that tile compileInner; the pp column sums to the overall %. Buckets moving the total by &ge;0.2% are listed, the rest fold into the remainder row. Below them, every other reported counter (nested/overlapping, e.g. serialized-module reads — own change only):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>counter</th><th>&Delta;</th><th>own %</th><th>of total</th></tr><tr><td>SemanticChecking</td><td align=right>+40.2 ms</td><td align=right>+85.5%</td><td align=right>+46.3pp</td></tr><tr><td>specializeModule</td><td align=right>+13.2 ms</td><td align=right>+101.2%</td><td align=right>+15.2pp</td></tr><tr><td>simplifyIR</td><td align=right>+8.9 ms</td><td align=right>+113.6%</td><td align=right>+10.2pp</td></tr><tr><td>generateIR</td><td align=right>+8.5 ms</td><td align=right>+107.3%</td><td align=right>+9.8pp</td></tr><tr><td>simplifyNonSSAIR</td><td align=right>+6.6 ms</td><td align=right>+318.2%</td><td align=right>+7.6pp</td></tr><tr><td>deferBufferLoad</td><td align=right>+6.2 ms</td><td align=right>+331.0%</td><td align=right>+7.1pp</td></tr><tr><td>emitEntryPointsSourceFromIR (self)</td><td align=right>+3.6 ms</td><td align=right>+141.5%</td><td align=right>+4.1pp</td></tr><tr><td>performMandatoryEarlyInlining</td><td align=right>+2.3 ms</td><td align=right>+230.9%</td><td align=right>+2.7pp</td></tr><tr><td>legalizeExistentialTypeLayout</td><td align=right>+0.9 ms</td><td align=right>+119.2%</td><td align=right>+1.0pp</td></tr><tr><td>legalizeResourceTypes</td><td align=right>+0.8 ms</td><td align=right>+118.7%</td><td align=right>+1.0pp</td></tr><tr><td>frontEndExecute (self)</td><td align=right>+0.6 ms</td><td align=right>+228.0%</td><td align=right>+0.7pp</td></tr><tr><td>parseTranslationUnit</td><td align=right>+0.4 ms</td><td align=right>+68.4%</td><td align=right>+0.4pp</td></tr><tr><td>linkIR</td><td align=right>+0.3 ms</td><td align=right>+47.1%</td><td align=right>+0.4pp</td></tr><tr><td>generateOutput (self)</td><td align=right>+0.3 ms</td><td align=right>+71.4%</td><td align=right>+0.3pp</td></tr><tr><td>(remaining 4 buckets)</td><td align=right>+0.1 ms</td><td align=right>&ndash;</td><td align=right>+0.1pp</td></tr><tr><td>loadBuiltinModule</td><td align=right>+5.4 ms</td><td align=right>+5.3%</td><td align=right style='color:#aaa'>&ndash;</td></tr><tr><td>readSerializedModuleIR</td><td align=right>+2.3 ms</td><td align=right>+4.9%</td><td align=right style='color:#aaa'>&ndash;</td></tr><tr><td>readSerializedModuleAST</td><td align=right>+1.5 ms</td><td align=right>+4.0%</td><td align=right style='color:#aaa'>&ndash;</td></tr><tr><td>performGLSLResourceReturnFunctionInlining</td><td align=right>+0.7 ms</td><td align=right>+110.3%</td><td align=right style='color:#aaa'>&ndash;</td></tr><tr><td>lowerExistentials</td><td align=right>+0.6 ms</td><td align=right>+95.1%</td><td align=right style='color:#aaa'>&ndash;</td></tr><tr><td>finalizeAutoDiffPass</td><td align=right>+0.5 ms</td><td align=right>+85.5%</td><td align=right style='color:#aaa'>&ndash;</td></tr></table><p style='color:#666;font-size:13px;margin:14px 0 4px'>Largest day steps (&ge;5% of the previous day, both directions; bisect with <code>git log &lt;c0&gt;..&lt;c1&gt; -- source/</code>):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>boundary</th><th>% vs prev day</th><th style='text-align:left'>commits</th><th style='text-align:left'>top buckets (own %)</th></tr><tr><td>2026-09-29 &rarr; 2026-09-30</td><td align=right style='color:#c0392b;font-weight:600'>+105.4%</td><td><code>3bb522221..16c3d3f68</code></td><td>SemanticChecking +82%, specializeModule +100%, generateIR +116%</td></tr><tr><td>2026-09-27 &rarr; 2026-09-28</td><td align=right style='color:#1e8449;font-weight:600'>-12.4%</td><td><code>6eb89786c..fd923329e</code></td><td>SemanticChecking -15%, generateIR -16%</td></tr><tr><td>2026-09-26 &rarr; 2026-09-27</td><td align=right style='color:#c0392b;font-weight:600'>+10.3%</td><td><code>6eb89786c..6eb89786c</code></td><td>SemanticChecking +13%, generateIR +12%</td></tr></table><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only backend_matrix_glsl --label repro --gen-dir repro-backend_matrix_glsl</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 512), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>matrix_chain.slang <span style='font-weight:400;color:#888'>(1036 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 StructuredBuffer&lt;float4x4&gt; matBuf;
 RWStructuredBuffer&lt;float4&gt; outBuf;
 
@@ -783,6 +783,518 @@ void computeMain(uint3 tid : SV_DispatchThreadID)
     acc += mul(m, acc) * 3.0;
     m = mul(m, matBuf[(tid.x + 255) % 16]);
     acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 256) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 257) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 258) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 259) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 260) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 261) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 262) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 263) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 264) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 265) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 266) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 267) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 268) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 269) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 270) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 271) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 272) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 273) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 274) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 275) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 276) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 277) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 278) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 279) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 280) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 281) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 282) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 283) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 284) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 285) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 286) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 287) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 288) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 289) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 290) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 291) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 292) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 293) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 294) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 295) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 296) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 297) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 298) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 299) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 300) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 301) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 302) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 303) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 304) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 305) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 306) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 307) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 308) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 309) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 310) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 311) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 312) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 313) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 314) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 315) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 316) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 317) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 318) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 319) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 320) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 321) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 322) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 323) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 324) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 325) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 326) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 327) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 328) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 329) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 330) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 331) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 332) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 333) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 334) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 335) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 336) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 337) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 338) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 339) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 340) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 341) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 342) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 343) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 344) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 345) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 346) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 347) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 348) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 349) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 350) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 351) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 352) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 353) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 354) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 355) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 356) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 357) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 358) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 359) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 360) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 361) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 362) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 363) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 364) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 365) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 366) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 367) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 368) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 369) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 370) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 371) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 372) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 373) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 374) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 375) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 376) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 377) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 378) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 379) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 380) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 381) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 382) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 383) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 384) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 385) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 386) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 387) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 388) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 389) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 390) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 391) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 392) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 393) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 394) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 395) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 396) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 397) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 398) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 399) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 400) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 401) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 402) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 403) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 404) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 405) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 406) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 407) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 408) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 409) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 410) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 411) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 412) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 413) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 414) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 415) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 416) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 417) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 418) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 419) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 420) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 421) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 422) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 423) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 424) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 425) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 426) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 427) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 428) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 429) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 430) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 431) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 432) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 433) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 434) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 435) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 436) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 437) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 438) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 439) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 440) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 441) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 442) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 443) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 444) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 445) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 446) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 447) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 448) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 449) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 450) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 451) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 452) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 453) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 454) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 455) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 456) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 457) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 458) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 459) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 460) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 461) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 462) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 463) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 464) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 465) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 466) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 467) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 468) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 469) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 470) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 471) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 472) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 473) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 474) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 475) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 476) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 477) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 478) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 479) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 480) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 481) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 482) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 483) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 484) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 485) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 486) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 487) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 488) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 489) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 490) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 491) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 492) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 493) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 494) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 495) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 496) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 497) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 498) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 499) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 500) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 501) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 502) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 503) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 504) % 16]);
+    acc += mul(m, acc) * 1.0;
+    m = mul(m, matBuf[(tid.x + 505) % 16]);
+    acc += mul(m, acc) * 2.0;
+    m = mul(m, matBuf[(tid.x + 506) % 16]);
+    acc += mul(m, acc) * 3.0;
+    m = mul(m, matBuf[(tid.x + 507) % 16]);
+    acc += mul(m, acc) * 4.0;
+    m = mul(m, matBuf[(tid.x + 508) % 16]);
+    acc += mul(m, acc) * 5.0;
+    m = mul(m, matBuf[(tid.x + 509) % 16]);
+    acc += mul(m, acc) * 6.0;
+    m = mul(m, matBuf[(tid.x + 510) % 16]);
+    acc += mul(m, acc) * 7.0;
+    m = mul(m, matBuf[(tid.x + 511) % 16]);
+    acc += mul(m, acc) * 1.0;
     outBuf[tid.x] = acc;
 }
 </pre></div><script>
