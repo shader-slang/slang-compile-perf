@@ -1,0 +1,551 @@
+{
+  "label": "2026-11-21-0a87e8963",
+  "status": "complete",
+  "repeated": [
+    {
+      "workload": "api_module_graph_bin",
+      "bucket": "api_overhead",
+      "size": 150,
+      "mode": "api",
+      "ok": true,
+      "setup_ok": true,
+      "got_timers": true,
+      "missing_primary_timers": [],
+      "samples": 5,
+      "warmup": 1,
+      "wall_ms": {
+        "median": 1013.8819,
+        "min": 991.3617,
+        "max": 1077.4509,
+        "mean": 1026.6193,
+        "stdev": 36.7551,
+        "n": 5,
+        "samples": [
+          1077.4509000000307,
+          998.6442000000579,
+          1013.8819000000012,
+          1051.7577000000529,
+          991.3616999999704
+        ]
+      },
+      "rss_kb": {
+        "median": 293900.0,
+        "min": 293448.0,
+        "max": 294164.0,
+        "mean": 293882.4,
+        "stdev": 288.3415,
+        "n": 5,
+        "samples": [
+          293448.0,
+          294116.0,
+          293900.0,
+          293784.0,
+          294164.0
+        ]
+      },
+      "memory": {
+        "apiCreateGlobalSessionRssDeltaKb": {
+          "median": 195808.0,
+          "min": 195800.0,
+          "max": 199916.0,
+          "mean": 196628.0,
+          "stdev": 1838.0598,
+          "n": 5,
+          "samples": [
+            195800.0,
+            195808.0,
+            195816.0,
+            195800.0,
+            199916.0
+          ]
+        }
+      },
+      "timers": {
+        "apiComposite": {
+          "median": 0.0953,
+          "min": 0.0892,
+          "max": 0.1194,
+          "mean": 0.1004,
+          "stdev": 0.0127,
+          "n": 5,
+          "samples": [
+            0.0911,
+            0.0953,
+            0.0892,
+            0.1194,
+            0.107
+          ]
+        },
+        "apiCreateGlobalSession": {
+          "median": 105.9012,
+          "min": 104.3185,
+          "max": 124.6445,
+          "mean": 110.3531,
+          "stdev": 8.5325,
+          "n": 5,
+          "samples": [
+            124.6445,
+            105.0233,
+            104.3185,
+            111.8781,
+            105.9012
+          ]
+        },
+        "apiCreateSession": {
+          "median": 0.0133,
+          "min": 0.0119,
+          "max": 0.0145,
+          "mean": 0.0134,
+          "stdev": 0.001,
+          "n": 5,
+          "samples": [
+            0.0142,
+            0.0132,
+            0.0119,
+            0.0145,
+            0.0133
+          ]
+        },
+        "apiFindEntryPoint": {
+          "median": 0.0007,
+          "min": 0.0005,
+          "max": 0.001,
+          "mean": 0.0007,
+          "stdev": 0.0002,
+          "n": 5,
+          "samples": [
+            0.001,
+            0.0005,
+            0.0007,
+            0.0007,
+            0.0005
+          ]
+        },
+        "apiGetCode": {
+          "median": 21.117,
+          "min": 20.0646,
+          "max": 25.8825,
+          "mean": 21.9858,
+          "stdev": 2.306,
+          "n": 5,
+          "samples": [
+            20.0646,
+            22.1493,
+            25.8825,
+            20.7154,
+            21.117
+          ]
+        },
+        "apiLink": {
+          "median": 2.3511,
+          "min": 1.9532,
+          "max": 2.5424,
+          "mean": 2.2558,
+          "stdev": 0.271,
+          "n": 5,
+          "samples": [
+            1.9532,
+            2.3511,
+            1.9841,
+            2.5424,
+            2.4483
+          ]
+        },
+        "apiLoadModule": {
+          "median": 93.6578,
+          "min": 91.4543,
+          "max": 100.2021,
+          "mean": 94.1639,
+          "stdev": 3.5654,
+          "n": 5,
+          "samples": [
+            100.2021,
+            93.9371,
+            91.4543,
+            93.6578,
+            91.5682
+          ]
+        },
+        "apiLoadModuleSource": {
+          "median": 118.0583,
+          "min": 111.8034,
+          "max": 128.4438,
+          "mean": 118.3048,
+          "stdev": 6.2581,
+          "n": 5,
+          "samples": [
+            128.4438,
+            114.91,
+            118.0583,
+            118.3086,
+            111.8034
+          ]
+        },
+        "apiTotal": {
+          "median": 118.5905,
+          "min": 115.3037,
+          "max": 122.3742,
+          "mean": 118.5693,
+          "stdev": 2.6519,
+          "n": 5,
+          "samples": [
+            122.3742,
+            118.5905,
+            119.4788,
+            117.0995,
+            115.3037
+          ]
+        },
+        "apiWriteModule": {
+          "median": 639.5394,
+          "min": 626.8249,
+          "max": 672.2893,
+          "mean": 647.297,
+          "stdev": 21.7542,
+          "n": 5,
+          "samples": [
+            668.7126,
+            629.1189,
+            639.5394,
+            672.2893,
+            626.8249
+          ]
+        }
+      },
+      "primary_timers": [
+        "apiTotal",
+        "apiLoadModule"
+      ],
+      "cmd": "C:\\Users\\ci\\AppData\\Local\\Temp\\perf_confirmation_ghzk6puu\\api-driver.exe W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slang-compiler.dll module-graph-bin --dir C:\\Users\\ci\\AppData\\Local\\Temp\\perf_confirmation_ghzk6puu\\api_module_graph_bin_n150 --out-dir C:\\Users\\ci\\AppData\\Local\\Temp\\perf_confirmation_ghzk6puu\\api_module_graph_bin_n150 --root graph_main",
+      "error": null,
+      "crash_codes": null,
+      "timer_schema": "coarse",
+      "sampling_strategy": "interleaved"
+    },
+    {
+      "workload": "serialize",
+      "bucket": "ir_infra",
+      "size": 1500,
+      "mode": "module",
+      "ok": true,
+      "setup_ok": true,
+      "got_timers": true,
+      "missing_primary_timers": [],
+      "samples": 5,
+      "warmup": 1,
+      "wall_ms": {
+        "median": 254.2192,
+        "min": 249.0006,
+        "max": 262.8814,
+        "mean": 255.6349,
+        "stdev": 5.4756,
+        "n": 5,
+        "samples": [
+          259.2828000000509,
+          252.79060000002573,
+          262.8813999999693,
+          249.00060000004487,
+          254.2191999999659
+        ]
+      },
+      "rss_kb": {
+        "median": 250820.0,
+        "min": 250720.0,
+        "max": 251188.0,
+        "mean": 250869.6,
+        "stdev": 182.8354,
+        "n": 5,
+        "samples": [
+          250796.0,
+          251188.0,
+          250824.0,
+          250720.0,
+          250820.0
+        ]
+      },
+      "memory": null,
+      "timers": {
+        "SemanticChecking": {
+          "median": 51.63,
+          "min": 50.9,
+          "max": 55.92,
+          "mean": 52.81,
+          "stdev": 2.2303,
+          "n": 5,
+          "samples": [
+            55.92,
+            54.41,
+            51.19,
+            51.63,
+            50.9
+          ]
+        },
+        "checkAllTranslationUnits": {
+          "median": 51.63,
+          "min": 50.89,
+          "max": 55.92,
+          "mean": 52.808,
+          "stdev": 2.2324,
+          "n": 5,
+          "samples": [
+            55.92,
+            54.41,
+            51.19,
+            51.63,
+            50.89
+          ]
+        },
+        "compileInner": {
+          "median": 117.92,
+          "min": 117.17,
+          "max": 120.64,
+          "mean": 118.334,
+          "stdev": 1.3643,
+          "n": 5,
+          "samples": [
+            120.64,
+            118.38,
+            117.17,
+            117.56,
+            117.92
+          ]
+        },
+        "endToEndActions": {
+          "median": 117.92,
+          "min": 117.16,
+          "max": 120.64,
+          "mean": 118.332,
+          "stdev": 1.3664,
+          "n": 5,
+          "samples": [
+            120.64,
+            118.38,
+            117.16,
+            117.56,
+            117.92
+          ]
+        },
+        "frontEndExecute": {
+          "median": 97.43,
+          "min": 96.98,
+          "max": 100.68,
+          "mean": 97.964,
+          "stdev": 1.5527,
+          "n": 5,
+          "samples": [
+            100.68,
+            97.75,
+            96.98,
+            97.43,
+            96.98
+          ]
+        },
+        "generateIR": {
+          "median": 38.91,
+          "min": 36.73,
+          "max": 39.56,
+          "mean": 38.428,
+          "stdev": 1.2089,
+          "n": 5,
+          "samples": [
+            37.62,
+            36.73,
+            39.32,
+            38.91,
+            39.56
+          ]
+        },
+        "generateIRForTranslationUnit": {
+          "median": 38.91,
+          "min": 36.72,
+          "max": 39.56,
+          "mean": 38.426,
+          "stdev": 1.2124,
+          "n": 5,
+          "samples": [
+            37.62,
+            36.72,
+            39.32,
+            38.91,
+            39.56
+          ]
+        },
+        "generateOutput": {
+          "median": 20.18,
+          "min": 19.96,
+          "max": 20.93,
+          "mean": 20.364,
+          "stdev": 0.3993,
+          "n": 5,
+          "samples": [
+            19.96,
+            20.62,
+            20.18,
+            20.13,
+            20.93
+          ]
+        },
+        "loadBuiltinModule": {
+          "median": 110.83,
+          "min": 105.33,
+          "max": 117.39,
+          "mean": 110.59,
+          "stdev": 4.5791,
+          "n": 5,
+          "samples": [
+            111.74,
+            107.66,
+            117.39,
+            105.33,
+            110.83
+          ]
+        },
+        "parseTranslationUnit": {
+          "median": 6.46,
+          "min": 6.32,
+          "max": 6.97,
+          "mean": 6.57,
+          "stdev": 0.2707,
+          "n": 5,
+          "samples": [
+            6.97,
+            6.46,
+            6.32,
+            6.72,
+            6.38
+          ]
+        },
+        "performMandatoryEarlyInlining": {
+          "median": 0.48,
+          "min": 0.48,
+          "max": 0.53,
+          "mean": 0.49,
+          "stdev": 0.0224,
+          "n": 5,
+          "samples": [
+            0.48,
+            0.48,
+            0.48,
+            0.53,
+            0.48
+          ]
+        },
+        "readSerializedModuleAST": {
+          "median": 40.19,
+          "min": 35.82,
+          "max": 41.55,
+          "mean": 38.86,
+          "stdev": 2.7718,
+          "n": 5,
+          "samples": [
+            40.19,
+            35.82,
+            41.55,
+            35.92,
+            40.82
+          ]
+        },
+        "readSerializedModuleIR": {
+          "median": 51.46,
+          "min": 50.25,
+          "max": 55.85,
+          "mean": 52.242,
+          "stdev": 2.1581,
+          "n": 5,
+          "samples": [
+            52.41,
+            51.46,
+            55.85,
+            50.25,
+            51.24
+          ]
+        },
+        "writeSerializedModuleAST": {
+          "median": 10.84,
+          "min": 10.68,
+          "max": 11.44,
+          "mean": 10.98,
+          "stdev": 0.3233,
+          "n": 5,
+          "samples": [
+            10.75,
+            11.19,
+            10.68,
+            10.84,
+            11.44
+          ]
+        },
+        "writeSerializedModuleIR": {
+          "median": 7.55,
+          "min": 7.43,
+          "max": 7.62,
+          "mean": 7.528,
+          "stdev": 0.0804,
+          "n": 5,
+          "samples": [
+            7.43,
+            7.58,
+            7.55,
+            7.46,
+            7.62
+          ]
+        }
+      },
+      "primary_timers": [
+        "writeSerializedModuleAST",
+        "writeSerializedModuleIR",
+        "compileInner"
+      ],
+      "cmd": "W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slangc.exe -report-detailed-perf-benchmark C:\\Users\\ci\\AppData\\Local\\Temp\\perf_confirmation_ghzk6puu\\serialize_n1500\\serialize.slang -o C:\\Users\\ci\\AppData\\Local\\Temp\\perf_confirmation_ghzk6puu\\serialize_n1500\\out.slang-module",
+      "error": null,
+      "crash_codes": null,
+      "timer_schema": "detailed",
+      "sampling_strategy": "interleaved"
+    }
+  ],
+  "run_id": "44869688840",
+  "run_attempt": "1",
+  "source_digest": "b109c41bf29fea9165c98f5275183a7dbbee8686c626df5fa8dd8fc72cedae6e",
+  "plan": {
+    "label": "2026-11-21-0a87e8963",
+    "runner": "Windows-AMD64-AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD-14cpu",
+    "baseline_labels": [
+      "2026-11-13-c7231c49a",
+      "2026-11-14-b50ad0977",
+      "2026-11-15-cdca151fb",
+      "2026-11-16-cdca151fb",
+      "2026-11-17-8115e2d31",
+      "2026-11-18-8ed6534cc",
+      "2026-11-20-ef93f4b7d"
+    ],
+    "thresholds": {
+      "rel": 1.1,
+      "warn_rel": 1.05,
+      "abs": 2.0
+    },
+    "regressions": [
+      {
+        "workload": "api_module_graph_bin",
+        "counter": "apiLoadModule",
+        "baseline": 84.762,
+        "value": 98.4287
+      },
+      {
+        "workload": "api_module_graph_bin",
+        "counter": "apiTotal",
+        "baseline": 108.0528,
+        "value": 124.0145
+      }
+    ],
+    "warnings": [
+      {
+        "workload": "serialize",
+        "counter": "compileInner",
+        "baseline": 114.55,
+        "value": 122.42
+      }
+    ],
+    "notes": [],
+    "judged_count": 222
+  }
+}
