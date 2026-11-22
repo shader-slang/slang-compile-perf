@@ -1,0 +1,265 @@
+{
+  "label": "2026-11-22-411af9b95",
+  "status": "complete",
+  "repeated": [
+    {
+      "workload": "api_module_graph_bin",
+      "bucket": "api_overhead",
+      "size": 150,
+      "mode": "api",
+      "ok": true,
+      "setup_ok": true,
+      "got_timers": true,
+      "missing_primary_timers": [],
+      "samples": 5,
+      "warmup": 1,
+      "wall_ms": {
+        "median": 1031.7159,
+        "min": 1012.4269,
+        "max": 1042.1677,
+        "mean": 1029.1277,
+        "stdev": 12.2685,
+        "n": 5,
+        "samples": [
+          1042.16770000005,
+          1021.124900000018,
+          1012.4269000000368,
+          1038.203199999998,
+          1031.7158999999947
+        ]
+      },
+      "rss_kb": {
+        "median": 293984.0,
+        "min": 293648.0,
+        "max": 294248.0,
+        "mean": 293980.0,
+        "stdev": 230.0609,
+        "n": 5,
+        "samples": [
+          293984.0,
+          293892.0,
+          294248.0,
+          294128.0,
+          293648.0
+        ]
+      },
+      "memory": {
+        "apiCreateGlobalSessionRssDeltaKb": {
+          "median": 195812.0,
+          "min": 195792.0,
+          "max": 199896.0,
+          "mean": 197437.6,
+          "stdev": 2240.5635,
+          "n": 5,
+          "samples": [
+            195792.0,
+            195812.0,
+            195800.0,
+            199888.0,
+            199896.0
+          ]
+        }
+      },
+      "timers": {
+        "apiComposite": {
+          "median": 0.1028,
+          "min": 0.0992,
+          "max": 0.1113,
+          "mean": 0.1034,
+          "stdev": 0.0047,
+          "n": 5,
+          "samples": [
+            0.1009,
+            0.1028,
+            0.1028,
+            0.0992,
+            0.1113
+          ]
+        },
+        "apiCreateGlobalSession": {
+          "median": 105.464,
+          "min": 102.1245,
+          "max": 107.6937,
+          "mean": 104.7895,
+          "stdev": 2.3995,
+          "n": 5,
+          "samples": [
+            102.1245,
+            106.152,
+            105.464,
+            102.5132,
+            107.6937
+          ]
+        },
+        "apiCreateSession": {
+          "median": 0.0135,
+          "min": 0.0122,
+          "max": 0.0172,
+          "mean": 0.014,
+          "stdev": 0.0019,
+          "n": 5,
+          "samples": [
+            0.0172,
+            0.0122,
+            0.0134,
+            0.0135,
+            0.0138
+          ]
+        },
+        "apiFindEntryPoint": {
+          "median": 0.0005,
+          "min": 0.0005,
+          "max": 0.0007,
+          "mean": 0.0005,
+          "stdev": 0.0001,
+          "n": 5,
+          "samples": [
+            0.0005,
+            0.0005,
+            0.0007,
+            0.0005,
+            0.0005
+          ]
+        },
+        "apiGetCode": {
+          "median": 20.9039,
+          "min": 20.5877,
+          "max": 23.5701,
+          "mean": 21.5234,
+          "stdev": 1.224,
+          "n": 5,
+          "samples": [
+            21.7379,
+            20.5877,
+            20.9039,
+            20.8176,
+            23.5701
+          ]
+        },
+        "apiLink": {
+          "median": 2.3176,
+          "min": 1.8909,
+          "max": 2.8295,
+          "mean": 2.277,
+          "stdev": 0.3818,
+          "n": 5,
+          "samples": [
+            2.3176,
+            1.8909,
+            2.4034,
+            1.9436,
+            2.8295
+          ]
+        },
+        "apiLoadModule": {
+          "median": 101.0829,
+          "min": 93.0325,
+          "max": 103.346,
+          "mean": 99.26,
+          "stdev": 4.5925,
+          "n": 5,
+          "samples": [
+            102.9909,
+            95.8477,
+            93.0325,
+            101.0829,
+            103.346
+          ]
+        },
+        "apiLoadModuleSource": {
+          "median": 111.3315,
+          "min": 105.7061,
+          "max": 128.0053,
+          "mean": 113.7111,
+          "stdev": 8.6207,
+          "n": 5,
+          "samples": [
+            111.3315,
+            114.5452,
+            108.9674,
+            128.0053,
+            105.7061
+          ]
+        },
+        "apiTotal": {
+          "median": 124.0008,
+          "min": 116.4986,
+          "max": 129.926,
+          "mean": 123.2264,
+          "stdev": 5.6812,
+          "n": 5,
+          "samples": [
+            127.2168,
+            118.4898,
+            116.4986,
+            124.0008,
+            129.926
+          ]
+        },
+        "apiWriteModule": {
+          "median": 651.5266,
+          "min": 648.7648,
+          "max": 668.4904,
+          "mean": 654.7368,
+          "stdev": 8.0426,
+          "n": 5,
+          "samples": [
+            668.4904,
+            649.8865,
+            648.7648,
+            651.5266,
+            655.0158
+          ]
+        }
+      },
+      "primary_timers": [
+        "apiTotal",
+        "apiLoadModule"
+      ],
+      "cmd": "C:\\Users\\ci\\AppData\\Local\\Temp\\perf_confirmation_1idm1vwr\\api-driver.exe W:\\ghbridge-runner\\_work\\slang\\slang\\build\\Release\\bin\\slang-compiler.dll module-graph-bin --dir C:\\Users\\ci\\AppData\\Local\\Temp\\perf_confirmation_1idm1vwr\\api_module_graph_bin_n150 --out-dir C:\\Users\\ci\\AppData\\Local\\Temp\\perf_confirmation_1idm1vwr\\api_module_graph_bin_n150 --root graph_main",
+      "error": null,
+      "crash_codes": null,
+      "timer_schema": "coarse",
+      "sampling_strategy": "interleaved"
+    }
+  ],
+  "run_id": "44988301006",
+  "run_attempt": "1",
+  "source_digest": "5e24262065facc41f52ff69129109a9102a7056962c9806ec8f5323169518d93",
+  "plan": {
+    "label": "2026-11-22-411af9b95",
+    "runner": "Windows-AMD64-AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD-14cpu",
+    "baseline_labels": [
+      "2026-11-14-b50ad0977",
+      "2026-11-15-cdca151fb",
+      "2026-11-16-cdca151fb",
+      "2026-11-17-8115e2d31",
+      "2026-11-18-8ed6534cc",
+      "2026-11-20-ef93f4b7d",
+      "2026-11-21-0a87e8963"
+    ],
+    "thresholds": {
+      "rel": 1.1,
+      "warn_rel": 1.05,
+      "abs": 2.0
+    },
+    "regressions": [
+      {
+        "workload": "api_module_graph_bin",
+        "counter": "apiLoadModule",
+        "baseline": 84.762,
+        "value": 97.2051
+      }
+    ],
+    "warnings": [
+      {
+        "workload": "api_module_graph_bin",
+        "counter": "apiTotal",
+        "baseline": 108.9554,
+        "value": 119.8446
+      }
+    ],
+    "notes": [],
+    "judged_count": 222
+  }
+}
