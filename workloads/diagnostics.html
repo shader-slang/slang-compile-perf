@@ -40,7 +40,7 @@ claim below, not incidental.
 Scaling null: n scales independent diagnostics; ideal cost is O(n).</p><p style='color:#666;font-size:13px'><b>bucket:</b> diagnostics &nbsp;·&nbsp; <b>compile mode:</b> module &nbsp;·&nbsp; <b>flags:</b> <code>(none)</code> &nbsp;·&nbsp; <b>default N:</b> 9600</p><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Phase composition across releases</h2><p style='color:#666;font-size:13px;max-width:900px'>Full sub-counter decomposition of <code>compileInner</code> &mdash; named leaf timers plus <code>(self)</code> residuals (a parent's time not covered by a named child, e.g. the autodiff transform in <code>linkAndOptimizeIR (self)</code>). Topmost band traces compileInner; hover a band for its phase.</p><div style='border:1px solid #eee;border-radius:6px;padding:8px;overflow:auto'><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Across releases</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="716" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">diagnostics — Across releases (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">diagnostics<tspan fill="#888" font-weight="400" text-decoration="none">  0.84×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">diagnostics<tspan fill="#888" font-weight="400" text-decoration="none">  0.89×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -51,50 +51,52 @@ Scaling null: n scales independent diagnostics; ideal cost is O(n).</p><p style=
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
 <text x="68.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 68.0 531.0)">25.12</text>
-<line x1="120.0" y1="516.0" x2="120.0" y2="519.0" stroke="#999"/>
-<text x="120.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 120.0 531.0)">25.14</text>
-<line x1="172.0" y1="516.0" x2="172.0" y2="519.0" stroke="#999"/>
-<text x="172.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 172.0 531.0)">25.16</text>
-<line x1="224.0" y1="516.0" x2="224.0" y2="519.0" stroke="#999"/>
-<text x="224.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 224.0 531.0)">25.18</text>
-<line x1="276.0" y1="516.0" x2="276.0" y2="519.0" stroke="#999"/>
-<text x="276.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 276.0 531.0)">25.20</text>
-<line x1="328.0" y1="516.0" x2="328.0" y2="519.0" stroke="#999"/>
-<text x="328.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 328.0 531.0)">25.22</text>
-<line x1="380.0" y1="516.0" x2="380.0" y2="519.0" stroke="#999"/>
-<text x="380.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 380.0 531.0)">25.24</text>
-<line x1="432.0" y1="516.0" x2="432.0" y2="519.0" stroke="#999"/>
-<text x="432.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 432.0 531.0)">26.2</text>
-<line x1="484.0" y1="516.0" x2="484.0" y2="519.0" stroke="#999"/>
-<text x="484.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 484.0 531.0)">26.4</text>
-<line x1="536.0" y1="516.0" x2="536.0" y2="519.0" stroke="#999"/>
-<text x="536.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 536.0 531.0)">26.7</text>
-<line x1="588.0" y1="516.0" x2="588.0" y2="519.0" stroke="#999"/>
-<text x="588.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 588.0 531.0)">26.9</text>
-<line x1="640.0" y1="516.0" x2="640.0" y2="519.0" stroke="#999"/>
-<text x="640.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 640.0 531.0)">26.11</text>
-<line x1="692.0" y1="516.0" x2="692.0" y2="519.0" stroke="#999"/>
-<text x="692.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 692.0 531.0)">26.13</text>
-<line x1="744.0" y1="516.0" x2="744.0" y2="519.0" stroke="#999"/>
-<text x="744.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 744.0 531.0)">26.14</text>
-<line x1="796.0" y1="516.0" x2="796.0" y2="519.0" stroke="#999"/>
-<text x="796.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 796.0 531.0)">26.16</text>
-<line x1="848.0" y1="516.0" x2="848.0" y2="519.0" stroke="#999"/>
-<text x="848.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 848.0 531.0)">26.17</text>
-<line x1="900.0" y1="516.0" x2="900.0" y2="519.0" stroke="#999"/>
-<text x="900.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 900.0 531.0)">26.18</text>
-<line x1="952.0" y1="516.0" x2="952.0" y2="519.0" stroke="#999"/>
-<text x="952.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 952.0 531.0)">26.18.2</text>
-<line x1="1004.0" y1="516.0" x2="1004.0" y2="519.0" stroke="#999"/>
-<text x="1004.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1004.0 531.0)">26.19</text>
-<line x1="1056.0" y1="516.0" x2="1056.0" y2="519.0" stroke="#999"/>
-<text x="1056.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1056.0 531.0)">26.21</text>
+<line x1="118.7" y1="516.0" x2="118.7" y2="519.0" stroke="#999"/>
+<text x="118.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 118.7 531.0)">25.14</text>
+<line x1="169.5" y1="516.0" x2="169.5" y2="519.0" stroke="#999"/>
+<text x="169.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 169.5 531.0)">25.16</text>
+<line x1="220.2" y1="516.0" x2="220.2" y2="519.0" stroke="#999"/>
+<text x="220.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 220.2 531.0)">25.18</text>
+<line x1="270.9" y1="516.0" x2="270.9" y2="519.0" stroke="#999"/>
+<text x="270.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 270.9 531.0)">25.20</text>
+<line x1="321.7" y1="516.0" x2="321.7" y2="519.0" stroke="#999"/>
+<text x="321.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 321.7 531.0)">25.22</text>
+<line x1="372.4" y1="516.0" x2="372.4" y2="519.0" stroke="#999"/>
+<text x="372.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 372.4 531.0)">25.24</text>
+<line x1="423.1" y1="516.0" x2="423.1" y2="519.0" stroke="#999"/>
+<text x="423.1" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 423.1 531.0)">26.2</text>
+<line x1="473.9" y1="516.0" x2="473.9" y2="519.0" stroke="#999"/>
+<text x="473.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 473.9 531.0)">26.4</text>
+<line x1="524.6" y1="516.0" x2="524.6" y2="519.0" stroke="#999"/>
+<text x="524.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 524.6 531.0)">26.7</text>
+<line x1="575.3" y1="516.0" x2="575.3" y2="519.0" stroke="#999"/>
+<text x="575.3" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 575.3 531.0)">26.9</text>
+<line x1="626.0" y1="516.0" x2="626.0" y2="519.0" stroke="#999"/>
+<text x="626.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 626.0 531.0)">26.11</text>
+<line x1="676.8" y1="516.0" x2="676.8" y2="519.0" stroke="#999"/>
+<text x="676.8" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 676.8 531.0)">26.13</text>
+<line x1="727.5" y1="516.0" x2="727.5" y2="519.0" stroke="#999"/>
+<text x="727.5" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 727.5 531.0)">26.14</text>
+<line x1="778.2" y1="516.0" x2="778.2" y2="519.0" stroke="#999"/>
+<text x="778.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 778.2 531.0)">26.16</text>
+<line x1="829.0" y1="516.0" x2="829.0" y2="519.0" stroke="#999"/>
+<text x="829.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 829.0 531.0)">26.17</text>
+<line x1="879.7" y1="516.0" x2="879.7" y2="519.0" stroke="#999"/>
+<text x="879.7" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 879.7 531.0)">26.18</text>
+<line x1="930.4" y1="516.0" x2="930.4" y2="519.0" stroke="#999"/>
+<text x="930.4" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 930.4 531.0)">26.18.2</text>
+<line x1="981.2" y1="516.0" x2="981.2" y2="519.0" stroke="#999"/>
+<text x="981.2" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 981.2 531.0)">26.19</text>
+<line x1="1031.9" y1="516.0" x2="1031.9" y2="519.0" stroke="#999"/>
+<text x="1031.9" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1031.9 531.0)">26.21</text>
+<line x1="1082.6" y1="516.0" x2="1082.6" y2="519.0" stroke="#999"/>
+<text x="1082.6" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1082.6 531.0)">26.22.1</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.22.1</text>
-<polygon points="640.0,460.6 666.0,462.3 692.0,458.8 744.0,470.4 796.0,472.2 848.0,473.0 900.0,472.9 926.0,473.1 952.0,474.6 978.0,474.4 1004.0,473.9 1030.0,470.8 1056.0,474.6 1082.0,471.0 1108.0,469.6 1108.0,516.0 1082.0,516.0 1056.0,516.0 1030.0,516.0 1004.0,516.0 978.0,516.0 952.0,516.0 926.0,516.0 900.0,516.0 848.0,516.0 796.0,516.0 744.0,516.0 692.0,516.0 666.0,516.0 640.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics — parseTranslationUnit</title></polygon>
-<polygon points="640.0,144.7 666.0,149.9 692.0,113.8 744.0,191.5 796.0,219.8 848.0,209.3 900.0,215.6 926.0,224.1 952.0,216.7 978.0,227.5 1004.0,218.5 1030.0,207.8 1056.0,213.7 1082.0,179.9 1108.0,205.3 1108.0,469.6 1082.0,471.0 1056.0,474.6 1030.0,470.8 1004.0,473.9 978.0,474.4 952.0,474.6 926.0,473.1 900.0,472.9 848.0,473.0 796.0,472.2 744.0,470.4 692.0,458.8 666.0,462.3 640.0,460.6" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics — SemanticChecking</title></polygon>
-<polygon points="640.0,144.5 666.0,149.6 692.0,108.6 744.0,190.2 796.0,219.3 848.0,207.7 900.0,215.1 926.0,222.8 952.0,216.7 978.0,226.9 1004.0,216.6 1030.0,207.8 1056.0,213.1 1082.0,179.9 1108.0,204.7 1108.0,205.3 1082.0,179.9 1056.0,213.7 1030.0,207.8 1004.0,218.5 978.0,227.5 952.0,216.7 926.0,224.1 900.0,215.6 848.0,209.3 796.0,219.8 744.0,191.5 692.0,113.8 666.0,149.9 640.0,144.7" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics — frontEndExecute (self)</title></polygon>
-<polygon points="640.0,144.5 666.0,149.6 692.0,108.6 744.0,190.2 796.0,219.3 848.0,207.7 900.0,215.1 926.0,222.8 952.0,216.7 978.0,226.9 1004.0,216.5 1030.0,207.8 1056.0,213.1 1082.0,179.9 1108.0,204.7 1108.0,204.7 1082.0,179.9 1056.0,213.1 1030.0,207.8 1004.0,216.6 978.0,226.9 952.0,216.7 926.0,222.8 900.0,215.1 848.0,207.7 796.0,219.3 744.0,190.2 692.0,108.6 666.0,149.6 640.0,144.5" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics — compileInner (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#666" transform="rotate(-50 1108.0 531.0)">26.23</text>
+<polygon points="626.0,460.6 651.4,462.3 676.8,458.8 727.5,470.4 778.2,472.2 829.0,473.0 879.7,472.9 905.1,473.1 930.4,474.6 955.8,474.4 981.2,473.9 1006.5,470.8 1031.9,474.6 1057.3,471.0 1082.6,469.6 1108.0,469.9 1108.0,516.0 1082.6,516.0 1057.3,516.0 1031.9,516.0 1006.5,516.0 981.2,516.0 955.8,516.0 930.4,516.0 905.1,516.0 879.7,516.0 829.0,516.0 778.2,516.0 727.5,516.0 676.8,516.0 651.4,516.0 626.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics — parseTranslationUnit</title></polygon>
+<polygon points="626.0,144.7 651.4,149.9 676.8,113.8 727.5,191.5 778.2,219.8 829.0,209.3 879.7,215.6 905.1,224.1 930.4,216.7 955.8,227.5 981.2,218.5 1006.5,207.8 1031.9,213.7 1057.3,179.9 1082.6,205.3 1108.0,186.2 1108.0,469.9 1082.6,469.6 1057.3,471.0 1031.9,474.6 1006.5,470.8 981.2,473.9 955.8,474.4 930.4,474.6 905.1,473.1 879.7,472.9 829.0,473.0 778.2,472.2 727.5,470.4 676.8,458.8 651.4,462.3 626.0,460.6" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics — SemanticChecking</title></polygon>
+<polygon points="626.0,144.5 651.4,149.6 676.8,108.6 727.5,190.2 778.2,219.3 829.0,207.7 879.7,215.1 905.1,222.8 930.4,216.7 955.8,226.9 981.2,216.6 1006.5,207.8 1031.9,213.1 1057.3,179.9 1082.6,204.7 1108.0,185.7 1108.0,186.2 1082.6,205.3 1057.3,179.9 1031.9,213.7 1006.5,207.8 981.2,218.5 955.8,227.5 930.4,216.7 905.1,224.1 879.7,215.6 829.0,209.3 778.2,219.8 727.5,191.5 676.8,113.8 651.4,149.9 626.0,144.7" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics — frontEndExecute (self)</title></polygon>
+<polygon points="626.0,144.5 651.4,149.6 676.8,108.6 727.5,190.2 778.2,219.3 829.0,207.7 879.7,215.1 905.1,222.8 930.4,216.7 955.8,226.9 981.2,216.5 1006.5,207.8 1031.9,213.1 1057.3,179.9 1082.6,204.7 1108.0,185.7 1108.0,185.7 1082.6,204.7 1057.3,179.9 1031.9,213.1 1006.5,207.8 981.2,216.6 955.8,226.9 930.4,216.7 905.1,222.8 879.7,215.1 829.0,207.7 778.2,219.3 727.5,190.2 676.8,108.6 651.4,149.6 626.0,144.5" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
@@ -141,7 +143,7 @@ Scaling null: n scales independent diagnostics; ideal cost is O(n).</p><p style=
 </svg><h3 style='font-size:15px;margin:18px 0 4px;color:#333'>Daily tip-of-tree (last 30 days)</h3><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1132" height="716" viewBox="0 0 1132 716" preserveAspectRatio="xMidYMid meet" font-family="sans-serif" font-size="13">
 <rect width="1132" height="716" fill="white"/>
 <text x="12" y="30" font-size="20" font-weight="bold">diagnostics — Daily tip-of-tree (last 30 days) (median ms)</text>
-<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">diagnostics<tspan fill="#888" font-weight="400" text-decoration="none">  1.02×</tspan></text>
+<text x="68" y="60" font-size="15" font-weight="600" fill="#1a1a1a">diagnostics<tspan fill="#888" font-weight="400" text-decoration="none">  1.05×</tspan></text>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#eee"/>
 <text x="64.0" y="519.0" text-anchor="end" fill="#999">0.0</text>
 <line x1="68.0" y1="296.0" x2="1108.0" y2="296.0" stroke="#eee"/>
@@ -151,69 +153,69 @@ Scaling null: n scales independent diagnostics; ideal cost is O(n).</p><p style=
 <line x1="68.0" y1="76.0" x2="68.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="1108.0" y2="516.0" stroke="#333"/>
 <line x1="68.0" y1="516.0" x2="68.0" y2="519.0" stroke="#999"/>
-<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">10-26</text>
+<text x="68.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 68.0 531.0)">10-27</text>
 <line x1="103.9" y1="516.0" x2="103.9" y2="519.0" stroke="#999"/>
-<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">10-27</text>
+<text x="103.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 103.9 531.0)">10-28</text>
 <line x1="139.7" y1="516.0" x2="139.7" y2="519.0" stroke="#999"/>
-<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">10-28</text>
+<text x="139.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 139.7 531.0)">10-29</text>
 <line x1="175.6" y1="516.0" x2="175.6" y2="519.0" stroke="#999"/>
-<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">10-29</text>
+<text x="175.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 175.6 531.0)">10-30</text>
 <line x1="211.4" y1="516.0" x2="211.4" y2="519.0" stroke="#999"/>
-<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">10-30</text>
+<text x="211.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 211.4 531.0)">10-31</text>
 <line x1="247.3" y1="516.0" x2="247.3" y2="519.0" stroke="#999"/>
-<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">10-31</text>
+<text x="247.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 247.3 531.0)">11-01</text>
 <line x1="283.2" y1="516.0" x2="283.2" y2="519.0" stroke="#999"/>
-<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">11-01</text>
+<text x="283.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 283.2 531.0)">11-02</text>
 <line x1="319.0" y1="516.0" x2="319.0" y2="519.0" stroke="#999"/>
-<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">11-02</text>
+<text x="319.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 319.0 531.0)">11-03</text>
 <line x1="354.9" y1="516.0" x2="354.9" y2="519.0" stroke="#999"/>
-<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">11-03</text>
+<text x="354.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 354.9 531.0)">11-04</text>
 <line x1="390.8" y1="516.0" x2="390.8" y2="519.0" stroke="#999"/>
-<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">11-04</text>
+<text x="390.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 390.8 531.0)">11-05</text>
 <line x1="426.6" y1="516.0" x2="426.6" y2="519.0" stroke="#999"/>
-<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">11-05</text>
+<text x="426.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 426.6 531.0)">11-06</text>
 <line x1="462.5" y1="516.0" x2="462.5" y2="519.0" stroke="#999"/>
-<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">11-06</text>
+<text x="462.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 462.5 531.0)">11-07</text>
 <line x1="498.3" y1="516.0" x2="498.3" y2="519.0" stroke="#999"/>
-<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">11-07</text>
+<text x="498.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 498.3 531.0)">11-08</text>
 <line x1="534.2" y1="516.0" x2="534.2" y2="519.0" stroke="#999"/>
-<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">11-08</text>
+<text x="534.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 534.2 531.0)">11-10</text>
 <line x1="570.1" y1="516.0" x2="570.1" y2="519.0" stroke="#999"/>
-<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">11-10</text>
+<text x="570.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 570.1 531.0)">11-11</text>
 <line x1="605.9" y1="516.0" x2="605.9" y2="519.0" stroke="#999"/>
-<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">11-11</text>
+<text x="605.9" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 605.9 531.0)">11-12</text>
 <line x1="641.8" y1="516.0" x2="641.8" y2="519.0" stroke="#999"/>
-<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">11-12</text>
+<text x="641.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 641.8 531.0)">11-13</text>
 <line x1="677.7" y1="516.0" x2="677.7" y2="519.0" stroke="#999"/>
-<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">11-13</text>
+<text x="677.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 677.7 531.0)">11-14</text>
 <line x1="713.5" y1="516.0" x2="713.5" y2="519.0" stroke="#999"/>
-<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">11-14</text>
+<text x="713.5" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 713.5 531.0)">11-15</text>
 <line x1="749.4" y1="516.0" x2="749.4" y2="519.0" stroke="#999"/>
-<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">11-15</text>
+<text x="749.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 749.4 531.0)">11-16</text>
 <line x1="785.2" y1="516.0" x2="785.2" y2="519.0" stroke="#999"/>
-<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">11-16</text>
+<text x="785.2" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 785.2 531.0)">11-17</text>
 <line x1="821.1" y1="516.0" x2="821.1" y2="519.0" stroke="#999"/>
-<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">11-17</text>
+<text x="821.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 821.1 531.0)">11-18</text>
 <line x1="857.0" y1="516.0" x2="857.0" y2="519.0" stroke="#999"/>
-<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">11-18</text>
+<text x="857.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 857.0 531.0)">11-20</text>
 <line x1="892.8" y1="516.0" x2="892.8" y2="519.0" stroke="#999"/>
-<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">11-20</text>
+<text x="892.8" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 892.8 531.0)">11-21</text>
 <line x1="928.7" y1="516.0" x2="928.7" y2="519.0" stroke="#999"/>
-<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">11-21</text>
+<text x="928.7" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 928.7 531.0)">11-22</text>
 <line x1="964.6" y1="516.0" x2="964.6" y2="519.0" stroke="#999"/>
-<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">11-22</text>
+<text x="964.6" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 964.6 531.0)">11-23</text>
 <line x1="1000.4" y1="516.0" x2="1000.4" y2="519.0" stroke="#999"/>
-<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">11-23</text>
+<text x="1000.4" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1000.4 531.0)">11-24</text>
 <line x1="1036.3" y1="516.0" x2="1036.3" y2="519.0" stroke="#999"/>
-<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">11-24</text>
+<text x="1036.3" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1036.3 531.0)">11-25</text>
 <line x1="1072.1" y1="516.0" x2="1072.1" y2="519.0" stroke="#999"/>
-<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">11-25</text>
+<text x="1072.1" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1072.1 531.0)">11-26</text>
 <line x1="1108.0" y1="516.0" x2="1108.0" y2="519.0" stroke="#999"/>
-<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">11-26</text>
-<polygon points="68.0,464.3 103.9,464.7 139.7,463.9 175.6,463.4 211.4,463.3 247.3,464.9 283.2,464.0 319.0,463.9 354.9,461.1 390.8,462.8 426.6,461.1 462.5,462.2 498.3,463.7 534.2,463.4 570.1,461.3 605.9,463.1 641.8,464.3 677.7,461.4 713.5,462.5 749.4,462.4 785.2,462.9 821.1,462.1 857.0,462.5 892.8,460.9 928.7,461.8 964.6,460.2 1000.4,460.5 1036.3,461.1 1072.1,463.2 1108.0,461.1 1108.0,516.0 1072.1,516.0 1036.3,516.0 1000.4,516.0 964.6,516.0 928.7,516.0 892.8,516.0 857.0,516.0 821.1,516.0 785.2,516.0 749.4,516.0 713.5,516.0 677.7,516.0 641.8,516.0 605.9,516.0 570.1,516.0 534.2,516.0 498.3,516.0 462.5,516.0 426.6,516.0 390.8,516.0 354.9,516.0 319.0,516.0 283.2,516.0 247.3,516.0 211.4,516.0 175.6,516.0 139.7,516.0 103.9,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics — parseTranslationUnit</title></polygon>
-<polygon points="68.0,131.1 103.9,142.7 139.7,137.9 175.6,124.4 211.4,143.2 247.3,144.7 283.2,142.4 319.0,137.2 354.9,120.5 390.8,124.0 426.6,111.7 462.5,114.3 498.3,128.8 534.2,131.8 570.1,129.1 605.9,132.9 641.8,134.2 677.7,117.9 713.5,130.8 749.4,127.5 785.2,125.5 821.1,129.4 857.0,128.0 892.8,119.3 928.7,123.9 964.6,123.8 1000.4,116.4 1036.3,130.4 1072.1,135.4 1108.0,123.6 1108.0,461.1 1072.1,463.2 1036.3,461.1 1000.4,460.5 964.6,460.2 928.7,461.8 892.8,460.9 857.0,462.5 821.1,462.1 785.2,462.9 749.4,462.4 713.5,462.5 677.7,461.4 641.8,464.3 605.9,463.1 570.1,461.3 534.2,463.4 498.3,463.7 462.5,462.2 426.6,461.1 390.8,462.8 354.9,461.1 319.0,463.9 283.2,464.0 247.3,464.9 211.4,463.3 175.6,463.4 139.7,463.9 103.9,464.7 68.0,464.3" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics — SemanticChecking</title></polygon>
-<polygon points="68.0,130.4 103.9,140.2 139.7,137.2 175.6,123.8 211.4,143.2 247.3,144.2 283.2,139.6 319.0,133.8 354.9,119.2 390.8,119.0 426.6,108.6 462.5,113.3 498.3,128.8 534.2,131.5 570.1,129.1 605.9,131.6 641.8,133.5 677.7,116.7 713.5,127.3 749.4,126.8 785.2,125.5 821.1,127.7 857.0,126.9 892.8,118.8 928.7,123.9 964.6,123.2 1000.4,115.7 1036.3,124.2 1072.1,133.0 1108.0,123.3 1108.0,123.6 1072.1,135.4 1036.3,130.4 1000.4,116.4 964.6,123.8 928.7,123.9 892.8,119.3 857.0,128.0 821.1,129.4 785.2,125.5 749.4,127.5 713.5,130.8 677.7,117.9 641.8,134.2 605.9,132.9 570.1,129.1 534.2,131.8 498.3,128.8 462.5,114.3 426.6,111.7 390.8,124.0 354.9,120.5 319.0,137.2 283.2,142.4 247.3,144.7 211.4,143.2 175.6,124.4 139.7,137.9 103.9,142.7 68.0,131.1" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics — frontEndExecute (self)</title></polygon>
-<polygon points="68.0,130.4 103.9,140.2 139.7,137.2 175.6,123.8 211.4,143.2 247.3,144.2 283.2,139.6 319.0,133.8 354.9,119.2 390.8,119.0 426.6,108.6 462.5,113.3 498.3,128.8 534.2,131.5 570.1,129.1 605.9,131.6 641.8,133.5 677.7,116.7 713.5,127.3 749.4,126.8 785.2,125.5 821.1,127.7 857.0,126.9 892.8,118.8 928.7,123.8 964.6,123.2 1000.4,115.7 1036.3,124.2 1072.1,133.0 1108.0,123.3 1108.0,123.3 1072.1,133.0 1036.3,124.2 1000.4,115.7 964.6,123.2 928.7,123.9 892.8,118.8 857.0,126.9 821.1,127.7 785.2,125.5 749.4,126.8 713.5,127.3 677.7,116.7 641.8,133.5 605.9,131.6 570.1,129.1 534.2,131.5 498.3,128.8 462.5,113.3 426.6,108.6 390.8,119.0 354.9,119.2 319.0,133.8 283.2,139.6 247.3,144.2 211.4,143.2 175.6,123.8 139.7,137.2 103.9,140.2 68.0,130.4" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics — compileInner (self)</title></polygon>
+<text x="1108.0" y="531.0" text-anchor="end" fill="#e8731a" transform="rotate(-50 1108.0 531.0)">11-27</text>
+<polygon points="68.0,464.7 103.9,463.9 139.7,463.4 175.6,463.3 211.4,464.9 247.3,464.0 283.2,463.9 319.0,461.1 354.9,462.8 390.8,461.1 426.6,462.2 462.5,463.7 498.3,463.4 534.2,461.3 570.1,463.1 605.9,464.3 641.8,461.4 677.7,462.5 713.5,462.4 749.4,462.9 785.2,462.1 821.1,462.5 857.0,460.9 892.8,461.8 928.7,460.2 964.6,460.5 1000.4,461.1 1036.3,463.2 1072.1,461.1 1108.0,462.6 1108.0,516.0 1072.1,516.0 1036.3,516.0 1000.4,516.0 964.6,516.0 928.7,516.0 892.8,516.0 857.0,516.0 821.1,516.0 785.2,516.0 749.4,516.0 713.5,516.0 677.7,516.0 641.8,516.0 605.9,516.0 570.1,516.0 534.2,516.0 498.3,516.0 462.5,516.0 426.6,516.0 390.8,516.0 354.9,516.0 319.0,516.0 283.2,516.0 247.3,516.0 211.4,516.0 175.6,516.0 139.7,516.0 103.9,516.0 68.0,516.0" fill="#c7e9c0" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics — parseTranslationUnit</title></polygon>
+<polygon points="68.0,142.7 103.9,137.9 139.7,124.4 175.6,143.2 211.4,144.7 247.3,142.4 283.2,137.2 319.0,120.5 354.9,124.0 390.8,111.7 426.6,114.3 462.5,128.8 498.3,131.8 534.2,129.1 570.1,132.9 605.9,134.2 641.8,117.9 677.7,130.8 713.5,127.5 749.4,125.5 785.2,129.4 821.1,128.0 857.0,119.3 892.8,123.9 928.7,123.8 964.6,116.4 1000.4,130.4 1036.3,135.4 1072.1,123.6 1108.0,122.0 1108.0,462.6 1072.1,461.1 1036.3,463.2 1000.4,461.1 964.6,460.5 928.7,460.2 892.8,461.8 857.0,460.9 821.1,462.5 785.2,462.1 749.4,462.9 713.5,462.4 677.7,462.5 641.8,461.4 605.9,464.3 570.1,463.1 534.2,461.3 498.3,463.4 462.5,463.7 426.6,462.2 390.8,461.1 354.9,462.8 319.0,461.1 283.2,463.9 247.3,464.0 211.4,464.9 175.6,463.3 139.7,463.4 103.9,463.9 68.0,464.7" fill="#41ab5d" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics — SemanticChecking</title></polygon>
+<polygon points="68.0,140.2 103.9,137.2 139.7,123.8 175.6,143.2 211.4,144.2 247.3,139.6 283.2,133.8 319.0,119.2 354.9,119.0 390.8,108.6 426.6,113.3 462.5,128.8 498.3,131.5 534.2,129.1 570.1,131.6 605.9,133.5 641.8,116.7 677.7,127.3 713.5,126.8 749.4,125.5 785.2,127.7 821.1,126.9 857.0,118.8 892.8,123.9 928.7,123.2 964.6,115.7 1000.4,124.2 1036.3,133.0 1072.1,123.3 1108.0,121.4 1108.0,122.0 1072.1,123.6 1036.3,135.4 1000.4,130.4 964.6,116.4 928.7,123.8 892.8,123.9 857.0,119.3 821.1,128.0 785.2,129.4 749.4,125.5 713.5,127.5 677.7,130.8 641.8,117.9 605.9,134.2 570.1,132.9 534.2,129.1 498.3,131.8 462.5,128.8 426.6,114.3 390.8,111.7 354.9,124.0 319.0,120.5 283.2,137.2 247.3,142.4 211.4,144.7 175.6,143.2 139.7,124.4 103.9,137.9 68.0,142.7" fill="#74c476" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics — frontEndExecute (self)</title></polygon>
+<polygon points="68.0,140.2 103.9,137.2 139.7,123.8 175.6,143.2 211.4,144.2 247.3,139.6 283.2,133.8 319.0,119.2 354.9,119.0 390.8,108.6 426.6,113.3 462.5,128.8 498.3,131.5 534.2,129.1 570.1,131.6 605.9,133.5 641.8,116.7 677.7,127.3 713.5,126.8 749.4,125.5 785.2,127.7 821.1,126.9 857.0,118.8 892.8,123.8 928.7,123.2 964.6,115.7 1000.4,124.2 1036.3,133.0 1072.1,123.3 1108.0,121.4 1108.0,121.4 1072.1,123.3 1036.3,133.0 1000.4,124.2 964.6,115.7 928.7,123.2 892.8,123.9 857.0,118.8 821.1,126.9 785.2,127.7 749.4,125.5 713.5,126.8 677.7,127.3 641.8,116.7 605.9,133.5 570.1,131.6 534.2,129.1 498.3,131.5 462.5,128.8 426.6,113.3 390.8,108.6 354.9,119.0 319.0,119.2 283.2,133.8 247.3,139.6 211.4,144.2 175.6,143.2 139.7,123.8 103.9,137.2 68.0,140.2" fill="#969696" fill-opacity="0.9" stroke="#fff" stroke-width="0.4"><title>diagnostics — compileInner (self)</title></polygon>
 <text x="12" y="578" fill="#666" font-weight="600">phase buckets</text>
 <rect x="12" y="586" width="12" height="12" fill="#c7e9c0"/>
 <text x="28" y="596" fill="#222">parseTranslationUnit</text>
@@ -257,7 +259,7 @@ Scaling null: n scales independent diagnostics; ideal cost is O(n).</p><p style=
 <text x="859" y="668" fill="#222">generateOutput (self)</text>
 <rect x="12" y="676" width="12" height="12" fill="#969696"/>
 <text x="28" y="686" fill="#222">compileInner (self)</text>
-</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Daily window progress</h2><p style='font-size:15px'>Overall <code>compileInner</code>: 202.9 &rarr; 206.7 ms &nbsp;<b style='color:#c0392b'>+1.9%</b><span style='color:#666;font-size:13px'> &nbsp;(2026-10-26 52e29ab43 &rarr; 2026-11-26 f666576d6)</span></p><p style='color:#666;font-size:13px;margin:10px 0 4px'>Contributors — the mutually-exclusive phase buckets (named leaves + <code>(self)</code> residuals) that tile compileInner; the pp column sums to the overall %. Buckets moving the total by &ge;0.2% are listed, the rest fold into the remainder row. Below them, every other reported counter (nested/overlapping, e.g. serialized-module reads — own change only):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>counter</th><th>&Delta;</th><th>own %</th><th>of total</th></tr><tr><td>SemanticChecking</td><td align=right>+2.2 ms</td><td align=right>+1.3%</td><td align=right>+1.1pp</td></tr><tr><td>parseTranslationUnit</td><td align=right>+1.7 ms</td><td align=right>+6.2%</td><td align=right>+0.8pp</td></tr><tr><td>(remaining 2 buckets)</td><td align=right>-0.2 ms</td><td align=right>&ndash;</td><td align=right>-0.1pp</td></tr><tr><td>readSerializedModuleAST</td><td align=right>-1.9 ms</td><td align=right>-4.6%</td><td align=right style='color:#aaa'>&ndash;</td></tr></table><p style='color:#666;font-size:13px;margin:14px 0 4px'>Largest day steps (&ge;5% of the previous day, both directions; bisect with <code>git log &lt;c0&gt;..&lt;c1&gt; -- source/</code>):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>boundary</th><th>% vs prev day</th><th style='text-align:left'>commits</th><th style='text-align:left'>top buckets (own %)</th></tr><tr><td colspan=4 style='color:#888'>none</td></tr></table><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only diagnostics --label repro --gen-dir repro-diagnostics</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 9600), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>diagnostics.slang <span style='font-weight:400;color:#888'>(9610 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
+</svg></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Daily window progress</h2><p style='font-size:15px'>Overall <code>compileInner</code>: 197.8 &rarr; 207.7 ms &nbsp;<b style='color:#c0392b'>+5.0%</b><span style='color:#666;font-size:13px'> &nbsp;(2026-10-27 9a4817c88 &rarr; 2026-11-27 77e59ba7c)</span></p><p style='color:#666;font-size:13px;margin:10px 0 4px'>Contributors — the mutually-exclusive phase buckets (named leaves + <code>(self)</code> residuals) that tile compileInner; the pp column sums to the overall %. Buckets moving the total by &ge;0.2% are listed, the rest fold into the remainder row. Below them, every other reported counter (nested/overlapping, e.g. serialized-module reads — own change only):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>counter</th><th>&Delta;</th><th>own %</th><th>of total</th></tr><tr><td>SemanticChecking</td><td align=right>+9.8 ms</td><td align=right>+5.8%</td><td align=right>+4.9pp</td></tr><tr><td>parseTranslationUnit</td><td align=right>+1.1 ms</td><td align=right>+4.1%</td><td align=right>+0.6pp</td></tr><tr><td>frontEndExecute (self)</td><td align=right>-1.0 ms</td><td align=right>-75.2%</td><td align=right>-0.5pp</td></tr><tr><td>(remaining 1 buckets)</td><td align=right>+0.0 ms</td><td align=right>&ndash;</td><td align=right>+0.0pp</td></tr><tr><td>loadBuiltinModule</td><td align=right>+1.0 ms</td><td align=right>+0.9%</td><td align=right style='color:#aaa'>&ndash;</td></tr></table><p style='color:#666;font-size:13px;margin:14px 0 4px'>Largest day steps (&ge;5% of the previous day, both directions; bisect with <code>git log &lt;c0&gt;..&lt;c1&gt; -- source/</code>):</p><table style='border-collapse:collapse;font-size:13px' cellpadding=5><tr><th style='text-align:left'>boundary</th><th>% vs prev day</th><th style='text-align:left'>commits</th><th style='text-align:left'>top buckets (own %)</th></tr><tr><td colspan=4 style='color:#888'>none</td></tr></table><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Reproduce</h2><p style='color:#666;font-size:13px;max-width:900px'>Run from the slang repo root. This regenerates the sources below and re-runs this workload's measurement; <code>--gen-dir</code> keeps the generated files (they go to a tempdir and are deleted otherwise).</p><div class='cbox'><button class='copy' type='button' data-copy='repro'>Copy</button><pre id='repro' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f;white-space:pre-wrap'>python3 tools/compile-perf/bench.py --slangc /path/to/slangc --only diagnostics --label repro --gen-dir repro-diagnostics</pre></div><h2 style='font-size:17px;margin:26px 0 8px;border-bottom:2px solid #eee;padding-bottom:4px'>Compiled Slang source</h2><p style='color:#666;font-size:13px'>the complete compiled source (N = 9600), shown in full</p><h3 style='font-size:13px;margin:16px 0 4px;color:#444'>diagnostics.slang <span style='font-weight:400;color:#888'>(9610 lines)</span></h3><div class='cbox'><button class='copy' type='button' data-copy='src0'>Copy</button><pre id='src0' style='background:#f6f8fa;border:1px solid #e3e6ea;border-radius:6px;padding:12px;overflow:auto;max-height:560px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#24292f'>// AUTO-GENERATED by perf-suite/workloads.py - do not edit by hand.
 RWStructuredBuffer&lt;float&gt; outBuf;
 
 float bad_0(float4 v) { float3 t = v; return t.x + 0.0; }
